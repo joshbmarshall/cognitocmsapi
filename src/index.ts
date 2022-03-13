@@ -1,1 +1,1 @@
-export * from '~/models/Cognito/CTypesense'
+export * from './models/Cognito/CTypesense'
