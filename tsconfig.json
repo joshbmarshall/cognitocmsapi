@@ -11,7 +11,7 @@
     "sourceMap": true,
     "outFile": "./dist/index.ts",
     //"outDir": "dist",
-    "module": "system",
+    "module": "amd",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
