@@ -1,0 +1,27 @@
+{
+  "name": "cognitoapi",
+  "version": "1.0.0",
+  "description": "API access to CognitoCMS sites for vite",
+  "main": "dist/index.ts",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepublish": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshbmarshall/cognitocmsapi.git"
+  },
+  "author": "Josh Marshall",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joshbmarshall/cognitocmsapi/issues"
+  },
+  "homepage": "https://github.com/joshbmarshall/cognitocmsapi#readme",
+  "dependencies": {
+    "@babel/runtime": "^7.17.2",
+    "axios": "^0.26.1",
+    "typesense": "^1.2.2"
+  }
+}
