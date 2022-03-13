@@ -7,10 +7,10 @@ class CognitoCTypesenseSettings {
   apiKey: string
 
   constructor() {
-    this.host = ''
+    this.host = 'typesense.d.jm1.me'
     this.port = 443
     this.protocol = 'https'
-    this.apiKey = ''
+    this.apiKey = 'xz'
   }
 
 }
