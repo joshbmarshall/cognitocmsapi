@@ -1,6 +1,6 @@
 {
   "name": "cognitoapi",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "API access to CognitoCMS sites for vite",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,6 +11,7 @@
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
     "build": "tsc",
+    "generate-barrels": "barrelsby --delete -d src",
     "prepublish": "npm run build",
     "postpublish": "git push --follow-tags",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -31,6 +32,7 @@
     "typesense": "^1.2.2"
   },
   "devDependencies": {
+    "barrelsby": "^2.3.3",
     "rimraf": "^3.0.2"
   }
 }
