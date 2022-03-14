@@ -1,9 +1,9 @@
 {
   "name": "cognitoapi",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "API access to CognitoCMS sites for vite",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "index.js",
+  "types": "index.d.ts",
   "files": [
     "dist"
   ],
