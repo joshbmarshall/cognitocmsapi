@@ -1,37 +1,26 @@
 {
   "name": "cognitoapi",
-  "version": "1.0.11",
-  "description": "API access to CognitoCMS sites for vite",
+  "version": "1.0.12",
+  "description": "",
   "main": "dist/index.js",
   "files": [
     "dist"
   ],
   "scripts": {
     "clean": "rimraf dist",
-    "prebuild": "npm run clean",
-    "build": "tsc",
-    "generate-barrels": "barrelsby --delete -d src",
-    "prepublish": "npm run build",
-    "postpublish": "git push --follow-tags",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/joshbmarshall/cognitocmsapi.git"
+    "prebuild": "pnpm run clean",
+    "preversion": "pnpm run build",
+    "postversion": "git push --follow-tags",
+    "test": "jest",
+    "build": "tsc"
   },
   "author": "Josh Marshall",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/joshbmarshall/cognitocmsapi/issues"
-  },
-  "homepage": "https://github.com/joshbmarshall/cognitocmsapi#readme",
-  "dependencies": {
-    "@babel/runtime": "^7.17.2",
-    "axios": "^0.26.1",
-    "typesense": "^1.2.2"
-  },
   "devDependencies": {
-    "barrelsby": "^2.3.3",
-    "rimraf": "^3.0.2"
+    "@types/jest": "^27.4.0",
+    "jest": "^27.4.5",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^27.1.2",
+    "typescript": "^4.5.4"
   }
 }
