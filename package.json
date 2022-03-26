@@ -1,8 +1,9 @@
 {
   "name": "cognitoapi",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "",
   "main": "dist/cognitoapi.es.js",
+  "module": "dist/cognitoapi.umd.js",
   "files": [
     "dist"
   ],
