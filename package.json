@@ -1,26 +1,32 @@
 {
   "name": "cognitoapi",
-  "version": "1.0.12",
+  "version": "1.0.14",
   "description": "",
-  "main": "dist/index.js",
+  "main": "dist/cognitoapi.es.js",
   "files": [
     "dist"
   ],
   "scripts": {
     "clean": "rimraf dist",
+    "dev": "vite",
     "prebuild": "pnpm run clean",
     "preversion": "pnpm run build",
     "postversion": "git push --follow-tags",
-    "test": "jest",
-    "build": "tsc"
+    "build": "vite build",
+    "debug": "node --inspect-brk ../../vite/bin/vite",
+    "serve": "vite preview"
   },
   "author": "Josh Marshall",
   "license": "ISC",
+  "dependencies": {
+    "vue": "^3.2.31"
+  },
   "devDependencies": {
-    "@types/jest": "^27.4.0",
-    "jest": "^27.4.5",
+    "@vitejs/plugin-vue": "^1.10.2",
+    "@vue/compiler-sfc": "^3.2.31",
+    "less": "^4.1.2",
     "rimraf": "^3.0.2",
-    "ts-jest": "^27.1.2",
-    "typescript": "^4.5.4"
+    "vite": "^2.8.6",
+    "wikimedia-ui-base": "^0.18.1"
   }
 }
