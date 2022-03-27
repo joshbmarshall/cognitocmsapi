@@ -1,53 +1,32 @@
-const fs = require('fs')
-const path = require('path')
-const vue = require('@vitejs/plugin-vue');
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import Icons from 'unplugin-icons/vite'
+import IconsResolver from 'unplugin-icons/resolver'
 
-/**
- * @type {import('vite').UserConfig}
- */
-module.exports = {
-    build: {
-        // See https://vitejs.dev/guide/build.html#library-mode
-        lib: {
-            entry: path.resolve(__dirname, 'src/main.js'),
-            name: 'SDComponents'
-        },
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [
+    vue(),
 
-        // Leaving this unminified so you can see what exactly gets included in
-        // the bundles
-        minify: false,
+    // https://github.com/antfu/unplugin-auto-import
+    AutoImport({
+      imports: [
+        'vue',
+      ],
+    }),
 
-        rollupOptions: {
-            // make sure to externalize deps that shouldn't be bundled
-            // into your library
-            external: ['vue'],
+    // https://github.com/antfu/vite-plugin-components
+    Components({
+      dts: false,
+      directoryAsNamespace: true,
+      resolvers: [
+        IconsResolver(),
+      ],
+    }),
 
-            // Provide global variables to use in the UMD build
-            // for externalized deps
-            output: {
-                globals: {
-                    vue: 'Vue'
-                }
-            }
-        }
-    },
-    plugins: [
-        // Explicitly emit an index.html file for demo purposes
-        {
-            name: 'emit-index',
-            generateBundle() {
-                this.emitFile({
-                    type: 'asset',
-                    fileName: 'index.html',
-                    source: fs.readFileSync(
-                        path.resolve(__dirname, 'index.dist.html'),
-                        'utf-8'
-                    )
-                })
-            }
-        },
-
-        // Vite Vue SFC plugin
-        vue()
-    ]
-}
+    // https://github.com/antfu/unplugin-icons
+    Icons(),
+  ],
+})

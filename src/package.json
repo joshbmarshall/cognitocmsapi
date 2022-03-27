@@ -1,0 +1,15 @@
+{
+  "name": "cognitoapi",
+  "version": "1.0.21",
+  "description": "Base components for Cognito's Vue frontend sites",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshbmarshall/cognitoapi.git"
+  },
+  "author": "Josh Marshall",
+  "license": "MIT"
+}
