@@ -1,12 +1,16 @@
 {
-  "include": ["src"],
   "compilerOptions": {
-    "target": "es2018",
+    "target": "esnext",
+    "useDefineForClassFields": true,
+    "module": "esnext",
     "moduleResolution": "node",
-    "declaration": true, // generate .d.ts files
-    "sourceMap": true, // generate source map
-    "outDir": "dist", // output compiled js, d.ts, and source map to dist folder
     "strict": true,
-    "esModuleInterop": true
-  }
+    "jsx": "preserve",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "lib": ["esnext", "dom"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
