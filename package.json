@@ -1,21 +1,30 @@
 {
   "name": "cognitoapi",
-  "version": "1.0.25",
+  "version": "1.0.34",
   "private": false,
   "description": "",
-  "main": "dist/cognitoapi-lib.es.js",
+  "main": "./dist/cognitoapi.umd.js",
+  "module": "./dist/cognitoapi.es.js",
   "files": [
     "dist"
   ],
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/cognitoapi.es.js",
+      "require": "./dist/cognitoapi.umd.js"
+    }
+  },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && vue-tsc --emitDeclarationOnly && mv dist/src dist/types",
     "serve": "vite preview"
   },
   "author": "Josh Marshall",
   "license": "ISC",
   "dependencies": {
     "@babel/runtime": "^7.17.8",
+    "@babel/types": "^7.17.0",
     "@iconify/json": "^2.1.20",
     "@tailwindcss/typography": "^0.5.2",
     "autoprefixer": "^10.4.4",
@@ -42,6 +51,7 @@
     "unplugin-auto-import": "^0.5.11",
     "unplugin-vue-components": "^0.17.21",
     "vite": "^2.8.6",
-    "vitest": "^0.2.8"
+    "vitest": "^0.2.8",
+    "vue-tsc": "^0.33.9"
   }
 }

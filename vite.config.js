@@ -4,47 +4,40 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
-import dts from 'vite-plugin-dts'
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 const path = require('path')
 
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
-    target: 'es2015',
-    outDir: 'dist',
-    cssCodeSplit: true,
+    target: 'esnext',
     lib: {
-      entry: path.resolve(__dirname, './src/index.ts'),
+      entry: path.resolve(__dirname, 'src/index.ts'),
       name: 'cognitoapi',
-      fileName: 'cognitoapi-lib',
+      fileName: format => `cognitoapi.${format}.js`,
     },
     rollupOptions: {
+      // make sure to externalize deps that shouldn't be bundled
+      // into your library
       external: ['vue'],
       output: {
+        // Provide global variables to use in the UMD build
+        // for externalized deps
         globals: {
-          MyLib: 'cognitoapi',
+          vue: 'Vue',
         },
       },
     },
   },
 
   resolve: {
-    alias: [
-      {
-        find: '@',
-        replacement: path.resolve(__dirname, 'src'),
-      },
-    ],
+    alias: {
+      '~/': new URL('./src/', import.meta.url).pathname,
+    },
   },
 
   plugins: [
     vue(),
-
-    dts({
-      insertTypesEntry: true,
-      copyDtsFiles: false,
-    }),
 
     cssInjectedByJsPlugin(),
 
@@ -57,7 +50,7 @@ export default defineConfig({
 
     // https://github.com/antfu/vite-plugin-components
     Components({
-      dts: false,
+      // dts: false,
       directoryAsNamespace: true,
       resolvers: [
         IconsResolver(),

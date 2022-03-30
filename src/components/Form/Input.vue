@@ -1,11 +1,11 @@
 <template>
   <div>
-    <label class="pl-1 text-sm text-gray-800 dark:text-gray-200">{{ label }}</label>
+    <label class="c-pl-1 c-text-sm c-text-gray-800 dark:c-text-gray-200">{{ label }}</label>
 
-    <div class="relative rounded-md shadow-sm my-1">
+    <div class="c-relative c-rounded-md c-shadow-sm c-my-1">
       <div
         v-if="type === 'password'"
-        class="absolute inset-y-0 left-0 pl-1 flex items-center cursor-pointer text-gray-500 dark:text-white"
+        class="c-absolute c-inset-y-0 c-left-0 c-pl-1 c-flex c-items-center c-cursor-pointer c-text-gray-500 dark:c-text-white"
         @click="toggleVisible()"
       >
         <i-heroicons-solid:eye v-if="showPassword" />
@@ -13,13 +13,13 @@
       </div>
       <div
         v-if="type === 'email'"
-        class="absolute inset-y-0 left-0 pl-1 flex items-center text-gray-500 dark:text-white"
+        class="c-absolute c-inset-y-0 c-left-0 c-pl-1 c-flex c-items-center c-text-gray-500 dark:c-text-white"
       >
         <i-heroicons-solid:mail />
       </div>
       <div
         v-if="type === 'phone'"
-        class="absolute inset-y-0 left-0 pl-1 flex items-center text-gray-500 dark:text-white"
+        class="c-absolute c-inset-y-0 c-left-0 c-pl-1 c-flex c-items-center c-text-gray-500 dark:c-text-white"
       >
         <i-heroicons-solid:phone />
       </div>
@@ -31,24 +31,23 @@
         :type="inputType"
         :placeholder="placeholder"
         :required="required"
-        class="appearance-none block rounded-md px-2 py-2 w-full shadow-md dark:shadow-inner placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-slate-600"
-        :class="hasIcon ? 'pl-7' : ''"
+        class="c-appearance-none c-block c-rounded-md c-px-2 c-py-2 c-w-full c-shadow-md dark:c-shadow-inner c-placeholder-gray-400 focus:c-ring-indigo-500 focus:c-border-indigo-500 sm:c-text-sm dark:c-bg-slate-600"
+        :class="hasIcon ? 'c-pl-7' : ''"
         @input="handleInput"
       >
     </div>
     <label
       v-if="type === 'password' && suggestPassword"
-      class="pl-1 text-sm text-gray-800 dark:text-gray-200 cursor-pointer"
+      class="c-pl-1 c-text-sm c-text-gray-800 dark:c-text-gray-200 c-cursor-pointer"
       @click="setPassword()"
     >
-      <span class="text-xs font-medium">Suggested password:</span>
+      <span class="c-text-xs c-font-medium">Suggested password:</span>
       {{ generated_password }}
     </label>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
 import { maska as vMaska } from 'maska'
 const props = defineProps({
   suggestPassword: {
@@ -83,7 +82,7 @@ const props = defineProps({
     type: String,
   },
 })
-const maska = ref(props.inputmask)
+const maska = ref<any>(props.inputmask)
 if (props.inputmask === 'date') {
   maska.value = {
     mask: 'D#/M#/Y###',
