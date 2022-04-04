@@ -1,10 +1,5 @@
-# npm-package-tutorial
+# Cognito CMS Vite API
 
-Example from https://cmdcolin.github.io/posts/2021-12-31-npm-package
+Base setup for connecting a vite website to Cognito CMS.
 
-## Features
-
-- Makes clean build before running yarn build or yarn publish
-- Pushes to github after publish
-- Uses ts-jest for testing
-- Uses esm modules
+See https://github.com/joshbmarshall/vitetest/ for a demo on how to use.

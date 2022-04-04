@@ -1,4 +1,6 @@
-class CognitoTest {
+import { CognitoBase } from './Base'
+
+class CognitoVideo extends CognitoBase {
   id: string
   platform: string // 'vimeo', 'youtube'
   name: string
@@ -6,7 +8,12 @@ class CognitoTest {
   length: number
   slate: string
 
-  constructor(source?: Partial<CognitoTest>) {
+  baseurl(): string {
+    return '/api/v1/cognito/video'
+  }
+
+  constructor(source?: Partial<CognitoVideo>) {
+    super()
     this.id = ''
     this.platform = 'youtube'
     this.name = ''
@@ -17,4 +24,4 @@ class CognitoTest {
   }
 }
 
-export { CognitoTest }
+export { CognitoVideo }
