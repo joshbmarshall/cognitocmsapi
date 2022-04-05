@@ -23,7 +23,7 @@ class CognitoFindOneParams {
 }
 
 class CognitoBase {
-  id?: number
+  id?: number|string
 
   /**
    * Override to get the actual url
