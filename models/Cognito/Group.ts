@@ -6,12 +6,14 @@ class CognitoGroup {
   slug: string
   content: string
   image: CognitoImage
+  children: CognitoGroup[]
 
   constructor(source?: Partial<CognitoGroup>) {
     this.name = ''
     this.slug = ''
     this.content = ''
     this.image = new CognitoImage()
+    this.children = []
     Object.assign(this, source)
   }
 
