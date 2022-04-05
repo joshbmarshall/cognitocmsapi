@@ -1,4 +1,4 @@
-import { $axios } from '~/plugins/axios'
+import { $axios } from '~cognito/plugins/axios'
 
 class SellAddress {
   id: number

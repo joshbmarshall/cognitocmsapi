@@ -1,5 +1,5 @@
 import { CognitoImage } from './Image'
-import { $axios } from '~/plugins/axios'
+import { $axios } from '~cognito/plugins/axios'
 
 class CognitoGroup {
   name: string

@@ -1,8 +1,9 @@
 import { SellSku } from './Sku'
 import { CognitoImage } from '~cognito/models/Cognito/Image'
-import { $axios } from '~/plugins/axios'
+import { $axios } from '~cognito/plugins/axios'
+import { CognitoBase } from '../Cognito/Base'
 
-class SellInvoiceItem {
+class SellInvoiceItem extends CognitoBase {
   id: number
   sku: SellSku
   product_name: string
@@ -13,7 +14,12 @@ class SellInvoiceItem {
   subtotal: number
   addons: string[]
 
+  baseurl() {
+    return '/api/v1/sell/cart'
+  }
+
   constructor(source?: Partial<SellInvoiceItem>) {
+    super()
     this.id = 0
     this.sku = new SellSku()
     this.product_name = ''
@@ -27,13 +33,18 @@ class SellInvoiceItem {
   }
 }
 
-class SellInvoice {
+class SellInvoice extends CognitoBase {
   id: number
   status_type: string // Pending, Paid, Picked, Complete or Canceled
   status: string
   items: SellInvoiceItem[]
 
+  baseurl() {
+    return '/api/v1/sell/cart'
+  }
+
   constructor(source?: Partial<SellInvoice>) {
+    super()
     this.id = 0
     this.status_type = 'Pending'
     this.status = ''

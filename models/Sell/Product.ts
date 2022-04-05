@@ -1,9 +1,10 @@
 import { CognitoImage } from '~cognito/models/Cognito/Image'
 import { CognitoVideo } from '~cognito/models/Cognito/Video'
-import type { SellSku } from '~/models/Sell/Sku'
-import { $axios } from '~/plugins/axios'
+import type { SellSku } from '~cognito/models/Sell/Sku'
+import { $axios } from '~cognito/plugins/axios'
+import { CognitoBase } from '../Cognito/Base'
 
-class SellProduct {
+class SellProduct extends CognitoBase {
   name: string
   title: string
   meta_description: string
@@ -19,7 +20,12 @@ class SellProduct {
   addons: string[]
   groupaddons: string[]
 
+  baseurl(): string {
+    return '/api/v1/sell/product'
+  }
+
   constructor(source?: Partial<SellProduct>) {
+    super()
     this.name = ''
     this.slug = ''
     this.blurb = ''
@@ -35,47 +41,6 @@ class SellProduct {
     this.addons = []
     this.groupaddons = []
     Object.assign(this, source)
-  }
-
-  async find_many(data: {
-    image_aspect?: string
-    image_width: number
-    page_size: number
-    page: number
-    group?: string
-    orderby?: string
-    ids?: number[]
-  }): Promise<{
-      num_items: number
-      num_pages: number
-      data: SellProduct[]
-    }> {
-    const res = await $axios.get('/api/v1/sell/product', {
-      params: {
-        image_aspect: data.image_aspect,
-        image_width: data.image_width,
-        page_size: data.page_size,
-        page: data.page,
-        group: data.group,
-        orderby: data.orderby,
-        ids: data.ids,
-      },
-    })
-    return res.data
-  }
-
-  async find_one(data: {
-    image_aspect?: string
-    image_width: number
-    url: string
-  }): Promise<SellProduct> {
-    const res = await $axios.get(`/api/v1/sell/product/${data.url}`, {
-      params: {
-        image_aspect: data.image_aspect,
-        image_width: data.image_width,
-      },
-    })
-    return res.data
   }
 
   async skusearch(data: {

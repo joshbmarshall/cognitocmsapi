@@ -1,5 +1,5 @@
 import { Client } from 'typesense'
-import { $axios } from '~/plugins/axios'
+import { $axios } from '~cognito/plugins/axios'
 
 class CognitoCTypesenseSettings {
   host: string

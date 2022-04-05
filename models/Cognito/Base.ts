@@ -1,4 +1,4 @@
-import { $axios } from '~/plugins/axios'
+import { $axios } from '~cognito/plugins/axios'
 
 class CognitoFindManyParams {
   image_aspect?: string
@@ -64,6 +64,35 @@ class CognitoBase {
       // Create new item
       res = await $axios.post(`${this.baseurl()}/create`, this)
     }
+    return res.data
+  }
+
+  async enable(): Promise<{
+    success: boolean
+    message: string
+  }> {
+    const res = await $axios.post(`${this.baseurl()}/enable`, {
+      id: this.id,
+    })
+    return res.data
+  }
+
+  async disable(): Promise<{
+    success: boolean
+    message: string
+  }> {
+    const res = await $axios.post(`${this.baseurl()}/disable`, {
+      id: this.id,
+    })
+    return res.data
+  }
+
+  async create(): Promise<{
+    success: boolean
+    item: any
+    error: string
+  }> {
+    const res = await $axios.post(`${this.baseurl()}/create`, this)
     return res.data
   }
 }

@@ -1,6 +1,7 @@
 import { CognitoImage } from '~cognito/models/Cognito/Image'
+import { CognitoBase } from '../Cognito/Base'
 
-class SellSku {
+class SellSku extends CognitoBase {
   id: number
   code: string
   is_default: boolean
@@ -8,7 +9,12 @@ class SellSku {
   product_id: number
   image: CognitoImage
 
+  baseurl(): string {
+    return '/api/v1/sell/sku'
+  }
+
   constructor(source?: Partial<SellSku>) {
+    super()
     this.id = 0
     this.code = ''
     this.is_default = false
