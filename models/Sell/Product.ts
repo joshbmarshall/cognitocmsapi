@@ -4,6 +4,23 @@ import type { SellSku } from '~cognito/models/Sell/Sku'
 import { $axios } from '~cognito/plugins/axios'
 import { CognitoBase } from '../Cognito/Base'
 
+class SellSkuSearchResult {
+  sku: number
+  price_each: string
+  full_price_each: string
+  on_special: boolean
+  in_stock: boolean
+
+  constructor(source?: Partial<SellSkuSearchResult>) {
+    this.sku = 0
+    this.price_each = ''
+    this.full_price_each = ''
+    this.on_special = false
+    this.in_stock = false
+    Object.assign(this, source)
+  }
+}
+
 class SellProduct extends CognitoBase {
   name: string
   title: string
@@ -11,6 +28,7 @@ class SellProduct extends CognitoBase {
   slug: string
   blurb: string
   content: string
+  price: number
   images: CognitoImage[]
   image: CognitoImage
   in_stock: boolean
@@ -32,6 +50,7 @@ class SellProduct extends CognitoBase {
     this.title = ''
     this.meta_description = ''
     this.content = ''
+    this.price = 0
     this.images = []
     this.image = new CognitoImage()
     this.in_stock = false
@@ -53,13 +72,7 @@ class SellProduct extends CognitoBase {
       id: number
       value: string
     }[]
-  }): Promise<{
-      sku: number
-      price_each: string
-      full_price_each: string
-      on_special: boolean
-      in_stock: boolean
-    }> {
+  }): Promise<SellSkuSearchResult> {
     const res = await $axios.post('/api/v1/sell/cart/searchsku', {
       product: data.product_id,
       variations: data.variations,
@@ -69,4 +82,4 @@ class SellProduct extends CognitoBase {
   }
 }
 
-export { SellProduct }
+export { SellProduct, SellSkuSearchResult }
