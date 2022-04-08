@@ -1,7 +1,7 @@
+import { CognitoBase } from '../Cognito/Base'
 import { SellSku } from './Sku'
 import { CognitoImage } from '~cognito/models/Cognito/Image'
 import { $axios } from '~cognito/plugins/axios'
-import { CognitoBase } from '../Cognito/Base'
 
 class SellInvoiceItem extends CognitoBase {
   id: number

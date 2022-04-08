@@ -1,5 +1,5 @@
-import { CognitoImage } from '~cognito/models/Cognito/Image'
 import { CognitoBase } from '../Cognito/Base'
+import { CognitoImage } from '~cognito/models/Cognito/Image'
 
 class SellSku extends CognitoBase {
   id: number

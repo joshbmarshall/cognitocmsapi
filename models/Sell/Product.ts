@@ -1,8 +1,8 @@
+import { CognitoBase } from '../Cognito/Base'
 import { CognitoImage } from '~cognito/models/Cognito/Image'
 import { CognitoVideo } from '~cognito/models/Cognito/Video'
 import type { SellSku } from '~cognito/models/Sell/Sku'
 import { $axios } from '~cognito/plugins/axios'
-import { CognitoBase } from '../Cognito/Base'
 
 class SellSkuSearchResult {
   sku: number
