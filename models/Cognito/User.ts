@@ -69,6 +69,20 @@ class CognitoUser {
     })
     return res.data
   }
+
+  /**
+   * Get this user's credit balance for a supplier
+   * @param supplier supplier id
+   * @returns number the current balance for that supplier
+   */
+  async creditBalance(supplier: number): Promise<number> {
+    const res = await $axios.get('/api/v1/cognito/user/creditBalance', {
+      params: {
+        supplier,
+      },
+    })
+    return res.data.balance
+  }
 }
 
 export { CognitoUser }
