@@ -1,4 +1,5 @@
-import { CognitoBase } from '../Cognito/Base'
+import { CognitoBase } from './Base'
+
 class CognitoSnippet extends CognitoBase {
   name: string
   content: string
