@@ -92,8 +92,10 @@ const testWebP = (cbfn: Function) => {
   }
   webP.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA'
 }
-
-onMounted(() => {
+const newImage = () => {
+  if (lazytimer) {
+    clearInterval(lazytimer)
+  }
   let webp = props.webp
   let url = props.url
   placeholder.value = props.placeholder
@@ -113,6 +115,13 @@ onMounted(() => {
       checkVisible()
     }, 500)
   })
+}
+watch(() => props.image, () => {
+  newImage()
+})
+
+onMounted(() => {
+  newImage()
 })
 
 onUnmounted(() => {
