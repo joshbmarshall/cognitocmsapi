@@ -3,18 +3,22 @@
 </template>
 
 <script setup lang="ts">
+import { CognitoImage } from '~cognito/models/Cognito/Image'
+
 const props = defineProps({
+  // Give just the image if you have a CognitoImage
+  image: {
+    type: CognitoImage,
+  },
+  // Below for custom lazy images
   placeholder: {
     type: String,
-    required: true,
   },
   url: {
     type: String,
-    required: true,
   },
   webp: {
     type: String,
-    required: true,
   },
 })
 
@@ -22,13 +26,14 @@ const lazyelement = ref()
 
 let use_webp = false
 const show_image = ref('')
+const placeholder = ref('')
 let lazytimer = 0
 
 const src = computed(() => {
   if (show_image.value) {
     return show_image.value
   }
-  return props.placeholder
+  return placeholder.value
 })
 
 const isInViewport = (el: HTMLElement) => {
@@ -89,12 +94,20 @@ const testWebP = (cbfn: Function) => {
 }
 
 onMounted(() => {
+  let webp = props.webp
+  let url = props.url
+  placeholder.value = props.placeholder
+  if (props.image) {
+    webp = props.image.webp_url
+    url = props.image.url
+    placeholder.value = props.image.placeholder
+  }
   testWebP((canSupportWebp: boolean) => {
     use_webp = canSupportWebp
     if (use_webp) {
-      show_image.value = props.webp
+      show_image.value = webp
     } else {
-      show_image.value = props.url
+      show_image.value = url
     }
     lazytimer = setInterval(() => {
       checkVisible()
