@@ -1,21 +1,27 @@
 <template>
-  <div class="space-y-2">
-    <label v-if="label" class="block select-none pl-1 text-sm text-gray-800 dark:text-gray-200">{{ label }}</label>
-    <div class="flex items-center space-x-6">
-      <div v-if="thumb" class="shrink-0">
-        <img class="h-16 w-16 bg-white object-cover" :class="isRoundedFull ? 'rounded-full' : 'rounded-md'" :src="thumb" :width="width">
+  <slot
+    :thumb="thumb"
+    :upload="upload"
+    :progress="progress"
+  >
+    <div class="space-y-2">
+      <label v-if="label" class="block select-none pl-1 text-sm text-gray-800 dark:text-gray-200">{{ label }}</label>
+      <div class="flex items-center space-x-6">
+        <div v-if="thumb" class="shrink-0">
+          <img class="h-16 w-16 bg-white object-cover" :class="isRoundedFull ? 'rounded-full' : 'rounded-md'" :src="thumb" :width="width">
+        </div>
+        <div>
+          <input
+            type="file"
+            class="block w-full text-sm text-transparent file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700 dark:file:bg-blue-600 dark:file:hover:bg-blue-700"
+            accept="image/*"
+            @change="upload"
+          >
+        </div>
       </div>
-      <div>
-        <input
-          type="file"
-          class="block w-full text-sm text-transparent file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700 dark:file:bg-blue-600 dark:file:hover:bg-blue-700"
-          accept="image/*"
-          @change="upload"
-        >
-      </div>
+      <cgn-progress v-if="progress > 0" :progress="progress" />
     </div>
-    <cgn-progress v-if="progress > 0" :progress="progress" />
-  </div>
+  </slot>
 </template>
 
 <script setup lang="ts">
@@ -65,6 +71,11 @@ const thumb = computed(() => {
   return props.thumbnail
 })
 const emit = defineEmits(['update:modelValue'])
+
+watch (() => props.thumbnail, () => {
+  uploadedthumb.value = ''
+})
+
 const upload = (e) => {
   // Get the selected file from the input element
   const file: File = e.target.files[0]
