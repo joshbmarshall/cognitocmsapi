@@ -1,7 +1,3 @@
-<template>
-  <img ref="lazyelement" :src="src">
-</template>
-
 <script setup lang="ts">
 import { CognitoImage } from '~cognito/models/Cognito/Image'
 
@@ -65,9 +61,10 @@ const checkVisible = () => {
   if (!isInViewport(lazyelement.value)) {
     return
   }
-  let srcurl = props.url
-  if (use_webp) {
-    srcurl = props.webp
+
+  let srcurl = use_webp ? props.webp : props.url
+  if (props.image) {
+    srcurl = use_webp ? props.image.webp_url : props.image.url
   }
 
   if (!srcurl) {
@@ -77,6 +74,7 @@ const checkVisible = () => {
   const filename = srcurl.split('/').pop()
   const width = Math.floor(lazyelement.value.clientWidth * window.devicePixelRatio)
   const height = Math.floor(lazyelement.value.clientHeight * window.devicePixelRatio)
+
   if (height === 0) {
     return
   }
@@ -87,7 +85,7 @@ const checkVisible = () => {
 
 const testWebP = (cbfn: Function) => {
   const webP = new Image()
-  webP.onload = webP.onerror = function() {
+  webP.onload = webP.onerror = function () {
     cbfn(webP.height === 2)
   }
   webP.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA'
@@ -98,7 +96,9 @@ const newImage = () => {
   }
   let webp = props.webp
   let url = props.url
-  placeholder.value = props.placeholder
+  if (props.placeholder) {
+    placeholder.value = props.placeholder
+  }
   if (props.image) {
     webp = props.image.webp_url
     url = props.image.url
@@ -106,9 +106,9 @@ const newImage = () => {
   }
   testWebP((canSupportWebp: boolean) => {
     use_webp = canSupportWebp
-    if (use_webp) {
+    if (use_webp && webp) {
       show_image.value = webp
-    } else {
+    } else if (url) {
       show_image.value = url
     }
     lazytimer = setInterval(() => {
@@ -130,3 +130,7 @@ onUnmounted(() => {
   }
 })
 </script>
+
+<template>
+  <img ref="lazyelement" :src="src">
+</template>
