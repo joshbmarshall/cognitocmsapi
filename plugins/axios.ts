@@ -1,6 +1,6 @@
 import axios from 'axios'
 import type { Router } from 'vue-router'
-import { baseURL } from '~/config'
+import { baseURL, sitename } from '~/config'
 import { useUserStore } from '~cognito/stores/user'
 import { useCartStore } from '~cognito/stores/cart'
 import { CognitoUser } from '~cognito/models/Cognito/User'
@@ -26,7 +26,7 @@ const isLoggedIn = () => {
   return !!useUserStore().access_token
 }
 
-const logout = async() => {
+const logout = async () => {
   useUserStore().logout()
   await $axios.get(urls.logout)
   useCartStore().getCart()
@@ -36,7 +36,7 @@ const setRedirectAfterLogin = (path: string) => {
   useUserStore().setRedirectAfterLogin(path)
 }
 
-const doRefresh = async() => {
+const doRefresh = async () => {
   const userStore = useUserStore()
   const refresh_token = userStore.refresh_token
 
@@ -48,12 +48,12 @@ const doRefresh = async() => {
   userStore.setAccessToken(tokens.data.access_token)
   userStore.setRefreshToken(tokens.data.refresh_token)
 }
-const getUser = async() => {
+const getUser = async () => {
   const user = await new CognitoUser().getLoggedInUser()
   useUserStore().setUser(user)
 }
 
-const login = async(username: string, password: string, router: Router) => {
+const login = async (username: string, password: string, router: Router) => {
   const userStore = useUserStore()
   const cartStore = useCartStore()
   try {
@@ -99,7 +99,7 @@ $axios.interceptors.response.use(
   (response) => {
     return response
   },
-  async(error) => {
+  async (error) => {
     const isIgnored = ignoredPaths.some(path => error.config.url.includes(path))
 
     // get the status code from the response
@@ -155,6 +155,10 @@ $axios.interceptors.response.use(
     return Promise.reject(error)
   })
 
+const setTitle = (suffix: string) => {
+  useHead({ title: `${sitename} | ${suffix}` })
+}
+
 export {
   $axios,
   login,
@@ -162,4 +166,5 @@ export {
   isLoggedIn,
   setRedirectAfterLogin,
   getUser,
+  setTitle,
 }
