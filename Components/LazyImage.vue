@@ -1,3 +1,7 @@
+<template>
+  <img ref="lazyelement" :src="src">
+</template>
+
 <script setup lang="ts">
 import { CognitoImage } from '~cognito/models/Cognito/Image'
 
@@ -131,6 +135,3 @@ onUnmounted(() => {
 })
 </script>
 
-<template>
-  <img ref="lazyelement" :src="src">
-</template>

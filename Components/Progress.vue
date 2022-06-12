@@ -11,7 +11,7 @@
     <div class="h-1 bg-gray-300 dark:bg-slate-600 rounded">
       <div
         class="bg-indigo-700 dark:bg-indigo-600 h-1 rounded relative"
-        :style="'width: ' + progress + '%'"
+        :style="`width: ${progress}%`"
       />
     </div>
   </div>

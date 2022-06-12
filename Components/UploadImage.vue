@@ -60,6 +60,7 @@ const props = defineProps({
     default: 300,
   },
 })
+const emit = defineEmits(['update:modelValue'])
 const progress = ref(0)
 const filename = ref('')
 const uploadedthumb = ref('')
@@ -70,8 +71,6 @@ const thumb = computed(() => {
   }
   return props.thumbnail
 })
-const emit = defineEmits(['update:modelValue'])
-
 watch (() => props.thumbnail, () => {
   uploadedthumb.value = ''
 })

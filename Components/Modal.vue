@@ -61,5 +61,4 @@ watch(() => props.modelValue, (newval) => {
   }
   timeoutID.value = setTimeout(() => close(), props.timeout)
 })
-
 </script>
