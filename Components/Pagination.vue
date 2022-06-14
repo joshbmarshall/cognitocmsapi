@@ -1,5 +1,5 @@
 <template>
-  <div v-if="props.pageCount > 1">
+  <div v-if="pageCount > 1">
     <div class="flex items-center justify-center py-10">
       <div class="w-full flex items-center justify-between">
         <div class="flex items-center pt-3 text-gray-600">
@@ -16,7 +16,7 @@
         </div>
         <div class="flex mx-2">
           <router-link
-            v-if="props.currentPage > 2"
+            v-if="currentPageNumber > 2"
             class="flex sm:hidden hover:text-indigo-700 border-t border-transparent text-gray-600 hover:border-indigo-400"
             :to="pageLink(1)"
           >
@@ -27,29 +27,29 @@
               ...
             </p>
           </router-link>
-          <span v-for="pageNum in props.pageCount" :key="pageNum">
+          <span v-for="pageNum in pageCount" :key="pageNum">
             <router-link v-if="showPageLink(pageNum)" :to="pageLink(pageNum)">
               <p
-                v-if="pageNum == props.currentPage"
+                v-if="pageNum === currentPageNumber"
                 class="text-sm font-medium leading-none cursor-pointer text-indigo-700 border-t border-indigo-400 pt-3 px-3"
               >{{ pageNum }}</p>
               <p
                 v-else
                 class="text-sm font-medium leading-none cursor-pointer text-gray-600 hover:text-indigo-700 border-t border-transparent hover:border-indigo-400 pt-3 px-3"
-                :class="pageNum < parseInt(props.currentPage) + 2 && pageNum > parseInt(props.currentPage) - 2 ? '' : 'hidden sm:block'"
+                :class="pageNum < currentPageNumber + 2 && pageNum > currentPageNumber - 2 ? '' : 'hidden sm:block'"
               >{{ pageNum }}</p>
             </router-link>
           </span>
           <router-link
-            v-if="props.currentPage < props.pageCount - 1"
+            v-if="currentPageNumber < pageCount - 1"
             class="flex sm:hidden hover:text-indigo-700 border-t border-transparent text-gray-600 hover:border-indigo-400"
-            :to="pageLink(props.pageCount)"
+            :to="pageLink(pageCount)"
           >
             <p class="text-sm font-medium leading-none pt-3 px-3 pr-0">
               ...
             </p>
             <p class="text-sm font-medium leading-none pt-3 px-3">
-              {{ props.pageCount }}
+              {{ pageCount }}
             </p>
           </router-link>
         </div>
@@ -80,8 +80,7 @@ const props = defineProps({
     type: String,
   },
   currentPage: {
-    type: Number,
-    default: 1,
+    default: '1',
   },
 })
 const pageLink = (pageNum: number) => {
@@ -98,14 +97,16 @@ const pageLink = (pageNum: number) => {
   }
   return url
 }
+const currentPageNumber = computed(() => parseInt(props.currentPage))
+
 const firstLink = () => {
   return pageLink(1)
 }
 const previousLink = () => {
-  return pageLink(parseInt(props.currentPage) - 1)
+  return pageLink(currentPageNumber.value - 1)
 }
 const nextLink = () => {
-  return pageLink(parseInt(props.currentPage) + 1)
+  return pageLink(currentPageNumber.value + 1)
 }
 const lastLink = () => {
   return pageLink(props.pageCount)
@@ -122,15 +123,15 @@ const showPageLink = (page: number) => {
 }
 
 const showFirstLink = () => {
-  return props.currentPage > 1
+  return currentPageNumber.value > 1
 }
 const showPreviousLink = () => {
-  return props.currentPage > 1
+  return currentPageNumber.value > 1
 }
 const showNextLink = () => {
-  return props.currentPage < props.pageCount
+  return currentPageNumber.value < props.pageCount
 }
 const showLastLink = () => {
-  return props.currentPage < props.pageCount
+  return currentPageNumber.value < props.pageCount
 }
 </script>

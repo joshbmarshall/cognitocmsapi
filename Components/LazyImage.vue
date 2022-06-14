@@ -8,7 +8,7 @@ import { CognitoImage } from '~cognito/models/Cognito/Image'
 const props = defineProps({
   // Give just the image if you have a CognitoImage
   image: {
-    type: CognitoImage,
+    type: [CognitoImage, Object],
   },
   // Below for custom lazy images
   placeholder: {
@@ -83,7 +83,9 @@ const checkVisible = () => {
     return
   }
 
-  show_image.value = `${srcurl.replace(filename, '') + width}x${height}:${filename}`
+  if (filename) {
+    show_image.value = `${srcurl.replace(filename, '') + width}x${height}:${filename}`
+  }
   clearInterval(lazytimer)
 }
 
