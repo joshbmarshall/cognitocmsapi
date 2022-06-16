@@ -1,5 +1,5 @@
 <template>
-  <img ref="lazyelement" :src="src">
+  <img ref="lazyelement" :src="src" :class="imageClass">
 </template>
 
 <script setup lang="ts">
@@ -20,21 +20,18 @@ const props = defineProps({
   webp: {
     type: String,
   },
+  imageClass: {
+    type: String,
+  },
 })
 
 const lazyelement = ref()
 
 let use_webp = false
 const show_image = ref('')
-const placeholder = ref('')
+const img_placeholder = ref('')
+const src = ref('')
 let lazytimer = 0
-
-const src = computed(() => {
-  if (show_image.value) {
-    return show_image.value
-  }
-  return placeholder.value
-})
 
 const isInViewport = (el: HTMLElement) => {
   const rect = el.getBoundingClientRect()
@@ -49,14 +46,16 @@ const isInViewport = (el: HTMLElement) => {
             && rect.left <= screenwidth
   )
 }
-const checkVisible = () => {
+const checkVisible = async () => {
   if (!lazyelement.value) {
     clearInterval(lazytimer)
     return
   }
   if (!lazyelement.value.complete) {
-    // Ensure the placeholder image has loaded
-    return
+    // Wait for the placeholder image to load
+    await new Promise((resolve) => {
+      lazyelement.value.onload = resolve
+    })
   }
   if (lazyelement.value.naturalHeight === 0) {
     // Ensure the placeholder image has a height
@@ -66,16 +65,11 @@ const checkVisible = () => {
     return
   }
 
-  let srcurl = use_webp ? props.webp : props.url
-  if (props.image) {
-    srcurl = use_webp ? props.image.webp_url : props.image.url
-  }
-
-  if (!srcurl) {
+  if (!show_image.value) {
     return
   }
 
-  const filename = srcurl.split('/').pop()
+  const filename = show_image.value.split('/').pop()
   const width = Math.floor(lazyelement.value.clientWidth * window.devicePixelRatio)
   const height = Math.floor(lazyelement.value.clientHeight * window.devicePixelRatio)
 
@@ -84,7 +78,7 @@ const checkVisible = () => {
   }
 
   if (filename) {
-    show_image.value = `${srcurl.replace(filename, '') + width}x${height}:${filename}`
+    src.value = `${show_image.value.replace(filename, '') + width}x${height}:${filename}`
   }
   clearInterval(lazytimer)
 }
@@ -96,19 +90,36 @@ const testWebP = (cbfn: Function) => {
   }
   webP.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA'
 }
-const newImage = () => {
+const newImage = async () => {
   if (lazytimer) {
     clearInterval(lazytimer)
   }
+  // Hide if already set
+  show_image.value = ''
   let webp = props.webp
   let url = props.url
-  if (props.placeholder) {
-    placeholder.value = props.placeholder
-  }
+  let placeholder = props.placeholder
   if (props.image) {
     webp = props.image.webp_url
     url = props.image.url
-    placeholder.value = props.image.placeholder
+    placeholder = props.image.placeholder
+    img_placeholder.value = props.image.placeholder
+  }
+  if (placeholder) {
+    img_placeholder.value = placeholder
+    src.value = placeholder
+    // Load transparent png
+    await new Promise((resolve) => {
+      lazyelement.value.onload = resolve
+    })
+  }
+  if (url) {
+    img_placeholder.value = url
+    src.value = url
+    // Load standard image
+    await new Promise((resolve) => {
+      lazyelement.value.onload = resolve
+    })
   }
   testWebP((canSupportWebp: boolean) => {
     use_webp = canSupportWebp
@@ -117,6 +128,9 @@ const newImage = () => {
     } else if (url) {
       show_image.value = url
     }
+    // Check immediately if in view
+    checkVisible()
+    // Check every half second
     lazytimer = setInterval(() => {
       checkVisible()
     }, 500)
