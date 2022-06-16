@@ -29,7 +29,6 @@ const lazyelement = ref()
 
 let use_webp = false
 const show_image = ref('')
-const img_placeholder = ref('')
 const src = ref('')
 let lazytimer = 0
 
@@ -103,20 +102,17 @@ const newImage = async () => {
     webp = props.image.webp_url
     url = props.image.url
     placeholder = props.image.placeholder
-    img_placeholder.value = props.image.placeholder
   }
   if (placeholder) {
-    img_placeholder.value = placeholder
-    src.value = placeholder
     // Load transparent png
+    src.value = placeholder
     await new Promise((resolve) => {
       lazyelement.value.onload = resolve
     })
   }
   if (url) {
-    img_placeholder.value = url
-    src.value = url
     // Load standard image
+    src.value = url
     await new Promise((resolve) => {
       lazyelement.value.onload = resolve
     })
