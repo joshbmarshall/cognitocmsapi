@@ -29,6 +29,7 @@ const lazyelement = ref()
 
 let use_webp = false
 const show_image = ref('')
+const last_image_url = ref('')
 const src = ref('')
 let lazytimer = 0
 
@@ -94,7 +95,6 @@ const newImage = async () => {
     clearInterval(lazytimer)
   }
   // Hide if already set
-  show_image.value = ''
   let webp = props.webp
   let url = props.url
   let placeholder = props.placeholder
@@ -103,6 +103,12 @@ const newImage = async () => {
     url = props.image.url
     placeholder = props.image.placeholder
   }
+  if (last_image_url.value == url) {
+    // No need to reload same image
+    return
+  }
+  last_image_url.value = url
+  show_image.value = ''
   if (placeholder) {
     // Load transparent png
     src.value = placeholder
