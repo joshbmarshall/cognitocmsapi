@@ -12,6 +12,7 @@ class CognitoArticle extends CognitoBase {
   meta_description: string
   image: CognitoImage
   groups: CognitoGroup[]
+  reading_time: number
 
   baseurl() {
     return '/api/v1/cognito/article'
@@ -28,6 +29,7 @@ class CognitoArticle extends CognitoBase {
     this.meta_description = ''
     this.image = new CognitoImage()
     this.groups = []
+    this.reading_time = 0
     Object.assign(this, source)
   }
 }
