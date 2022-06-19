@@ -11,7 +11,7 @@
       <input v-model="signup.email" type="text" required placeholder="Email" :class="inputClass">
       <input v-if="!omitFirstName" v-model="signup.first_name" type="text" required placeholder="First Name" :class="inputClass">
       <input v-if="!omitLastName" v-model="signup.last_name" type="text" required placeholder="Last Name" :class="inputClass">
-      <input type="submit" value="Sign me up" :class="btnClass">
+      <input type="submit" :value="submitText" :class="btnClass">
     </form>
     <cgn-spinner v-if="is_loading" />
     <cgn-alert-success v-if="success">
@@ -34,21 +34,25 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  submitText: {
+    type: String,
+    default: 'Sign me up',
+  },
   successMessage: {
     type: String,
     default: 'Subscription successful',
   },
   formClass: {
     type: String,
-    default: 'grid grid-cols-1 lg:grid-cols-4 gap-2',
+    default: 'grid grid-cols-1 md:grid-cols-4 gap-2',
   },
   inputClass: {
     type: String,
-    default: 'appearance-none block rounded-md my-1 px-2 py-2 shadow-md dark:shadow-inner placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-slate-600',
+    default: 'appearance-none block rounded-md my-1 px-2 py-2 shadow-md dark:shadow-inner placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-slate-600 dark:text-gray-400',
   },
   btnClass: {
     type: String,
-    default: 'shadow py-2 my-1 px-2 rounded-lg text-center select-none bg-indigo-600 dark:bg-blue-600 cursor-pointer hover:bg-indigo-700 dark:hover:bg-blue-700 text-white',
+    default: 'shadow py-2 my-1 px-2 rounded-lg text-center select-none bg-indigo-600 dark:bg-blue-600 cursor-pointer hover:bg-indigo-700 dark:hover:bg-blue-700 sm:text-sm text-white',
   },
 })
 
