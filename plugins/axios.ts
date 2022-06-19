@@ -132,6 +132,7 @@ $axios.interceptors.response.use(
             url: error.response.config.url,
             headers: error.response.config.headers,
             data: error.response.config.data,
+            params: error.response.config.params,
           })
         } catch (e) {
           // catch any error while refreshing the token
