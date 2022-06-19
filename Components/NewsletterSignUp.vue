@@ -44,7 +44,7 @@ const props = defineProps({
   },
   formClass: {
     type: String,
-    default: 'grid grid-cols-1 md:grid-cols-4 gap-2',
+    default: 'grid md:grid-flow-col auto-cols-max gap-2',
   },
   inputClass: {
     type: String,
