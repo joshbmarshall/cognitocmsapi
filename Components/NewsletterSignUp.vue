@@ -8,7 +8,7 @@
     :fail="fail"
   >
     <form :class="formClass" @submit.prevent="submitted">
-      <input v-model="signup.email" type="text" required placeholder="Email" :class="inputClass">
+      <input v-model="signup.email" type="email" required placeholder="Email" :class="inputClass">
       <input v-if="!omitFirstName" v-model="signup.first_name" type="text" required placeholder="First Name" :class="inputClass">
       <input v-if="!omitLastName" v-model="signup.last_name" type="text" required placeholder="Last Name" :class="inputClass">
       <input type="submit" :value="submitText" :class="btnClass">
@@ -24,7 +24,8 @@
 </template>
 
 <script setup lang="ts">
-import { $axios } from '~cognito/plugins/axios'
+import { CognitoMailerlite } from '~cognito/models/Cognito/Mailerlite'
+
 const props = defineProps({
   omitFirstName: {
     type: Boolean,
@@ -70,17 +71,17 @@ const submitted = () => {
   is_loading.value = true
   success.value = false
   fail.value = false
-  $axios
-    .post('/api/v1/cognito/mailerlite/subscribe', signup.value)
-    .then((res: any) => {
+
+  new CognitoMailerlite().subscribe(signup.value)
+    .then((data: any) => {
       is_loading.value = false
-      if (res.data.success) {
+      if (data.success) {
         success.value = true
         message.value = props.successMessage
         return
       }
       fail.value = true
-      message.value = res.data.error
+      message.value = data.error
     })
 }
 </script>
