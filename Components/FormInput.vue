@@ -6,6 +6,18 @@
           <slot />
         </div>
       </div>
+      <div v-else-if="type === 'btnlink'">
+        <div :class="inputClass">
+          <router-link
+            ref="inputel"
+            type="submit"
+            class="appearance-none block px-2 w-full text-center"
+            :to="url"
+          >
+            <slot />
+          </router-link>
+        </div>
+      </div>
       <div v-else-if="type === 'submit'">
         <div :class="inputClass">
           <button
@@ -87,6 +99,9 @@ const props = defineProps({
     type: String,
   },
   placeholder: {
+    type: String,
+  },
+  url: {
     type: String,
   },
   modelValue: {

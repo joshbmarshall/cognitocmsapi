@@ -1,0 +1,39 @@
+<template>
+  <form @submit.prevent="go">
+    <div class="grid grid-cols-2 gap-2 mt-4">
+      <ss-input-text v-model="postcode" label="Postcode" required />
+      <ss-input-text v-model="country" label="Country" required />
+    </div>
+    <ss-input-button submit extra-classes="w-full">
+      Find Shipping Options
+    </ss-input-button>
+  </form>
+  <div
+    v-if="shippingQuotes.length > 0"
+    class="mt-4 w-full rounded-md overflow-y-auto shadow-lg max-h-96"
+  >
+    <div class="grid grid-cols-1 auto-rows-[1fr]">
+      <div
+        v-for="(shippingQuote, index) in shippingQuotes"
+        :key="index"
+        class="p-3 select-none"
+        :class="index % 2 ? 'bg-gray-100 dark:bg-gray-800' : 'bg-white dark:bg-gray-900'"
+      >
+        {{ shippingQuote.name }}
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { useCartStore } from '~cognito/stores/cart'
+const cartStore = useCartStore()
+
+const postcode = ref('')
+const country = ref('Australia')
+
+const shippingQuotes = ref([])
+const go = async () => {
+  shippingQuotes.value = await cartStore.getShippingQuotes(postcode.value, country.value)
+}
+</script>
