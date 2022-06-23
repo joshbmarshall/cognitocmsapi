@@ -18,6 +18,14 @@
           </button>
         </div>
       </div>
+      <div v-else-if="type === 'textarea'">
+        <textarea
+          ref="inputel"
+          :class="textareaClass"
+          :value="modelValue"
+          @input="handleInput"
+        />
+      </div>
       <div v-else>
         <div
           v-if="type === 'password'"
@@ -107,6 +115,9 @@ const props = defineProps({
     type: String,
   },
   inputClass: {
+    type: String,
+  },
+  textareaClass: {
     type: String,
   },
   wrapClass: {
