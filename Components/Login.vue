@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="userLogin">
     <ss-input-email v-model="username" label="Email address" required />
-    <ss-input-password v-model="password" label="Password" required type="password" suggest-password />
+    <ss-input-password v-model="password" label="Password" required type="password" />
     <div
       v-if="isWrongPassword"
       class="
@@ -49,7 +49,7 @@
       submit
       extra-classes="w-full"
     >
-      <span :class="isLoading ? 'pr-4' : ''">Sign in</span>
+      Sign in
       <cgn-spinner v-if="isLoading" />
     </ss-button>
     <div class="flex items-center justify-between">

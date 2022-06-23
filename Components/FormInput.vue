@@ -1,51 +1,58 @@
 <template>
-  <cgn-form-label>
+  <cgn-form-label :label="label">
     <div class="relative" :class="wrapClass">
-      <div
-        v-if="type === 'password'"
-        class="absolute inset-y-0 left-0 pl-1 flex items-center cursor-pointer"
-        :class="iconClass"
-        @click="toggleVisible()"
-      >
-        <i-heroicons-solid:eye v-if="showPassword" />
-        <i-heroicons-solid:eye-off v-else />
+      <div v-if="type === 'readonly'">
+        <div :class="inputClass">
+          <slot />
+        </div>
       </div>
-      <div
-        v-if="type === 'email'"
-        class="absolute inset-y-0 left-0 pl-1 flex items-center"
-        :class="iconClass"
-      >
-        <i-heroicons-solid:mail />
+      <div v-else>
+        <div
+          v-if="type === 'password'"
+          class="absolute inset-y-0 left-0 pl-1 flex items-center cursor-pointer"
+          :class="iconClass"
+          @click="toggleVisible()"
+        >
+          <i-heroicons-solid:eye v-if="showPassword" />
+          <i-heroicons-solid:eye-off v-else />
+        </div>
+        <div
+          v-if="type === 'email'"
+          class="absolute inset-y-0 left-0 pl-1 flex items-center"
+          :class="iconClass"
+        >
+          <i-heroicons-solid:mail />
+        </div>
+        <div
+          v-if="type === 'phone'"
+          class="absolute inset-y-0 left-0 pl-1 flex items-center"
+          :class="iconClass"
+        >
+          <i-heroicons-solid:phone />
+        </div>
+        <input
+          ref="inputel"
+          v-maska="maska"
+          :min="minAmount"
+          :max="maxAmount"
+          :value="modelValue"
+          :type="inputType"
+          :placeholder="placeholder"
+          :required="required"
+          class="appearance-none block px-2 py-2 w-full"
+          :class="inputClass + (hasIcon ? ' pl-7' : '')"
+          @input="handleInput"
+        >
       </div>
-      <div
-        v-if="type === 'phone'"
-        class="absolute inset-y-0 left-0 pl-1 flex items-center"
-        :class="iconClass"
+      <label
+        v-if="type === 'password' && suggestPassword"
+        class="pl-1 text-sm cursor-pointer"
+        @click="setPassword()"
       >
-        <i-heroicons-solid:phone />
-      </div>
-      <input
-        ref="inputel"
-        v-maska="maska"
-        :min="minAmount"
-        :max="maxAmount"
-        :value="modelValue"
-        :type="inputType"
-        :placeholder="placeholder"
-        :required="required"
-        class="appearance-none block px-2 py-2 w-full"
-        :class="inputClass + (hasIcon ? 'pl-7' : '')"
-        @input="handleInput"
-      >
+        <span class="text-xs font-medium">Suggested password:</span>
+        {{ generated_password }}
+      </label>
     </div>
-    <label
-      v-if="type === 'password' && suggestPassword"
-      class="pl-1 text-sm cursor-pointer"
-      @click="setPassword()"
-    >
-      <span class="text-xs font-medium">Suggested password:</span>
-      {{ generated_password }}
-    </label>
   </cgn-form-label>
 </template>
 
