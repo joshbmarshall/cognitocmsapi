@@ -6,6 +6,18 @@
           <slot />
         </div>
       </div>
+      <div v-else-if="type === 'submit'">
+        <div :class="inputClass">
+          <button
+            ref="inputel"
+            type="submit"
+            class="appearance-none block px-2 w-full"
+            @input="handleInput"
+          >
+            <slot />
+          </button>
+        </div>
+      </div>
       <div v-else>
         <div
           v-if="type === 'password'"
