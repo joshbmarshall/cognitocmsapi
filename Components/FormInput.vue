@@ -76,15 +76,15 @@
           @input="handleInput"
         >
       </div>
-      <label
-        v-if="type === 'password' && suggestPassword"
-        class="pl-1 text-sm cursor-pointer"
-        @click="setPassword()"
-      >
-        <span class="text-xs font-medium">Suggested password:</span>
-        {{ generated_password }}
-      </label>
     </div>
+    <label
+      v-if="type === 'password' && suggestPassword"
+      class="pl-1 text-sm cursor-pointer"
+      @click="setPassword()"
+    >
+      <span class="text-xs font-medium">Suggested password:</span>
+      {{ generated_password }}
+    </label>
   </cgn-form-label>
 </template>
 
