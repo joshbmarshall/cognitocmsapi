@@ -189,9 +189,21 @@ export const useCartStore = defineStore({
           id: shippingOption.shipping_type_id,
           name: `${shippingOption.shipping_name} $${shippingOption.amount.toFixed(2)}`,
           amount: shippingOption.amount,
+          is_pick_up: shippingOption.is_pick_up,
         })
       }
       return options
+    },
+    async requestShippingQuote(address: SellAddress) {
+      const result = await $axios
+        .post(
+          '/api/v1/sell/cart/requestShippingQuote',
+          {
+            session: this.sessionKey,
+            address,
+          },
+        )
+      return result.data
     },
     submitOrder(address: number, shipping_option_id: number, paymentGateway: string, note: string, promotion_code: string) {
       $axios
