@@ -29,8 +29,8 @@ class CognitoGroup {
     namespace: string
     model: string
     group: string
-    image_aspect: string
-    image_width: number
+    image_aspect?: string
+    image_width?: number
   }): Promise<CognitoGroup> {
     const res = await $axios.get(`/api/v1/cognito/group/details/${data.namespace}/${data.model}/${data.group}`, {
       params: data,
