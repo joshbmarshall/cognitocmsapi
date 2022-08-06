@@ -23,7 +23,7 @@ class CognitoFindOneParams {
 }
 
 class CognitoBase {
-  id?: number|string
+  id?: number | string
 
   /**
    * Override to get the actual url
@@ -31,6 +31,14 @@ class CognitoBase {
    */
   baseurl(): string {
     return '/api/v1/cognito/changeMe'
+  }
+
+  /**
+   * Override to get the actual model
+   * @returns string
+   */
+  modelname(): string {
+    return ''
   }
 
   async find_many(data: CognitoFindManyParams): Promise<{
@@ -93,6 +101,30 @@ class CognitoBase {
     error: string
   }> {
     const res = await $axios.post(`${this.baseurl()}/create`, this)
+    return res.data
+  }
+
+  async delete(): Promise<{
+    success: boolean
+    item: any
+    error: string
+  }> {
+    const res = await $axios.post(`${this.baseurl()}/delete`, this)
+    return res.data
+  }
+
+  async addPhoto(uuid: string, key: string, name: string): Promise<{
+    success: boolean
+    item: any
+    error: string
+  }> {
+    const res = await $axios.post(`${this.baseurl()}/addPhoto`, {
+      id: this.id,
+      model: this.modelname(),
+      uuid,
+      name,
+      key,
+    })
     return res.data
   }
 }
