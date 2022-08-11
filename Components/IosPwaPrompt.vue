@@ -102,6 +102,6 @@ const showPrompt = computed(() => {
   if (props.debug) {
     return true
   }
-  return deviceok
+  return deviceok.value
 })
 </script>
