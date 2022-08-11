@@ -1,5 +1,5 @@
 <template>
-  <div v-if="showPrompt" class="sticky bottom-0 p-2 bg-dark-300 border-l-2 border-brand-500">
+  <div v-if="showPrompt" class="sticky bottom-0 p-2 bg-gray-800">
     <div class="text-xl">
       {{ copyTitle }}
     </div>
