@@ -74,6 +74,7 @@
           class="appearance-none block px-2 py-2 w-full"
           :class="inputClass + (hasIcon ? ' pl-7' : '')"
           @input="handleInput"
+          @blur="blurInput"
         >
       </div>
     </div>
@@ -142,7 +143,7 @@ const props = defineProps({
     type: String,
   },
 })
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'blur'])
 const maska = ref(props.inputmask)
 if (props.inputmask === 'date') {
   maska.value = {
@@ -158,6 +159,7 @@ if (props.inputmask === 'date') {
 const inputel = ref(null)
 
 const handleInput = e => emit('update:modelValue', e.currentTarget.value)
+const blurInput = e => emit('blur')
 
 const showPassword = ref(false)
 const generated_password = ref('')
