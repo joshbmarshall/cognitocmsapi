@@ -25,6 +25,9 @@
         >
           Test code
         </ss-button>
+        <span>
+          Please check your email for the recovery code. Remember to check your spam folder.
+        </span>
         <!--
             <ss-button
               @click="sendResetCode"
@@ -48,6 +51,7 @@
     </form>
     <cgn-alert-danger v-if="message" class="mt-2">
       {{ message }}
+      <div>{{ props.userNotFoundInfo }}</div>
     </cgn-alert-danger>
   </div>
 </template>
@@ -55,6 +59,12 @@
 <script setup lang="ts">
 import { CognitoUser } from '~cognito/models/Cognito/User'
 import { login } from '~cognito/plugins/axios'
+
+const props = defineProps({
+  userNotFoundInfo: {
+    type: String,
+  },
+})
 
 const router = useRouter()
 

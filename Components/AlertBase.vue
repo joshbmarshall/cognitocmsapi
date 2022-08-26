@@ -12,7 +12,7 @@
       justify-between
     "
   >
-    <div class="flex items-center flex-row">
+    <div class="flex flex-row">
       <div
         v-if="props.type == 'danger'"
         class="mr-3 p-2 bg-red-400 rounded-l text-white"
@@ -25,7 +25,7 @@
       >
         <i-heroicons-solid:check />
       </div>
-      <p class="mr-2 my-0 text-sm dark:text-gray-300 text-gray-600 text-left">
+      <p class="mr-2 my-1 text-sm dark:text-gray-300 text-gray-600 text-left">
         <slot />
       </p>
     </div>
