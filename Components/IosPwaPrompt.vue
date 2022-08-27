@@ -108,7 +108,7 @@ const isiOS13AndUp = computed(() => {
 })
 
 const isStandalone = computed(() => {
-  return 'standalone' in window.navigator && window.navigator.standalone
+  return window.matchMedia('(display-mode: standalone)').matches
 })
 
 const deviceok = computed(() => {
