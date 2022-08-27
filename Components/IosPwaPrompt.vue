@@ -107,17 +107,26 @@ const isiOS13AndUp = computed(() => {
   return /OS (13|14)/.test(window.navigator.userAgent)
 })
 
+const isStandalone = computed(() => {
+  return 'standalone' in window.navigator && window.navigator.standalone
+})
+
 const deviceok = computed(() => {
+  if (isStandalone.value) {
+    return false
+  }
   const isiOS = /iphone|ipad|ipod/.test(
     window.navigator.userAgent.toLowerCase(),
   )
   const isiPadOS = navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1
-  const isStandalone = 'standalone' in window.navigator && window.navigator.standalone
 
-  return (isiOS || isiPadOS) && !isStandalone
+  return (isiOS || isiPadOS)
 })
 
 const deviceandroid = computed(() => {
+  if (isStandalone.value) {
+    return false
+  }
   const ua = navigator.userAgent.toLowerCase()
   return ua.includes('android')
 })
