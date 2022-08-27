@@ -1,5 +1,17 @@
 <template>
-  <div v-if="showPrompt" class="sticky bottom-0 p-2 bg-gray-800">
+  <div v-if="showAndroidPrompt" class="sticky bottom-0 p-2 bg-gray-800">
+    <div class="text-xl">
+      {{ copyTitle }}
+    </div>
+    <div class="text-lg pb-2 text-gray-400">
+      {{ copyBody }}
+    </div>
+    <div>
+      Using the Google browser, select the “Add to Home screen” button under the browser menu ( ⋮ ) in the upper right corner.
+    </div>
+  </div>
+
+  <div v-if="showIOSPrompt" class="sticky bottom-0 p-2 bg-gray-800">
     <div class="text-xl">
       {{ copyTitle }}
     </div>
@@ -65,7 +77,11 @@
 
 <script setup lang="ts">
 const props = defineProps({
-  debug: {
+  debugIOS: {
+    type: Boolean,
+    default: false,
+  },
+  debugAndroid: {
     type: Boolean,
     default: false,
   },
@@ -101,10 +117,22 @@ const deviceok = computed(() => {
   return (isiOS || isiPadOS) && !isStandalone
 })
 
-const showPrompt = computed(() => {
-  if (props.debug) {
+const deviceandroid = computed(() => {
+  const ua = navigator.userAgent.toLowerCase()
+  return ua.includes('android')
+})
+
+const showIOSPrompt = computed(() => {
+  if (props.debugIOS) {
     return true
   }
   return deviceok.value
+})
+
+const showAndroidPrompt = computed(() => {
+  if (props.debugAndroid) {
+    return true
+  }
+  return deviceandroid.value
 })
 </script>
