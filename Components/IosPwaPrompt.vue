@@ -7,7 +7,7 @@
       {{ copyBody }}
     </div>
     <div>
-      Using the Google browser, select the “Add to Home screen” button under the browser menu ( ⋮ ) in the upper right corner.
+      Select the “Install app” button under the browser menu ( ⋮ ) in the upper right corner.
     </div>
   </div>
 
@@ -87,7 +87,7 @@ const props = defineProps({
   },
   copyTitle: {
     type: String,
-    default: 'Add to Home Screen',
+    default: 'Install',
   },
   copyBody: {
     type: String,
