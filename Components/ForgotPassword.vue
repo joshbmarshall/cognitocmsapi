@@ -17,24 +17,18 @@
     </form>
     <form v-else-if="success" class="space-y-6" @submit.prevent="testResetCode">
       <ss-input v-model="otp" label="OTP code" required />
+      <ss-input-password v-model="newpassword" label="Password" type="password" suggest-password required />
 
       <div>
         <ss-button
           type="submit"
           extra-classes="w-full"
         >
-          Test code
+          Change Password
         </ss-button>
         <span>
           Please check your email for the recovery code. Remember to check your spam folder.
         </span>
-        <!--
-            <ss-button
-              @click="sendResetCode"
-            >
-              Resend code
-            </ss-button>
-            -->
       </div>
     </form>
     <form v-else class="space-y-6" @submit.prevent="sendResetCode">
@@ -70,6 +64,7 @@ const router = useRouter()
 
 const username = ref('')
 const password = ref('')
+const newpassword = ref('')
 const otp = ref('')
 const message = ref('')
 const success = ref(false)
@@ -102,10 +97,14 @@ const testResetCode = () => {
   new CognitoUser().checkRecoveryCode({
     email: username.value,
     code: otp.value,
+    newpassword: newpassword.value,
   })
     .then((data) => {
       password.value = data.newPassword
       message.value = ''
+      if (newpassword.value) {
+        login(username.value, newpassword.value, router)
+      }
     })
     .catch(() => {
       message.value = 'OTP Incorrect'

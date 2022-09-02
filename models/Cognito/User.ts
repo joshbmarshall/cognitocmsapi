@@ -57,14 +57,16 @@ class CognitoUser {
   async checkRecoveryCode(data: {
     email: string
     code: string
+    newpassword?: string
   }): Promise<{
-      newPassword: string
-      message: string
-    }> {
+    newPassword: string
+    message: string
+  }> {
     const res = await $axios.get('/api/v1/cognito/user/recoverPasswordCheck', {
       params: {
         email: data.email,
         code: data.code,
+        newpassword: data.newpassword,
       },
     })
     return res.data
