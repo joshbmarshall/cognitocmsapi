@@ -16,7 +16,10 @@
       </div>
     </form>
     <form v-else-if="success" class="space-y-6" @submit.prevent="testResetCode">
-      <ss-input v-model="otp" label="OTP code" required />
+      <ss-input v-model="otp" label="Password recovery code" required />
+      <span>
+        Please check your email for the recovery code. Remember to check your spam folder.
+      </span>
       <ss-input-password v-model="newpassword" label="Password" type="password" suggest-password required />
 
       <div>
@@ -26,9 +29,6 @@
         >
           Change Password
         </ss-button>
-        <span>
-          Please check your email for the recovery code. Remember to check your spam folder.
-        </span>
       </div>
     </form>
     <form v-else class="space-y-6" @submit.prevent="sendResetCode">
@@ -39,7 +39,7 @@
           type="submit"
           extra-classes="w-full"
         >
-          Email reset code
+          Email password recovery code
         </ss-button>
       </div>
     </form>
