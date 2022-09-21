@@ -22,6 +22,12 @@ const login = async (username: string, password: string, router: Router) => {
   return $axios.login(username, password, router)
 }
 
+const relogin = (loginurl: string, redirect_after_login: string, router: Router) => {
+  const userStore = useUserStore()
+  userStore.redirect_after_login = redirect_after_login
+  router.push(loginurl)
+}
+
 const getUser = () => {
   return $axios.getUser()
 }
@@ -34,6 +40,7 @@ export {
   $axios,
   login,
   logout,
+  relogin,
   isLoggedIn,
   setRedirectAfterLogin,
   getUser,
