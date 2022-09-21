@@ -37,8 +37,11 @@ class CognitoUser {
     return res.data
   }
 
-  async getLoggedInUser(): Promise<CognitoUser> {
-    const res = await $axios.get('/api/v1/cognito/user/authUser')
+  async getLoggedInUser(api?): Promise<CognitoUser> {
+    if (!api) {
+      api = $axios
+    }
+    const res = await api.get('/api/v1/cognito/user/authUser')
     return res.data.user
   }
 
