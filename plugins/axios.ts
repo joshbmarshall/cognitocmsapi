@@ -74,6 +74,12 @@ const login = async (username: string, password: string, router: Router) => {
   return true
 }
 
+const relogin = (loginurl: string, redirect_after_login: string, router: Router) => {
+  const userStore = useUserStore()
+  userStore.redirect_after_login = redirect_after_login
+  router.push(loginurl)
+}
+
 $axios.interceptors.request.use(
   (request) => {
     const access_token = useUserStore().access_token
@@ -164,6 +170,7 @@ export {
   $axios,
   login,
   logout,
+  relogin,
   isLoggedIn,
   setRedirectAfterLogin,
   getUser,
