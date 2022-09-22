@@ -234,6 +234,10 @@ class CgnAxios {
   get(url: string, config?: AxiosRequestConfig<any> | undefined) {
     return this.axios.get(url, config)
   }
+
+  post(url: string, data?: any, config?: AxiosRequestConfig<any> | undefined) {
+    return this.axios.post(url, data, config)
+  }
 }
 
 export { CgnAxios }
