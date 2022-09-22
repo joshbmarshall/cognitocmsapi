@@ -8,6 +8,7 @@ export const useUserStore = defineStore({
       access_token: '',
       refresh_token: '',
       redirect_after_login: '/',
+      oauth2_state: '',
       user: {},
     }
   },
