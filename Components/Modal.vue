@@ -7,15 +7,15 @@
     <div class="place-content-center min-h-screen pt-4 px-4 pb-20 text-center block sm:p-0">
       <div class="fixed inset-0 bg-gray-500 dark:bg-gray-700 dark:bg-opacity-75 bg-opacity-75 transition-opacity" @click="close()" />
       <div
-        class="inline-block bg-white dark:bg-slate-700 rounded-lg overflow-hidden shadow-xl transform w-full my-8 max-w-lg"
+        class="inline-block bg-white dark:bg-gray-700 rounded-lg overflow-hidden shadow-xl transform w-full my-8 max-w-lg"
       >
         <div
-          class="absolute top-0 right-0 w-10 h-10 select-none hover:bg-gray-100 dark:hover:bg-slate-600 text-lg p-2.5"
+          class="absolute top-0 right-0 w-10 h-10 select-none hover:bg-gray-100 dark:hover:bg-gray-600 text-lg p-2.5"
           @click="close()"
         >
           <i-heroicons-solid:x />
         </div>
-        <div class="bg-white dark:bg-slate-700 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+        <div class="px-4 py-5 sm:p-6">
           <div class="flex items-start">
             <div>
               <slot name="icon" />
@@ -24,8 +24,11 @@
               <slot name="content" />
             </div>
           </div>
+          <div class="text-left">
+            <slot name="clean-content" />
+          </div>
         </div>
-        <div class="bg-gray-50 dark:bg-slate-700 sm:flex sm:flex-row-reverse">
+        <div class="bg-gray-50 dark:bg-gray-700 sm:flex sm:flex-row-reverse">
           <slot name="button-footer" />
         </div>
       </div>
