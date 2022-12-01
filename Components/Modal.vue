@@ -7,7 +7,7 @@
     <div class="place-content-center min-h-screen pt-4 px-4 pb-20 text-center block sm:p-0">
       <div class="fixed inset-0 bg-gray-500 dark:bg-gray-700 dark:bg-opacity-75 bg-opacity-75 transition-opacity" @click="close()" />
       <div
-        class="inline-block bg-white dark:bg-gray-700 rounded-lg overflow-hidden shadow-xl transform w-full my-8 max-w-lg"
+        class="inline-block bg-white dark:bg-gray-700 rounded-lg overflow-hidden shadow-xl transform w-full my-8 max-w-4xl"
       >
         <div
           class="absolute top-0 right-0 w-10 h-10 select-none hover:bg-gray-100 dark:hover:bg-gray-600 text-lg p-2.5"
