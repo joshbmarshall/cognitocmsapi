@@ -23,6 +23,15 @@ const props = defineProps({
   imageClass: {
     type: String,
   },
+  imageHash: {
+    type: String,
+  },
+  imageAspect: {
+    type: String,
+  },
+  imageWidth: {
+    type: String,
+  },
 })
 
 const lazyelement = ref()
@@ -102,6 +111,18 @@ const newImage = async () => {
     webp = props.image.webp_url
     url = props.image.url
     placeholder = props.image.placeholder
+  }
+  if (props.imageHash && props.imageAspect && props.imageWidth) {
+    await new CognitoImage().getByHash({
+      hash: props.imageHash,
+      aspect: props.imageAspect,
+      width: props.imageWidth,
+    })
+      .then((data) => {
+        webp = data.webp_url
+        url = data.url
+        placeholder = data.placeholder
+      })
   }
   if (last_image_url.value == url) {
     // No need to reload same image
