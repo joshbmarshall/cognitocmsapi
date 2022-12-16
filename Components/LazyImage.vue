@@ -115,8 +115,8 @@ const newImage = async () => {
   if (props.imageHash && props.imageAspect && props.imageWidth) {
     await new CognitoImage().getByHash({
       hash: props.imageHash,
-      aspect: props.imageAspect,
-      width: props.imageWidth,
+      image_aspect: props.imageAspect,
+      image_width: props.imageWidth,
     })
       .then((data) => {
         webp = data.webp_url
