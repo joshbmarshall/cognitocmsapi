@@ -20,6 +20,12 @@
         <i-heroicons-solid:exclamation />
       </div>
       <div
+        v-if="props.type == 'warning'"
+        class="mr-3 p-2 bg-amber-400 rounded-l text-white"
+      >
+        <i-heroicons-solid:information-circle />
+      </div>
+      <div
         v-if="props.type == 'success'"
         class="mr-3 p-2 bg-green-400 rounded-l text-white"
       >
