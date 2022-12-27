@@ -90,7 +90,7 @@
 </template>
 
 <script setup>
-import { maska as vMaska } from 'maska'
+import { vMaska } from 'maska'
 const props = defineProps({
   suggestPassword: {
     type: Boolean,
