@@ -172,5 +172,23 @@ onUnmounted(() => {
     clearInterval(lazytimer)
   }
 })
+onServerPrefetch(async () => {
+  if (props.image) {
+    src.value = props.image.url
+  }
+  if (props.url) {
+    src.value = props.url
+  }
+  if (props.imageHash && props.imageAspect && props.imageWidth) {
+    await new CognitoImage().getByHash({
+      hash: props.imageHash,
+      image_aspect: props.imageAspect,
+      image_width: props.imageWidth,
+    })
+      .then((data) => {
+        src.value = data.url
+      })
+  }
+})
 </script>
 

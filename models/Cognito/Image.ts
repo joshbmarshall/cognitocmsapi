@@ -20,8 +20,8 @@ class CognitoImage extends CognitoBase {
 
   async getByHash(data: {
     hash: string
-    aspect: string
-    width: string
+    image_aspect: string
+    image_width: string
   }): Promise<{
     webp_url: string
     url: string
