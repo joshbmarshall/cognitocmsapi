@@ -17,7 +17,6 @@ const pdfSrc = ref<VuePdfPropsType['src']>('')
 const numOfPages = ref(0)
 
 const doload = () => {
-  console.log('doload')
   if (!props.pdf) {
     return
   }
