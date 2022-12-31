@@ -1,10 +1,10 @@
 import type { Router } from 'vue-router'
-import { sitename } from '~/config'
+import { isEcommerce, sitename } from '~/config'
 import { useUserStore } from '~cognito/stores/user'
 
 import { CgnAxios } from '~cognito/plugins/cgnAxios'
 
-const $axios = new CgnAxios({})
+const $axios = new CgnAxios({ useCart: isEcommerce })
 
 const setRedirectAfterLogin = (path: string) => {
   useUserStore().setRedirectAfterLogin(path)
