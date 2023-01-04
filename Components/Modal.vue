@@ -39,7 +39,6 @@
 <script setup lang="ts">
 const props = defineProps({
   modelValue: {
-    type: Boolean,
   },
   timeout: {
     type: Number,
