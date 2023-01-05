@@ -1,5 +1,5 @@
 <template>
-  <cgn-form-label :label="label">
+  <cgn-form-label :label="label" :required="required">
     <div class="relative" :class="wrapClass">
       <div v-if="type === 'readonly'">
         <div :class="inputClass">
