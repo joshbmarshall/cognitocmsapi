@@ -20,8 +20,10 @@ class CognitoGroup {
   async find_many(data: {
     namespace: string
     model: string
+    image_aspect?: string
+    image_width?: number
   }): Promise<CognitoGroup[]> {
-    const res = await $axios.get(`/api/v1/cognito/group/${data.namespace}/${data.model}`)
+    const res = await $axios.get(`/api/v1/cognito/group/${data.namespace}/${data.model}`, { params: data })
     return res.data
   }
 
