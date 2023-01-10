@@ -129,7 +129,7 @@ const newImage = async () => {
   }
   if (props.imageId && props.imageAspect && props.imageWidth) {
     await new CognitoImage().find_one({
-      id: props.imageId,
+      url: props.imageId,
       image_aspect: props.imageAspect,
       image_width: props.imageWidth,
     })
