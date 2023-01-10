@@ -4,7 +4,7 @@ class CognitoPageWidget {
   outer: string
   inner: string
   type: string
-  templatevars: {
+  templatevar: {
     block_class: string
     visible: boolean
     hidden_before: string
@@ -16,7 +16,7 @@ class CognitoPageWidget {
     this.outer = ''
     this.inner = ''
     this.type = ''
-    this.templatevars = {
+    this.templatevar = {
       block_class: '',
       anchor_name: '',
       visible: false,
