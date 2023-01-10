@@ -26,6 +26,9 @@ const props = defineProps({
   imageHash: {
     type: String,
   },
+  imageId: {
+    type: String,
+  },
   imageAspect: {
     type: String,
   },
@@ -115,6 +118,18 @@ const newImage = async () => {
   if (props.imageHash && props.imageAspect && props.imageWidth) {
     await new CognitoImage().getByHash({
       hash: props.imageHash,
+      image_aspect: props.imageAspect,
+      image_width: props.imageWidth,
+    })
+      .then((data) => {
+        webp = data.webp_url
+        url = data.url
+        placeholder = data.placeholder
+      })
+  }
+  if (props.imageId && props.imageAspect && props.imageWidth) {
+    await new CognitoImage().find_one({
+      id: props.imageId,
       image_aspect: props.imageAspect,
       image_width: props.imageWidth,
     })
