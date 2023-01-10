@@ -35,6 +35,10 @@ const props = defineProps({
   imageWidth: {
     type: String,
   },
+  forceSize: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const lazyelement = ref()
@@ -158,6 +162,9 @@ const newImage = async () => {
     await new Promise((resolve) => {
       lazyelement.value.onload = resolve
     })
+  }
+  if (props.forceSize) {
+    return
   }
   testWebP((canSupportWebp: boolean) => {
     use_webp = canSupportWebp
