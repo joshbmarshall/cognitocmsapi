@@ -63,6 +63,7 @@ class CognitoPageRow {
 class CognitoPage extends CognitoBase {
   content: string
   name: string
+  slug: string
   title: string
   meta_description: string
   rows: CognitoPageRow[]
@@ -75,10 +76,21 @@ class CognitoPage extends CognitoBase {
     super()
     this.content = ''
     this.name = ''
+    this.slug = ''
     this.title = ''
     this.meta_description = ''
     this.rows = []
     Object.assign(this, source)
+  }
+
+  async loadPage(url: string, pagebuilder: boolean) {
+    const data = {
+      url,
+    }
+    if (pagebuilder) {
+      data.pb = 1
+    }
+    return await new CognitoPage().find_one(data)
   }
 }
 
