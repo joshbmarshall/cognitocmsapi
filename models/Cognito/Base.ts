@@ -53,7 +53,9 @@ class CognitoBase {
   }
 
   async find_one(data: CognitoFindOneParams): Promise<any> {
-    const res = await $axios.get(`${this.baseurl()}/${data.url}`, {
+    const url = data.url
+    delete data.url
+    const res = await $axios.get(`${this.baseurl()}/${url}`, {
       params: data,
     })
     return res.data
