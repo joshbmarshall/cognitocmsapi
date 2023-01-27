@@ -1,6 +1,6 @@
 <template>
   <div :style="parallaxStyle" class="bg-fixed bg-center bg-cover">
-    <div class="opacity-40 bg-slate-900 absolute w-full h-full z-0" />
+    <div class="opacity-40 bg-slate-900 absolute w-full h-[500px] z-0" />
     <div class="relative z-1" :class="props.class">
       <slot />
     </div>
