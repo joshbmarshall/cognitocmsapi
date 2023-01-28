@@ -1,5 +1,5 @@
 <template>
-  <div class="prose" v-html="templatevar.html" />
+  <div class="prose prose-brand dark:prose-dark max-w-none" v-html="templatevar.html" />
 </template>
 
 <script lang="ts">
