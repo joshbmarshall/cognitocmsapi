@@ -57,4 +57,7 @@ const loadImage = async () => {
 onMounted(() => {
   loadImage()
 })
+onServerPrefetch(async () => {
+  await loadImage()
+})
 </script>
