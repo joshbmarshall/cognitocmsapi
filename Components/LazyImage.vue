@@ -51,6 +51,9 @@ let lazytimer = 0
 
 const isInViewport = (el: HTMLElement) => {
   const rect = el.getBoundingClientRect()
+  if (rect.width == 0) {
+    return false
+  }
   let screenheight = window.innerHeight || document.documentElement.clientHeight
   const screenwidth = window.innerWidth || document.documentElement.clientWidth
   // Increase height to pre-load on scroll
