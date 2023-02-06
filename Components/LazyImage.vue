@@ -188,6 +188,14 @@ watch(() => props.image, () => {
   newImage()
 })
 
+watch(() => props.imageId, () => {
+  newImage()
+})
+
+watch(() => props.imageHash, () => {
+  newImage()
+})
+
 onMounted(() => {
   newImage()
 })
