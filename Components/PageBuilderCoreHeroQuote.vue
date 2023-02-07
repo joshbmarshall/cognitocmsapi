@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-2 text-white mx-auto lg:max-w-none lg:row-start-1 lg:col-start-1">
     <div :class="outerClass" class="relative">
-      <div class="absolute inset-0 bg-center bg-cover" :class="imageClass" :style="parallaxStyle" />
+      <div class="absolute inset-0 bg-center bg-cover" :class="imageClass" :style="imageStyle" />
       <div class="relative p-8 text-center flex flex-col justify-center items-center h-[500px]" :class="textClass">
         <h1 class="text-2xl font-semibold">
           {{ templatevar.heading }}
@@ -80,11 +80,11 @@ const imageClass = computed(() => {
   }
   return string
 })
-
-const url = ref('')
-const parallaxStyle = computed(() => {
+const imageStyle = computed(() => {
   return { 'background-image': `url(${url.value})` }
 })
+
+const url = ref('')
 const loadImage = async () => {
   if (props.templatevar.background_image) {
     await new CognitoImage().find_one({
