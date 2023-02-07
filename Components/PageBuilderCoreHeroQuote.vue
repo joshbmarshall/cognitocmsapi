@@ -3,10 +3,10 @@
     <div :class="outerClass" class="relative">
       <div class="absolute inset-0 bg-center bg-cover" :class="imageClass" :style="imageStyle" />
       <div class="relative p-8 text-center flex flex-col justify-center items-center h-[500px]" :class="textClass">
-        <h1 class="text-2xl font-semibold">
+        <h1 class="text-2xl font-semibold font-display">
           {{ templatevar.heading }}
         </h1>
-        <h2 v-if="templatevar.subheading" class="text-xl font-semibold">
+        <h2 v-if="templatevar.subheading" class="text-xl font-semibold font-display">
           {{ templatevar.subheading }}
         </h2>
         <div v-if="templatevar.html" class="prose-invert max-w-none pb-2" v-html="templatevar.html" />
