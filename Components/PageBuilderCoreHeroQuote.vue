@@ -3,7 +3,7 @@
     <div :class="outerClass" class="relative">
       <div class="absolute inset-0 bg-center bg-cover" :class="imageClass" :style="imageStyle" />
       <div class="relative p-8 text-center flex flex-col justify-center items-center h-[500px]" :class="textClass">
-        <h1 class="text-2xl font-semibold font-display">
+        <h1 class="text-2xl md:text-4xl font-semibold font-display pb-2">
           {{ templatevar.heading }}
         </h1>
         <h2 v-if="templatevar.subheading" class="text-xl font-semibold font-display">
