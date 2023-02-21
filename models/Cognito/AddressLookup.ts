@@ -1,11 +1,6 @@
 import { $axios } from '~cognito/plugins/axios'
 
 class CognitoAddressLookup {
-  first_name: string
-  last_name: string
-  email: string
-  phone: string
-  company: string
   line1: string
   line2: string
   city: string
@@ -14,11 +9,6 @@ class CognitoAddressLookup {
   country: string
 
   constructor(source?: Partial<CognitoAddressLookup>) {
-    this.first_name = ''
-    this.last_name = ''
-    this.email = ''
-    this.phone = ''
-    this.company = ''
     this.line1 = ''
     this.line2 = ''
     this.city = ''
