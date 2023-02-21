@@ -23,12 +23,16 @@ class CognitoUser {
     Object.assign(this, source)
   }
 
+  baseurl(): string {
+    return '/api/v1/cognito/user'
+  }
+
   async find_one(data: {
     image_aspect?: string
     image_width: number
     url: string
   }): Promise<CognitoUser> {
-    const res = await $axios.get(`/api/v1/cognito/user/${data.url}`, {
+    const res = await $axios.get(`${this.baseurl()}/${data.url}`, {
       params: {
         image_aspect: data.image_aspect,
         image_width: data.image_width,
@@ -41,7 +45,7 @@ class CognitoUser {
     if (!api) {
       api = $axios
     }
-    const res = await api.get('/api/v1/cognito/user/authUser')
+    const res = await api.get(`${this.baseurl()}/authUser`)
     return res.data.user
   }
 
@@ -49,7 +53,7 @@ class CognitoUser {
     success: boolean
     message: string
   }> {
-    const res = await $axios.get('/api/v1/cognito/user/recoverPassword', {
+    const res = await $axios.get(`${this.baseurl()}/recoverPassword`, {
       params: {
         email,
       },
@@ -65,7 +69,7 @@ class CognitoUser {
     newPassword: string
     message: string
   }> {
-    const res = await $axios.get('/api/v1/cognito/user/recoverPasswordCheck', {
+    const res = await $axios.get(`${this.baseurl()}/recoverPasswordCheck`, {
       params: {
         email: data.email,
         code: data.code,
@@ -81,8 +85,22 @@ class CognitoUser {
    * @returns number the current balance for that supplier
    */
   async creditBalance(supplier: number): Promise<number> {
-    const res = await $axios.get(`/api/v1/cognito/user/creditBalance?supplier=${supplier}`)
+    const res = await $axios.get(`${this.baseurl()}/creditBalance?supplier=${supplier}`)
     return res.data.balance
+  }
+
+  async getProfile(): Promise<CognitoUser> {
+    const res = await $axios.get(`${this.baseurl()}/myAccount`)
+    return res.data
+  }
+
+  async uploadImage(image: string): Promise<{
+    success: boolean
+    error: string
+  }> {
+    const res = await $axios.post(`${this.baseurl()}/uploadImage`, { image })
+    $axios.getUser()
+    return res.data
   }
 }
 
