@@ -46,7 +46,7 @@ const outerClass = computed(() => {
     return 'bg-black'
   }
   if (props.templatevar.overlay_colour == 'bnd') {
-    return 'bg-brand'
+    return 'bg-brand-500'
   }
   if (props.templatevar.overlay_colour == 'suc') {
     return 'bg-success'
