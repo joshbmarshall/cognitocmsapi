@@ -23,6 +23,9 @@
       </div>
     </div>
   </div>
+  <div v-if="noShippingQuotes">
+    No Shipping options were found
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -32,8 +35,11 @@ const cartStore = useCartStore()
 const postcode = ref('')
 const country = ref('Australia')
 
-const shippingQuotes = ref([])
+const shippingQuotes = ref<any[]>([])
+const noShippingQuotes = ref(false)
+
 const go = async () => {
   shippingQuotes.value = await cartStore.getShippingQuotes(postcode.value, country.value)
+  noShippingQuotes.value = shippingQuotes.value.length == 0
 }
 </script>
