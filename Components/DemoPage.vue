@@ -21,6 +21,8 @@
         label="Address lookup"></cgn-address-lookup>
       <span>Address lookup address: {{ address_lookup_modelvalue }}</span>
 
+      <cgn-form-dropdown :options="dropdown_options" label="form dropdown"></cgn-form-dropdown>
+
       <cgn-upload-image label="upload an image" required></cgn-upload-image>
 
       <cgn-button url="/" disabled colorBrand>disabled button</cgn-button>
@@ -103,6 +105,13 @@ import { CognitoAddressLookup } from '~cognito/models/Cognito/AddressLookup';
 const address_lookup_modelvalue = ref(new CognitoAddressLookup())
 const here_api_key = ref('GOBLSSIkkrgjhMahFmXPramj-95rVXZYpj-0pj7DsFU')
 
+const dropdown_options = ref([
+  { name: 'Cheese', id: 1 },
+  { name: 'Cake', id: 1 },
+  { name: 'Icecream', id: 1 },
+  { name: 'Chocolate', id: 1 },
+])
+
 const modal_open = ref(false)
 const toast_fail_open = ref(false)
 const toast_success_open = ref(false)
@@ -112,6 +121,4 @@ const breadcrumbs_dummydata = ref([
   { name: 'Food', url: '/articles/food' },
   { name: 'Icecream is bad', url: '/article/icecream-is-bad' },
 ])
-
-// TODO add other form options, like dropdowns
 </script>
