@@ -23,10 +23,10 @@
 
       <cgn-upload-image label="upload an image" required></cgn-upload-image>
 
-      <cgn-button url="/" disabled>disabled button</cgn-button>
-      <cgn-button url="/">button with url</cgn-button>
-      <cgn-button url="/" newtab>button with url, opens in new tab</cgn-button>
-      <cgn-button @click="modal_open = true" class="bg-yellow-500 hover:bg-yellow-600 dark:hover:bg-yellow-400">custom coloured modal button</cgn-button>
+      <cgn-button url="/" disabled colorBrand>disabled button</cgn-button>
+      <cgn-button url="/" colorBrand>button with url</cgn-button>
+      <cgn-button url="/" newtab colorBrand>button with url, opens in new tab</cgn-button>
+      <cgn-button @click="modal_open = true" class="bg-yellow-400 hover:bg-yellow-500 dark:hover:bg-yellow-300 text-yellow-900">custom coloured modal button</cgn-button>
       <cgn-button @click="toast_fail_open = true" colorPrimary>Primary toast fail button</cgn-button>
       <cgn-button @click="toast_success_open = true" fullwidth colorSecondary>fullwidth secondary toast success button</cgn-button>
     </div>
@@ -86,7 +86,7 @@
             <cgn-button colorWarning>Button Warning</cgn-button>
             <cgn-button colorDanger>Button Danger</cgn-button>
             <cgn-button colorSuccess>Button Success</cgn-button>
-            <cgn-button>Button Brand</cgn-button>
+            <cgn-button colorBrand>Button Brand</cgn-button>
           </div>
         </template>
       </cgn-modal>

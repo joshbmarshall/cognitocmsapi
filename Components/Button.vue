@@ -3,7 +3,7 @@
     :class="buttonClass">
     <slot />
   </router-link>
-  <button v-else :type="submit ? 'submit' : undefined" :class="buttonClass" :disabled="disabled">
+<button v-else :type="submit ? 'submit' : undefined" :class="buttonClass" :disabled="disabled" class="">
     <slot />
   </button>
 </template>
@@ -35,7 +35,7 @@ const props = defineProps({
   },
   colorBrand: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   colorDanger: {
     type: Boolean,
@@ -71,25 +71,25 @@ const buttonClass = computed(() => {
     classes += ' cursor-not-allowed opacity-50'
   }
   if (props.colorDanger) {
-    classes += ` bg-danger-500 hover:bg-danger-600 dark:hover:bg-danger-400`
+    classes += ` bg-danger-500 hover:bg-danger-600 text-on-danger dark:hover:bg-danger-400`
   }
   if (props.colorWarning) {
-    classes += ` bg-warning-500 hover:bg-warning-600 dark:hover:bg-warning-400`
+    classes += ` bg-warning-500 hover:bg-warning-600 text-on-warning dark:hover:bg-warning-400`
   }
   if (props.colorSuccess) {
-    classes += ` bg-success-500 hover:bg-success-600 dark:hover:bg-success-400`
+    classes += ` bg-success-500 hover:bg-success-600 text-on-success dark:hover:bg-success-400`
   }
   if (props.colorInfo) {
-    classes += ` bg-info-500 hover:bg-info-600 dark:hover:bg-info-400`
+    classes += ` bg-info-500 hover:bg-info-600 text-on-info dark:hover:bg-info-400`
   }
   if (props.colorPrimary) {
-    classes += ` bg-primary-500 hover:bg-primary-600 dark:hover:bg-primary-400`
+    classes += ` bg-primary-500 hover:bg-primary-600 text-on-primary dark:hover:bg-primary-400`
   }
   if (props.colorSecondary) {
-    classes += ` bg-secondary-500 hover:bg-secondary-600 dark:hover:bg-secondary-400`
+    classes += ` bg-secondary-500 hover:bg-secondary-600 text-on-secondary dark:hover:bg-secondary-400`
   }
   if (props.colorBrand) {
-    classes += ` bg-brand-500 hover:bg-brand-600 dark:hover:bg-brand-400`
+    classes += ` bg-brand-500 hover:bg-brand-600 text-on-brand dark:hover:bg-brand-400`
   }
   return classes
 })
