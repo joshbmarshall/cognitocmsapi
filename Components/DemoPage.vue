@@ -23,11 +23,12 @@
 
       <cgn-upload-image label="upload an image" required></cgn-upload-image>
 
-      <cgn-button url="/">testbutton with url</cgn-button>
-      <cgn-button url="/">testbutton with url, opens in new tab</cgn-button>
-      <cgn-button @click="modal_open = true">coloured button, also opens modal</cgn-button>
-      <cgn-button @click="toast_fail_open = true">button, also opens toast fail</cgn-button>
-      <cgn-button @click="toast_success_open = true">fullwidth button, also opens toast success</cgn-button>
+      <cgn-button url="/" disabled>disabled button</cgn-button>
+      <cgn-button url="/">button with url</cgn-button>
+      <cgn-button url="/" newtab>button with url, opens in new tab</cgn-button>
+      <cgn-button @click="modal_open = true" class="bg-yellow-500 hover:bg-yellow-600 dark:hover:bg-yellow-400">custom coloured modal button</cgn-button>
+      <cgn-button @click="toast_fail_open = true" colorPrimary>Primary toast fail button</cgn-button>
+      <cgn-button @click="toast_success_open = true" fullwidth colorSecondary>fullwidth secondary toast success button</cgn-button>
     </div>
 
     <div> <!-- NAVIGATION, for getting around the site -->
@@ -81,10 +82,10 @@
         </template>
         <template #button-footer>
           <div class="px-2 flex flex-col md:flex-row gap-2 justify-between w-full">
-            <cgn-button>Button Info</cgn-button>
-            <cgn-button>Button Warning</cgn-button>
-            <cgn-button>Button Danger</cgn-button>
-            <cgn-button>Button Success</cgn-button>
+            <cgn-button colorInfo>Button Info</cgn-button>
+            <cgn-button colorWarning>Button Warning</cgn-button>
+            <cgn-button colorDanger>Button Danger</cgn-button>
+            <cgn-button colorSuccess>Button Success</cgn-button>
             <cgn-button>Button Brand</cgn-button>
           </div>
         </template>
@@ -112,6 +113,5 @@ const breadcrumbs_dummydata = ref([
   { name: 'Icecream is bad', url: '/article/icecream-is-bad' },
 ])
 
-// TODO rework cgn-button to be amazing
 // TODO add other form options, like dropdowns
 </script>
