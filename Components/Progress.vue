@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps({
+defineProps({
   progress: {
     type: Number,
     default: 0,

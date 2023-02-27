@@ -5,7 +5,7 @@
     :progress="progress"
   >
     <div class="space-y-2">
-      <label v-if="label" class="block select-none pl-1 text-sm text-gray-800 dark:text-gray-200">{{ label }}</label>
+      <cgn-form-label :label="label" :required="required"></cgn-form-label>
       <div class="flex items-center space-x-6">
         <div v-if="thumb" class="shrink-0">
           <img class="h-16 w-16 bg-white object-cover" :class="isRoundedFull ? 'rounded-full' : 'rounded-md'" :src="thumb" :width="width">
