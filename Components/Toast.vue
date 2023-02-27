@@ -79,4 +79,5 @@ watch(() => props.modelValue, () => {
 onMounted(() => {
   show.value = props.modelValue
 })
+// TODO replace icon colors with warning and success
 </script>

@@ -16,6 +16,7 @@
       <cgn-form-input-email required label="email input"></cgn-form-input-email>
       <cgn-form-input-password suggestPassword required label="password input"></cgn-form-input-password>
       <cgn-form-input-text label="form input text" placeholder="text placeholder"></cgn-form-input-text>
+      <cgn-form-input-textarea label="form input textarea"></cgn-form-input-textarea>
 
       <cgn-address-lookup v-model="address_lookup_modelvalue" :hereApiKey="here_api_key"
         label="Address lookup"></cgn-address-lookup>
@@ -121,4 +122,6 @@ const breadcrumbs_dummydata = ref([
   { name: 'Food', url: '/articles/food' },
   { name: 'Icecream is bad', url: '/article/icecream-is-bad' },
 ])
+// TODO update all cgn blocks with new colors and inputs
+// TODO make sure all sites get updated tailwind.css and tailwind config
 </script>

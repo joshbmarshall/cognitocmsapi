@@ -3,7 +3,7 @@
     :class="buttonClass">
     <slot />
   </router-link>
-<button v-else :type="submit ? 'submit' : undefined" :class="buttonClass" :disabled="disabled" class="">
+  <button v-else :type="submit ? 'submit' : undefined" :class="buttonClass" :disabled="disabled">
     <slot />
   </button>
 </template>
@@ -64,7 +64,7 @@ const props = defineProps({
 })
 
 const buttonClass = computed(() => {
-  var classes = 'shadow py-1.5 px-4 text-center select-none rounded-lg my-2 text-white'
+  var classes = 'cgn-button text-white'
   classes += props.fullwidth ? ' block w-full' : ' inline-block'
 
   if (props.disabled) {
@@ -93,4 +93,10 @@ const buttonClass = computed(() => {
   }
   return classes
 })
+
+/* tailwind.css
+.cgn-button {
+  @apply shadow py-1.5 px-4 text-center select-none rounded-lg my-2 text-white
+}
+*/
 </script>

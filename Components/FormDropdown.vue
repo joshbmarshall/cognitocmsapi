@@ -1,7 +1,7 @@
 <template>
   <div>
     <cgn-form-label :label="label" :required="required"></cgn-form-label>
-    <select v-model="curval" :required="required" class="appearance-none block px-2 py-2 w-full bg-white"
+    <select v-model="curval" :required="required" class="block w-full bg-white cgn-input-field"
       :class="inputClass" @change="handleInput">
       <option v-if="!hideSelect" value>
         {{ prompt }}
