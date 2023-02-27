@@ -40,25 +40,25 @@ const props = defineProps({
 
 const outerClass = computed(() => {
   if (props.templatevar.overlay_colour == 'wht') {
-    return 'bg-white'
+    return 'bg-white-500'
   }
   if (props.templatevar.overlay_colour == 'blk') {
-    return 'bg-black'
+    return 'bg-black-500'
   }
   if (props.templatevar.overlay_colour == 'bnd') {
     return 'bg-brand-500'
   }
   if (props.templatevar.overlay_colour == 'suc') {
-    return 'bg-success'
+    return 'bg-success-500'
   }
   if (props.templatevar.overlay_colour == 'inf') {
-    return 'bg-info'
+    return 'bg-info-500'
   }
   if (props.templatevar.overlay_colour == 'wrn') {
-    return 'bg-warning'
+    return 'bg-warning-500'
   }
   if (props.templatevar.overlay_colour == 'dng') {
-    return 'bg-danger'
+    return 'bg-danger-500'
   }
   return ''
 })
