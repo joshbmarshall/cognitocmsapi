@@ -40,10 +40,10 @@ const props = defineProps({
 
 const outerClass = computed(() => {
   if (props.templatevar.overlay_colour == 'wht') {
-    return 'bg-white-500'
+    return 'bg-white'
   }
   if (props.templatevar.overlay_colour == 'blk') {
-    return 'bg-black-500'
+    return 'bg-black'
   }
   if (props.templatevar.overlay_colour == 'bnd') {
     return 'bg-brand-500'
