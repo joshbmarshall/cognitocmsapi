@@ -1,12 +1,12 @@
 <template>
   <form @submit.prevent="go">
     <div class="grid grid-cols-2 gap-2 mt-4">
-      <ss-input-text v-model="postcode" label="Postcode" required />
-      <ss-input-text v-model="country" label="Country" required />
+      <cgn-form-input-text v-model="postcode" label="Postcode" required />
+      <cgn-form-input-text v-model="country" label="Country" required />
     </div>
-    <ss-input-button submit extra-classes="w-full">
+    <cgn-button submit fullwidth color-brand>
       Find Shipping Options
-    </ss-input-button>
+    </cgn-button>
   </form>
   <div
     v-if="shippingQuotes.length > 0"

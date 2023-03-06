@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="userLogin">
-    <ss-input-email v-model="username" label="Email address" required />
-    <ss-input-password v-model="password" label="Password" required type="password" />
+    <cgn-form-input-email v-model="username" label="Email address" required />
+    <cgn-form-input-password v-model="password" label="Password" required type="password" />
     <div
       v-if="isWrongPassword"
       class="
@@ -37,29 +37,30 @@
         <div
           class="h-1 w-1 bg-gray-300 dark:bg-gray-700 rounded-full mr-2"
         />
-        <ss-link
+        <cgn-link
           to="/forgotpassword"
         >
           Forgot?
-        </ss-link>
+        </cgn-link>
       </div>
     </div>
 
-    <ss-button
+    <cgn-button
+      fullwidth
+      color-brand
       submit
-      extra-classes="w-full"
     >
       Sign in
       <cgn-spinner v-if="isLoading" />
-    </ss-button>
+    </cgn-button>
     <div class="flex items-center justify-between">
       <div class="flex items-center" />
       <div class="text-sm">
-        <ss-link
+        <cgn-link
           to="/forgotpassword"
         >
           Forgot your password?
-        </ss-link>
+        </cgn-link>
       </div>
     </div>
   </form>

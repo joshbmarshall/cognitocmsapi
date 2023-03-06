@@ -1,46 +1,49 @@
 <template>
   <div>
-    <form v-if="password" class="space-y-6" @submit.prevent="userLogin">
+    <form v-if="password " class="space-y-6" @submit.prevent="userLogin">
       <div class="mt-1">
-        <ss-input-read-only label="Your new password">
+        <cgn-form-input-read-only label="Your new password">
           {{ password }}
-        </ss-input-read-only>
+        </cgn-form-input-read-only>
       </div>
       <div>
-        <ss-button
-          extra-classes="w-full"
+        <cgn-button
+          fullwidth
+          color-brand
         >
           Sign in
           <cgn-spinner v-if="login_loading" />
-        </ss-button>
+        </cgn-button>
       </div>
     </form>
     <form v-else-if="success" class="space-y-6" @submit.prevent="testResetCode">
-      <ss-input v-model="otp" label="Password recovery code" required />
+      <cgn-form-input v-model="otp" label="Password recovery code" required />
       <span>
         Please check your email for the recovery code. Remember to check your spam folder.
       </span>
-      <ss-input-password v-model="newpassword" label="Password" type="password" suggest-password required />
+      <cgn-form-input-password v-model="newpassword" label="Password" type="password" suggest-password required />
 
       <div>
-        <ss-button
-          type="submit"
-          extra-classes="w-full"
+        <cgn-button
+          submit
+          fullwidth
+          color-brand
         >
           Change Password
-        </ss-button>
+        </cgn-button>
       </div>
     </form>
     <form v-else class="space-y-6" @submit.prevent="sendResetCode">
-      <ss-input-email v-model="username" label="Email address" required />
+      <cgn-form-input-email v-model="username" label="Email address" required />
 
       <div>
-        <ss-button
-          type="submit"
-          extra-classes="w-full"
+        <cgn-button
+          submit
+          fullwidth
+          color-brand
         >
           Email password recovery code
-        </ss-button>
+        </cgn-button>
       </div>
     </form>
     <cgn-alert-danger v-if="message" class="mt-2">

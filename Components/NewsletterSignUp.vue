@@ -8,10 +8,14 @@
     :fail="fail"
   >
     <form :class="formClass" @submit.prevent="submitted">
-      <input v-model="signup.email" type="email" required placeholder="Email" :class="inputClass">
-      <input v-if="!omitFirstName" v-model="signup.first_name" type="text" required placeholder="First Name" :class="inputClass">
-      <input v-if="!omitLastName" v-model="signup.last_name" type="text" required placeholder="Last Name" :class="inputClass">
-      <input type="submit" :value="submitText" :class="btnClass">
+      <cgn-form-input-email v-model="signup.email" required label="Email" />
+      <cgn-form-input v-if="!omitFirstName" v-model="signup.first_name" required label="First Name" />
+      <cgn-form-input v-if="!omitLastName" v-model="signup.last_name" required label="Last Name" />
+      <div class="flex items-end">
+        <cgn-button submit color-brand fullwidth="">
+          {{ submitText }}
+        </cgn-button>
+      </div>
     </form>
     <cgn-spinner v-if="is_loading" />
     <cgn-alert-success v-if="success">
@@ -46,14 +50,6 @@ const props = defineProps({
   formClass: {
     type: String,
     default: 'grid md:grid-flow-col auto-cols-max gap-2',
-  },
-  inputClass: {
-    type: String,
-    default: 'appearance-none block rounded-md my-1 px-2 py-2 shadow-md dark:shadow-inner placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-slate-600 dark:text-gray-400',
-  },
-  btnClass: {
-    type: String,
-    default: 'shadow py-2 my-1 px-2 rounded-lg text-center select-none bg-indigo-600 dark:bg-blue-600 cursor-pointer hover:bg-indigo-700 dark:hover:bg-blue-700 sm:text-sm text-white',
   },
 })
 

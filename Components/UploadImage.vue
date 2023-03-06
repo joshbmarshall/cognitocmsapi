@@ -5,7 +5,7 @@
     :progress="progress"
   >
     <div class="space-y-2">
-      <cgn-form-label :label="label" :required="required"></cgn-form-label>
+      <cgn-form-label :label="label" :required="required" />
       <div class="flex items-center space-x-6">
         <div v-if="thumb" class="shrink-0">
           <img class="h-16 w-16 bg-white object-cover" :class="isRoundedFull ? 'rounded-full' : 'rounded-md'" :src="thumb" :width="width">
@@ -13,7 +13,7 @@
         <div>
           <input
             type="file"
-            class="block w-full text-sm text-transparent file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700 dark:file:bg-blue-600 dark:file:hover:bg-blue-700"
+            class="block w-full text-sm text-transparent file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-brand-500 file:text-on-brand hover:file:bg-brand-600 dark:file:bg-brand-500 dark:file:hover:bg-brand-400"
             accept="image/*"
             @change="upload"
           >

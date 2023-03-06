@@ -3,7 +3,7 @@
     <div class="flex items-center justify-center py-10">
       <div class="w-full flex items-center justify-between">
         <div class="flex items-center pt-3 text-gray-600">
-          <router-link v-if="showFirstLink()" class="hover:text-indigo-700" :to="firstLink()">
+          <router-link v-if="showFirstLink()" class="hover:text-brand-700" :to="firstLink()">
             <i-heroicons-solid:chevron-double-left />
           </router-link>
           <router-link
@@ -17,7 +17,7 @@
         <div class="flex mx-2">
           <router-link
             v-if="currentPageNumber > 2"
-            class="flex sm:hidden hover:text-indigo-700 border-t border-transparent text-gray-600 hover:border-indigo-400"
+            class="flex sm:hidden hover:text-indigo-700 border-t border-transparent text-gray-600 hover:border-brand-400"
             :to="pageLink(1)"
           >
             <p class="text-sm font-medium leading-none pt-3 px-3">
@@ -31,18 +31,18 @@
             <router-link v-if="showPageLink(pageNum)" :to="pageLink(pageNum)">
               <p
                 v-if="pageNum === currentPageNumber"
-                class="text-sm font-medium leading-none cursor-pointer text-indigo-700 border-t border-indigo-400 pt-3 px-3"
+                class="text-sm font-medium leading-none cursor-pointer text-brand-700 border-t border-brand-400 pt-3 px-3"
               >{{ pageNum }}</p>
               <p
                 v-else
-                class="text-sm font-medium leading-none cursor-pointer text-gray-600 hover:text-indigo-700 border-t border-transparent hover:border-indigo-400 pt-3 px-3"
+                class="text-sm font-medium leading-none cursor-pointer text-gray-600 hover:text-brand-700 border-t border-transparent hover:border-brand-400 pt-3 px-3"
                 :class="pageNum < currentPageNumber + 2 && pageNum > currentPageNumber - 2 ? '' : 'hidden sm:block'"
               >{{ pageNum }}</p>
             </router-link>
           </span>
           <router-link
             v-if="currentPageNumber < pageCount - 1"
-            class="flex sm:hidden hover:text-indigo-700 border-t border-transparent text-gray-600 hover:border-indigo-400"
+            class="flex sm:hidden hover:text-indigo-700 border-t border-transparent text-gray-600 hover:border-brand-400"
             :to="pageLink(pageCount)"
           >
             <p class="text-sm font-medium leading-none pt-3 px-3 pr-0">
@@ -54,10 +54,10 @@
           </router-link>
         </div>
         <div class="flex items-center pt-3 text-gray-600">
-          <router-link v-if="showNextLink()" class="hover:text-indigo-700 mr-3" :to="nextLink()">
+          <router-link v-if="showNextLink()" class="hover:text-brand-700 mr-3" :to="nextLink()">
             <i-heroicons-solid:chevron-right />
           </router-link>
-          <router-link v-if="showLastLink()" class="hover:text-indigo-700" :to="lastLink()">
+          <router-link v-if="showLastLink()" class="hover:text-brand-700" :to="lastLink()">
             <i-heroicons-solid:chevron-double-right />
           </router-link>
         </div>

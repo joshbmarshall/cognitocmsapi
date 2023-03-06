@@ -2,19 +2,19 @@
   <cgn-form-label class="cgn-input-wrapper" :label="label" :required="required">
     <div class="relative" :class="wrapClass">
       <div v-if="type === 'readonly'">
-        <div :class="inputClass">
+        <div :class="inputClass" class="cgn-input-field p-2 bg-white">
           <slot />
         </div>
       </div>
       <div v-else-if="type === 'btnlink'">
-        <div :class="inputClass">
+        <div :class="inputClass" class="cgn-input-field p-2 bg-white">
           <router-link ref="inputel" type="submit" class="appearance-none block px-2 w-full text-center" :to="url">
             <slot />
           </router-link>
         </div>
       </div>
       <div v-else-if="type === 'submit'">
-        <div :class="inputClass">
+        <div :class="inputClass" class="cgn-input-field p-2 bg-white">
           <button ref="inputel" type="submit" class="appearance-none block px-2 w-full" @input="handleInput">
             <slot />
           </button>
