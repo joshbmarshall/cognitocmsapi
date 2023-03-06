@@ -1,8 +1,10 @@
 <template>
   <div>
-    <cgn-form-label :label="label" :required="required"></cgn-form-label>
-    <select v-model="curval" :required="required" class="block w-full bg-white cgn-input-field"
-      :class="inputClass" @change="handleInput">
+    <cgn-form-label :label="label" :required="required" />
+    <select
+      v-model="curval" :required="required" class="block w-full bg-white cgn-input-field p-2"
+      :class="inputClass" @change="handleInput"
+    >
       <option v-if="!hideSelect" value>
         {{ prompt }}
       </option>
@@ -39,13 +41,13 @@ const props = defineProps({
   },
   inputClass: {
     type: String,
-  }
+  },
 })
 
+const emit = defineEmits(['update:modelValue', 'change', 'input'])
 const curval = ref('')
 const dropdownOptions = ref(props.options)
 
-const emit = defineEmits(['update:modelValue', 'change', 'input'])
 const handleInput = () => {
   emit('change')
   emit('update:modelValue', curval.value)

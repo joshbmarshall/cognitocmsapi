@@ -24,8 +24,10 @@
         <textarea ref="inputel" :class="textareaClass" class="appearance-none block w-full cgn-input-textarea-field" :value="modelValue" @input="handleInput" />
       </div>
       <div v-else>
-        <div v-if="type === 'password'" class="absolute inset-y-0 left-0 pl-1 flex items-center cursor-pointer"
-          :class="iconClass" @click="toggleVisible()">
+        <div
+          v-if="type === 'password'" class="absolute inset-y-0 left-0 pl-1 flex items-center cursor-pointer"
+          :class="iconClass" @click="toggleVisible()"
+        >
           <i-heroicons-solid:eye v-if="showPassword" />
           <i-heroicons-solid:eye-off v-else />
         </div>
@@ -35,14 +37,17 @@
         <div v-if="type === 'phone'" class="absolute inset-y-0 left-0 pl-1 flex items-center" :class="iconClass">
           <i-heroicons-solid:phone />
         </div>
-        <input ref="inputel" v-maska="maska" :min="minAmount" :max="maxAmount" :value="modelValue" :type="inputType"
-          :placeholder="placeholder" :required="required" class="appearance-none block w-full cgn-input-field"
-          :class="inputClass + (hasIcon ? ' pl-7' : '')" @input="handleInput" @blur="blurInput">
+        <input
+          ref="inputel" v-maska="maska" :min="minAmount" :max="maxAmount" :value="modelValue" :type="inputType"
+          :placeholder="placeholder" :required="required" class="appearance-none block w-full cgn-input-field p-2"
+          :class="inputClass + (hasIcon ? ' pl-7' : '')" @input="handleInput" @blur="blurInput"
+        >
       </div>
     </div>
-    <cgn-form-label v-if="type === 'password' && suggestPassword" class="text-sm cursor-pointer"
-      @click="setPassword()" :label="`Suggested password: ${generated_password}`">
-    </cgn-form-label>
+    <cgn-form-label
+      v-if="type === 'password' && suggestPassword" class="text-sm cursor-pointer"
+      :label="`Suggested password: ${generated_password}`" @click="setPassword()"
+    />
   </cgn-form-label>
 </template>
 
