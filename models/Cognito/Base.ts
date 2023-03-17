@@ -6,6 +6,7 @@ class CognitoFindManyParams {
   page_size?: number
   page?: number
   group?: string
+  parent?: string
   orderby?: string
   ids?: number[]
 }
@@ -128,6 +129,10 @@ class CognitoBase {
       key,
     })
     return res.data
+  }
+
+  fileDownloadUrl(hash: string): string {
+    return `/api/v1/cognito/default/file/${hash}`
   }
 }
 
