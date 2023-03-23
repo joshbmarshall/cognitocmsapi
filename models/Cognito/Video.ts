@@ -1,4 +1,5 @@
 import { CognitoBase } from './Base'
+import { CognitoImage } from './Image'
 
 class CognitoVideo extends CognitoBase {
   id: string
@@ -7,6 +8,8 @@ class CognitoVideo extends CognitoBase {
   slug: string
   length: number
   slate: string
+  slate_image: CognitoImage
+  file: string
 
   baseurl(): string {
     return '/api/v1/cognito/video'
@@ -20,6 +23,8 @@ class CognitoVideo extends CognitoBase {
     this.slug = ''
     this.length = 0
     this.slate = ''
+    this.slate_image = new CognitoImage()
+    this.file = ''
     Object.assign(this, source)
   }
 }
