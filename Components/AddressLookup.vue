@@ -86,9 +86,12 @@ const handleSubmitAddress = (id: string) => {
       emit('update:modelValue', newaddress)
     })
 }
-
+const setPlaceholder = () => {
+  searchTermPlaceholder.value = `${props.modelValue.line1} ${props.modelValue.line2} ${props.modelValue.city} ${props.modelValue.state} ${props.modelValue.postcode} ${props.modelValue.country}`
+}
 watch(() => props.modelValue, () => {
   validateAddress()
+  setPlaceholder()
 })
 watch(() => searchTerm.value, (newVal) => {
   if (newVal.length < 5) {
@@ -140,6 +143,8 @@ onMounted(() => {
       postcode: '',
       state: '',
     })
+  } else {
+    setPlaceholder()
   }
 })
 </script>
