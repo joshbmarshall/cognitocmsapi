@@ -27,11 +27,11 @@ defineProps({
   },
   barColor: {
     type: String,
-    default: 'bg-indigo-700 dark:bg-indigo-600',
+    default: 'bg-brand-500',
   },
   textColor: {
     type: String,
-    default: 'text-indigo-700 dark:text-indigo-600',
+    default: 'text-brand-500',
   },
 })
 </script>
