@@ -38,7 +38,7 @@
           <i-heroicons-solid:phone />
         </div>
         <input
-          ref="inputel" v-maska="maska" :min="minAmount" :max="maxAmount" :value="modelValue" :type="inputType"
+          ref="inputel" v-maska:[maska] :min="minAmount" :max="maxAmount" :value="modelValue" :type="inputType"
           :placeholder="placeholder" :required="required" class="appearance-none block w-full cgn-input-field p-2"
           :class="inputClass + (hasIcon ? ' pl-7' : '')" @input="handleInput" @blur="blurInput"
         >
