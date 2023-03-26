@@ -9,7 +9,13 @@ export const useUserStore = defineStore({
       refresh_token: '',
       redirect_after_login: '/',
       oauth2_state: '',
-      user: {},
+      user: {
+        id: 0,
+        first_name: '',
+        last_name: '',
+        email: '',
+        mobile_phone: '',
+      },
     }
   },
 
