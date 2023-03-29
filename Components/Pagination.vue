@@ -8,7 +8,7 @@
           </router-link>
           <router-link
             v-if="showPreviousLink()"
-            class="hover:text-indigo-700 ml-3"
+            class="hover:text-brand-700 ml-3"
             :to="previousLink()"
           >
             <i-heroicons-solid:chevron-left />
@@ -17,7 +17,7 @@
         <div class="flex mx-2">
           <router-link
             v-if="currentPageNumber > 2"
-            class="flex sm:hidden hover:text-indigo-700 border-t border-transparent text-gray-600 hover:border-brand-400"
+            class="flex sm:hidden hover:text-brand-700 border-t border-transparent text-gray-600 hover:border-brand-400"
             :to="pageLink(1)"
           >
             <p class="text-sm font-medium leading-none pt-3 px-3">
@@ -42,7 +42,7 @@
           </span>
           <router-link
             v-if="currentPageNumber < pageCount - 1"
-            class="flex sm:hidden hover:text-indigo-700 border-t border-transparent text-gray-600 hover:border-brand-400"
+            class="flex sm:hidden hover:text-brand-700 border-t border-transparent text-gray-600 hover:border-brand-400"
             :to="pageLink(pageCount)"
           >
             <p class="text-sm font-medium leading-none pt-3 px-3 pr-0">
