@@ -87,6 +87,12 @@ const handleSubmitAddress = (id: string) => {
     })
 }
 const setPlaceholder = () => {
+  if (!props.modelValue) {
+    return
+  }
+  if (!props.modelValue.line1) {
+    return
+  }
   searchTermPlaceholder.value = `${props.modelValue.line1} ${props.modelValue.line2} ${props.modelValue.city} ${props.modelValue.state} ${props.modelValue.postcode} ${props.modelValue.country}`
 }
 watch(() => props.modelValue, () => {
