@@ -1,17 +1,18 @@
 <template>
   <div>
-    <cgn-form-label :label="label" :required="required" />
-    <select
-      v-model="curval" :required="required" class="block w-full bg-white cgn-input-field p-2"
-      :class="inputClass" @change="handleInput"
-    >
-      <option v-if="!hideSelect" value>
-        {{ prompt }}
-      </option>
-      <option v-for="option in dropdownOptions" :key="option.id" :value="option.id">
-        {{ option.name }}
-      </option>
-    </select>
+    <cgn-form-label class="cgn-input-wrapper" :label="label" :required="required">
+      <select
+        v-model="curval" :required="required" class="appearance-none block w-full bg-white cgn-input-field p-2"
+        :class="inputClass" @change="handleInput"
+      >
+        <option v-if="!hideSelect" value>
+          {{ prompt }}
+        </option>
+        <option v-for="option in dropdownOptions" :key="option.id" :value="option.id">
+          {{ option.name }}
+        </option>
+      </select>
+    </cgn-form-label>
   </div>
 </template>
 
