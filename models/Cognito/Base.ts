@@ -15,10 +15,10 @@ class CognitoFindOneParams {
   image_aspect?: string
   image_width?: number
   page_size?: number
-  url: string
+  url?: string
+  id?: number
 
   constructor(source?: Partial<CognitoFindOneParams>) {
-    this.url = ''
     Object.assign(this, source)
   }
 }
@@ -54,6 +54,14 @@ class CognitoBase {
   }
 
   async find_one(data: CognitoFindOneParams): Promise<any> {
+    if (data.id) {
+      const id = data.id
+      delete data.id
+      const res = await $axios.get(`${this.baseurl()}/${id}`, {
+        params: data,
+      })
+      return res.data
+    }
     const url = data.url
     delete data.url
     const res = await $axios.get(`${this.baseurl()}/${url}`, {

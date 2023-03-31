@@ -2,7 +2,7 @@
   <div>
     <cgn-form-label class="cgn-input-wrapper" :label="label" :required="required">
       <select
-        v-model="curval" :required="required" class="appearance-none block w-full bg-white cgn-input-field p-2"
+        v-model="curval" :required="required" class="block w-full bg-white cgn-input-field p-2"
         :class="inputClass" @change="handleInput"
       >
         <option v-if="!hideSelect" value>
@@ -66,6 +66,9 @@ const formatOptions = () => {
         name: dropdownOption,
       }
     } else {
+      if (!dropdownOption.id) {
+        dropdownOptions.value[index].id = dropdownOption.value
+      }
       if (!dropdownOption.id) {
         dropdownOptions.value[index].id = index
       }
