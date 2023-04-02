@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-2 text-white mx-auto lg:max-w-none lg:row-start-1 lg:col-start-1">
     <div :class="outerClass" class="relative">
-      <div class="absolute inset-0 bg-center bg-cover" :class="imageClass" :style="imageStyle" />
+      <div class="absolute inset-0 bg-center bg-cover" :class="imageClass" :style="{ 'background-image': `url(${url})` }" />
       <div class="relative p-8 text-center flex flex-col justify-center items-center h-[500px]" :class="textClass">
         <h1 class="text-2xl md:text-4xl font-semibold font-display pb-2">
           {{ templatevar.heading }}
@@ -74,14 +74,27 @@ const textClass = computed(() => {
 })
 
 const imageClass = computed(() => {
-  let string = `opacity-${props.templatevar.image_opacity} saturate-${props.templatevar.image_saturation}`
+  let classes = ''
+
+  classes += `opacity-${[
+      '10',
+      '30',
+      '50',
+      '70',
+      '100',
+    ].find(e => e === props.templatevar.image_opacity)}`
+
+  classes += ` saturate-${[
+      '0',
+      '50',
+      '100',
+    ].find(e => e === props.templatevar.image_saturation)}`
+
   if (props.templatevar.parallax == 1) {
-    string += ' bg-fixed'
+    classes += ' bg-fixed'
   }
-  return string
-})
-const imageStyle = computed(() => {
-  return { 'background-image': `url(${url.value})` }
+
+  return classes
 })
 
 const url = ref('')
