@@ -10,9 +10,9 @@
     <SwiperSlide v-for="slide in props.gallery.slides" :key="slide.id">
       <router-link :to="slide.link" :class="{ 'pointer-events-none': !slide.link }">
         <div class="space-y-2 text-white mx-auto lg:max-w-none lg:row-start-1 lg:col-start-1">
-          <div :class="new CognitoSlide(slide).outerClass()" class="relative">
-            <div class="absolute inset-0 bg-center bg-cover" :class="new CognitoSlide(slide).imageClass()" :style="{ 'background-image': `url(${slide.image.url})` }" />
-            <div class="relative p-8 text-center flex flex-col justify-center items-center h-[500px]" :class="new CognitoSlide(slide).textClass()">
+          <div :class="outerClass(slide)" class="relative">
+            <div class="absolute inset-0 bg-center bg-cover" :class="imageClass(slide)" :style="{ 'background-image': `url(${slide.image.url})` }" />
+            <div class="relative p-8 text-center flex flex-col justify-center items-center h-[500px]" :class="textClass(slide)">
               <h1 class="text-2xl md:text-4xl font-semibold font-display pb-2">
                 {{ slide.heading }}
               </h1>
@@ -44,5 +44,14 @@ const props = defineProps({
     required: true,
   },
 })
+const outerClass = (slide: CognitoSlide) => {
+  return new CognitoSlide(slide).outerClass()
+}
+const imageClass = (slide: CognitoSlide) => {
+  return new CognitoSlide(slide).imageClass()
+}
+const textClass = (slide: CognitoSlide) => {
+  return new CognitoSlide(slide).textClass()
+}
 const swiperModules = ref([Autoplay])
 </script>
