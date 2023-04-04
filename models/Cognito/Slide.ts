@@ -37,19 +37,20 @@ class CognitoSlide extends CognitoBase {
   imageClass(): string {
     let classes = ''
 
-    classes += `opacity-${[
-      '10',
-      '30',
-      '50',
-      '70',
-      '100',
-    ].find(e => e === this.image_opacity)}`
+    classes += [
+      { name: 'opacity-10', id: '10' },
+      { name: 'opacity-30', id: '30' },
+      { name: 'opacity-50', id: '50' },
+      { name: 'opacity-70', id: '70' },
+      { name: 'opacity-90', id: '90' },
+      { name: 'opacity-100', id: '100' },
+    ].find(e => e.id === this.image_opacity)?.name
 
-    classes += ` saturate-${[
-      '0',
-      '50',
-      '100',
-    ].find(e => e === this.image_saturation)}`
+    classes += ` ${[
+    { name: 'saturate-0', id: '0' },
+    { name: 'saturate-50', id: '50' },
+    { name: 'saturate-100', id: '100' },
+  ].find(e => e.id === this.image_saturation)?.name}`
 
     return classes
   }
