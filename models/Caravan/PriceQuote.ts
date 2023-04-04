@@ -1,5 +1,38 @@
 import { $axios } from '~cognito/plugins/axios'
 
+class CaravanQuoteFormPerson {
+  name: string
+  type: number
+  min_qty: number
+  qty: number
+  constructor() {
+    this.name = ''
+    this.type = 0
+    this.min_qty = 0
+    this.qty = 0
+  }
+}
+
+class CaravanQuoteForm {
+  from_date: string
+  to_date: string
+  caravan_length: number
+  people: CaravanQuoteFormPerson[]
+  constructor() {
+    this.from_date = ''
+    this.to_date = ''
+    this.caravan_length = 0
+    this.people = []
+  }
+}
+
+class CaravanBookForm {
+  first_name: string
+  constructor() {
+    this.first_name = ''
+  }
+}
+
 class CaravanPrice {
   site_type_id: number
   site_type_name: string
@@ -36,4 +69,4 @@ class CaravanPriceQuote {
   }
 }
 
-export { CaravanPriceQuote }
+export { CaravanPriceQuote, CaravanQuoteForm, CaravanBookForm }

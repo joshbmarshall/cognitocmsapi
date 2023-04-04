@@ -2,6 +2,7 @@ import { CognitoBase } from '../Cognito/Base'
 
 class CaravanPersonType extends CognitoBase {
   name: string
+  min_qty: number
 
   baseurl() {
     return '/api/v1/caravan/personType'
@@ -10,6 +11,7 @@ class CaravanPersonType extends CognitoBase {
   constructor(source?: Partial<CaravanPersonType>) {
     super()
     this.name = ''
+    this.min_qty = 0
     Object.assign(this, source)
   }
 }
