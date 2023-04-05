@@ -16,13 +16,9 @@
     </div>
     <div v-else>
       <form @submit.prevent="searchAvailability()">
-        <div>
-          Check In
-          <cgn-form-input v-model="quoteform.from_date" type="date" required />
-        </div>
-        <div>
-          Check Out
-          <cgn-form-input v-model="quoteform.to_date" type="date" required />
+        <div class="flex gap-2">
+          <cgn-form-input v-model="quoteform.from_date" label="Check In" type="date" required class="w-full" />
+          <cgn-form-input v-model="quoteform.to_date" label="Check Out" type="date" required class="w-full" />
         </div>
         <div v-for="personType in quoteform.people" :key="personType.type">
           <cgn-form-input
@@ -34,18 +30,20 @@
           />
         </div>
         <cgn-form-input v-model="quoteform.caravan_length" type="number" min-amount="1" max-amount="20" label="Caravan length (metres)" />
-        <cgn-button color-brand>
+        <cgn-button color-brand fullwidth>
           Search
         </cgn-button>
       </form>
-      <div v-if="price_from">
-        <div>
-          Prices from: ${{ price_from.toFixed(2) }}
+      <div v-if="price_from" class="mt-4">
+        <div class="text-center">
+          Prices from: <span class="text-2xl">${{ price_from.toFixed(2) }}</span>
         </div>
         <form @submit.prevent="bookNow()">
           <cgn-form-dropdown v-model="bookform.site_id" :options="bookSiteOptions" label="Site" required />
-          <cgn-form-input v-model="bookform.first_name" label="First Name" required />
-          <cgn-form-input v-model="bookform.last_name" label="Last Name" required />
+          <div class="flex gap-2">
+            <cgn-form-input v-model="bookform.first_name" label="First Name" required class="w-full" />
+            <cgn-form-input v-model="bookform.last_name" label="Last Name" required class="w-full" />
+          </div>
           <cgn-form-input-email v-model="bookform.email" label="Email" required />
           <cgn-form-input v-model="bookform.phone" type="phone" label="Phone" required />
           <cgn-form-input v-model="bookform.suburb" label="Suburb" required />
@@ -56,7 +54,7 @@
           <cgn-alert-danger v-if="payErrorMessage">
             {{ payErrorMessage }}
           </cgn-alert-danger>
-          <cgn-button v-if="selectedAmount" color-brand>
+          <cgn-button v-if="selectedAmount" color-brand fullwidth>
             Pay ${{ selectedAmount.toFixed(2) }} Now
           </cgn-button>
         </form>
