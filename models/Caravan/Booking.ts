@@ -49,8 +49,15 @@ class CaravanBooking extends CognitoBase {
     redirect: string
   }> {
     data.url = btoa(window.location)
-    console.log(data)
     return (await $axios.post('/api/v1/caravan/booking/payNow', data)).data
+  }
+
+  async getInvoice(payment: number): Promise<{
+    invoiceText: string
+  }> {
+    return (await $axios.post('/api/v1/caravan/booking/invoiceText', {
+      payment,
+    })).data
   }
 }
 

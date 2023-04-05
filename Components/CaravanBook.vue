@@ -1,12 +1,16 @@
 <template>
   <div>
     <div v-if="has_payment">
-      <cgn-alert-success
+      <div
         v-if="payment_ok"
-        class="max-w-2xl w-full mx-auto my-2"
       >
-        Payment Successful, please check your email for your invoice
-      </cgn-alert-success>
+        <cgn-alert-success
+          class="max-w-2xl w-full mx-auto my-2"
+        >
+          Payment Successful
+        </cgn-alert-success>
+        <div class="max-w-3xl w-full mx-auto bg-white text-black shadow" v-html="invoiceText" />
+      </div>
       <cgn-alert-danger
         v-else
         class="max-w-2xl w-full mx-auto my-2"
@@ -79,6 +83,7 @@ const bookform = ref<CaravanBooking>(new CaravanBooking())
 const quotes = ref<CaravanPriceQuote>(new CaravanPriceQuote())
 const has_payment = ref(false)
 const payment_ok = ref(false)
+const invoiceText = ref('')
 
 const price_from = computed(() => {
   if (quotes.value.available_sites.length === 0) {
@@ -146,6 +151,12 @@ onMounted(() => {
     .then((data) => {
       has_payment.value = data.has_payment
       payment_ok.value = data.success
+      if (data.success) {
+        new CaravanBooking().getInvoice(data.payment.id)
+          .then((data) => {
+            invoiceText.value = data.invoiceText
+          })
+      }
     })
 })
 </script>
