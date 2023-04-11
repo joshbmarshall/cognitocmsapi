@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <form
+    @submit.prevent="sendContactForm()"
+  >
     <div v-for="input in formdata?.data" :key="input.name">
       <div v-if="input.type == 'text'">
         <cgn-form-input v-model="input.value" :type="input.subtype" :label="input.label" :placeholder="input.placeholder" :required="input.required" />
@@ -32,12 +34,22 @@
         </cgn-button>
       </div>
     </div>
-  </div>
+  </form>
+
+  <cgn-alert-danger v-if="submission_error">
+    {{ submission_error }}
+  </cgn-alert-danger>
+  <cgn-alert-success v-if="submitted_ok">
+    Thank you, your message has been sent
+  </cgn-alert-success>
 </template>
 
 <script lang="ts">
 import { CognitoForm } from '~cognito/models/Cognito/Form'
+import { CognitoFormSubmit } from '~cognito/models/Cognito/FormSubmit'
 class Templatevars {
+  form?: number
+  framework?: string // unused
 }
 </script>
 
@@ -49,11 +61,33 @@ const props = defineProps({
   },
 })
 
+const is_loading = ref(false)
+const submitted_ok = ref(false)
+const submission_error = ref('')
 const formdata = ref()
 
-const form = new CognitoForm().find_one({ id: 2 }).then((data) => {
+const form = new CognitoForm().find_one({ id: props.templatevar.form }).then((data) => {
   formdata.value = data
 })
-// TODO autocomplete, checkbox group, hidden input, radio group, header sizes, form submit
-// TODO id hardcoded?
+
+const formValues = computed(() => {
+  return formdata.value?.data.reduce((obj, item) => Object.assign(obj, { [item.name]: item.value }), {})
+})
+
+const sendContactForm = () => {
+  is_loading.value = true
+  new CognitoFormSubmit({
+    form_id: props.templatevar.form,
+    details: formValues.value,
+  }).save()
+    .then((data) => {
+      submitted_ok.value = data.success
+      submission_error.value = data.error
+      is_loading.value = false
+      if (submitted_ok.value) {
+        formdata.value.message = ''
+      }
+    })
+}
+// TODO autocomplete, checkbox group, hidden input, radio group, header sizes
 </script>
