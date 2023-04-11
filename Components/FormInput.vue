@@ -37,11 +37,16 @@
         <div v-if="type === 'phone'" class="absolute inset-y-0 left-0 pl-1 flex items-center" :class="iconClass">
           <i-heroicons-solid:phone />
         </div>
-        <input
-          ref="inputel" v-maska:[maska] :min="minAmount" :max="maxAmount" :value="modelValue" :type="inputType"
-          :placeholder="placeholder" :required="required" class="appearance-none block w-full cgn-input-field p-2"
-          :class="inputClass + (hasIcon ? ' pl-7' : '')" @input="handleInput" @blur="blurInput"
-        >
+        <div class="flex">
+          <input
+            ref="inputel" v-maska:[maska] :min="minAmount" :max="maxAmount" :value="modelValue" :type="inputType"
+            :placeholder="placeholder" :required="required" class="appearance-none block w-full cgn-input-field p-2"
+            :class="inputClass + (hasIcon ? ' pl-7' : '')" @input="handleInput" @blur="blurInput"
+          >
+          <div v-if="showButton" class="cgn-button bg-brand-500 hover:bg-brand-600 text-on-brand dark:hover:bg-brand-400 ml-1" @click="buttonClick">
+            <slot />
+          </div>
+        </div>
       </div>
     </div>
     <cgn-form-label
@@ -104,8 +109,16 @@ const props = defineProps({
   iconClass: {
     type: String,
   },
+  showButton: {
+    type: Boolean,
+    default: false,
+  },
+  buttonColorBrand: {
+    type: Boolean,
+    default: false,
+  },
 })
-const emit = defineEmits(['update:modelValue', 'blur'])
+const emit = defineEmits(['update:modelValue', 'blur', 'buttonClick'])
 const maska = ref(props.inputmask)
 if (props.inputmask === 'date') {
   maska.value = {
@@ -122,6 +135,7 @@ const inputel = ref(null)
 
 const handleInput = e => emit('update:modelValue', e.currentTarget.value)
 const blurInput = e => emit('blur')
+const buttonClick = e => emit('buttonClick')
 
 const showPassword = ref(false)
 const generated_password = ref('')
