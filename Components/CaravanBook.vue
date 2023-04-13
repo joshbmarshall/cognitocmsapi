@@ -39,6 +39,9 @@
           Search
         </cgn-button>
       </form>
+      <cgn-alert-danger v-if="no_availability">
+        Sorry, there are no sites available for those dates
+      </cgn-alert-danger>
       <div v-if="price_from" class="mt-4">
         <div class="text-center">
           Prices from: <span class="text-2xl">${{ price_from.toFixed(2) }}</span>
@@ -84,6 +87,7 @@ const bookform = ref<CaravanBooking>(new CaravanBooking())
 const quotes = ref<CaravanPriceQuote>(new CaravanPriceQuote())
 const has_payment = ref(false)
 const payment_ok = ref(false)
+const no_availability = ref(false)
 const invoiceText = ref('')
 
 const price_from = computed(() => {
@@ -121,6 +125,7 @@ const bookNow = () => {
 }
 
 const searchAvailability = () => {
+  no_availability.value = false
   new CaravanPriceQuote().searchAvailability(quoteform.value)
     .then((data) => {
       quotes.value = data
@@ -131,6 +136,9 @@ const searchAvailability = () => {
       bookform.value.check_in = quoteform.value.from_date
       bookform.value.check_out = quoteform.value.to_date
       bookform.value.caravan_length = quoteform.value.caravan_length
+      if (quotes.value.available_sites.length == 0) {
+        no_availability.value = true
+      }
     })
 }
 
