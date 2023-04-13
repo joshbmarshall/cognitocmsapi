@@ -114,7 +114,6 @@ const bookNow = () => {
   payErrorMessage.value = ''
   new CaravanBooking().payNow(bookform.value)
     .then((data) => {
-      console.log(data)
       if (data.success) {
         // redirect
         window.location = data.redirect
