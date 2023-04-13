@@ -19,6 +19,7 @@
       </cgn-alert-danger>
     </div>
     <div v-else>
+      <slot />
       <form @submit.prevent="searchAvailability()">
         <div class="flex gap-2">
           <cgn-form-input v-model="quoteform.from_date" label="Check In" type="date" required class="w-full" />
