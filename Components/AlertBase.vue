@@ -14,7 +14,7 @@
       cgn-alert-wrapper
     "
   >
-    <div class="flex flex-row">
+    <div class="flex items-center flex-row">
       <div
         v-if="props.type == 'danger'"
         class="mr-3 p-2 bg-red-400 text-white"
