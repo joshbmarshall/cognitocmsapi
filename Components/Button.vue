@@ -2,12 +2,17 @@
   <label v-if="isLabel" class="cursor-pointer" :class="buttonClass">
     <slot />
   </label>
-  <router-link
-    v-else-if="url && !disabled" :to="url" :type="submit ? 'submit' : undefined" :target="newtab ? '_blank' : ''"
+  <component
+    :is="url.startsWith('http') ? 'a' : 'router-link'"
+    v-else-if="url && !disabled"
+    :to="url"
+    :href="url"
+    :type="submit ? 'submit' : undefined"
+    :target="newtab ? '_blank' : ''"
     :class="buttonClass"
   >
     <slot />
-  </router-link>
+  </component>
   <button v-else :type="submit ? 'submit' : undefined" :class="buttonClass" :disabled="disabled">
     <slot />
   </button>
