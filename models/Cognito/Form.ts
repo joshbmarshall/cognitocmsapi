@@ -5,6 +5,7 @@ class CognitoForm extends CognitoBase {
   name: string
   url: string
   use_captcha: boolean
+  data: any
 
   baseurl(): string {
     return '/api/v1/cognito/form'
