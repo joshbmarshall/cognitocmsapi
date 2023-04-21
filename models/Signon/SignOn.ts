@@ -25,6 +25,7 @@ class SignonSignOn extends CognitoBase {
   adult_signature: string
   extra_term_ids: number[]
   extra_details: string
+  armband_colour: string
   already_signed_on: boolean
   indemnity_ids: number[]
 
@@ -54,6 +55,7 @@ class SignonSignOn extends CognitoBase {
     this.adult_signature = ''
     this.extra_term_ids = []
     this.extra_details = ''
+    this.armband_colour = '#ffffff'
     this.already_signed_on = false
     this.indemnity_ids = []
     Object.assign(this, source)
@@ -91,6 +93,7 @@ class SignonStaffSignOnResults extends CognitoBase {
   adult_photo: CognitoImage
   adult_signature: CognitoImage
   extra_details: string
+  armband_colour: string
   created_at: string
 
   baseurl() {
@@ -107,6 +110,7 @@ class SignonStaffSignOnResults extends CognitoBase {
     this.adult_photo = new CognitoImage()
     this.adult_signature = new CognitoImage()
     this.extra_details = ''
+    this.armband_colour = '#ffffff'
     this.created_at = ''
     Object.assign(this, source)
   }

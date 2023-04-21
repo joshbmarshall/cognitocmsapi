@@ -121,6 +121,7 @@
           <span class="text-sm text-gray-700">{{ approving_signon?.adult_relationship }}</span>
         </div>
       </div>
+      <div :style="{ backgroundColor: approving_signon?.armband_colour }" class="w-full h-10" />
     </template>
     <template #button-footer>
       <div class="flex px-4 py-3 sm:px-6 gap-6">
@@ -262,6 +263,7 @@
                 <i-heroicons-solid:trash /> Delete
               </span>
             </button>
+            <div :style="{ backgroundColor: sign_on?.armband_colour }" class="w-full h-10" />
           </div>
         </div>
       </div>
