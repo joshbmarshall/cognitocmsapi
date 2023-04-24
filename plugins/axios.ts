@@ -22,6 +22,10 @@ const login = async (username: string, password: string, router: Router) => {
   return $axios.login(username, password, router)
 }
 
+const tokenlogin = async () => {
+  return $axios.tokenlogin()
+}
+
 const relogin = (loginurl: string, redirect_after_login: string, router: Router) => {
   const userStore = useUserStore()
   userStore.redirect_after_login = redirect_after_login
@@ -39,6 +43,7 @@ const setTitle = (suffix: string) => {
 export {
   $axios,
   login,
+  tokenlogin,
   logout,
   relogin,
   isLoggedIn,

@@ -230,6 +230,18 @@ class CgnAxios {
     return true
   }
 
+  async tokenlogin() {
+    const access_token = new URL(location.href).searchParams.get('a')
+    const refresh_token = new URL(location.href).searchParams.get('r')
+    if (access_token && refresh_token) {
+      const userStore = this.userStore()
+      userStore.setRefreshToken(refresh_token)
+      userStore.setAccessToken(access_token)
+      await this.getUser()
+      window.location = '/'
+    }
+  }
+
   get(url: string, config?: AxiosRequestConfig<any> | undefined) {
     return this.axios.get(url, config)
   }
