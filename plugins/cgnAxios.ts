@@ -2,7 +2,7 @@ import type { Axios, AxiosRequestConfig } from 'axios'
 import axios from 'axios'
 import type { Router } from 'vue-router'
 import { nanoid } from 'nanoid'
-import { baseURL, sitename } from '~/config'
+import { baseURL } from '~/config'
 import { CognitoUser } from '~cognito/models/Cognito/User'
 import { useUserStore } from '~cognito/stores/user'
 import { useCartStore } from '~cognito/stores/cart'
@@ -16,7 +16,6 @@ const urls = {
 
 const ignoredPaths = [
   urls.login,
-  urls.logout,
   urls.refresh,
   '/authtoken',
 ]
@@ -175,8 +174,8 @@ class CgnAxios {
   }
 
   async logout() {
-    this.userStore().logout()
     await this.axios.get(urls.logout)
+    this.userStore().logout()
     if (this.useCart) {
       useCartStore().getCart()
     }
