@@ -1,4 +1,5 @@
 import { CognitoBase } from './Base'
+import pagebuilderdata from '~/pagebuilderdata.json'
 
 class CognitoPageWidget {
   outer: string
@@ -67,6 +68,7 @@ class CognitoPage extends CognitoBase {
   title: string
   meta_description: string
   rows: CognitoPageRow[]
+  updated_at: string
 
   baseurl(): string {
     return '/api/v1/cognito/page'
@@ -80,7 +82,16 @@ class CognitoPage extends CognitoBase {
     this.title = ''
     this.meta_description = ''
     this.rows = []
+    this.updated_at = ''
     Object.assign(this, source)
+  }
+
+  preloadPage(url: string) {
+    const page = new CognitoPage(pagebuilderdata.data.find(e => e.slug == url))
+    if (!page.slug) {
+      page.updated_at = 'Try load from server'
+    }
+    return page
   }
 
   async loadPage(url: string, pagebuilder: boolean) {
