@@ -87,7 +87,7 @@ class CognitoPage extends CognitoBase {
   }
 
   preloadPage(url: string) {
-    const page = new CognitoPage(pagebuilderdata.data.find(e => e.slug == url))
+    const page = new CognitoPage(pagebuilderdata.data?.find(e => e.slug == url))
     if (!page.slug) {
       page.updated_at = 'Try load from server'
     }
