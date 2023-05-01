@@ -69,6 +69,7 @@ class CognitoPage extends CognitoBase {
   meta_description: string
   rows: CognitoPageRow[]
   updated_at: string
+  item_url: string
 
   baseurl(): string {
     return '/api/v1/cognito/page'
@@ -83,6 +84,7 @@ class CognitoPage extends CognitoBase {
     this.meta_description = ''
     this.rows = []
     this.updated_at = ''
+    this.item_url = ''
     Object.assign(this, source)
   }
 
@@ -93,16 +95,24 @@ class CognitoPage extends CognitoBase {
     return url[0]
   }
 
-  preloadPage(urlToLoad: string) {
+  getItemFromUrl(url: string | string[]): string {
+    if (typeof (url) === 'string') {
+      return ''
+    }
+    return url[1]
+  }
+
+  preloadPage(urlToLoad: string | string[]) {
     const url = this.resolveurlpath(urlToLoad)
     const page = new CognitoPage(pagebuilderdata.data?.find(e => e.slug == url))
     if (!page.slug) {
       page.updated_at = 'Try load from server'
     }
+    page.item_url = this.getItemFromUrl(urlToLoad)
     return page
   }
 
-  async loadPage(urlToLoad: string, pagebuilder: boolean) {
+  async loadPage(urlToLoad: string | string[], pagebuilder: boolean) {
     const url = this.resolveurlpath(urlToLoad)
     const data = {
       url,
@@ -110,7 +120,9 @@ class CognitoPage extends CognitoBase {
     if (pagebuilder) {
       data.pb = 1
     }
-    return await new CognitoPage().find_one(data)
+    const page = await new CognitoPage().find_one(data)
+    page.item_url = this.getItemFromUrl(urlToLoad)
+    return page
   }
 }
 
