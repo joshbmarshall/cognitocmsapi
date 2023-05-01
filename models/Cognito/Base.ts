@@ -6,6 +6,7 @@ class CognitoFindManyParams {
   page_size?: number
   page?: number
   group?: string
+  tag?: string
   parent?: string
   orderby?: string
   ids?: number[]
@@ -46,10 +47,13 @@ class CognitoBase {
     num_items: number
     num_pages: number
     data: any[]
+    mapped: any[]
   }> {
     const res = await $axios.get(this.baseurl(), {
       params: data,
     })
+    res.data.mapped = []
+    res.data.mapped.push(...res.data.data.map(e => new this.constructor(e)))
     return res.data
   }
 
