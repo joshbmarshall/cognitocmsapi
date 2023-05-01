@@ -4,7 +4,7 @@
       #{{ props.tag }}
     </div>
     <div v-for="post, index in posts" :key="post.id" class="mb-4">
-      <div class="text-right mb-1 text-sm">
+      <div class="mb-1 text-sm text-secondary-600 dark:text-secondary-400">
         {{ post.published_at.format(props.dateformat) }}
       </div>
       <div v-if="post.image">
@@ -41,7 +41,7 @@
           <router-link :to="`${props.feedurl}/${encodeURIComponent(tag)}`" class="hover:underline mr-1">#{{ tag }}</router-link>
         </span>
       </div>
-      <hr v-if="index < posts.length - 1" class="h-px mt-8 mb-2 bg-secondary-600 border-0 dark:bg-secondary-400">
+      <hr v-if="index < posts.length - 1" class="h-px mt-2 mb-12 bg-secondary-600 border-0 dark:bg-secondary-400">
     </div>
     <div v-if="has_more_pages">
       <cgn-button @click="loadMore">
