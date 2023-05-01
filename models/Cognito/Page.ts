@@ -86,7 +86,15 @@ class CognitoPage extends CognitoBase {
     Object.assign(this, source)
   }
 
-  preloadPage(url: string) {
+  resolveurlpath(url: string | string[]): string {
+    if (typeof (url) === 'string') {
+      return url
+    }
+    return url[0]
+  }
+
+  preloadPage(urlToLoad: string) {
+    const url = this.resolveurlpath(urlToLoad)
     const page = new CognitoPage(pagebuilderdata.data?.find(e => e.slug == url))
     if (!page.slug) {
       page.updated_at = 'Try load from server'
@@ -94,7 +102,8 @@ class CognitoPage extends CognitoBase {
     return page
   }
 
-  async loadPage(url: string, pagebuilder: boolean) {
+  async loadPage(urlToLoad: string, pagebuilder: boolean) {
+    const url = this.resolveurlpath(urlToLoad)
     const data = {
       url,
     }
