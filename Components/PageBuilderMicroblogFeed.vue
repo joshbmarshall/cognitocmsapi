@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div v-if="props.tag" class="py-3 text-xl font-bold">
+      #{{ props.tag }}
+    </div>
     <div v-for="post, index in posts" :key="post.id" class="mb-4">
       <div class="text-right mb-1 text-sm">
         {{ post.published_at.format(props.dateformat) }}
@@ -27,7 +30,7 @@
           <i-material-symbols:play-arrow-outline-rounded class="absolute top-0 w-full h-full" />
         </div>
       </div>
-      <div class="prose dark:prose-invert max-w-none my-3" v-html="post.content" />
+      <div class="prose dark:prose-invert max-w-none mt-3" v-html="post.content" />
       <div v-if="post.link">
         <cgn-button :url="post.link">
           {{ post.link_text }}
@@ -38,7 +41,7 @@
           <router-link :to="`${props.feedurl}/${encodeURIComponent(tag)}`" class="hover:underline mr-1">#{{ tag }}</router-link>
         </span>
       </div>
-      <hr v-if="index < posts.length - 1" class="mx-auto max-w-xs py-3 mt-4">
+      <hr v-if="index < posts.length - 1" class="h-px mt-8 mb-2 bg-secondary-600 border-0 dark:bg-secondary-400">
     </div>
     <div v-if="has_more_pages">
       <cgn-button @click="loadMore">
