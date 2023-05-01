@@ -4,20 +4,18 @@
       #{{ props.tag }}
     </div>
     <div v-for="post, index in posts" :key="post.id" class="mb-4">
-      <div class="mb-1 text-sm text-secondary-600 dark:text-secondary-400">
-        {{ post.published_at.format(props.dateformat) }}
-      </div>
-      <div v-if="post.image">
-        <cgn-lazy-image :image="post.image" class="w-full" />
-      </div>
-      <div v-if="post.video" class="relative cursor-pointer">
-        <div v-if="post.showVideo">
-          <video :src="post.video.file" :poster="post.video.slate" autoplay controls class="w-full" />
+      <div class="bg-white rounded-lg border border-slate-200 shadow-md dark:bg-slate-800 dark:border-slate-700">
+        <div v-if="post.image">
+          <cgn-lazy-image :image="post.image" class="w-full rounded-t-lg" />
         </div>
-        <div v-else @click="post.showVideo = true">
-          <img
-            class="
-                rounded-lg
+        <div v-if="post.video" class="relative cursor-pointer">
+          <div v-if="post.showVideo">
+            <video :src="post.video.file" :poster="post.video.slate" autoplay controls class="w-full rounded-t-lg" />
+          </div>
+          <div v-else @click="post.showVideo = true">
+            <img
+              class="
+                rounded-t-lg
                 shadow-lg
                 hover:shadow-xl
                 aspect-square
@@ -26,25 +24,28 @@
                 object-center
                 overflow-hidden
                 " :src="post.video.slate"
-          >
-          <i-material-symbols:play-arrow-outline-rounded class="absolute top-0 w-full h-full" />
+            >
+            <i-material-symbols:play-arrow-outline-rounded class="absolute top-0 w-full h-full" />
+          </div>
+        </div>
+        <div class="bg-slate-100 dark:bg-slate-700 p-1 text-sm text-right text-secondary-600 dark:text-secondary-400">
+          {{ post.published_at.format(props.dateformat) }}
+        </div>
+        <div class="prose dark:prose-invert text-secondary-700 dark:text-secondary-400 max-w-none p-6" v-html="post.content" />
+        <div v-if="post.link">
+          <cgn-button :url="post.link" class="mx-6">
+            {{ post.link_text }}
+          </cgn-button>
+        </div>
+        <div v-if="props.feedurl" class="text-right text-sm text-secondary-600 dark:text-secondary-400">
+          <span v-for="tag, idx in post.tags" :key="idx" class="mx-1">
+            <router-link :to="`${props.feedurl}/${encodeURIComponent(tag)}`" class="hover:underline mr-1">#{{ tag }}</router-link>
+          </span>
         </div>
       </div>
-      <div class="prose dark:prose-invert max-w-none mt-3" v-html="post.content" />
-      <div v-if="post.link">
-        <cgn-button :url="post.link">
-          {{ post.link_text }}
-        </cgn-button>
-      </div>
-      <div v-if="props.feedurl" class="text-right text-sm text-secondary-600 dark:text-secondary-400">
-        <span v-for="tag, idx in post.tags" :key="idx" class="mx-1">
-          <router-link :to="`${props.feedurl}/${encodeURIComponent(tag)}`" class="hover:underline mr-1">#{{ tag }}</router-link>
-        </span>
-      </div>
-      <hr v-if="index < posts.length - 1" class="h-px mt-2 mb-12 bg-secondary-600 border-0 dark:bg-secondary-400">
     </div>
     <div v-if="has_more_pages">
-      <cgn-button @click="loadMore">
+      <cgn-button class="w-full" @click="loadMore">
         Load More
       </cgn-button>
     </div>
