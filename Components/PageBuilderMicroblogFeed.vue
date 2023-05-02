@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="py-3 text-xl font-bold">
-      Lastest Posts
+    <div v-if="posts.length" class="py-3 text-xl font-bold">
+      Latest Posts
       <span v-if="props.tag">
         #{{ props.tag }}
       </span>
