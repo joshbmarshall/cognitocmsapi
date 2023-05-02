@@ -1,7 +1,10 @@
 <template>
   <div>
-    <div v-if="props.tag" class="py-3 text-xl font-bold">
-      #{{ props.tag }}
+    <div class="py-3 text-xl font-bold">
+      Lastest Posts
+      <span v-if="props.tag">
+        #{{ props.tag }}
+      </span>
     </div>
     <div v-for="post, index in posts" :key="post.id" class="mb-4">
       <div class="bg-white rounded-lg border border-slate-200 shadow-md dark:bg-slate-800 dark:border-slate-700">
