@@ -1,4 +1,4 @@
-import { format, parseISO } from 'date-fns'
+import { format, isSameDay, parseISO } from 'date-fns'
 class CognitoTime {
   time: Date
 
@@ -12,6 +12,10 @@ class CognitoTime {
 
   toDateString() {
     return format(this.time, 'Y-MM-dd')
+  }
+
+  isSameDay(compare_to: CognitoTime): boolean {
+    return isSameDay(this.time, compare_to.time)
   }
 }
 export { CognitoTime }
