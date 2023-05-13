@@ -103,13 +103,23 @@ class CognitoPage extends CognitoBase {
     return url[1]
   }
 
-  preloadPage(urlToLoad: string | string[]) {
+  async preloadPage(urlToLoad: string | string[]): Promise<CognitoPage> {
     const url = this.resolveurlpath(urlToLoad)
     const page = new CognitoPage(pagebuilderdata.data?.find(e => e.slug == url))
     if (!page.slug) {
       page.updated_at = 'Try load from server'
     }
     page.item_url = this.getItemFromUrl(urlToLoad)
+
+    // Use page in pinia if it exists
+    const pageStore = usePageStore()
+    if (!pageStore.pages) {
+      await pageStore.loadPages()
+    }
+    if (pageStore.pages) {
+      return new CognitoPage(pageStore.pages.find(e => url === e.slug))
+    }
+
     return page
   }
 
@@ -128,14 +138,6 @@ class CognitoPage extends CognitoBase {
     }
     if (pagebuilder) {
       data.pb = 1
-      // Use page in pinia if it exists
-      const pageStore = usePageStore()
-      if (!pageStore.pages) {
-        await pageStore.loadPages()
-      }
-      if (pageStore.pages) {
-        return new CognitoPage(pageStore.pages.find(e => url === e.slug))
-      }
     }
     const page = await new CognitoPage().find_one(data)
     page.item_url = this.getItemFromUrl(urlToLoad)
