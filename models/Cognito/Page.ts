@@ -71,6 +71,8 @@ class CognitoPage extends CognitoBase {
   rows: CognitoPageRow[]
   updated_at: string
   item_url: string
+  url_parameter_2: string
+  url_parameter_3: string
 
   baseurl(): string {
     return '/api/v1/cognito/page'
@@ -86,6 +88,8 @@ class CognitoPage extends CognitoBase {
     this.rows = []
     this.updated_at = ''
     this.item_url = ''
+    this.url_parameter_2 = ''
+    this.url_parameter_3 = ''
     Object.assign(this, source)
   }
 
