@@ -17,6 +17,19 @@ class CognitoTime {
     return format(this.time, 'Y-MM-dd')
   }
 
+  toHumanDateString(include_year: boolean) {
+    const formatting = `do MMM${include_year ? ' yyyy' : ''}`
+    return format(this.time, formatting)
+  }
+
+  toHumanTimeString() {
+    return format(this.time, 'h:mmaaa')
+  }
+
+  toHuman24HourTimeString() {
+    return format(this.time, 'HH:mm')
+  }
+
   isSameDay(compare_to: CognitoTime): boolean {
     return isSameDay(this.time, compare_to.time)
   }
