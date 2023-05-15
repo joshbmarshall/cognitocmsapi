@@ -43,6 +43,12 @@ class CognitoBase {
     return ''
   }
 
+  map(data: any[]): any {
+    const mapped = []
+    mapped.push(...data.map(e => new this.constructor(e)))
+    return mapped
+  }
+
   async find_many(data: CognitoFindManyParams): Promise<{
     num_items: number
     num_pages: number
@@ -52,9 +58,13 @@ class CognitoBase {
     const res = await $axios.get(this.baseurl(), {
       params: data,
     })
-    res.data.mapped = []
-    res.data.mapped.push(...res.data.data.map(e => new this.constructor(e)))
+    res.data.mapped = this.map(res.data.data)
     return res.data
+  }
+
+  async find_one_mapped(data: CognitoFindOneParams): Promise<any> {
+    const item = await this.find_one(data)
+    return new this.constructor(item)
   }
 
   async find_one(data: CognitoFindOneParams): Promise<any> {
