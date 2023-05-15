@@ -24,6 +24,7 @@
 </template>
 
 <script lang="ts">
+import { CognitoPage } from '~cognito/models/Cognito/Page'
 class Templatevars {
 }
 class Widget {
@@ -40,6 +41,10 @@ class Widget {
 const props = defineProps({
   widget: {
     type: Widget,
+    required: true,
+  },
+  currentPage: {
+    type: CognitoPage,
     required: true,
   },
   containedClass: {
