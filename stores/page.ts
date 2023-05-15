@@ -86,7 +86,7 @@ export const usePageStore = defineStore({
 
   persist: false,
   share: {
-    enable: true,
+    enable: false,
   },
 })
 
