@@ -17,6 +17,10 @@ class CognitoTime {
     return format(this.time, 'Y-MM-dd')
   }
 
+  toDateTimeString() {
+    return format(this.time, 'Y-MM-dd HH:mm:ss')
+  }
+
   toHumanDateString(include_year: boolean) {
     const formatting = `do MMM${include_year ? ' yyyy' : ''}`
     return format(this.time, formatting)
