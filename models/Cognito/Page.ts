@@ -70,6 +70,7 @@ class CognitoPage extends CognitoBase {
   meta_description: string
   rows: CognitoPageRow[]
   updated_at: string
+  full_url: string
   item_url: string
   url_parameter_2: string
   url_parameter_3: string
@@ -87,6 +88,7 @@ class CognitoPage extends CognitoBase {
     this.meta_description = ''
     this.rows = []
     this.updated_at = ''
+    this.full_url = ''
     this.item_url = ''
     this.url_parameter_2 = ''
     this.url_parameter_3 = ''

@@ -25,6 +25,7 @@ export const usePageStore = defineStore({
       })
     },
     setCurrentPageUrlFragments(urlToLoad: string | string[]) {
+      this.setCurrentPageFullUrl(urlToLoad)
       this.currentPage.item_url = this.getUrlParameter(urlToLoad, 1)
       this.currentPage.url_parameter_2 = this.getUrlParameter(urlToLoad, 2)
       this.currentPage.url_parameter_3 = this.getUrlParameter(urlToLoad, 3)
@@ -63,6 +64,13 @@ export const usePageStore = defineStore({
             this.setCurrentPageUrlFragments(urlToLoad)
           }
         })
+    },
+    setCurrentPageFullUrl(url: string | string[]) {
+      if (typeof (url) === 'string') {
+        this.currentPage.full_url = `/${url}`
+        return
+      }
+      this.currentPage.full_url = `/${url.join('/')}`
     },
     getUrlParameter(url: string | string[], parameter_number: number): string {
       if (typeof (url) === 'string') {

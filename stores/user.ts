@@ -43,6 +43,13 @@ export const useUserStore = defineStore({
         mobile_phone: '',
       }
     },
+    checkLoggedIn() {
+      if (this.user.id) {
+        return
+      }
+      this.setRedirectAfterLogin(usePageStore().currentPage?.full_url)
+      useRouter().replace('/login')
+    },
   },
 
   persist: true,
