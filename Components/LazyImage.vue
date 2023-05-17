@@ -48,6 +48,7 @@ const show_image = ref('')
 const last_image_url = ref('')
 const src = ref('')
 let lazytimer = 0
+const blank_webp = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA'
 
 const isInViewport = (el: HTMLElement) => {
   const rect = el.getBoundingClientRect()
@@ -107,12 +108,13 @@ const testWebP = (cbfn: Function) => {
   webP.onload = webP.onerror = function () {
     cbfn(webP.height === 2)
   }
-  webP.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA'
+  webP.src = blank_webp
 }
 const newImage = async () => {
   if (lazytimer) {
     clearInterval(lazytimer)
   }
+  src.value = blank_webp // clear while loading
   // Hide if already set
   let webp = props.webp
   let url = props.url
@@ -184,16 +186,10 @@ const newImage = async () => {
     }, 500)
   })
 }
-watch(() => props.image, () => {
+watch(() => props, () => {
   newImage()
-})
-
-watch(() => props.imageId, () => {
-  newImage()
-})
-
-watch(() => props.imageHash, () => {
-  newImage()
+}, {
+  deep: true,
 })
 
 onMounted(() => {
@@ -224,4 +220,3 @@ onServerPrefetch(async () => {
   }
 })
 </script>
-
