@@ -1,6 +1,7 @@
 import { CognitoImage } from './Image'
 import type { CognitoGroup } from './Group'
 import { CognitoBase } from './Base'
+import type { CognitoPageRow } from './Page'
 
 class CognitoArticle extends CognitoBase {
   author: string
@@ -13,6 +14,7 @@ class CognitoArticle extends CognitoBase {
   image: CognitoImage
   groups: CognitoGroup[]
   reading_time: number
+  rows: CognitoPageRow[]
 
   baseurl() {
     return '/api/v1/cognito/article'
@@ -30,6 +32,7 @@ class CognitoArticle extends CognitoBase {
     this.image = new CognitoImage()
     this.groups = []
     this.reading_time = 0
+    this.rows = []
     Object.assign(this, source)
   }
 }

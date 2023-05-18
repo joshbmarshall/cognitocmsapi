@@ -1,6 +1,5 @@
 import { CognitoBase } from './Base'
 import pagebuilderdata from '~/pagebuilderdata.json'
-import { usePageStore } from '~cognito/stores/page'
 
 class CognitoPageWidget {
   outer: string
@@ -118,12 +117,12 @@ class CognitoPage extends CognitoBase {
     page.item_url = this.getItemFromUrl(urlToLoad)
 
     // Use page in pinia if it exists
-    const pageStore = usePageStore()
-    if (!pageStore.pages) {
-      await pageStore.loadPages()
+    const pagesStore = usePagesStore()
+    if (!pagesStore.pages) {
+      await pagesStore.loadPages()
     }
-    if (pageStore.pages) {
-      return new CognitoPage(pageStore.pages.find(e => url === e.slug))
+    if (pagesStore.pages) {
+      return new CognitoPage(pagesStore.pages.find(e => url === e.slug))
     }
 
     return page
@@ -137,7 +136,7 @@ class CognitoPage extends CognitoBase {
     return data.data
   }
 
-  async loadPage(urlToLoad: string | string[], pagebuilder: boolean): CognitoPage {
+  async loadPage(urlToLoad: string | string[], pagebuilder: boolean): Promise<CognitoPage> {
     const url = this.resolveurlpath(urlToLoad)
     const data = {
       url,
@@ -151,4 +150,4 @@ class CognitoPage extends CognitoBase {
   }
 }
 
-export { CognitoPage }
+export { CognitoPage, CognitoPageRow }

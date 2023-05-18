@@ -24,6 +24,10 @@
   <div v-else-if="widget.outer == 'core/link_children'" :class="props.uncontainedClass">
     <cgn-page-builder-link-children :templatevar="widget.templatevar" />
   </div>
+
+  <div v-else-if="useUserStore().user.id">
+    Unknown {{ widget.outer }}
+  </div>
 </template>
 
 <script lang="ts">
