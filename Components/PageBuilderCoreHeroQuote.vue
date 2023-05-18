@@ -101,13 +101,16 @@ const imageClass = computed(() => {
 const url = ref('')
 const loadImage = async () => {
   if (props.templatevar.background_image) {
+    url.value = props.templatevar.background_image
     await new CognitoImage().find_one({
       url: props.templatevar.background_image,
       image_aspect: '16x9',
       image_width: 1920,
     })
       .then((data) => {
-        url.value = data.url
+        if (data.url) {
+          url.value = data.url
+        }
       })
   }
 }
