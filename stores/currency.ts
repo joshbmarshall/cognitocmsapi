@@ -1,7 +1,8 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { Tzlocator, getBrowserTimezone } from 'tzlocator'
+import pkg from 'tzlocator'
 import { CognitoTime } from '~cognito/models/Cognito/Time'
 import { $axios } from '~cognito/plugins/axios'
+const { Tzlocator, getBrowserTimezone } = pkg
 
 export const useCurrencyStore = defineStore({
   id: 'currency',
@@ -21,6 +22,9 @@ export const useCurrencyStore = defineStore({
 
   actions: {
     async initialise() {
+      if (typeof window == 'undefined') {
+        return
+      }
       let eur = await $axios.get('https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/eur.json')
       if (!eur) {
         eur = await $axios.get('https://raw.githubusercontent.com/fawazahmed0/currency-api/1/latest/currencies/eur.json')
