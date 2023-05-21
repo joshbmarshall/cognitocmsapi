@@ -29,6 +29,7 @@
 
 <script setup lang="ts">
 import { CognitoMailerlite } from '~cognito/models/Cognito/Mailerlite'
+import { NewsletterSubscriber } from '~cognito/models/Newsletter/Subscriber'
 
 const props = defineProps({
   omitFirstName: {
@@ -51,6 +52,10 @@ const props = defineProps({
     type: String,
     default: 'grid md:grid-flow-col auto-cols-max gap-2',
   },
+  newsletterType: {
+    type: String,
+    default: 'mailerlite',
+  },
 })
 
 const signup = ref({
@@ -68,16 +73,30 @@ const submitted = () => {
   success.value = false
   fail.value = false
 
-  new CognitoMailerlite().subscribe(signup.value)
-    .then((data: any) => {
-      is_loading.value = false
-      if (data.success) {
-        success.value = true
-        message.value = props.successMessage
-        return
-      }
-      fail.value = true
-      message.value = data.error
-    })
+  if (props.newsletterType === 'mailerlite') {
+    new CognitoMailerlite().subscribe(signup.value)
+      .then((data: any) => {
+        is_loading.value = false
+        if (data.success) {
+          success.value = true
+          message.value = props.successMessage
+          return
+        }
+        fail.value = true
+        message.value = data.error
+      })
+  } else {
+    new NewsletterSubscriber().subscribe(signup.value)
+      .then((data: any) => {
+        is_loading.value = false
+        if (data.success) {
+          success.value = true
+          message.value = props.successMessage
+          return
+        }
+        fail.value = true
+        message.value = data.error
+      })
+  }
 }
 </script>
