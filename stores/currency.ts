@@ -1,8 +1,7 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import pkg from 'tzlocator'
+import { Tzlocator, getBrowserTimezone } from 'tzlocator'
 import { CognitoTime } from '~cognito/models/Cognito/Time'
 import { $axios } from '~cognito/plugins/axios'
-const { Tzlocator, getBrowserTimezone } = pkg
 
 export const useCurrencyStore = defineStore({
   id: 'currency',
