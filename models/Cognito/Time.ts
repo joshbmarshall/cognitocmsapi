@@ -1,12 +1,36 @@
-import { differenceInCalendarDays, format, isSameDay, parseISO } from 'date-fns'
+import { addMinutes, differenceInCalendarDays, format, isFuture, isPast, isSameDay, parseISO } from 'date-fns'
 class CognitoTime {
   time: Date
 
   constructor(isoformat?: any) {
-    this.time = parseISO(isoformat)
+    if (typeof isoformat == 'object') {
+      this.time = isoformat
+    } else {
+      this.time = parseISO(isoformat)
+    }
     if (this.time == 'Invalid Date') {
       this.time = new Date()
     }
+  }
+
+  addMinutes(minutes: number): CognitoTime {
+    return new CognitoTime(addMinutes(this.time, minutes))
+  }
+
+  diffInDays(compare_to: CognitoTime): number {
+    return differenceInCalendarDays(this.time, compare_to.time)
+  }
+
+  isFuture(): boolean {
+    return isFuture(this.time)
+  }
+
+  isPast(): boolean {
+    return isPast(this.time)
+  }
+
+  isSameDay(compare_to: CognitoTime): boolean {
+    return isSameDay(this.time, compare_to.time)
   }
 
   format(fmt: string) {
@@ -32,14 +56,6 @@ class CognitoTime {
 
   toHuman24HourTimeString() {
     return format(this.time, 'HH:mm')
-  }
-
-  isSameDay(compare_to: CognitoTime): boolean {
-    return isSameDay(this.time, compare_to.time)
-  }
-
-  diffInDays(compare_to: CognitoTime): number {
-    return differenceInCalendarDays(this.time, compare_to.time)
   }
 }
 export { CognitoTime }
