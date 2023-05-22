@@ -1,5 +1,5 @@
 <template>
-  <div class="relative z-10" @close="open = false">
+  <div v-show="open" class="relative z-10" @close="open = false">
     <div class="fixed inset-0" />
 
     <div class="fixed inset-0 overflow-hidden">
