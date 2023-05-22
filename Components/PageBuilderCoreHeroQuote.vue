@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-2 text-white mx-auto lg:max-w-none lg:row-start-1 lg:col-start-1">
+  <div class="space-y-2 mx-auto lg:max-w-none lg:row-start-1 lg:col-start-1">
     <div :class="outerClass" class="relative">
       <div class="absolute inset-0 bg-center bg-cover" :class="imageClass" :style="{ 'background-image': `url(${url})` }" />
       <div class="relative p-8 text-center flex flex-col justify-center items-center h-[500px]" :class="textClass">
