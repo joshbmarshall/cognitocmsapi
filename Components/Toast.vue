@@ -32,9 +32,9 @@
       </template>
       <template #button-footer>
         <div class="px-4 py-1 sm:py-0">
-          <ss-button @click="close()">
+          <cgn-button color-primary @click="close()">
             Close
-          </ss-button>
+          </cgn-button>
         </div>
       </template>
     </cgn-modal>
