@@ -8,8 +8,16 @@
       <i-heroicons-solid:x v-if="showPageEditor" class="absolute right-1 top-1 cursor-pointer" @click="showPageEditor = false" />
       <div class="p-2">
         Edit page
+        <div v-for="row in pageStore.currentPage.rows" :key="row.id">
+          <div v-for="block in row.blocks" :key="block.id">
+            <div v-for="widget, idx in block.widgets" :key="idx">
+              <div v-for="templatevar, tvname in widget.templatevar" :key="tvname">
+                <cgn-widget-edit v-model="widget.templatevar[tvname]" :widget-name="widget.outer" :var-name="tvname" :widgets="widgets" />
+              </div>
+            </div>
+          </div>
+        </div>
         <cgn-form-dropdown v-model="widgetName" :options="widgetList" label="Widget" />
-        <pre class="text-xs">{{ selectedWidget }}</pre>
       </div>
     </div>
   </div>
@@ -36,8 +44,9 @@ const widgetList = computed(() => {
 })
 const widgetName = ref('')
 const selectedWidget = computed(() => {
-  return widgets.value.filter(e => e.name == widgetName.value)
+  return widgets.value.find(e => e.name == widgetName.value)
 })
+const pageStore = usePageStore()
 
 onMounted(async () => {
   new CognitoWidget().getList().then((data) => {
