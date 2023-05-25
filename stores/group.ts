@@ -10,17 +10,19 @@ export const useGroupStore = defineStore({
     return {
       image_aspect: '1x1',
       image_width: 300,
-      groups: <CognitoGroup[]>[],
+      groups_encoded: '[]',
       lastUpdate: new CognitoTime('2000-01-01').toDateTimeString(),
     }
   },
 
   actions: {
     async getGroup(model: string, url: string): Promise<CognitoGroup> {
-      if (this.groups.length == 0) {
+      let groups = JSON.parse(this.groups_encoded)
+      if (groups.length == 0) {
         await this.loadGroups()
+        groups = JSON.parse(this.groups_encoded)
       }
-      const group = this.groups.find(e => e.url == url && e.model == model)
+      const group = groups.find(e => e.url == url && e.model == model)
       return Promise.resolve(new CognitoGroup(group))
     },
     async loadGroups() {
@@ -30,7 +32,7 @@ export const useGroupStore = defineStore({
           image_width: this.image_width,
         },
       })
-      this.groups = res.data.data // For some reason this causes a Proxy object could not be cloned error
+      this.groups_encoded = JSON.stringify(res.data.data)
       this.lastUpdate = new CognitoTime('').toDateTimeString()
     },
   },
