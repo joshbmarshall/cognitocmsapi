@@ -3,39 +3,34 @@ import { CognitoGroup } from '~cognito/models/Cognito/Group'
 import { $axios } from '~cognito/plugins/axios'
 import { CognitoTime } from '~cognito/models/Cognito/Time'
 
-export const useGroupStore = defineStore({
-  id: 'group',
-
+export const useGroupStore = defineStore('group', {
   state: () => {
     return {
       image_aspect: '1x1',
       image_width: 300,
-      groups_encoded: '[]',
+      groups: [],
       lastUpdate: new CognitoTime('2000-01-01').toDateTimeString(),
     }
   },
 
   actions: {
-    async decodeGroups(): Promise<CognitoGroup[]> {
-      let groups = JSON.parse(this.groups_encoded)
-      if (groups.length == 0) {
+    async loadGroupsIfNone() {
+      if (this.groups.length == 0) {
         await this.loadGroups()
-        groups = JSON.parse(this.groups_encoded)
       }
-      return groups
     },
     async getGroup(model: string, url: string): Promise<CognitoGroup> {
-      const groups = await this.decodeGroups()
-      const group = groups.find(e => e.url == url && e.model == model)
+      await this.loadGroupsIfNone()
+      const group = this.groups.find(e => e.url == url && e.model == model)
       return new CognitoGroup(group)
     },
     async getParents(model: string, lft: number, rgt: number): Promise<CognitoGroup[]> {
-      const groups = await this.decodeGroups()
-      return new CognitoGroup().map(groups.filter(e => e.model == model && e.lft < lft && e.rgt > rgt))
+      await this.loadGroupsIfNone()
+      return new CognitoGroup().map(this.groups.filter(e => e.model == model && e.lft < lft && e.rgt > rgt))
     },
     async getChildren(model: string, lft: number, rgt: number): Promise<CognitoGroup[]> {
-      const groups = await this.decodeGroups()
-      return groups.filter(e => e.model == model && e.lft > lft && e.rgt < rgt)
+      await this.loadGroupsIfNone()
+      return new CognitoGroup().map(this.groups.filter(e => e.model == model && e.lft > lft && e.rgt < rgt))
     },
     async loadGroups() {
       const res = await $axios.get('/api/v1/cognito/group', {
@@ -44,7 +39,7 @@ export const useGroupStore = defineStore({
           image_width: this.image_width,
         },
       })
-      this.groups_encoded = JSON.stringify(res.data.data)
+      this.groups = res.data.data
       this.lastUpdate = new CognitoTime('').toDateTimeString()
     },
   },
