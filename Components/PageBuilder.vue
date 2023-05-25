@@ -32,6 +32,7 @@
 
 <script lang="ts">
 import { CognitoPage } from '~cognito/models/Cognito/Page'
+
 class Templatevars {
 }
 class Widget {
