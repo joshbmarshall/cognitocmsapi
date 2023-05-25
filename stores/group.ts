@@ -16,14 +16,26 @@ export const useGroupStore = defineStore({
   },
 
   actions: {
-    async getGroup(model: string, url: string): Promise<CognitoGroup> {
+    async decodeGroups(): Promise<CognitoGroup[]> {
       let groups = JSON.parse(this.groups_encoded)
       if (groups.length == 0) {
         await this.loadGroups()
         groups = JSON.parse(this.groups_encoded)
       }
+      return groups
+    },
+    async getGroup(model: string, url: string): Promise<CognitoGroup> {
+      const groups = await this.decodeGroups()
       const group = groups.find(e => e.url == url && e.model == model)
-      return Promise.resolve(new CognitoGroup(group))
+      return new CognitoGroup(group)
+    },
+    async getParents(model: string, lft: number, rgt: number): Promise<CognitoGroup[]> {
+      const groups = await this.decodeGroups()
+      return new CognitoGroup().map(groups.filter(e => e.model == model && e.lft < lft && e.rgt > rgt))
+    },
+    async getChildren(model: string, lft: number, rgt: number): Promise<CognitoGroup[]> {
+      const groups = await this.decodeGroups()
+      return groups.filter(e => e.model == model && e.lft > lft && e.rgt < rgt)
     },
     async loadGroups() {
       const res = await $axios.get('/api/v1/cognito/group', {
