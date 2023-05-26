@@ -12,15 +12,15 @@
   >
     <div class="space-y-3">
       <div v-for="variation in variations" :key="variation.name" class="flex flex-col">
-        <FormDropdown
+        <cgn-form-dropdown
           v-model="variation.selected"
           :label="variation.name"
           :options="variation.options"
         />
       </div>
       <div v-for="addon in addons" :key="addon.id" class="flex flex-col">
-        <FormCheckbox v-if="addon.type == 'Checkbox'" v-model="addon.selected" :label="addon.name" />
-        <FormDropdown
+        <cgn-form-checkbox v-if="addon.type == 'Checkbox'" v-model="addon.selected" :label="addon.name" />
+        <cgn-form-dropdown
           v-if="addon.type == 'Dropdown'"
           v-model="addon.selected"
           :label="addon.name"
@@ -147,7 +147,7 @@ const selected_variations = computed<{
   return selected_variations
 })
 
-const searchsku = () => {
+function searchsku() {
   if (!props.product.id) {
     return
   }
@@ -174,17 +174,17 @@ watch(() => [
   searchsku()
 }, { deep: true })
 
-const increaseQty = () => {
+function increaseQty() {
   qty.value++
 }
-const decreaseQty = () => {
+function decreaseQty() {
   qty.value--
   if (qty.value < 1) {
     qty.value = 1
   }
 }
 
-const selectVariation = (variation_id: number, option_id: string) => {
+function selectVariation(variation_id: number, option_id: string) {
   for (let index = 0; index < variations.value.length; index++) {
     const variation = variations.value[index]
     if (variation_id == variation.id) {
@@ -193,7 +193,7 @@ const selectVariation = (variation_id: number, option_id: string) => {
   }
 }
 
-const addToCart = async () => {
+async function addToCart() {
   adding_to_cart.value = true
   await cartStore.addToCart(selected_sku.value, qty.value, selected_addons.value)
   adding_to_cart.value = false
