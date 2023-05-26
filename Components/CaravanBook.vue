@@ -105,12 +105,12 @@ const bookSiteOptions = computed(() => {
   return quotes.value.available_sites.map((e) => {
     return {
       id: e.id,
-      name: `${e.name} - $${quotes.value.prices.find(f => f.site_type_id === e.type_id)?.amount.toFixed(2)}`,
+      name: `${e.name} - $${quotes.value.prices.find(f => f.site_type_id === e.type_id)?.amount.toFixed(2)} ${e.is_closed ? '(Site Closed)' : ''}`,
     }
   })
 })
 
-const bookNow = () => {
+function bookNow() {
   payErrorMessage.value = ''
   new CaravanBooking().payNow(bookform.value)
     .then((data) => {
@@ -123,7 +123,7 @@ const bookNow = () => {
     })
 }
 
-const searchAvailability = () => {
+function searchAvailability() {
   no_availability.value = false
   new CaravanPriceQuote().searchAvailability(quoteform.value)
     .then((data) => {

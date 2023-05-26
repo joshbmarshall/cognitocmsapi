@@ -48,10 +48,12 @@ class CaravanQuoteSite {
   id: number
   type_id: number
   name: string
+  is_closed: boolean
   constructor() {
     this.id = 0
     this.type_id = 0
     this.name = ''
+    this.is_closed = false
   }
 }
 
