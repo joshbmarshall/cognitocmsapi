@@ -58,6 +58,7 @@
 
 <script setup>
 import { vMaska } from 'maska'
+
 const props = defineProps({
   suggestPassword: {
     type: Boolean,
@@ -140,7 +141,7 @@ const buttonClick = e => emit('buttonClick')
 const showPassword = ref(false)
 const generated_password = ref('')
 
-const generatePassword = () => {
+function generatePassword() {
   const length = 8
   const charset
     = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
@@ -149,7 +150,7 @@ const generatePassword = () => {
   }
 }
 
-const setPassword = () => {
+function setPassword() {
   emit('update:modelValue', generated_password.value)
 }
 
@@ -159,7 +160,7 @@ watch(() => props.focussed, () => {
   }
 })
 
-const toggleVisible = () => {
+function toggleVisible() {
   showPassword.value = !showPassword.value
 }
 const hasIcon = computed(() => {
