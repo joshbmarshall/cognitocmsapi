@@ -26,7 +26,7 @@
           :label="addon.name"
           :options="addon.options"
         />
-        <ss-input-text
+        <cgn-form-input-text
           v-if="addon.type == 'Qty'"
           v-model="addon.selected"
           type="number"
@@ -34,9 +34,9 @@
           :max-amount="addon.max_qty"
           :label="addon.name"
         />
-        <ss-input-text v-if="addon.type == 'Text'" v-model="addon.selected" :label="addon.name" />
+        <cgn-form-input-text v-if="addon.type == 'Text'" v-model="addon.selected" :label="addon.name" />
       </div>
-      <ss-input-text v-model="qty" label="Qty" type="number" min-amount="1" />
+      <cgn-form-input-text v-model="qty" label="Qty" type="number" min-amount="1" />
       <div>
         <div
           v-if="price_each"
