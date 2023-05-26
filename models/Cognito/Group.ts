@@ -35,12 +35,23 @@ class CognitoGroup extends CognitoBase {
     return await useGroupStore().getGroup(model, url)
   }
 
+  async getTopLevelGroup(model: string): Promise<CognitoGroup> {
+    return await useGroupStore().getTopLevelGroup(model)
+  }
+
   async getParents(): Promise<CognitoGroup[]> {
     return useGroupStore().getParents(this.model, this.lft, this.rgt)
   }
 
-  async getChildren(): Promise<CognitoGroup[]> {
-    return useGroupStore().getChildren(this.model, this.lft, this.rgt)
+  async getChildren(depth?: number): Promise<CognitoGroup[]> {
+    if (typeof depth == 'undefined') {
+      depth = 99999
+    }
+    return useGroupStore().getChildren(this.model, this.lft, this.rgt, this.level + depth)
+  }
+
+  isRoot(): boolean {
+    return this.id == this.root
   }
 
   // deprecated

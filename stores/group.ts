@@ -19,6 +19,11 @@ export const useGroupStore = defineStore('group', {
         await this.loadGroups()
       }
     },
+    async getTopLevelGroup(model: string): Promise<CognitoGroup> {
+      await this.loadGroupsIfNone()
+      const group = this.groups.find(e => e.root == e.id && e.model == model)
+      return new CognitoGroup(group)
+    },
     async getGroup(model: string, url: string): Promise<CognitoGroup> {
       await this.loadGroupsIfNone()
       const group = this.groups.find(e => e.url == url && e.model == model)
@@ -28,9 +33,9 @@ export const useGroupStore = defineStore('group', {
       await this.loadGroupsIfNone()
       return new CognitoGroup().map(this.groups.filter(e => e.model == model && e.lft < lft && e.rgt > rgt))
     },
-    async getChildren(model: string, lft: number, rgt: number): Promise<CognitoGroup[]> {
+    async getChildren(model: string, lft: number, rgt: number, maxlevel: number): Promise<CognitoGroup[]> {
       await this.loadGroupsIfNone()
-      return new CognitoGroup().map(this.groups.filter(e => e.model == model && e.lft > lft && e.rgt < rgt))
+      return new CognitoGroup().map(this.groups.filter(e => e.model == model && e.lft > lft && e.rgt < rgt && e.level <= maxlevel))
     },
     async loadGroups() {
       const res = await $axios.get('/api/v1/cognito/group', {
