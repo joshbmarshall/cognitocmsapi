@@ -1,7 +1,7 @@
 <template>
   <span v-if="cartStore.hasCartItems">
     <span class="relative inline-block cursor-pointer" @click="dropdownToggle()">
-      <i-heroicons-solid:shopping-cart class="mr-2 mt-2 dark:text-gray-400" />
+      <i-heroicons-solid:shopping-cart class="mr-2 mt-2" />
       <span
         class="absolute top-0 right-0 w-4 h-4 text-xs font-bold text-center text-white bg-red-500 dark:bg-red-600 rounded-full"
       >{{ cartStore.cartitemCount }}</span>
