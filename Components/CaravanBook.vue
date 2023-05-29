@@ -62,9 +62,26 @@
           <cgn-alert-danger v-if="payErrorMessage">
             {{ payErrorMessage }}
           </cgn-alert-danger>
-          <cgn-button v-if="selectedAmount" color-brand fullwidth>
-            Pay ${{ selectedAmount.toFixed(2) }} Now
-          </cgn-button>
+          <div v-if="selectedAmount">
+            <div class="text-xl font-bold text-center my-4">
+              Total: ${{ selectedAmount.toFixed(2) }}
+            </div>
+            <cgn-form-checkbox v-if="isAdmin" v-model="bookform.paid" label="This booking has already been paid" />
+            <cgn-button color-brand fullwidth>
+              <template v-if="isAdmin">
+                Create Booking and send
+                <template v-if="bookform.paid">
+                  Receipt
+                </template>
+                <template v-else>
+                  Invoice
+                </template>
+              </template>
+              <template v-else>
+                Pay Now
+              </template>
+            </cgn-button>
+          </div>
         </form>
       </div>
     </div>
@@ -97,6 +114,9 @@ const price_from = computed(() => {
   return Math.min(...quotes.value.prices.map(e => e.amount))
 })
 
+const isAdmin = computed(() => {
+  return useUserStore().user.is_admin
+})
 const selectedAmount = computed(() => {
   return quotes.value.prices.find(f => f.site_type_id === quotes.value.available_sites.find(e => e.id === bookform.value.site_id)?.type_id)?.amount
 })

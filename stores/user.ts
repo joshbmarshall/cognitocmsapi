@@ -13,6 +13,7 @@ export const useUserStore = defineStore({
         id: 0,
         first_name: '',
         last_name: '',
+        is_admin: false,
         email: '',
         mobile_phone: '',
       },
@@ -39,6 +40,7 @@ export const useUserStore = defineStore({
         id: 0,
         first_name: '',
         last_name: '',
+        is_admin: false,
         email: '',
         mobile_phone: '',
       }
