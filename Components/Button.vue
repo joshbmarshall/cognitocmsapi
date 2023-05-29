@@ -78,7 +78,7 @@ const props = defineProps({
 })
 
 const buttonClass = computed(() => {
-  let classes = 'cgn-button text-white'
+  let classes = 'cgn-button'
   classes += props.fullwidth ? ' block w-full' : ' inline-block'
 
   if (props.disabled) {
