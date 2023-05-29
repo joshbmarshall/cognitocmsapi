@@ -57,7 +57,7 @@
           <cgn-form-input v-model="bookform.suburb" label="Suburb" required />
           <cgn-form-input v-model="bookform.state" label="State" required />
           <cgn-form-input v-model="bookform.registration" label="Caravan Registration" required />
-          <cgn-form-input v-model="bookform.car_registration" label="Car Registration" required />
+          <cgn-form-input v-model="bookform.car_registration" label="Car Registration" />
           <cgn-form-input v-model="bookform.est_arrival_time" type="time" label="Estimated Arrival Time" required />
           <cgn-alert-danger v-if="payErrorMessage">
             {{ payErrorMessage }}
