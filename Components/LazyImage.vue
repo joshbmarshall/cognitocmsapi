@@ -50,7 +50,7 @@ const src = ref('')
 let lazytimer = 0
 const blank_webp = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA'
 
-const isInViewport = (el: HTMLElement) => {
+function isInViewport(el: HTMLElement) {
   const rect = el.getBoundingClientRect()
   if (rect.width == 0) {
     return false
@@ -66,7 +66,7 @@ const isInViewport = (el: HTMLElement) => {
             && rect.left <= screenwidth
   )
 }
-const checkVisible = async () => {
+async function checkVisible() {
   if (!lazyelement.value) {
     clearInterval(lazytimer)
     return
@@ -103,14 +103,14 @@ const checkVisible = async () => {
   clearInterval(lazytimer)
 }
 
-const testWebP = (cbfn: Function) => {
+function testWebP(cbfn: Function) {
   const webP = new Image()
   webP.onload = webP.onerror = function () {
     cbfn(webP.height === 2)
   }
   webP.src = blank_webp
 }
-const newImage = async () => {
+async function newImage() {
   if (lazytimer) {
     clearInterval(lazytimer)
   }
@@ -158,6 +158,9 @@ const newImage = async () => {
     // Load transparent png
     src.value = placeholder
     await new Promise((resolve) => {
+      if (!lazyelement.value) {
+        return
+      }
       lazyelement.value.onload = resolve
     })
   }
@@ -165,6 +168,9 @@ const newImage = async () => {
     // Load standard image
     src.value = url
     await new Promise((resolve) => {
+      if (!lazyelement.value) {
+        return
+      }
       lazyelement.value.onload = resolve
     })
   }
