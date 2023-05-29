@@ -45,8 +45,12 @@ class CognitoUser {
     if (!api) {
       api = $axios
     }
-    const res = await api.get(`${this.baseurl()}/authUser`)
-    return res.data.user
+    try {
+      const res = await api.get(`${this.baseurl()}/authUser`)
+      return res.data.user
+    } catch (error) {
+      return new CognitoUser()
+    }
   }
 
   async recoverPassword(email: string): Promise<{
