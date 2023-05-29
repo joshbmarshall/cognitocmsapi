@@ -44,11 +44,11 @@ const props = defineProps({
 const lazyelement = ref()
 
 let use_webp = false
+const blank_webp = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA'
 const show_image = ref('')
 const last_image_url = ref('')
-const src = ref('')
+const src = ref(blank_webp)
 let lazytimer = 0
-const blank_webp = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA'
 
 function isInViewport(el: HTMLElement) {
   const rect = el.getBoundingClientRect()
@@ -111,10 +111,14 @@ function testWebP(cbfn: Function) {
   webP.src = blank_webp
 }
 async function newImage() {
+  // Set/Reset
+  show_image.value = ''
+  last_image_url.value = ''
+  src.value = blank_webp // clear while loading
   if (lazytimer) {
     clearInterval(lazytimer)
   }
-  src.value = blank_webp // clear while loading
+
   // Hide if already set
   let webp = props.webp
   let url = props.url
