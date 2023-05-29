@@ -27,7 +27,7 @@ export const useUserStore = defineStore({
       this.refresh_token = token
     },
     setUser(user: any) {
-      this.user = user
+      this.user = JSON.parse(JSON.stringify(user))
     },
     setRedirectAfterLogin(path: string) {
       this.redirect_after_login = path
