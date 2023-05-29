@@ -21,6 +21,9 @@ export const usePagesStore = defineStore({
       this.pages = data.data
       this.lastUpdate = new CognitoTime('').toDateTimeString()
     },
+    findById(id): CognitoPage {
+      return new CognitoPage(this.pages.find(e => e.id == id))
+    },
   },
 
   persist: true,

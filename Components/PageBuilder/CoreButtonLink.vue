@@ -7,8 +7,9 @@
     :color-info="props.templatevar.button_colour == 'inf'"
     :color-warning="props.templatevar.button_colour == 'wrn'"
     :color-danger="props.templatevar.button_colour == 'dng'"
-    :url="props.templatevar.button_url"
+    :url="button_url"
     :newtab="props.templatevar.open_in_new_tab"
+    :fullwidth="props.templatevar.full_width"
   >
     {{ props.templatevar.button_text }}
   </cgn-button>
@@ -22,6 +23,7 @@ class Templatevars {
   link_to_page?: string
   link_to_document?: string
   open_in_new_tab?: boolean
+  full_width?: boolean
 }
 </script>
 
@@ -33,5 +35,13 @@ const props = defineProps({
   },
 })
 
-// TODO link to page or document
+const button_url = computed(() => {
+  if (props.templatevar.link_to_document) {
+    // TODO link to document
+  }
+  if (props.templatevar.link_to_page) {
+    return `/${usePagesStore().findById(props.templatevar.link_to_page)?.slug}`
+  }
+  return props.templatevar.button_url
+})
 </script>
