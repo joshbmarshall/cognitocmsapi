@@ -1,6 +1,7 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { CognitoPage } from '~cognito/models/Cognito/Page'
 import { CognitoTime } from '~cognito/models/Cognito/Time'
+import { CognitoDomain } from '~cognito/models/Cognito/Domain'
 
 export const usePagesStore = defineStore({
   id: 'pages',
@@ -8,6 +9,7 @@ export const usePagesStore = defineStore({
   state: () => {
     return {
       pages: <CognitoPage[]>[],
+      currentDomain: new CognitoDomain(),
       lastUpdate: new CognitoTime('2000-01-01').toDateTimeString(),
     }
   },
@@ -19,6 +21,7 @@ export const usePagesStore = defineStore({
         pb: 1,
       })
       this.pages = data.data
+      this.currentDomain = await new CognitoDomain().currentDomain()
       this.lastUpdate = new CognitoTime('').toDateTimeString()
     },
     findById(id): CognitoPage {
