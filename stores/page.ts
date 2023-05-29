@@ -50,12 +50,17 @@ export const usePageStore = defineStore({
       this.setCurrentPageUrlFragments(urlToLoad)
 
       // Check if there is a newer version
+      const page_check_slug = this.currentPage.slug
       setTimeout(() => {
         new CognitoPage().find_one({
           url,
           pb: 1,
         })
           .then((data) => {
+            // Check if currentPage has changed since loading (ie navigated to another page)
+            if (this.currentPage.slug != page_check_slug) {
+              return
+            }
             if (data.updated_at != this.currentPage.updated_at) {
               this.currentPage.slug = ''
               this.currentPage = data
