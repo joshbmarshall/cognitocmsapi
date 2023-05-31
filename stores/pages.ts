@@ -9,7 +9,7 @@ export const usePagesStore = defineStore({
   state: () => {
     return {
       pages: <CognitoPage[]>[],
-      currentDomain: new CognitoDomain(),
+      currentDomain: JSON.parse(JSON.stringify(new CognitoDomain())),
       lastUpdate: new CognitoTime('2000-01-01').toDateTimeString(),
     }
   },
