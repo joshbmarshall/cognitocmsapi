@@ -21,6 +21,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { baseURL, siteURL } from '~/config'
+import { logout } from '~cognito/plugins/axios'
 
 const props = defineProps({
   page: {
@@ -70,6 +71,10 @@ onMounted(() => {
   loading.value = false
   if (props.page == 'cms') {
     window.location = `${baseURL}/cms`
+  }
+  if (props.page == 'logout') {
+    logout()
+    useRouter().push('/')
   }
 })
 onServerPrefetch(async () => {
