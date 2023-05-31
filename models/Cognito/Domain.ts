@@ -6,6 +6,7 @@ class CognitoDomain extends CognitoBase {
   name: string
   favicon: CognitoImage
   theme_colour: string
+  dark_theme_colour: string
   seo_title_suffix: string
   seo_title_prefix: string
   google_analytics_key: string
@@ -40,6 +41,7 @@ class CognitoDomain extends CognitoBase {
     this.name = ''
     this.favicon = new CognitoImage()
     this.theme_colour = ''
+    this.dark_theme_colour = ''
     this.seo_title_prefix = ''
     this.seo_title_suffix = ''
     this.google_analytics_key = ''
