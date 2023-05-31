@@ -39,7 +39,6 @@
 
 <script setup lang="ts">
 import { login } from '~cognito/plugins/axios'
-import { sitename } from '~/config'
 
 const router = useRouter()
 const username = ref('')
@@ -52,14 +51,4 @@ async function userLogin() {
   isWrongPassword.value = !(await login(username.value, password.value, router))
   isLoading.value = false
 }
-
-useHead({
-  title: `Log in - ${sitename}`,
-  meta: [
-    {
-      name: 'description',
-      content: '',
-    },
-  ],
-})
 </script>

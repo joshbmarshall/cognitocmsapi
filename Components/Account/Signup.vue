@@ -49,7 +49,6 @@
 
 <script setup lang="ts">
 import { $axios, login } from '~cognito/plugins/axios'
-import { sitename } from '~/config'
 
 const router = useRouter()
 
@@ -80,14 +79,4 @@ function registerAccount() {
       alert('Problem signing up')
     })
 }
-
-useHead({
-  title: `Sign up - ${sitename}`,
-  meta: [
-    {
-      name: 'description',
-      content: '',
-    },
-  ],
-})
 </script>

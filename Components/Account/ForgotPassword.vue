@@ -56,7 +56,6 @@
 </template>
 
 <script setup lang="ts">
-import { sitename } from '~/config'
 import { CognitoUser } from '~cognito/models/Cognito/User'
 import { login } from '~cognito/plugins/axios'
 
@@ -105,14 +104,4 @@ function testResetCode() {
       message.value = 'OTP Incorrect'
     })
 }
-
-useHead({
-  title: `Forgot password - ${sitename}`,
-  meta: [
-    {
-      name: 'description',
-      content: '',
-    },
-  ],
-})
 </script>
