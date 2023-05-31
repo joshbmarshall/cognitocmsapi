@@ -1,43 +1,45 @@
 import type { Router } from 'vue-router'
-import { isEcommerce, sitename } from '~/config'
+import { isEcommerce } from '~/config'
 import { useUserStore } from '~cognito/stores/user'
 
 import { CgnAxios } from '~cognito/plugins/cgnAxios'
 
 const $axios = new CgnAxios({ useCart: isEcommerce })
 
-const setRedirectAfterLogin = (path: string) => {
+function setRedirectAfterLogin(path: string) {
   useUserStore().setRedirectAfterLogin(path)
 }
 
-const isLoggedIn = () => {
+function isLoggedIn() {
   return $axios.isLoggedIn()
 }
 
-const logout = () => {
+function logout() {
   return $axios.logout()
 }
 
-const login = async (username: string, password: string, router: Router) => {
+async function login(username: string, password: string, router: Router) {
   return $axios.login(username, password, router)
 }
 
-const tokenlogin = async () => {
+async function tokenlogin() {
   return $axios.tokenlogin()
 }
 
-const relogin = (loginurl: string, redirect_after_login: string, router: Router) => {
+function relogin(loginurl: string, redirect_after_login: string, router: Router) {
   const userStore = useUserStore()
   userStore.redirect_after_login = redirect_after_login
   router.push(loginurl)
 }
 
-const getUser = () => {
+function getUser() {
   return $axios.getUser()
 }
 
-const setTitle = (suffix: string) => {
-  useHead({ title: `${sitename} | ${suffix}` })
+function setTitle(heading: string) {
+  useHead({
+    title: () => `${usePagesStore().currentDomain.seo_title_prefix} ${heading} ${usePagesStore().currentDomain.seo_title_suffix}`,
+  })
 }
 
 export {
