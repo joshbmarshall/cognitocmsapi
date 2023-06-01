@@ -35,7 +35,6 @@
           >
             {{ camera.label }}
           </cgn-button>
-          {{ camera }}
         </div>
         <div class="mx-auto">
           <video ref="video" muted autoplay class="w-full transform -scale-x-100" />
@@ -107,7 +106,12 @@ const { videoInputs: cameras } = useDevicesList({
 const video = ref<HTMLVideoElement>()
 const canvas = ref<HTMLCanvasElement>()
 const { stream, enabled } = useUserMedia({
-  constraints: { video: { deviceId: currentCamera } },
+  constraints: {
+    video: {
+      deviceId: currentCamera,
+      facingMode: 'user',
+    },
+  },
 })
 
 const canvasHeight = ref(500)
