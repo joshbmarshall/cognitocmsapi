@@ -25,11 +25,11 @@
         <cgn-button color-success fullwidth @click="takePhoto">
           Take photo
         </cgn-button>
-        <div v-if="cameras.length > 1">
+        <div v-if="cameras.length > 1" class="px-2 py-1">
           <cgn-button
             v-for="camera of cameras"
             :key="camera.deviceId"
-            class="px-2 py-1 cursor-pointer"
+            class="inline-block mr-2"
             :color-brand="currentCamera === camera.deviceId"
             @click="useCamera(camera.deviceId)"
           >
