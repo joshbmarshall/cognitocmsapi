@@ -20,7 +20,7 @@
         >
       </div>
     </div>
-    <cgn-modal v-model="showModal">
+    <cgn-modal v-model="showModal" @close="stopCamera()">
       <template #clean-content>
         <cgn-button color-success fullwidth @click="takePhoto">
           Take photo
@@ -152,5 +152,9 @@ function takePhoto() {
       props.onSuccess(imageData)
     }
   })
+}
+
+function stopCamera() {
+  enabled.value = false
 }
 </script>
