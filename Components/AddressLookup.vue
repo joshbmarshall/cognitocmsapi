@@ -3,7 +3,7 @@
     <div v-if="!valid_address" class="text-xs font-light text-red-500">
       Please include your street number!
     </div>
-    <cgn-form-input v-model="searchTerm" :label="label" :placeholder="searchTermPlaceholder" />
+    <cgn-form-input v-model="searchTerm" :label="label" :placeholder="searchTermPlaceholder" :fake-required="props.required" />
     <div
       v-if="search.length > 0"
       class="absolute top-14 mt-4 w-full rounded-md overflow-y-auto shadow-lg max-h-96 z-10"
@@ -44,6 +44,10 @@ const props = defineProps({
   longitude: {
     type: Number,
     default: 153,
+  },
+  required: {
+    type: Boolean,
+    default: false,
   },
 })
 

@@ -1,5 +1,5 @@
 <template>
-  <cgn-form-label class="cgn-input-wrapper" :label="label" :required="required">
+  <cgn-form-label class="cgn-input-wrapper" :label="label" :required="required || fakeRequired">
     <div class="relative" :class="wrapClass">
       <div v-if="type === 'readonly'">
         <div :class="inputClass" class="cgn-input-field p-2 bg-white">
@@ -88,6 +88,11 @@ const props = defineProps({
     default: 'text',
   },
   required: {
+    type: Boolean,
+    default: false,
+  },
+  fakeRequired: {
+    // Only shows red asterisk
     type: Boolean,
     default: false,
   },

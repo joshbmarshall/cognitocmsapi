@@ -25,6 +25,7 @@
         v-model="signer.address"
         here-api-key="GOBLSSIkkrgjhMahFmXPramj-95rVXZYpj-0pj7DsFU"
         label="Address"
+        required
       />
       <cgn-form-input v-model="signer.emergency_contact" label="Emergency Contact" required />
       <cgn-form-input v-model="signer.emergency_contact_phone" type="phone" label="Emergency Contact Phone" required />
@@ -58,6 +59,7 @@
           v-model="signer.adult_address"
           here-api-key="GOBLSSIkkrgjhMahFmXPramj-95rVXZYpj-0pj7DsFU"
           label="Address"
+          required
         />
         <div v-for="indemnity in signonType.indemnities" :key="indemnity.id">
           <div v-if="indemnity.adult_terms_for_minor_content">
