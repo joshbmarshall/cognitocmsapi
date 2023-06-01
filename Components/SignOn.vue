@@ -37,7 +37,7 @@
           </label>
         </div>
       </div>
-      <cgn-form-image v-model="signer.photo" label="Your photo" file-button-label="Take Photo" class="mt-2" />
+      <cgn-form-instant-photo v-model="signer.photo" label="Your photo" file-button-label="Take Photo" class="mt-2" />
       <small>
         It is compulsory to take a photo
       </small>
@@ -70,7 +70,7 @@
             </div>
           </div>
         </div>
-        <cgn-form-image v-model="signer.adult_photo" label="Photo" class="mt-2" />
+        <cgn-form-instant-photo v-model="signer.adult_photo" label="Photo" class="mt-2" />
         <div class="flex flex-col gap-8 sm:gap-5">
           <SignaturePad
             ref="adult_signaturePad" width="100%" height="200"
