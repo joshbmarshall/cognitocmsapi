@@ -31,7 +31,7 @@
             :key="camera.deviceId"
             class="px-2 py-1 cursor-pointer"
             :color-brand="currentCamera === camera.deviceId"
-            @click="currentCamera = camera.deviceId"
+            @click="useCamera(camera.deviceId)"
           >
             {{ camera.label }}
           </cgn-button>
@@ -115,6 +115,14 @@ watchEffect(() => {
     video.value.srcObject = stream.value!
   }
 })
+
+function useCamera(camera_id: string) {
+  enabled.value = false
+  currentCamera.value = camera_id
+  nextTick(() => {
+    enabled.value = true
+  })
+}
 
 function startPhoto() {
   showModal.value = true
