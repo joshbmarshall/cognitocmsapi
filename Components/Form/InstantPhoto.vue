@@ -35,6 +35,7 @@
           >
             {{ camera.label }}
           </cgn-button>
+          {{ camera }}
         </div>
         <div class="mx-auto">
           <video ref="video" muted autoplay class="w-full transform -scale-x-100" />
