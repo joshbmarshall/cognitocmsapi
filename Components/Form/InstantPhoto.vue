@@ -22,7 +22,7 @@
     </div>
     <cgn-modal v-model="showModal" @close="stopCamera()">
       <template #clean-content>
-        <cgn-button color-success fullwidth @click="takePhoto">
+        <cgn-button is-label color-success fullwidth @click="takePhoto">
           Take photo
         </cgn-button>
         <div class="mx-auto">
@@ -31,13 +31,14 @@
         </div>
         <div v-if="cameras.length > 1" class="px-2 py-1">
           <cgn-button
-            v-for="camera of cameras"
+            v-for="camera, camid of cameras"
             :key="camera.deviceId"
             class="inline-block mr-2"
             :color-brand="currentCamera === camera.deviceId"
+            is-label
             @click="useCamera(camera.deviceId)"
           >
-            {{ camera.label }}
+            Cam {{ camid + 1 }}
           </cgn-button>
         </div>
       </template>
