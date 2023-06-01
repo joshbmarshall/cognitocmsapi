@@ -45,12 +45,13 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'close'])
 
 const timeoutID = ref(0)
 
-const close = () => {
+function close() {
   emit('update:modelValue', false)
+  emit('close')
 }
 
 watch(() => props.modelValue, (newval) => {
