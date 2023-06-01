@@ -25,16 +25,16 @@
         <cgn-button color-success fullwidth @click="takePhoto">
           Take photo
         </cgn-button>
-        <div>
-          <div
+        <div v-if="cameras.length > 1">
+          <cgn-button
             v-for="camera of cameras"
             :key="camera.deviceId"
             class="px-2 py-1 cursor-pointer"
-            :class="{ 'text-primary': currentCamera === camera.deviceId }"
+            :color-brand="currentCamera === camera.deviceId"
             @click="currentCamera = camera.deviceId"
           >
             {{ camera.label }}
-          </div>
+          </cgn-button>
         </div>
         <div class="mx-auto">
           <video ref="video" muted autoplay class="w-full transform -scale-x-100" />
@@ -116,11 +116,11 @@ watchEffect(() => {
   }
 })
 
-const startPhoto = () => {
+function startPhoto() {
   showModal.value = true
   enabled.value = true
 }
-const takePhoto = () => {
+function takePhoto() {
   if (!video.value?.clientWidth) {
     return
   }
