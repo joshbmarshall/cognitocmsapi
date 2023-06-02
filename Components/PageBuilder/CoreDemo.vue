@@ -10,7 +10,6 @@
       <cgn-alert-warning>warning alert, also info</cgn-alert-warning>
       <cgn-alert-success>Success! your form has been submitted</cgn-alert-success>
     </div>
-    <cgn-form-photo-test />
     <div>
       <!-- FORM INPUTS, all things form related -->
       <h1 class="text-3xl font-display">
@@ -23,6 +22,7 @@
       <cgn-form-input-password suggest-password required label="password input" />
       <cgn-form-input-text label="form input text" placeholder="text placeholder" />
       <cgn-form-input-textarea label="form input textarea" />
+      <cgn-form-instant-photo label="form instant photo" />
 
       <cgn-address-lookup
         v-model="address_lookup_modelvalue" :here-api-key="here_api_key"
