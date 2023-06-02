@@ -10,7 +10,7 @@
       <cgn-alert-warning>warning alert, also info</cgn-alert-warning>
       <cgn-alert-success>Success! your form has been submitted</cgn-alert-success>
     </div>
-
+    <cgn-form-photo-test />
     <div>
       <!-- FORM INPUTS, all things form related -->
       <h1 class="text-3xl font-display">
