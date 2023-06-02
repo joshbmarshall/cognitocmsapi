@@ -1,19 +1,50 @@
 <template>
   <div>
-    TEST
-
-    <video ref="video" playsinline autoplay />
+    <video ref="video" playsinline autoplay class="w-full transform -scale-x-100" />
     <button @click="takePhoto">
       Take snapshot
     </button>
-    <canvas ref="canvas" />
+    <canvas ref="canvas" class="hidden" />
+    <img :src="dataURL">
   </div>
 </template>
 
 <script setup lang="ts">
-// Put variables in global scope to make them available to the browser console.
+const props = defineProps({
+  label: {
+    type: String,
+  },
+  fileButtonLabel: {
+    type: String,
+    default: 'Take Photo',
+  },
+  modelValue: {
+    type: [String, Number],
+    default: '',
+  },
+  required: {
+    type: Boolean,
+    default: false,
+  },
+  onSuccess: {
+    type: Function,
+  },
+  thumbnail: {
+    type: String,
+  },
+  width: {
+    type: Number,
+    default: 300,
+  },
+  photoWidth: {
+    type: Number,
+    default: 500,
+  },
+})
+
 const video = ref<HTMLVideoElement>()
 const canvas = ref<HTMLCanvasElement>()
+const dataURL = ref('')
 
 const constraints = {
   audio: false,
@@ -21,7 +52,6 @@ const constraints = {
 }
 
 function handleSuccess(stream: MediaProvider) {
-  console.log(stream)
   if (video.value) {
     video.value.srcObject = stream
   }
@@ -34,10 +64,12 @@ function takePhoto() {
   if (!video.value) {
     return
   }
-  canvas.value.width = video.value.videoWidth
-  canvas.value.height = video.value.videoHeight
+  canvas.value.width = props.photoWidth
+  canvas.value.height = props.photoWidth * video.value.videoHeight / video.value.videoWidth
 
   canvas.value.getContext('2d')?.drawImage(video.value, 0, 0, canvas.value.width, canvas.value.height)
+  const imageData = canvas.value?.toDataURL('image/jpeg')
+  dataURL.value = imageData
 }
 
 function handleError(error) {
