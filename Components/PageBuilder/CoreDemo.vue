@@ -23,7 +23,6 @@
       <cgn-form-input-password suggest-password required label="password input" />
       <cgn-form-input-text label="form input text" placeholder="text placeholder" />
       <cgn-form-input-textarea label="form input textarea" />
-      <cgn-form-instant-photo label="form input instant photo" />
 
       <cgn-address-lookup
         v-model="address_lookup_modelvalue" :here-api-key="here_api_key"
