@@ -5,10 +5,15 @@
       <h1 class="text-3xl font-display">
         Alerts
       </h1>
-      <cgn-alert-base>alert base! ALERT</cgn-alert-base>
       <cgn-alert-danger>Danger alert</cgn-alert-danger>
-      <cgn-alert-warning>warning alert, also info</cgn-alert-warning>
-      <cgn-alert-success>Success! your form has been submitted</cgn-alert-success>
+      <cgn-alert-warning>warning alert</cgn-alert-warning>
+      <cgn-alert-info>info alert</cgn-alert-info>
+      <cgn-alert-success>Success alert</cgn-alert-success>
+      <cgn-alert-brand>Brand alert</cgn-alert-brand>
+      <cgn-alert-primary>Primary alert</cgn-alert-primary>
+      <cgn-alert-secondary>
+        Secondary alert
+      </cgn-alert-secondary>
     </div>
     <div>
       <!-- FORM INPUTS, all things form related -->
