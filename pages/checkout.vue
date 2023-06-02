@@ -159,7 +159,7 @@
               <span v-else>${{ cartStore.total_amount.toFixed(2) }}</span>
             </p>
           </div>
-          <div v-if="false" class="text-xs mt-3">
+          <div v-if="hasLaybuy" class="text-xs mt-3">
             Or 6 payments of
             ${{ (cartStore.total_amount / 6).toFixed(2) }}
             with
@@ -319,7 +319,10 @@ async function selectAddress() {
 const note = ref('')
 
 const selectedPaymentMethod = ref('')
-const paymentMethods = ref([])
+const paymentMethods = ref<{
+  id: string
+  name: string
+}[]>([])
 
 const payum_token = ref('')
 
@@ -361,6 +364,17 @@ function payNow() {
     cartStore.promotion_code,
   )
 }
+
+const hasLaybuy = computed(() => {
+  for (let index = 0; index < paymentMethods.value.length; index++) {
+    const paymentMethod = paymentMethods.value[index]
+    if (paymentMethod.name == 'Laybuy') {
+      return true
+    }
+  }
+
+  return false
+})
 
 const payment_ok = ref(null)
 const payment = ref<CognitoPayment>(null)
