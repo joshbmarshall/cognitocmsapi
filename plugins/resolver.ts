@@ -11,7 +11,7 @@ function cgnResolver(name: string) {
       cwd: rootdir,
       absolute: false,
     }).map((e) => {
-      const component = e.replace(/\.[^/.]+$/, '').split('/').join('')
+      const component = e.replace(/\.[^/.]+$/, '').replace(/\/index$/, '').split('/').join('')
       return {
         file: e,
         component,

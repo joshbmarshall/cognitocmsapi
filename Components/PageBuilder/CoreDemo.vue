@@ -14,6 +14,12 @@
       <cgn-alert-secondary>
         Secondary alert
       </cgn-alert-secondary>
+      <cgn-alert color="bg-slate-300">
+        Custom icon and colour
+        <template #icon>
+          <i-heroicons-solid:chevron-double-right />
+        </template>
+      </cgn-alert>
     </div>
     <div>
       <!-- FORM INPUTS, all things form related -->
