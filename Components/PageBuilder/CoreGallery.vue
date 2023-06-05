@@ -1,12 +1,13 @@
 <template>
   <div>
     <cgn-gallery-slider v-if="props.templatevar.type == 'slider'" :gallery="gallery" />
-    <cgn-gallery-grid v-else-if="props.templatevar.type == 'grid'" :gallery="gallery" />
+    <cgn-gallery-grid v-else-if="props.templatevar.type == 'grid'" :gallery="gallery" :heading="props.templatevar.heading" :subheading="props.templatevar.subheading" />
   </div>
 </template>
 
 <script lang="ts">
 import { CognitoGallery } from '~cognito/models/Cognito/Gallery'
+
 class Templatevars {
   heading?: string
   subheading?: string
@@ -24,7 +25,7 @@ const props = defineProps({
 })
 
 const gallery = ref(new CognitoGallery())
-const loadGallery = async () => {
+async function loadGallery() {
   if (props.templatevar.gallery) {
     const data = await new CognitoGallery().find_one({
       id: props.templatevar.gallery,
