@@ -1,7 +1,14 @@
 <template>
   <div>
     <cgn-gallery-slider v-if="props.templatevar.type == 'slider'" :gallery="gallery" />
-    <cgn-gallery-grid v-else-if="props.templatevar.type == 'grid'" :gallery="gallery" :heading="props.templatevar.heading" :subheading="props.templatevar.subheading" />
+    <cgn-gallery-grid
+      v-else-if="props.templatevar.type == 'grid'"
+      :gallery="gallery"
+      :heading="props.templatevar.heading"
+      :subheading="props.templatevar.subheading"
+      :show-heading="props.templatevar.show_heading > 0"
+      :limit-slides="props.templatevar.limit_slides"
+    />
   </div>
 </template>
 
@@ -11,6 +18,8 @@ import { CognitoGallery } from '~cognito/models/Cognito/Gallery'
 class Templatevars {
   heading?: string
   subheading?: string
+  show_heading?: number
+  limit_slides?: number
   gallery?: number
   type?: string
 }
