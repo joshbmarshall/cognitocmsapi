@@ -38,7 +38,7 @@
             :options="addresses"
             class="w-full"
           />
-          <div v-if="cartStore.shipping_address == 0">
+          <div v-if="!cartStore.shipping_address">
             <div class="mt-8 flex flex-col justify-start items-start w-full space-y-4">
               <div class="flex flex-col sm:flex-row w-full gap-2">
                 <cgn-form-input-text
@@ -81,7 +81,7 @@
               color-brand
               fullwidth
               submit
-              class="py-2"
+              class="my-2"
             >
               <cgn-spinner v-if="savingAddressSpinner" class="pr-2" />
               <span>Use this address</span>
@@ -92,9 +92,13 @@
           <cgn-form-radio-button v-model="cartStore.shipping_type" label="Shipping" :options="shippingQuotes" />
         </div>
         <div v-if="showShippingQuote" class="mt-4">
-          Sorry, we don't have a price to ship to your address.
-          If you can't pick up I can email you a shipping quote.
-          <cgn-button class="block" @click="requestShippingQuote">
+          <div>
+            Sorry, we don't have a price to ship to your address.
+          </div>
+          <div>
+            If you can't pick up, I can email you a shipping quote.
+          </div>
+          <cgn-button color-brand class="my-2" @click="requestShippingQuote">
             Request a shipping quote
           </cgn-button>
           <cgn-spinner v-if="gettingShippingQuote" />

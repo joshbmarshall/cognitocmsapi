@@ -5,7 +5,7 @@
         v-model="curval" :required="required" class="block w-full bg-white cgn-input-field p-2"
         :class="inputClass" @change="handleInput"
       >
-        <option v-if="!hideSelect" value>
+        <option v-if="!hideSelect" value="">
           {{ prompt }}
         </option>
         <option v-for="option in dropdownOptions" :key="option.id" :value="option.id">
@@ -49,12 +49,12 @@ const emit = defineEmits(['update:modelValue', 'change', 'input'])
 const curval = ref('')
 const dropdownOptions = ref(props.options)
 
-const handleInput = () => {
+function handleInput() {
   emit('change')
   emit('update:modelValue', curval.value)
 }
 
-const formatOptions = () => {
+function formatOptions() {
   if (!dropdownOptions.value) {
     return
   }
