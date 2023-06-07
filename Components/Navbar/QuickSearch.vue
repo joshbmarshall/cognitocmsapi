@@ -89,7 +89,7 @@ function doSearch() {
     return
   }
   new CognitoCTypesense().search({
-    collectionName: 'cmsdndlaserkutscomausellproduct',
+    collectionName: 'sellproduct',
     query: search.value,
     query_by: 'skus,name,categories,content,blurb',
     page: page.value,

@@ -6,12 +6,14 @@ class CognitoCTypesenseSettings {
   port: number
   protocol: string
   apiKey: string
+  prefix: string
 
   constructor() {
     this.host = ''
     this.port = 443
     this.protocol = 'https'
     this.apiKey = ''
+    this.prefix = ''
   }
 
   async getSettings() {
@@ -23,6 +25,7 @@ class CognitoCTypesenseSettings {
     this.port = res.data.port
     this.protocol = res.data.protocol
     this.apiKey = res.data.apiKey
+    this.prefix = res.data.prefix
   }
 }
 
@@ -91,7 +94,7 @@ class CognitoCTypesense {
       connectionTimeoutSeconds: 10,
     })
 
-    const res = await typesense.collections(data.collectionName).documents().search({
+    const res = await typesense.collections(CognitoCTypesense.typesensedata.prefix + data.collectionName).documents().search({
       q: data.query,
       query_by: data.query_by,
       per_page: data.per_page,
