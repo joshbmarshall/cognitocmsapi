@@ -26,7 +26,19 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue'])
 
-const checked = ref(props.modelValue == '1')
+const checked = ref(false)
 
 const handleInput = () => emit('update:modelValue', checked.value ? 1 : 0)
+
+const setChecked = () => {
+  checked.value = !!props.modelValue
+}
+watch(() => props, () => {
+  setChecked()
+}, {
+  deep: true,
+})
+onMounted(() => {
+  setChecked()
+})
 </script>
