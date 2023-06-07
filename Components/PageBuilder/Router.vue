@@ -102,5 +102,6 @@ onMounted(() => {
 })
 onServerPrefetch(async () => {
   await loadPageContent(props.page)
+  loading.value = false
 })
 </script>
