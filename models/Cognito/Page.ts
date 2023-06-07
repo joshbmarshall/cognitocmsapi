@@ -50,6 +50,7 @@ class CognitoPageRow {
   container_class: string
   outer_class: string
   blocks: CognitoPageBlock[]
+  row_type: string
 
   constructor() {
     this.id = ''
@@ -57,6 +58,7 @@ class CognitoPageRow {
     this.container_id = ''
     this.container_class = ''
     this.outer_class = ''
+    this.row_type = 'columns'
     this.blocks = []
   }
 }

@@ -5,7 +5,22 @@
   </div>
   <div v-else>
     <div v-if="currentPage.slug">
-      <page-builder-content :pagebuilder-rows="currentPage.rows" />
+      <div v-for="row in currentPage.rows" :key="row.id" class="space-y-2 text-gray-900 dark:text-gray-200 lg:row-start-1 lg:col-start-1" :class="{ 'grid grid-cols-12': row.row_type == 'columns' }">
+        <div v-if="row.row_type == 'tabs'">
+          <cgn-tabs v-slot="tabData" :tabs="generateTabs(row.blocks)">
+            <div v-for="block in row.blocks" v-show="tabData.selected_tab == block.title" :key="block.id" :style="`grid-column: span ${block.width} / span ${block.width}`">
+              <div v-for="widget, index in block.widgets" :key="index">
+                <page-builder-content :widget="widget" />
+              </div>
+            </div>
+          </cgn-tabs>
+        </div>
+        <div v-for="block in row.blocks" v-show="row.row_type == 'columns'" :key="block.id" :style="`grid-column: span ${block.width} / span ${block.width}`">
+          <div v-for="widget, index in block.widgets" :key="index">
+            <page-builder-content :widget="widget" />
+          </div>
+        </div>
+      </div>
       <div
         v-if="currentPage.content"
         class="p-6 sm:p-12 space-y-2 prose prose-brand dark:prose-dark text-gray-500 dark:text-gray-200 mx-auto lg:max-w-none lg:row-start-1 lg:col-start-1"
@@ -56,6 +71,14 @@ useHead({
     },
   ],
 })
+
+function generateTabs(blocks) {
+  const tab_list = []
+  blocks.forEach((block) => {
+    tab_list.push({ name: block.title, id: block.id })
+  })
+  return tab_list
+}
 
 async function loadPageContent(url: string | string[]) {
   pageStore.loadPage(url)
