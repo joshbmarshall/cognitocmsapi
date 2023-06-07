@@ -38,7 +38,8 @@
     >
       <div
         v-if="!isHidden"
-        class="absolute top-full inset-x-0 bg-gray-800 text-white"
+        class="absolute top-full inset-x-0"
+        :class="menu?.image ? 'bg-gray-800 text-white' : 'bg-white dark:bg-gray-800'"
       >
         <cgn-lazy-image class="absolute inset-0 object-cover h-full w-full opacity-40 saturate-50" force-size :image="menu?.image" />
         <div class="max-w-7xl flex gap-8 p-8 mx-auto max-h-96 relative">
