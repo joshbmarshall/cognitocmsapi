@@ -10,6 +10,12 @@ import appleTouchIconUrl from '~/assets/pwa-192x192.png'
 import safariPinnedTabUrl from '~/assets/safari-pinned-tab.svg'
 import { baseURL } from '~/config'
 
+function favicon() {
+  if (isDark.value && usePagesStore().currentDomain.favicon_dark) {
+    return usePagesStore().currentDomain.favicon_dark.url
+  }
+  return usePagesStore().currentDomain.favicon.url
+}
 useHead({
   meta: [
     {
@@ -29,7 +35,7 @@ useHead({
     {
       rel: 'icon',
       type: 'image/png',
-      href: () => usePagesStore().currentDomain.favicon.url,
+      href: favicon,
     },
     {
       rel: 'apple-touch-icon',

@@ -5,6 +5,7 @@ import { $axios } from '~cognito/plugins/axios'
 class CognitoDomain extends CognitoBase {
   name: string
   favicon: CognitoImage
+  favicon_dark?: CognitoImage
   theme_colour: string
   dark_theme_colour: string
   seo_title_suffix: string
@@ -19,6 +20,7 @@ class CognitoDomain extends CognitoBase {
   organisation_name: string
   organisation_abn: string
   organisation_logo: CognitoImage
+  organisation_logo_dark?: CognitoImage
   organisation_address: string
   organisation_email: string
   organisation_phone: string
