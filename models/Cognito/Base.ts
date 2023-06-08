@@ -14,6 +14,7 @@ class CognitoFindManyParams {
 
 class CognitoFindOneParams {
   image_aspect?: string
+  extra_aspects?: string[]
   image_width?: number
   page_size?: number
   url?: string

@@ -39,6 +39,9 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  extraAspect: {
+    type: String,
+  },
 })
 
 const lazyelement = ref()
@@ -127,6 +130,14 @@ async function newImage() {
     webp = props.image.webp_url
     url = props.image.url
     placeholder = props.image.placeholder
+    if (props.extraAspect) {
+      const extraAspect = props.image.extra_aspects.find(e => e.aspect === props.extraAspect)
+      if (extraAspect) {
+        webp = extraAspect.webp_url
+        url = extraAspect.url
+        placeholder = extraAspect.placeholder
+      }
+    }
   }
   if (props.imageHash && props.imageAspect && props.imageWidth) {
     await new CognitoImage().getByHash({

@@ -8,6 +8,7 @@
       :subheading="props.templatevar.subheading"
       :show-heading="props.templatevar.show_heading > 0"
       :limit-slides="props.templatevar.limit_slides"
+      :lightbox-aspect="props.templatevar.lightbox_aspect"
     />
   </div>
 </template>
@@ -22,6 +23,9 @@ class Templatevars {
   limit_slides?: number
   gallery?: number
   type?: string
+  aspect?: string
+  width?: number
+  lightbox_aspect?: string
 }
 </script>
 
@@ -38,8 +42,9 @@ async function loadGallery() {
   if (props.templatevar.gallery) {
     const data = await new CognitoGallery().find_one({
       id: props.templatevar.gallery,
-      image_aspect: '16x9',
-      image_width: 1920,
+      image_aspect: props.templatevar.aspect,
+      image_width: props.templatevar.width,
+      extra_aspects: [props.templatevar.lightbox_aspect],
     })
     gallery.value = data
   }
