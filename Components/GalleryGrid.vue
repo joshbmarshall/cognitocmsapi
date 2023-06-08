@@ -1,7 +1,7 @@
 <template>
   <div v-if="props.heading" class="prose dark:prose-dark mx-auto max-w-6xl">
     <h1>{{ props.heading }}</h1>
-    <p>
+    <p v-if="props.subheading">
       {{ props.subheading }}
     </p>
   </div>
