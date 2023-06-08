@@ -1,6 +1,52 @@
 import { CognitoBase } from './Base'
 import pagebuilderdata from '~/pagebuilderdata.json'
 
+class CognitoUrlParts {
+  full_url: string
+  page_url: string
+  item_url: string
+  url_parameter_2: string
+  url_parameter_3: string
+
+  constructor() {
+    this.full_url = ''
+    this.page_url = ''
+    this.item_url = ''
+    this.url_parameter_2 = ''
+    this.url_parameter_3 = ''
+  }
+
+  getUrlParameter(url: string | string[], parameter_number: number): string {
+    if (typeof (url) === 'string') {
+      if (parameter_number) {
+        return ''
+      }
+      return url
+    }
+    if (parameter_number > url.length) {
+      return ''
+    }
+    return url[parameter_number]
+  }
+
+  getFullUrl(url: string | string[]): string {
+    if (typeof (url) === 'string') {
+      return `/${url}`
+    }
+    return `/${url.join('/')}`
+  }
+
+  parse(urlToLoad: string | string[]): CognitoUrlParts {
+    const item = new CognitoUrlParts()
+    item.full_url = this.getFullUrl(urlToLoad)
+    item.page_url = this.getUrlParameter(urlToLoad, 0)
+    item.item_url = this.getUrlParameter(urlToLoad, 1)
+    item.url_parameter_2 = this.getUrlParameter(urlToLoad, 2)
+    item.url_parameter_3 = this.getUrlParameter(urlToLoad, 3)
+    return item
+  }
+}
+
 class CognitoPageWidget {
   outer: string
   inner: string
@@ -71,10 +117,6 @@ class CognitoPage extends CognitoBase {
   meta_description: string
   rows: CognitoPageRow[]
   updated_at: string
-  full_url: string
-  item_url: string
-  url_parameter_2: string
-  url_parameter_3: string
 
   baseurl(): string {
     return '/api/v1/cognito/page'
@@ -89,10 +131,6 @@ class CognitoPage extends CognitoBase {
     this.meta_description = ''
     this.rows = []
     this.updated_at = ''
-    this.full_url = ''
-    this.item_url = ''
-    this.url_parameter_2 = ''
-    this.url_parameter_3 = ''
     Object.assign(this, source)
   }
 
@@ -152,4 +190,4 @@ class CognitoPage extends CognitoBase {
   }
 }
 
-export { CognitoPage, CognitoPageRow }
+export { CognitoPage, CognitoPageRow, CognitoUrlParts }

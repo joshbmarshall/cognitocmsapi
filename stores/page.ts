@@ -1,6 +1,6 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { usePagesStore } from './pages'
-import { CognitoPage } from '~cognito/models/Cognito/Page'
+import { CognitoPage, CognitoUrlParts } from '~cognito/models/Cognito/Page'
 import pagebuilderdata from '~/pagebuilderdata.json'
 
 export const usePageStore = defineStore({
@@ -21,20 +21,14 @@ export const usePageStore = defineStore({
           }
         })
     },
-    setCurrentPageUrlFragments(urlToLoad: string | string[]) {
-      this.setCurrentPageFullUrl(urlToLoad)
-      this.currentPage.item_url = this.getUrlParameter(urlToLoad, 1)
-      this.currentPage.url_parameter_2 = this.getUrlParameter(urlToLoad, 2)
-      this.currentPage.url_parameter_3 = this.getUrlParameter(urlToLoad, 3)
-    },
     loadPage(urlToLoad: string | string[]) {
-      const url = this.resolveurlpath(urlToLoad)
-      let page = pagebuilderdata.data?.find(e => e.slug == url)
+      const urlParts = new CognitoUrlParts().parse(urlToLoad)
+      let page = pagebuilderdata.data?.find(e => e.slug == urlParts.page_url)
       if (!page?.slug) {
         page = {}
       }
       if (usePagesStore().pages.length > 0) {
-        const pageStorepage = usePagesStore().pages.find(e => url === e.slug)
+        const pageStorepage = usePagesStore().pages.find(e => urlParts.page_url === e.slug)
         if (pageStorepage?.slug) {
           page = pageStorepage
         }
@@ -47,13 +41,12 @@ export const usePageStore = defineStore({
 
       // Set the page from the cached version
       this.currentPage = page
-      this.setCurrentPageUrlFragments(urlToLoad)
 
       // Check if there is a newer version
       const page_check_slug = this.currentPage.slug
       setTimeout(() => {
         new CognitoPage().find_one({
-          url,
+          url: urlParts.page_url,
           pb: 1,
         })
           .then((data) => {
@@ -64,37 +57,11 @@ export const usePageStore = defineStore({
             if (data.updated_at != this.currentPage.updated_at) {
               this.currentPage.slug = ''
               this.currentPage = data
-              this.setCurrentPageUrlFragments(urlToLoad)
               // Update page cache
               usePagesStore().loadPages()
             }
           })
       }, 1000)
-    },
-    setCurrentPageFullUrl(url: string | string[]) {
-      if (typeof (url) === 'string') {
-        this.currentPage.full_url = `/${url}`
-        return
-      }
-      this.currentPage.full_url = `/${url.join('/')}`
-    },
-    getUrlParameter(url: string | string[], parameter_number: number): string {
-      if (typeof (url) === 'string') {
-        if (parameter_number) {
-          return ''
-        }
-        return url
-      }
-      if (parameter_number > url.length) {
-        return ''
-      }
-      return url[parameter_number]
-    },
-    resolveurlpath(url: string | string[]): string {
-      return this.getUrlParameter(url, 0)
-    },
-    getItemFromUrl(url: string | string[]): string {
-      return this.getUrlParameter(url, 1)
     },
   },
 

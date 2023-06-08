@@ -10,14 +10,14 @@
           <cgn-tabs v-slot="tabData" :tabs="generateTabs(row.blocks)">
             <div v-for="block in row.blocks" v-show="tabData.selected_tab == block.title" :key="block.id" :style="`grid-column: span ${block.width} / span ${block.width}`">
               <div v-for="widget, index in block.widgets" :key="index">
-                <page-builder-content :widget="widget" />
+                <page-builder-content :widget="widget" :url-parts="urlParts" />
               </div>
             </div>
           </cgn-tabs>
         </div>
         <div v-for="block in row.blocks" v-show="row.row_type == 'columns'" :key="block.id" :style="`grid-column: span ${block.width} / span ${block.width}`">
           <div v-for="widget, index in block.widgets" :key="index">
-            <page-builder-content :widget="widget" />
+            <page-builder-content :widget="widget" :url-parts="urlParts" />
           </div>
         </div>
       </div>
@@ -36,6 +36,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { baseURL, siteURL } from '~/config'
+import { CognitoUrlParts } from '~cognito/models/Cognito/Page'
 import { logout } from '~cognito/plugins/axios'
 
 const props = defineProps({
@@ -50,6 +51,7 @@ const loading = ref(true)
 const not_found = computed(() => {
   return !currentPage.value.updated_at
 })
+const urlParts = ref(new CognitoUrlParts())
 
 useHead({
   title: () => `${usePagesStore().currentDomain.seo_title_prefix} ${currentPage.value.title} ${usePagesStore().currentDomain.seo_title_suffix}`,
@@ -82,6 +84,7 @@ function generateTabs(blocks) {
 
 async function loadPageContent(url: string | string[]) {
   pageStore.loadPage(url)
+  urlParts.value = new CognitoUrlParts().parse(url)
 }
 
 watch(() => props.page, (newUrl) => {

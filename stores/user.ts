@@ -49,7 +49,7 @@ export const useUserStore = defineStore({
       if (this.user.id) {
         return
       }
-      this.setRedirectAfterLogin(usePageStore().currentPage?.full_url)
+      this.setRedirectAfterLogin(useRoute().fullPath)
       useRouter().replace('/login')
     },
   },

@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { CognitoPage } from '~cognito/models/Cognito/Page'
+import { CognitoUrlParts } from '~cognito/models/Cognito/Page'
 
 class Templatevars {
 }
@@ -51,8 +51,8 @@ const props = defineProps({
     type: Widget,
     required: true,
   },
-  currentPage: {
-    type: CognitoPage,
+  urlParts: {
+    type: CognitoUrlParts,
     required: true,
   },
   containedClass: {
