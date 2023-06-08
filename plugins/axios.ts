@@ -41,6 +41,16 @@ function setTitle(heading: string) {
     title: () => `${usePagesStore().currentDomain.seo_title_prefix} ${heading} ${usePagesStore().currentDomain.seo_title_suffix}`,
   })
 }
+function setMetaDescription(description: string) {
+  useHead({
+    meta: [
+      {
+        name: 'description',
+        content: description,
+      },
+    ],
+  })
+}
 
 export {
   $axios,
@@ -52,4 +62,5 @@ export {
   setRedirectAfterLogin,
   getUser,
   setTitle,
+  setMetaDescription,
 }
