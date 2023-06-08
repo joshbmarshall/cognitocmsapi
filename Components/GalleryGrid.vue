@@ -34,7 +34,7 @@
       </div>
       <div v-if="selectedSlide.content" class="prose-invert max-w-none pb-2" v-html="selectedSlide.content" />
       <div :class="outerClass(selectedSlide)" class="relative aspect-[16/9]">
-        <cgn-lazy-image :image="selectedSlide.image" :extra-aspect="props.lightboxAspect" />
+        <cgn-lazy-image :image="selectedSlide.image" :extra-aspect="props.lightboxAspect" class="w-full" />
       </div>
     </template>
     <template v-if="selectedSlide.link_button_text" #button-footer>
