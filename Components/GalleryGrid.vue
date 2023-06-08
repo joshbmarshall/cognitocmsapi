@@ -22,7 +22,7 @@
       </div>
     </div>
   </div>
-  <cgn-modal v-model="modal_open">
+  <cgn-modal v-if="useLightbox" v-model="modal_open">
     <template #clean-content>
       <div class="mr-4">
         <h1 class="text-2xl md:text-4xl font-semibold font-display">
@@ -70,6 +70,9 @@ const props = defineProps({
   },
   lightboxAspect: {
     type: String,
+  },
+  useLightbox: {
+    type: Boolean,
   },
 })
 

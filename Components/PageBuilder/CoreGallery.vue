@@ -9,6 +9,7 @@
       :show-heading="props.templatevar.show_heading > 0"
       :limit-slides="props.templatevar.limit_slides"
       :lightbox-aspect="props.templatevar.lightbox_aspect"
+      :use-lightbox="props.templatevar.use_lightbox > 0"
     />
   </div>
 </template>
@@ -20,6 +21,7 @@ class Templatevars {
   heading?: string
   subheading?: string
   show_heading?: number
+  use_lightbox?: number
   limit_slides?: number
   gallery?: number
   type?: string
