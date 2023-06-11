@@ -14,7 +14,7 @@ function favicon() {
   if (isDark.value && usePagesStore().currentDomain.favicon_dark) {
     return usePagesStore().currentDomain.favicon_dark.url
   }
-  return usePagesStore().currentDomain.favicon.url
+  return usePagesStore().currentDomain.favicon?.url
 }
 useHead({
   meta: [
