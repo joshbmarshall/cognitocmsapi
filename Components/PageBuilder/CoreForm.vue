@@ -28,7 +28,7 @@
           <h1>{{ input.label }}</h1>
         </div>
       </div>
-      <div v-if="input.type == 'button'">
+      <div v-if="input.type == 'button' && !submitted_ok">
         <cgn-button color-brand>
           {{ input.label }}
         </cgn-button>
@@ -47,6 +47,7 @@
 <script lang="ts">
 import { CognitoForm } from '~cognito/models/Cognito/Form'
 import { CognitoFormSubmit } from '~cognito/models/Cognito/FormSubmit'
+
 class Templatevars {
   form?: number
   framework?: string // unused
