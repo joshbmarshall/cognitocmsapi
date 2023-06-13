@@ -6,7 +6,7 @@
       </h2>
     </div>
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-      <div class="bg-white dark:bg-slate-800 py-8 px-4 drop-shadow-lg rounded-lg sm:px-10">
+      <div class="bg-white dark:bg-darkbg-700 py-8 px-4 drop-shadow-lg rounded-lg sm:px-10">
         <form v-if="password" class="space-y-6" @submit.prevent="userLogin">
           <div>
             <cgn-form-input-text v-model="password" label="Your new password" readonly />
