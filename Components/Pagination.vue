@@ -31,11 +31,11 @@
             <router-link v-if="showPageLink(pageNum)" :to="pageLink(pageNum)">
               <p
                 v-if="pageNum === currentPageNumber"
-                class="text-sm font-medium leading-none cursor-pointer text-brand-700 border-t border-brand-400 pt-3 px-3"
+                class="text-sm font-medium leading-none cursor-pointer text-brand-600 border-t border-brand-400 pt-3 px-3"
               >{{ pageNum }}</p>
               <p
                 v-else
-                class="text-sm font-medium leading-none cursor-pointer text-gray-600 hover:text-brand-700 border-t border-transparent hover:border-brand-400 pt-3 px-3"
+                class="text-sm font-medium leading-none cursor-pointer text-gray-600 dark:text-gray-400 hover:text-brand-700 border-t border-transparent hover:border-brand-400 pt-3 px-3"
                 :class="pageNum < currentPageNumber + 2 && pageNum > currentPageNumber - 2 ? '' : 'hidden sm:block'"
               >{{ pageNum }}</p>
             </router-link>
