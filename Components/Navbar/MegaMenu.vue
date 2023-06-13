@@ -18,7 +18,7 @@
         "
         :class="
           isHidden
-            ? 'text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-100'
+            ? ''
             : 'text-brand-500'
         "
         aria-expanded="false"
@@ -39,7 +39,7 @@
       <div
         v-if="!isHidden"
         class="absolute top-full inset-x-0"
-        :class="menu?.image ? 'bg-gray-800 text-white' : 'bg-white dark:bg-gray-800'"
+        :class="menu?.image ? 'bg-gray-800 text-white' : 'bg-white dark:bg-darkbg-500'"
       >
         <cgn-lazy-image class="absolute inset-0 object-cover h-full w-full opacity-40 saturate-50" force-size :image="menu?.image" />
         <div class="max-w-7xl flex gap-8 p-8 mx-auto max-h-96 relative">
