@@ -45,8 +45,11 @@ export const useUserStore = defineStore({
         mobile_phone: '',
       }
     },
+    isLoggedIn(): boolean {
+      return !!this.user.id
+    },
     checkLoggedIn() {
-      if (this.user.id) {
+      if (this.isLoggedIn()) {
         return
       }
       this.setRedirectAfterLogin(useRoute().fullPath)

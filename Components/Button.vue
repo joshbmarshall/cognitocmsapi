@@ -2,6 +2,9 @@
   <label v-if="isLabel" class="cursor-pointer" :class="buttonClass">
     <slot />
   </label>
+  <router-link v-else-if="redirectLogin" class="cursor-pointer" :class="buttonClass" to="/login">
+    <slot />
+  </router-link>
   <component
     :is="url.startsWith('http') ? 'a' : 'router-link'"
     v-else-if="url && !disabled"
@@ -44,6 +47,10 @@ const props = defineProps({
     default: false,
   },
   fullwidth: {
+    type: Boolean,
+    default: false,
+  },
+  redirectLogin: {
     type: Boolean,
     default: false,
   },
@@ -106,6 +113,12 @@ const buttonClass = computed(() => {
     classes += ' bg-brand-500 hover:bg-brand-600 text-on-brand dark:hover:bg-brand-400'
   }
   return classes
+})
+
+onMounted(() => {
+  if (props.redirectLogin && !useUserStore().isLoggedIn()) {
+    useUserStore().setRedirectAfterLogin(useRoute().fullPath)
+  }
 })
 
 /* tailwind.css
