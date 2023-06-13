@@ -34,6 +34,7 @@ class SellProduct extends CognitoBase {
   image: CognitoImage
   in_stock: boolean
   is_new: boolean
+  is_on_special: boolean
   groups: string[]
   video: CognitoVideo
   skus: SellSku[]
@@ -58,6 +59,7 @@ class SellProduct extends CognitoBase {
     this.image = new CognitoImage()
     this.in_stock = false
     this.is_new = false
+    this.is_on_special = false
     this.groups = []
     this.video = new CognitoVideo()
     this.skus = []
