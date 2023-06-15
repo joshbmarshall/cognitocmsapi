@@ -69,6 +69,10 @@ const formdata = ref()
 
 const form = new CognitoForm().find_one({ id: props.templatevar.form }).then((data) => {
   formdata.value = data
+  // Clean up labels with trailing <br>
+  for (let index = 0; index < formdata.value.data.length; index++) {
+    formdata.value.data[index].label = formdata.value.data[index].label.replace('<br>', '')
+  }
 })
 
 const formValues = computed(() => {
