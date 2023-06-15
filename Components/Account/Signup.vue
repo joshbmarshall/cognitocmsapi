@@ -9,7 +9,7 @@
     </cgn-link>
   </div>
   <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-    <div class="bg-white dark:bg-slate-800 py-8 px-4 drop-shadow-lg rounded-lg sm:px-10">
+    <div class="bg-white dark:bg-darkbg-700 py-8 px-4 drop-shadow-lg rounded-lg sm:px-10">
       <form class="space-y-4" @submit.prevent="registerAccount()">
         <div class="flex flex-col sm:flex-row gap-4">
           <cgn-form-input-text
