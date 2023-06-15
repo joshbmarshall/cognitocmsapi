@@ -35,9 +35,9 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { baseURL, siteURL } from '~/config'
+import { baseURL } from '~/config'
 import { CognitoUrlParts } from '~cognito/models/Cognito/Page'
-import { logout } from '~cognito/plugins/axios'
+import { logout, setCanonical, setMetaDescription, setTitle } from '~cognito/plugins/axios'
 
 const props = defineProps({
   page: {
@@ -53,27 +53,6 @@ const not_found = computed(() => {
 })
 const urlParts = ref(new CognitoUrlParts())
 
-useHead({
-  title: () => `${usePagesStore().currentDomain.seo_title_prefix} ${currentPage.value.title} ${usePagesStore().currentDomain.seo_title_suffix}`,
-  meta: [
-    {
-      name: 'description',
-      content: computed(() => currentPage.value.meta_description || ''),
-    },
-  ],
-  link: [
-    {
-      rel: 'canonical',
-      href: computed(() => {
-        if (currentPage.value.slug == 'home') {
-          return siteURL
-        }
-        return `${siteURL}/${currentPage.value.slug}`
-      }),
-    },
-  ],
-})
-
 function generateTabs(blocks) {
   const tab_list = []
   blocks.forEach((block) => {
@@ -85,6 +64,9 @@ function generateTabs(blocks) {
 async function loadPageContent(url: string | string[]) {
   pageStore.loadPage(url)
   urlParts.value = new CognitoUrlParts().parse(url)
+  setTitle(currentPage.value.title)
+  setMetaDescription(currentPage.value.meta_description || '')
+  setCanonical(currentPage.value.slug == 'home' ? '/' : `/${currentPage.value.slug}`)
 }
 
 watch(() => props.page, (newUrl) => {

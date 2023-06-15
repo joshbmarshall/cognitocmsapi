@@ -1,5 +1,5 @@
 import type { Router } from 'vue-router'
-import { isEcommerce } from '~/config'
+import { isEcommerce, siteURL } from '~/config'
 import { useUserStore } from '~cognito/stores/user'
 
 import { CgnAxios } from '~cognito/plugins/cgnAxios'
@@ -41,6 +41,16 @@ function setTitle(heading: string) {
     title: () => `${usePagesStore().currentDomain.seo_title_prefix} ${heading} ${usePagesStore().currentDomain.seo_title_suffix}`,
   })
 }
+function setCanonical(url: string) {
+  useHead({
+    link: [
+      {
+        rel: 'canonical',
+        href: `${siteURL}${url}`,
+      },
+    ],
+  })
+}
 function setMetaDescription(description: string) {
   useHead({
     meta: [
@@ -62,5 +72,6 @@ export {
   setRedirectAfterLogin,
   getUser,
   setTitle,
+  setCanonical,
   setMetaDescription,
 }
