@@ -7,19 +7,21 @@
   </div>
   <div class="grid grid-cols-2 md:grid-cols-3 max-w-6xl p-5 mx-auto gap-5">
     <div v-for="slide in slides" :key="slide.id" class="group bg-black overflow-hidden relative shadow-md hover:shadow-lg transition-shadow">
-      <div class="space-y-2 text-white mx-auto lg:max-w-none lg:row-start-1 lg:col-start-1">
-        <div :class="outerClass(slide)" class="relative aspect-square">
-          <div class="absolute inset-0 bg-center bg-cover transition-opacity duration-300" :class="[{ 'group-hover:opacity-50': showHeading }, imageClass(slide)]" :style="{ 'background-image': `url(${slide.image.url})` }" />
+      <router-link :to="slide.link">
+        <div class="space-y-2 text-white mx-auto lg:max-w-none lg:row-start-1 lg:col-start-1">
+          <div :class="outerClass(slide)" class="relative aspect-square">
+            <div class="absolute inset-0 bg-center bg-cover transition-opacity duration-300" :class="[{ 'group-hover:opacity-50': showHeading }, imageClass(slide)]" :style="{ 'background-image': `url(${slide.image.url})` }" />
+          </div>
         </div>
-      </div>
-      <div v-if="showHeading" class="absolute right-0 bottom-0 p-2 text-right translate-y-full group-hover:translate-y-0 text-white transition-transform duration-300">
-        <div class="text-2xl font-semibold font-display">
-          {{ slide.heading }}
+        <div v-if="showHeading" class="absolute right-0 bottom-0 p-2 text-right translate-y-full group-hover:translate-y-0 text-white transition-transform duration-300">
+          <div class="text-2xl font-semibold font-display">
+            {{ slide.heading }}
+          </div>
+          <div v-if="slide.sub_heading" class="font-semibold font-display">
+            {{ slide.sub_heading }}
+          </div>
         </div>
-        <div v-if="slide.sub_heading" class="font-semibold font-display">
-          {{ slide.sub_heading }}
-        </div>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>
