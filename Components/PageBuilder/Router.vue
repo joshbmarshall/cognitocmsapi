@@ -1,6 +1,6 @@
 <template>
   <div v-if="loading" />
-  <div v-else-if="not_found" class="bg-gray-200 dark:bg-gray-800 w-full min-h-screen">
+  <div v-else-if="not_found" class="w-full min-h-screen">
     <notFound />
   </div>
   <div v-else>
