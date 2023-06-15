@@ -6,8 +6,6 @@
 // https://github.com/vueuse/head
 // you can use this to manipulate the document head in any components,
 // they will be rendered correctly in the html results with vite-ssg
-import appleTouchIconUrl from '~/assets/pwa-192x192.png'
-import safariPinnedTabUrl from '~/assets/safari-pinned-tab.svg'
 import { baseURL } from '~/config'
 
 function favicon() {
@@ -39,11 +37,11 @@ useHead({
     },
     {
       rel: 'apple-touch-icon',
-      href: appleTouchIconUrl,
+      href: '/apple-touch-icon-180x180.png',
     },
     {
       rel: 'mask-icon',
-      href: safariPinnedTabUrl,
+      href: '/maskable-icon-512x512.png',
       color: () => isDark.value ? usePagesStore().currentDomain.dark_theme_colour : usePagesStore().currentDomain.theme_colour,
     },
   ],
