@@ -2,6 +2,9 @@
   <div v-if="widget.outer == 'core/html'" :class="props.containedClass">
     <cgn-page-builder-core-html :templatevar="widget.templatevar" />
   </div>
+  <div v-else-if="widget.outer == 'core/heading'" :class="props.containedClass">
+    <cgn-page-builder-core-heading :templatevar="widget.templatevar" />
+  </div>
   <div v-else-if="widget.outer == 'core/demo'" :class="props.containedClass">
     <cgn-page-builder-core-demo :templatevar="widget.templatevar" />
   </div>
@@ -10,6 +13,9 @@
   </div>
   <div v-else-if="widget.outer == 'core/form'" :class="props.containedClass">
     <cgn-page-builder-core-form :templatevar="widget.templatevar" />
+  </div>
+  <div v-else-if="widget.outer == 'core/google_map'" :class="props.containedClass">
+    <cgn-page-builder-core-google-map :templatevar="widget.templatevar" />
   </div>
   <div v-else-if="widget.outer == 'core/button_link'" :class="props.containedClass">
     <cgn-page-builder-core-button-link :templatevar="widget.templatevar" />
