@@ -1,7 +1,6 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { usePagesStore } from './pages'
 import { CognitoPage, CognitoUrlParts } from '~cognito/models/Cognito/Page'
-import pagebuilderdata from '~/pagebuilderdata.json'
 
 export const usePageStore = defineStore({
   id: 'page',
@@ -9,10 +8,22 @@ export const usePageStore = defineStore({
   state: () => {
     return {
       currentPage: new CognitoPage(),
+      title: '',
+      metaDescription: '',
+      canonical: '',
     }
   },
 
   actions: {
+    setTitle(text: string) {
+      this.title = text
+    },
+    setMetaDescription(text: string) {
+      this.metaDescription = text
+    },
+    setCanonical(canonical: string) {
+      this.canonical = canonical
+    },
     loadPages(loadUrlAfter?: string | string[]) {
       usePagesStore().loadPages()
         .then((res) => {
@@ -23,9 +34,9 @@ export const usePageStore = defineStore({
     },
     loadPage(urlToLoad: string | string[]) {
       const urlParts = new CognitoUrlParts().parse(urlToLoad)
-      let page = pagebuilderdata.data?.find(e => e.slug == urlParts.page_url)
-      if (!page?.slug) {
-        page = {}
+      let page = new CognitoPage()
+      if (usePagesStore().pages.length == 0) {
+        usePagesStore().initPages()
       }
       if (usePagesStore().pages.length > 0) {
         const pageStorepage = usePagesStore().pages.find(e => urlParts.page_url === e.slug)

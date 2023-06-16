@@ -1,5 +1,5 @@
 import type { Router } from 'vue-router'
-import { isEcommerce, siteURL } from '~/config'
+import { isEcommerce } from '~/config'
 import { useUserStore } from '~cognito/stores/user'
 
 import { CgnAxios } from '~cognito/plugins/cgnAxios'
@@ -36,32 +36,6 @@ function getUser() {
   return $axios.getUser()
 }
 
-function setTitle(heading: string) {
-  useHead({
-    title: () => `${usePagesStore().currentDomain.seo_title_prefix} ${heading} ${usePagesStore().currentDomain.seo_title_suffix}`,
-  })
-}
-function setCanonical(url: string) {
-  useHead({
-    link: [
-      {
-        rel: 'canonical',
-        href: `${siteURL}${url}`,
-      },
-    ],
-  })
-}
-function setMetaDescription(description: string) {
-  useHead({
-    meta: [
-      {
-        name: 'description',
-        content: description,
-      },
-    ],
-  })
-}
-
 export {
   $axios,
   login,
@@ -71,7 +45,4 @@ export {
   isLoggedIn,
   setRedirectAfterLogin,
   getUser,
-  setTitle,
-  setCanonical,
-  setMetaDescription,
 }

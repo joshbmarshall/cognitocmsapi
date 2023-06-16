@@ -6,7 +6,7 @@
 // https://github.com/vueuse/head
 // you can use this to manipulate the document head in any components,
 // they will be rendered correctly in the html results with vite-ssg
-import { baseURL } from '~/config'
+import { baseURL, siteURL } from '~/config'
 
 function favicon() {
   if (isDark.value && usePagesStore().currentDomain.favicon_dark) {
@@ -15,6 +15,7 @@ function favicon() {
   return usePagesStore().currentDomain.favicon?.url
 }
 useHead({
+  title: () => `${usePagesStore().currentDomain.seo_title_prefix} ${usePageStore().title} ${usePagesStore().currentDomain.seo_title_suffix}`,
   meta: [
     {
       name: 'theme-color',
@@ -23,6 +24,10 @@ useHead({
     {
       name: 'msapplication-TileColor',
       content: () => isDark.value ? usePagesStore().currentDomain.dark_theme_colour : usePagesStore().currentDomain.theme_colour,
+    },
+    {
+      name: 'description',
+      content: () => usePageStore().metaDescription,
     },
   ],
   link: [
@@ -43,6 +48,10 @@ useHead({
       rel: 'mask-icon',
       href: '/maskable-icon-512x512.png',
       color: () => isDark.value ? usePagesStore().currentDomain.dark_theme_colour : usePagesStore().currentDomain.theme_colour,
+    },
+    {
+      rel: 'canonical',
+      href: () => `${siteURL}${usePageStore().canonical}`,
     },
   ],
 })

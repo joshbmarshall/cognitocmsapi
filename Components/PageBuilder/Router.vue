@@ -37,7 +37,7 @@
 import { storeToRefs } from 'pinia'
 import { baseURL } from '~/config'
 import { CognitoUrlParts } from '~cognito/models/Cognito/Page'
-import { logout, setCanonical, setMetaDescription, setTitle } from '~cognito/plugins/axios'
+import { logout } from '~cognito/plugins/axios'
 
 const props = defineProps({
   page: {
@@ -64,9 +64,9 @@ function generateTabs(blocks) {
 async function loadPageContent(url: string | string[]) {
   pageStore.loadPage(url)
   urlParts.value = new CognitoUrlParts().parse(url)
-  setTitle(currentPage.value.title)
-  setMetaDescription(currentPage.value.meta_description || '')
-  setCanonical(currentPage.value.slug == 'home' ? '/' : `/${currentPage.value.slug}`)
+  usePageStore().setTitle(currentPage.value.title)
+  usePageStore().setMetaDescription(currentPage.value.meta_description || '')
+  usePageStore().setCanonical(currentPage.value.slug == 'home' ? '/' : `/${currentPage.value.slug}`)
 }
 
 watch(() => props.page, (newUrl) => {
