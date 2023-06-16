@@ -2,6 +2,7 @@ import { CognitoBase } from '../Cognito/Base'
 import { CognitoTime } from '../Cognito/Time'
 import type { EventCategory } from './Category'
 import type { EventExtra } from './Extra'
+import type { EventMerch } from './Merch'
 import type { EventSpectatorType } from './SpectatorType'
 import { EventType } from './Type'
 import { EventVenue } from './Venue'
@@ -18,7 +19,7 @@ class EventEvent extends CognitoBase {
   categories: EventCategory[]
   spectator_types: EventSpectatorType[]
   extras: EventExtra[]
-  merch: []
+  merch: EventMerch[]
 
   baseurl() {
     return '/api/v1/event/event'
