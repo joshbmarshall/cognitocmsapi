@@ -1,5 +1,8 @@
 import { CognitoBase } from '../Cognito/Base'
 import { CognitoTime } from '../Cognito/Time'
+import type { EventCategory } from './Category'
+import type { EventExtra } from './Extra'
+import type { EventSpectatorType } from './SpectatorType'
 import { EventType } from './Type'
 import { EventVenue } from './Venue'
 
@@ -12,9 +15,9 @@ class EventEvent extends CognitoBase {
   spectator_content: string
   entries_open_at: CognitoTime
   can_enter: boolean
-  categories: []
-  spectator_types: []
-  extras: []
+  categories: EventCategory[]
+  spectator_types: EventSpectatorType[]
+  extras: EventExtra[]
   merch: []
 
   baseurl() {
