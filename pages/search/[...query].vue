@@ -81,6 +81,7 @@ import { CognitoCTypesense } from '~cognito/models/Cognito/CTypesense'
 const props = defineProps({
   query: {
     type: String,
+    required: true,
   },
 })
 const searchresults = ref<CognitoCTypesense>()
@@ -116,8 +117,18 @@ watch(() => page.value, () => {
   doSearch()
 })
 
-onMounted(() => {
+const start = () => {
+  usePageStore().setSEO({
+    title: 'Search',
+    canonical: '/search',
+  })
   search.value = props.query
   doSearch()
+}
+onMounted(() => {
+  start()
+})
+onServerPrefetch(() => {
+  start()
 })
 </script>

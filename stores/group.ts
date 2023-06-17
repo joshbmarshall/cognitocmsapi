@@ -2,6 +2,7 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import { CognitoGroup } from '~cognito/models/Cognito/Group'
 import { $axios } from '~cognito/plugins/axios'
 import { CognitoTime } from '~cognito/models/Cognito/Time'
+import initialData from '~/initialData.json'
 
 export const useGroupStore = defineStore('group', {
   state: () => {
@@ -38,14 +39,21 @@ export const useGroupStore = defineStore('group', {
       return new CognitoGroup().map(this.groups.filter(e => e.model == model && e.lft > lft && e.rgt < rgt && e.level <= maxlevel))
     },
     async loadGroups() {
-      const res = await $axios.get('/api/v1/cognito/group', {
-        params: {
-          image_aspect: this.image_aspect,
-          image_width: this.image_width,
-        },
-      })
-      this.groups = res.data.data
+      this.groups = initialData.groups.data
       this.lastUpdate = new CognitoTime('').toDateTimeString()
+      if ($axios.isSSR()) {
+        return
+      }
+      setTimeout(async () => {
+        const res = await $axios.get('/api/v1/cognito/group', {
+          params: {
+            image_aspect: this.image_aspect,
+            image_width: this.image_width,
+          },
+        })
+        this.groups = res.data.data
+        this.lastUpdate = new CognitoTime('').toDateTimeString()
+      }, 1000)
     },
   },
 

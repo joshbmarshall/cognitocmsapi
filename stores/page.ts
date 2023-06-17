@@ -1,6 +1,7 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { usePagesStore } from './pages'
 import { CognitoPage, CognitoUrlParts } from '~cognito/models/Cognito/Page'
+import { $axios } from '~cognito/plugins/axios'
 
 export const usePageStore = defineStore({
   id: 'page',
@@ -15,6 +16,15 @@ export const usePageStore = defineStore({
   },
 
   actions: {
+    setSEO(data: {
+      title?: string
+      metaDescription?: string
+      canonical?: string
+    }) {
+      this.title = data.title || ''
+      this.metaDescription = data.metaDescription || ''
+      this.canonical = data.canonical || ''
+    },
     setTitle(text: string) {
       this.title = text
     },
@@ -53,6 +63,9 @@ export const usePageStore = defineStore({
       // Set the page from the cached version
       this.currentPage = page
 
+      if ($axios.isSSR()) {
+        return
+      }
       // Check if there is a newer version
       const page_check_slug = this.currentPage.slug
       setTimeout(() => {

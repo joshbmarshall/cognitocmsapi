@@ -249,6 +249,10 @@ class CgnAxios {
   post(url: string, data?: any, config?: AxiosRequestConfig<any> | undefined) {
     return this.axios.post(url, data, config)
   }
+
+  isSSR(): boolean {
+    return import.meta.env?.SSR
+  }
 }
 
 export { CgnAxios }

@@ -24,5 +24,12 @@
 </template>
 
 <script setup lang="ts">
-
+const start = () => {
+  usePageStore().setSEO({
+    title: 'Login',
+    canonical: '/login',
+  })
+}
+onMounted(start)
+onServerPrefetch(start)
 </script>

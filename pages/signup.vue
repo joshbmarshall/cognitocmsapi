@@ -10,3 +10,14 @@
     <cgn-account-signup />
   </div>
 </template>
+
+<script setup lang="ts">
+const start = () => {
+  usePageStore().setSEO({
+    title: 'Sign Up',
+    canonical: '/signup',
+  })
+}
+onMounted(start)
+onServerPrefetch(start)
+</script>

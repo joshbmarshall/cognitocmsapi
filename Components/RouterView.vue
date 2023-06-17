@@ -3,9 +3,6 @@
 </template>
 
 <script setup lang="ts">
-// https://github.com/vueuse/head
-// you can use this to manipulate the document head in any components,
-// they will be rendered correctly in the html results with vite-ssg
 import { baseURL, siteURL } from '~/config'
 
 function favicon() {
@@ -14,6 +11,8 @@ function favicon() {
   }
   return usePagesStore().currentDomain.favicon?.url
 }
+
+// https://github.com/vueuse/head
 useHead({
   title: () => `${usePagesStore().currentDomain.seo_title_prefix} ${usePageStore().title} ${usePagesStore().currentDomain.seo_title_suffix}`,
   meta: [
@@ -57,8 +56,8 @@ useHead({
 })
 
 async function loadDomain() {
-  useGroupStore().loadGroups()
-  usePagesStore().loadPages()
+  await useGroupStore().loadGroups()
+  await usePagesStore().loadPages()
 }
 
 onMounted(() => {

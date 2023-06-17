@@ -64,13 +64,15 @@ function generateTabs(blocks) {
 async function loadPageContent(url: string | string[]) {
   pageStore.loadPage(url)
   urlParts.value = new CognitoUrlParts().parse(url)
-  usePageStore().setTitle(currentPage.value.title)
-  usePageStore().setMetaDescription(currentPage.value.meta_description || '')
-  usePageStore().setCanonical(currentPage.value.slug == 'home' ? '/' : `/${currentPage.value.slug}`)
+  usePageStore().setSEO({
+    title: currentPage.value.title,
+    metaDescription: currentPage.value.meta_description || '',
+    canonical: currentPage.value.slug == 'home' ? '/' : `/${currentPage.value.slug}`,
+  })
 }
 
-watch(() => props.page, (newUrl) => {
-  loadPageContent(newUrl)
+watch(() => props, () => {
+  loadPageContent(props.page)
 }, {
   deep: true,
 })

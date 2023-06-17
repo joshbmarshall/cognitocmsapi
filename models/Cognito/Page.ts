@@ -1,5 +1,5 @@
 import { CognitoBase } from './Base'
-import pagebuilderdata from '~/pagebuilderdata.json'
+import initialData from '~/initialData.json'
 
 class CognitoUrlParts {
   full_url: string
@@ -150,7 +150,7 @@ class CognitoPage extends CognitoBase {
 
   async preloadPage(urlToLoad: string | string[]): Promise<CognitoPage> {
     const url = this.resolveurlpath(urlToLoad)
-    const page = new CognitoPage(pagebuilderdata.data?.find(e => e.slug == url))
+    const page = new CognitoPage(initialData.pages.data?.find(e => e.slug == url))
     if (!page.slug) {
       page.updated_at = 'Try load from server'
     }

@@ -2,7 +2,8 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import { CognitoPage } from '~cognito/models/Cognito/Page'
 import { CognitoTime } from '~cognito/models/Cognito/Time'
 import { CognitoDomain } from '~cognito/models/Cognito/Domain'
-import pagebuilderdata from '~/pagebuilderdata.json'
+import initialData from '~/initialData.json'
+import { $axios } from '~cognito/plugins/axios'
 
 export const usePagesStore = defineStore({
   id: 'pages',
@@ -17,9 +18,15 @@ export const usePagesStore = defineStore({
 
   actions: {
     initPages() {
-      this.pages = JSON.parse(JSON.stringify(pagebuilderdata.data))
+      this.pages = JSON.parse(JSON.stringify(initialData.pages.data))
+      this.currentDomain = JSON.parse(JSON.stringify(initialData.currentDomain))
     },
     async loadPages() {
+      if ($axios.isSSR()) {
+        this.initPages()
+        this.lastUpdate = new CognitoTime('').toDateTimeString()
+        return
+      }
       const data = await new CognitoPage().find_many({
         page_size: 100,
         pb: 1,
