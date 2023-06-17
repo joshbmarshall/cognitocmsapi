@@ -1,7 +1,7 @@
 import { CognitoBase } from '../Cognito/Base'
 import { CognitoTime } from '../Cognito/Time'
-import { EventEngineType } from './EngineType'
-import { EventInductionType } from './InductionType'
+import { EventVehicleEngineType } from './VehicleEngineType'
+import { EventVehicleInductionType } from './VehicleInductionType'
 
 class EventVehicle extends CognitoBase {
   make: string
@@ -12,8 +12,10 @@ class EventVehicle extends CognitoBase {
   registration: string
   registration_state: string
   registration_expiry: CognitoTime
-  induction_type: EventInductionType
-  engine_type: EventEngineType
+  induction_type: EventVehicleInductionType
+  induction_type_id: number
+  engine_type: EventVehicleEngineType
+  engine_type_id: number
   vehicle_owner: string
   owner_mobile: string
 
@@ -30,8 +32,10 @@ class EventVehicle extends CognitoBase {
     this.body_style = ''
     this.registration = ''
     this.registration_state = ''
-    this.induction_type = new EventInductionType()
-    this.engine_type = new EventEngineType()
+    this.induction_type = new EventVehicleInductionType()
+    this.induction_type_id = 0
+    this.engine_type = new EventVehicleEngineType()
+    this.engine_type_id = 0
     this.vehicle_owner = ''
     this.owner_mobile = ''
     Object.assign(this, source)
