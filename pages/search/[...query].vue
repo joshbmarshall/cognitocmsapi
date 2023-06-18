@@ -117,18 +117,8 @@ watch(() => page.value, () => {
   doSearch()
 })
 
-const start = () => {
-  usePageStore().setSEO({
-    title: 'Search',
-    canonical: '/search',
-  })
+onMounted(() => {
   search.value = props.query
   doSearch()
-}
-onMounted(() => {
-  start()
-})
-onServerPrefetch(() => {
-  start()
 })
 </script>

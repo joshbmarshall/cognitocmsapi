@@ -30,13 +30,7 @@
 import { useCartStore } from '~cognito/stores/cart'
 
 const cartStore = useCartStore()
-const start = () => {
+onMounted(() => {
   cartStore.getCart()
-  usePageStore().setSEO({
-    title: 'Cart',
-    canonical: '/cart',
-  })
-}
-onMounted(start)
-onServerPrefetch(start)
+})
 </script>

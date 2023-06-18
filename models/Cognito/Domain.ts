@@ -75,6 +75,11 @@ class CognitoDomain extends CognitoBase {
     const data = await $axios.get(`${this.baseurl()}/currentDomain`)
     return data.data
   }
+
+  async getInitialData() {
+    const data = await $axios.get(`${this.baseurl()}/initialData`)
+    return data.data
+  }
 }
 
 export { CognitoDomain }

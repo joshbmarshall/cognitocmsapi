@@ -9,31 +9,10 @@ export const usePageStore = defineStore({
   state: () => {
     return {
       currentPage: new CognitoPage(),
-      title: '',
-      metaDescription: '',
-      canonical: '',
     }
   },
 
   actions: {
-    setSEO(data: {
-      title?: string
-      metaDescription?: string
-      canonical?: string
-    }) {
-      this.title = data.title || ''
-      this.metaDescription = data.metaDescription || ''
-      this.canonical = data.canonical || ''
-    },
-    setTitle(text: string) {
-      this.title = text
-    },
-    setMetaDescription(text: string) {
-      this.metaDescription = text
-    },
-    setCanonical(canonical: string) {
-      this.canonical = canonical
-    },
     loadPages(loadUrlAfter?: string | string[]) {
       usePagesStore().loadPages()
         .then((res) => {

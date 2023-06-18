@@ -4,6 +4,9 @@
 
 <script setup lang="ts">
 import { baseURL, siteURL } from '~/config'
+import initialData from '~/initialData.json'
+import { CognitoDomain } from '~cognito/models/Cognito/Domain'
+import { $axios } from '~cognito/plugins/axios'
 
 function favicon() {
   if (isDark.value && usePagesStore().currentDomain.favicon_dark) {
@@ -12,9 +15,35 @@ function favicon() {
   return usePagesStore().currentDomain.favicon?.url
 }
 
+const router = useRouter()
+const sitemapData = ref(initialData.sitemap)
+
+const sitemapPage = computed((): {
+  url: String
+  seo_title: String
+  seo_meta_description: String
+} => {
+  const url = router?.currentRoute?.value?.path || ''
+  const page = sitemapData.value.find(e => e.url == url)
+  if (page) {
+    return page
+  }
+  if (!$axios.isSSR()) {
+    // Get details from server
+    new CognitoDomain().getInitialData().then((data) => {
+      sitemapData.value = data.sitemap
+    })
+  }
+  return {
+    url: '/',
+    seo_title: '',
+    seo_meta_description: '',
+  }
+})
+
 // https://github.com/vueuse/head
 useHead({
-  title: () => `${usePagesStore().currentDomain.seo_title_prefix} ${usePageStore().title} ${usePagesStore().currentDomain.seo_title_suffix}`,
+  title: () => sitemapPage.value?.seo_title || '',
   meta: [
     {
       name: 'theme-color',
@@ -26,7 +55,7 @@ useHead({
     },
     {
       name: 'description',
-      content: () => usePageStore().metaDescription,
+      content: () => sitemapPage.value?.seo_meta_description || '',
     },
   ],
   link: [
@@ -50,7 +79,7 @@ useHead({
     },
     {
       rel: 'canonical',
-      href: () => `${siteURL}${usePageStore().canonical}`,
+      href: () => siteURL + (sitemapPage.value?.url || ''),
     },
   ],
 })
