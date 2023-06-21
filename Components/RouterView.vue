@@ -6,6 +6,7 @@
 import { baseURL, siteURL } from '~/config'
 import initialData from '~/initialData.json'
 import { CognitoDomain } from '~cognito/models/Cognito/Domain'
+import { CognitoTime } from '~cognito/models/Cognito/Time'
 import { $axios } from '~cognito/plugins/axios'
 
 function favicon() {
@@ -17,6 +18,7 @@ function favicon() {
 
 const router = useRouter()
 const sitemapData = ref(initialData.sitemap)
+const nextUpdateInitialData = ref(new CognitoTime())
 
 const sitemapPage = computed((): {
   url: String
@@ -29,10 +31,14 @@ const sitemapPage = computed((): {
     return page
   }
   if (!$axios.isSSR()) {
-    // Get details from server
-    new CognitoDomain().getInitialData().then((data) => {
-      sitemapData.value = data.sitemap
-    })
+    if (nextUpdateInitialData.value.isPast()) {
+      // Get details from server
+      new CognitoDomain().getInitialData().then((data) => {
+        sitemapData.value = data.sitemap
+        // Do not update initial data for at least a minute
+        nextUpdateInitialData.value = new CognitoTime().addMinutes(1)
+      })
+    }
   }
   return {
     url: '/',
