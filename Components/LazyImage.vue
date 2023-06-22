@@ -4,11 +4,12 @@
 
 <script setup lang="ts">
 import { CognitoImage } from '~cognito/models/Cognito/Image'
+import { CognitoPhoto } from '~cognito/models/Cognito/Photo'
 
 const props = defineProps({
   // Give just the image if you have a CognitoImage
   image: {
-    type: [CognitoImage, Object],
+    type: [CognitoImage, CognitoPhoto, Object],
   },
   // Below for custom lazy images
   placeholder: {
@@ -126,12 +127,17 @@ async function newImage() {
   let webp = props.webp
   let url = props.url
   let placeholder = props.placeholder
-  if (props.image) {
-    webp = props.image.webp_url
-    url = props.image.url
-    placeholder = props.image.placeholder
+  let image = props.image
+  if (image) {
+    if (image.image) {
+      // This is a CognitoPhoto
+      image = image.image
+    }
+    webp = image.webp_url
+    url = image.url
+    placeholder = image.placeholder
     if (props.extraAspect) {
-      const extraAspect = props.image.extra_aspects.find(e => e.aspect === props.extraAspect)
+      const extraAspect = image.extra_aspects.find(e => e.aspect === props.extraAspect)
       if (extraAspect) {
         webp = extraAspect.webp_url
         url = extraAspect.url
