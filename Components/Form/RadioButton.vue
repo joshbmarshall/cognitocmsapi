@@ -62,9 +62,6 @@ const formatOptions = () => {
         name: radioOption,
       }
     } else {
-      if (!radioOption.id) {
-        radioOptions.value[index].id = index
-      }
       if (!radioOption.name) {
         radioOptions.value[index].name = radioOption.label
       }
