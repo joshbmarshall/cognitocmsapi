@@ -34,6 +34,12 @@
         </cgn-link>
       </div>
     </div>
+    <cgn-link
+      to="/loginlink"
+      color-brand
+    >
+      .
+    </cgn-link>
   </form>
 </template>
 

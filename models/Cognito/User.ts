@@ -53,6 +53,18 @@ class CognitoUser {
     }
   }
 
+  async sendLoginLink(email: string): Promise<{
+    success: boolean
+    message: string
+  }> {
+    const fingerprint = useUserStore().getAuthFingerprint()
+    const res = await $axios.post(`${this.baseurl()}/sendLoginLink`, {
+      email,
+      fingerprint,
+    })
+    return res.data
+  }
+
   async recoverPassword(email: string): Promise<{
     success: boolean
     message: string

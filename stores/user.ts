@@ -1,4 +1,5 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import { nanoid } from 'nanoid'
 
 export const useUserStore = defineStore({
   id: 'user',
@@ -9,6 +10,7 @@ export const useUserStore = defineStore({
       refresh_token: '',
       redirect_after_login: '/',
       oauth2_state: '',
+      auth_fingerprint: '',
       user: {
         id: 0,
         first_name: '',
@@ -21,6 +23,12 @@ export const useUserStore = defineStore({
   },
 
   actions: {
+    getAuthFingerprint(): string {
+      if (!this.auth_fingerprint) {
+        this.auth_fingerprint = nanoid()
+      }
+      return this.auth_fingerprint
+    },
     setAccessToken(token: string) {
       this.access_token = token
     },

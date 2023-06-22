@@ -187,10 +187,12 @@ class CgnAxios {
 
   async doRefresh() {
     const refresh_token = this.userStore().refresh_token
+    const fingerprint = this.userStore().getAuthFingerprint()
 
     // make an API call using the refresh token to generate an access tokens
     const tokens = await this.axios.post(urls.refresh, {
       refresh_token,
+      fingerprint,
     })
 
     this.userStore().setAccessToken(tokens.data.access_token)
@@ -208,11 +210,13 @@ class CgnAxios {
 
   async login(username: string, password: string, router: Router) {
     const userStore = this.userStore()
+    const fingerprint = this.userStore().getAuthFingerprint()
     try {
     // make an API call to login the user with an email address and password
       const tokens = await this.axios.post(urls.login, {
         username,
         password,
+        fingerprint,
       })
       userStore.setAccessToken(tokens.data.access_token)
       userStore.setRefreshToken(tokens.data.refresh_token)
