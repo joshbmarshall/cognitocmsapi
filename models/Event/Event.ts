@@ -6,6 +6,7 @@ import type { EventMerch } from './Merch'
 import type { EventSpectatorType } from './SpectatorType'
 import { EventType } from './Type'
 import { EventVenue } from './Venue'
+import { $axios } from '~cognito/plugins/axios'
 
 class EventEvent extends CognitoBase {
   name: string
@@ -40,6 +41,14 @@ class EventEvent extends CognitoBase {
     Object.assign(this, source)
     this.start_date = new CognitoTime(source?.start_date)
     this.entries_open_at = new CognitoTime(source?.entries_open_at)
+  }
+
+  async submitEntry(data: any): Promise<{
+    success: boolean
+    message: string
+    redirect: string
+  }> {
+    return (await $axios.post(`${this.baseurl()}/submitEntry`, data)).data
   }
 }
 
