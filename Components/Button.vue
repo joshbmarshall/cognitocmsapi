@@ -1,8 +1,8 @@
 <template>
-  <label v-if="isLabel" class="cursor-pointer" :class="buttonClass">
+  <label v-if="isLabel" :class="buttonClass">
     <slot />
   </label>
-  <router-link v-else-if="redirectLogin" class="cursor-pointer" :class="buttonClass" to="/login">
+  <router-link v-else-if="redirectLogin" :class="buttonClass" to="/login">
     <slot />
   </router-link>
   <component
@@ -90,6 +90,8 @@ const buttonClass = computed(() => {
 
   if (props.disabled) {
     classes += ' cursor-not-allowed opacity-50'
+  } else {
+    classes += ' cursor-pointer'
   }
   if (props.colorDanger) {
     classes += ' bg-danger-500 hover:bg-danger-600 text-on-danger dark:hover:bg-danger-400'

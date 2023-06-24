@@ -80,9 +80,6 @@ watch(() => props.options, () => {
 
 onMounted(() => {
   curval.value = props.modelValue
-  if (!curval.value) {
-    curval.value = ''
-  }
   formatOptions()
 })
 </script>
