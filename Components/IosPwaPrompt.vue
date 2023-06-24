@@ -76,6 +76,8 @@
 </template>
 
 <script setup lang="ts">
+import { $axios } from '~cognito/plugins/axios'
+
 const props = defineProps({
   debugIOS: {
     type: Boolean,
@@ -104,14 +106,23 @@ const props = defineProps({
 })
 
 const isiOS13AndUp = computed(() => {
+  if ($axios.isSSR()) {
+    return false
+  }
   return /OS (13|14)/.test(window.navigator.userAgent)
 })
 
 const isStandalone = computed(() => {
+  if ($axios.isSSR()) {
+    return false
+  }
   return window.matchMedia('(display-mode: standalone)').matches
 })
 
 const deviceok = computed(() => {
+  if ($axios.isSSR()) {
+    return false
+  }
   if (isStandalone.value) {
     return false
   }
@@ -124,6 +135,9 @@ const deviceok = computed(() => {
 })
 
 const deviceandroid = computed(() => {
+  if ($axios.isSSR()) {
+    return false
+  }
   if (isStandalone.value) {
     return false
   }
