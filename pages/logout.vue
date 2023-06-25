@@ -6,8 +6,10 @@
 import { logout } from '~cognito/plugins/axios'
 
 const router = useRouter()
-logout()
-nextTick(() => {
-  router.push('/')
+onMounted(() => {
+  logout()
+  setTimeout(() => {
+    router.push('/')
+  }, 500)
 })
 </script>
