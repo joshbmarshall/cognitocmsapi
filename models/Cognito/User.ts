@@ -65,6 +65,22 @@ class CognitoUser {
     return res.data
   }
 
+  async signup(data: {
+    email: string
+    first_name: string
+    last_name: string
+  }): Promise<{
+    success: boolean
+    message: string
+  }> {
+    const res = await $axios.post(`${this.baseurl()}/register`, {
+      email: data.email,
+      first_name: data.first_name,
+      last_name: data.last_name,
+    })
+    return this.sendLoginLink(data.email)
+  }
+
   async recoverPassword(email: string): Promise<{
     success: boolean
     message: string
