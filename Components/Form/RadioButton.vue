@@ -11,7 +11,7 @@
             <input v-if="!option.disabled" v-model="curval" type="radio" class="mr-2" :value="option.id" @change="handleInput">
             <div class="text-sm">{{ option.name }}</div>
           </div>
-          <div v-if="option.content" class="text-xs">{{ option.content }}</div>
+          <div v-if="option.content" class="text-xs" v-html="option.content" />
         </div>
       </label>
     </div>
