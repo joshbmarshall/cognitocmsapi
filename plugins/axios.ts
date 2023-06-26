@@ -26,6 +26,14 @@ async function tokenlogin() {
   return $axios.tokenlogin()
 }
 
+function requireLoggedIn() {
+  if (isLoggedIn()) {
+    return
+  }
+  useUserStore().setRedirectAfterLogin(useRoute().fullPath)
+  useRouter().replace('/login')
+}
+
 function relogin(loginurl: string, redirect_after_login: string, router: Router) {
   const userStore = useUserStore()
   userStore.redirect_after_login = redirect_after_login
@@ -43,6 +51,7 @@ export {
   logout,
   relogin,
   isLoggedIn,
+  requireLoggedIn,
   setRedirectAfterLogin,
   getUser,
 }

@@ -242,7 +242,8 @@ class CgnAxios {
       userStore.setRefreshToken(refresh_token)
       userStore.setAccessToken(access_token)
       await this.getUser()
-      window.location = '/'
+      window.location = userStore.redirect_after_login || '/'
+      userStore.redirect_after_login = ''
     }
   }
 
