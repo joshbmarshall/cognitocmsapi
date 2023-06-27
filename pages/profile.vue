@@ -128,9 +128,12 @@
             </span>
           </cgn-button>
 
-          <PreviousOrders />
+          <div v-if="isEcommerce">
+            <cgn-profile-previous-orders />
+            <cgn-profile-sell-addresses />
+          </div>
 
-          <Addresses />
+          <ProfileElements />
         </div>
       </form>
     </div>
@@ -138,6 +141,7 @@
 </template>
 
 <script setup lang="ts">
+import { isEcommerce } from '~/config'
 import { $axios, getUser } from '~cognito/plugins/axios'
 
 const router = useRouter()
