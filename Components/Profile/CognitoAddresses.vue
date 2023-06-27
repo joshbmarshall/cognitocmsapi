@@ -14,6 +14,13 @@
     >
       <form class="w-full" @submit.prevent="saveAddress">
         <div v-if="!modelValue">
+          <div class="flex flex-row justify-between w-full items-center">
+            <span class="text-lg font-medium">Add address</span>
+            <i-heroicons-solid:x
+              class="text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 cursor-pointer"
+              @click="showAdditionalAddress = false"
+            />
+          </div>
           <div class="mt-2 flex flex-col justify-start items-start w-full bg-gray-50 rounded-lg">
             <cgn-address-lookup
               v-model="hereApiAddress"
