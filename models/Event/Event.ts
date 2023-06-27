@@ -10,6 +10,7 @@ import { $axios } from '~cognito/plugins/axios'
 
 class EventEvent extends CognitoBase {
   name: string
+  url: string
   type: EventType
   start_date: CognitoTime
   venue: EventVenue
@@ -31,6 +32,7 @@ class EventEvent extends CognitoBase {
   constructor(source?: Partial<EventEvent>) {
     super()
     this.name = ''
+    this.url = ''
     this.type = new EventType()
     this.venue = new EventVenue()
     this.entrant_content = ''
