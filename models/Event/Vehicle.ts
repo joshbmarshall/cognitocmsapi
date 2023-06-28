@@ -1,6 +1,5 @@
 import { CognitoBase } from '../Cognito/Base'
 import { CognitoState } from '../Cognito/State'
-import { CognitoTime } from '../Cognito/Time'
 import { EventVehicleBodyStyle } from './VehicleBodyStyle'
 import { EventVehicleEngineType } from './VehicleEngineType'
 import { EventVehicleInductionType } from './VehicleInductionType'
@@ -13,7 +12,7 @@ class EventVehicle extends CognitoBase {
   body_style_id: EventVehicleBodyStyle
   registration: string
   registration_state_id: CognitoState
-  registration_expiry: CognitoTime
+  registration_expiry: string
   induction_type: EventVehicleInductionType
   induction_type_id: number
   engine_type: EventVehicleEngineType
@@ -40,8 +39,8 @@ class EventVehicle extends CognitoBase {
     this.engine_type_id = 0
     this.vehicle_owner = ''
     this.owner_mobile = ''
+    this.registration_expiry = ''
     Object.assign(this, source)
-    this.registration_expiry = new CognitoTime(source?.registration_expiry)
   }
 }
 
