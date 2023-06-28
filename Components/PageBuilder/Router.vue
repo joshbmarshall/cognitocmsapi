@@ -38,6 +38,7 @@ import { storeToRefs } from 'pinia'
 import { baseURL } from '~/config'
 import { CognitoUrlParts } from '~cognito/models/Cognito/Page'
 import { logout } from '~cognito/plugins/axios'
+import { redirects } from '~/initialData.json'
 
 const props = defineProps({
   page: {
@@ -80,6 +81,10 @@ onMounted(() => {
   if (props.page == 'logout') {
     logout()
     useRouter().push('/')
+  }
+  const redirect = redirects.data.find(e => e.from == props.page)
+  if (redirect) {
+    useRouter().replace(`/${redirect.to}`)
   }
 })
 onServerPrefetch(async () => {
