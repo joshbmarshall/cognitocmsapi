@@ -121,6 +121,36 @@
             />
           </div>
 
+          <div class="flex flex-col md:flex-row gap-8 sm:gap-5">
+            <cgn-form-input-text
+              v-model="formValues.drivers_licence_number"
+              label="Drivers Licence Number"
+              class="w-full md:w-1/2"
+            />
+            <cgn-form-input
+              v-model="formValues.drivers_licence_expiry"
+              type="date"
+              label="Drivers Licence Expiry"
+              class="w-full md:w-1/2"
+            />
+          </div>
+          <div class="flex flex-col md:flex-row gap-8 sm:gap-5">
+            <cgn-form-dropdown v-model="formValues.drivers_licence_state_of_issue_id" :options="states" label="Drivers Licence State of Issue" class="w-full" />
+          </div>
+
+          <div class="flex flex-col md:flex-row gap-8 sm:gap-5">
+            <cgn-form-input-text
+              v-model="formValues.emergency_contact_name"
+              label="Emergency Contact Name"
+              class="w-full md:w-1/2"
+            />
+            <cgn-form-input-phone
+              v-model="formValues.emergency_contact_phone"
+              label="Emergency Contact Phone"
+              class="w-full md:w-1/2"
+            />
+          </div>
+
           <cgn-button color-brand submit>
             <span class="flex flex-row gap-2 items-center">
               Submit
@@ -142,6 +172,7 @@
 
 <script setup lang="ts">
 import { isEcommerce } from '~/config'
+import { CognitoState } from '~cognito/models/Cognito/State'
 import { $axios, getUser } from '~cognito/plugins/axios'
 
 const router = useRouter()
@@ -158,9 +189,16 @@ const formValues = ref({
   email: '',
   mobile_phone: '',
   newpassword: '',
+  drivers_licence_number: '',
+  drivers_licence_expiry: '',
+  drivers_licence_state_of_issue_id: '',
+  emergency_contact_name: '',
+  emergency_contact_phone: '',
   image: '',
   addresses: [],
 })
+const states = ref<CognitoState[]>([])
+
 const name_field_visible = ref(false)
 function changeName() {
   name_field_visible.value = true
@@ -188,6 +226,7 @@ function logout() {
 
 onMounted(async () => {
   await getUser()
+  states.value = (await new CognitoState().find_many({})).data
   formValues.value = userStore.user
 })
 </script>
