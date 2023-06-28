@@ -33,10 +33,10 @@
             </div>
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-x-2">
               <cgn-form-input-text v-model="newVehicle.registration" label="Registration" class="w-full" required />
-              <cgn-form-input-text v-model="newVehicle.registration_state" label="Registration State" class="w-full" required />
+              <cgn-form-dropdown v-model="newVehicle.registration_state_id" :options="states" label="Registration State" required />
               <cgn-form-input v-model="newVehicle.registration_expiry" type="date" label="Registration Expiry" class="w-full col-span-2 sm:col-span-1" required />
             </div>
-            <cgn-form-input-text v-model="newVehicle.body_style" label="Body Style" class="w-full" required />
+            <cgn-form-dropdown v-model="newVehicle.body_style_id" :options="bodyStyles" label="Body Style" required />
             <cgn-form-input v-model="newVehicle.year_of_manufacture" type="number" label="Year of manufacture" class="w-full" required />
             <div class="grid grid-cols-2 gap-x-2">
               <cgn-form-input-text v-model="newVehicle.vehicle_owner" label="Vehicle Owner" class="w-full" required />
@@ -87,12 +87,16 @@
 import { EventVehicleEngineType } from '~cognito/models/Event/VehicleEngineType.js'
 import { EventVehicleInductionType } from '~cognito/models/Event/VehicleInductionType'
 import { EventVehicle } from '~cognito/models/Event/Vehicle'
+import { EventVehicleBodyStyle } from '~cognito/models/Event/VehicleBodyStyle'
+import { CognitoState } from '~cognito/models/Cognito/State'
 
 const vehicleDropdown = ref([])
 
 const vehicles = ref<EventVehicle[]>([])
 const inductionTypes = ref<EventVehicleInductionType[]>([])
 const engineTypes = ref<EventVehicleEngineType[]>([])
+const bodyStyles = ref<EventVehicleBodyStyle[]>([])
+const states = ref<CognitoState[]>([])
 
 const newVehicle = ref<EventVehicle>(new EventVehicle())
 const showVehicleAdd = ref(false)
@@ -108,6 +112,16 @@ const loadEngineTypes = async () => {
   engineTypes.value = data.mapped
 }
 
+const loadBodyStyles = async () => {
+  const data = await new EventVehicleBodyStyle().find_many({})
+  bodyStyles.value = data.mapped
+}
+
+const loadStates = async () => {
+  const data = await new CognitoState().find_many({})
+  states.value = data.mapped
+}
+
 const loadVehicles = async () => {
   const data = await new EventVehicle().find_many({
     entrant_id: useUserStore().user.id,
@@ -121,6 +135,8 @@ const loadVehicles = async () => {
   })
   await loadInductionTypes()
   await loadEngineTypes()
+  await loadBodyStyles()
+  await loadStates()
 }
 
 function addVehicle() {
