@@ -1,17 +1,19 @@
 <template>
   <div class="cgn-alert-wrapper">
-    <div class="flex items-center flex-row">
+    <div class="flex items-stretch flex-row">
       <div
-        class="mr-3 p-2 text-white"
+        class="mr-3 p-2 text-white flex items-center"
         :class="props.color"
       >
         <slot name="icon">
           <i-heroicons-solid:information-circle />
         </slot>
       </div>
-      <p class="cgn-alert-text">
-        <slot />
-      </p>
+      <div class="flex items-center">
+        <p class="cgn-alert-text">
+          <slot />
+        </p>
+      </div>
     </div>
   </div>
 </template>

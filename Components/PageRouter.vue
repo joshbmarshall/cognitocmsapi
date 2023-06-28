@@ -24,10 +24,24 @@
   <div v-if="canShowPageEditor" class="absolute left-1 top-1 cursor-pointer">
     <i-heroicons-solid:pencil v-if="!showPageEditor" @click="showPageEditor = true" />
   </div>
+  <div class="fixed top-0 right-0 left-0 z-50 p-2 pointer-events-none">
+    <div v-for="toast in useToastStore().toasts" :key="toast.id" class="w-full max-w-sm ml-auto">
+      <cgn-alert-success v-if="toast.type == 'success'">
+        {{ toast.message }}
+      </cgn-alert-success>
+      <cgn-alert-info v-if="toast.type == 'info'">
+        {{ toast.message }}
+      </cgn-alert-info>
+      <cgn-alert-danger v-if="toast.type == 'fail'">
+        {{ toast.message }}
+      </cgn-alert-danger>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { CognitoWidget } from '~cognito/models/Cognito/Widget'
+import { useToastStore } from '~cognito/stores/toast'
 
 const showPageEditor = ref(false)
 const widgets = ref<CognitoWidget[]>([])
