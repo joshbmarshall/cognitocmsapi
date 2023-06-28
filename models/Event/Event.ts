@@ -24,6 +24,7 @@ class EventEvent extends CognitoBase {
   merch: EventMerch[]
   last_address_id: number
   last_vehicle_id: number
+  user_cannot_enter_reason: string
 
   baseurl() {
     return '/api/v1/event/event'
@@ -44,6 +45,7 @@ class EventEvent extends CognitoBase {
     this.merch = []
     this.last_address_id = 0
     this.last_vehicle_id = 0
+    this.user_cannot_enter_reason = ''
     Object.assign(this, source)
     this.start_date = new CognitoTime(source?.start_date)
     this.entries_open_at = new CognitoTime(source?.entries_open_at)
