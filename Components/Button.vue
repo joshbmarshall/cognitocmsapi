@@ -54,6 +54,14 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  colorWhite: {
+    type: Boolean,
+    default: false,
+  },
+  colorBlack: {
+    type: Boolean,
+    default: false,
+  },
   colorBrand: {
     type: Boolean,
     default: false,
@@ -113,6 +121,12 @@ const buttonClass = computed(() => {
   }
   if (props.colorBrand) {
     classes += ' bg-brand-500 hover:bg-brand-600 text-on-brand dark:hover:bg-brand-400'
+  }
+  if (props.colorWhite) {
+    classes += ' bg-white text-gray-500'
+  }
+  if (props.colorBlack) {
+    classes += ' bg-black text-gray-500'
   }
   return classes
 })
