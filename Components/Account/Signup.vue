@@ -10,7 +10,7 @@
   </div>
   <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
     <div class="bg-white dark:bg-darkbg-700 py-8 px-4 drop-shadow-lg rounded-lg sm:px-10">
-      <form class="space-y-4" @submit.prevent="registerAccount()">
+      <form v-if="!sentEmail" class="space-y-4" @submit.prevent="registerAccount()">
         <div class="flex flex-col sm:flex-row gap-4">
           <cgn-form-input-text
             v-model="formValues.first_name"
@@ -29,54 +29,42 @@
         </div>
 
         <cgn-form-input-email v-model="formValues.email" label="Email address" type="email" required />
-        <cgn-form-input-password v-model="formValues.password" label="Password" type="password" suggest-password required />
 
         <cgn-button color-brand fullwidth submit>
           Sign up
           <cgn-spinner v-if="isLoading" />
         </cgn-button>
-        <cgn-alert-danger v-if="errorMessage">
-          An account with that email address already exists.
-          Please recover your password.
-          <router-link to="/forgotpassword" class="text-indigo-600 dark:text-indigo-300">
-            Recover now
-          </router-link>
-        </cgn-alert-danger>
       </form>
+      <cgn-account-test-otp-code v-else :username="formValues.email" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { $axios, login } from '~cognito/plugins/axios'
-
-const router = useRouter()
+import { $axios } from '~cognito/plugins/axios'
 
 const isLoading = ref(false)
-const errorMessage = ref(false)
+const sentEmail = ref(false)
 const formValues = ref({
   first_name: '',
   last_name: '',
   email: '',
-  password: '',
+  fingerprint: useUserStore().getAuthFingerprint(),
 })
 
 function registerAccount() {
   isLoading.value = true
   // check that the user doesn't already have a profile, add their profile to the system
   $axios
-    .post('/api/v1/cognito/user/register', formValues.value)
+    .post('/api/v1/cognito/user/registerLink', formValues.value)
     .then(() => {
-      login(formValues.value.email, formValues.value.password, router)
-        .then((success) => {
-          isLoading.value = false
-          if (!success) {
-            errorMessage.value = true
-          }
-        })
+      sentEmail.value = true
     })
     .catch(() => {
-      alert('Problem signing up')
+      useToastStore().addToast('Problem signing up', 'danger', 5000)
+    })
+    .finally(() => {
+      isLoading.value = false
     })
 }
 </script>
