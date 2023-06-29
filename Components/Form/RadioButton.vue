@@ -6,12 +6,12 @@
         class="block bg-white dark:bg-slate-600 border-2 rounded-lg shadow-sm px-6 py-4 cursor-pointer sm:flex sm:justify-between"
         :class="curval === option.id ? 'border-brand-500' : 'border-gray-300 dark:border-gray-700'"
       >
-        <div>
+        <div class="cgn-radio-button text-sm">
           <div class="flex items-center">
             <input v-if="!option.disabled" v-model="curval" type="radio" class="mr-2" :value="option.id" @change="handleInput">
-            <div class="text-sm">{{ option.name }}</div>
+            <div>{{ option.name }}</div>
           </div>
-          <div v-if="option.content" class="text-xs" v-html="option.content" />
+          <div v-if="option.content" class="cgn-radio-button-content text-xs" v-html="option.content" />
         </div>
       </label>
     </div>
@@ -82,4 +82,13 @@ onMounted(() => {
   curval.value = props.modelValue
   formatOptions()
 })
+/* tailwind.css
+.cgn-radio-button {
+  @apply text-sm
+}
+
+.cgn-radio-button-content {
+  @apply text-xs
+}
+*/
 </script>
