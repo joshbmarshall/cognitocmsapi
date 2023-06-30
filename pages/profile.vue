@@ -81,73 +81,52 @@
             </div>
           </div>
 
-          <div v-if="name_field_visible" class="flex flex-col md:flex-row gap-8 sm:gap-5">
+          <div class="grid sm:grid-cols-2 gap-2">
             <cgn-form-input-text
+              v-if="name_field_visible"
               v-model="userStore.user.first_name"
               label="First name"
               required
-              class="w-full md:w-1/2"
             />
             <cgn-form-input-text
+              v-if="name_field_visible"
               v-model="userStore.user.last_name"
               label="Last name"
               required
-              class="w-full md:w-1/2"
             />
-          </div>
-          <div class="flex flex-col md:flex-row gap-8 sm:gap-5">
-            <cgn-form-input-email v-model="formValues.email" label="Email" required class="w-full md:w-1/2" />
-            <cgn-form-input-phone
-              v-model="formValues.mobile_phone"
-              label="Phone"
-              required
-              class="w-full md:w-1/2"
-            />
-          </div>
 
-          <div class="flex flex-col md:flex-row gap-8 sm:gap-5">
-            <cgn-form-input-password
-              v-model="formValues.newpassword"
-              type="password"
-              label="Change Password"
-              class="w-full md:w-1/2"
-            />
             <cgn-form-image
               v-model="formValues.image"
               :thumbnail="userStore.user.thumbnail"
               :width="160"
               label="Photo"
-              class="w-full md:w-1/2"
             />
-          </div>
 
-          <div class="flex flex-col md:flex-row gap-8 sm:gap-5">
+            <cgn-form-input-email v-model="formValues.email" label="Email" required />
+            <cgn-form-input-phone
+              v-model="formValues.mobile_phone"
+              label="Phone"
+              required
+            />
+
             <cgn-form-input-text
               v-model="formValues.drivers_licence_number"
               label="Drivers Licence Number"
-              class="w-full md:w-1/2"
             />
             <cgn-form-input
               v-model="formValues.drivers_licence_expiry"
               type="date"
               label="Drivers Licence Expiry"
-              class="w-full md:w-1/2"
             />
-          </div>
-          <div class="flex flex-col md:flex-row gap-8 sm:gap-5">
-            <cgn-form-dropdown v-model="formValues.drivers_licence_state_of_issue_id" :options="states" label="Drivers Licence State of Issue" class="w-full" />
-          </div>
+            <cgn-form-dropdown v-model="formValues.drivers_licence_state_of_issue_id" :options="states" label="Drivers Licence State of Issue" />
 
-          <div class="flex flex-col md:flex-row gap-8 sm:gap-5">
             <cgn-form-input-text
               v-model="formValues.emergency_contact_name"
               label="Emergency Contact Name"
-              class="w-full md:w-1/2"
             />
             <cgn-form-input-phone
               v-model="formValues.emergency_contact_phone"
               label="Emergency Contact Phone"
-              class="w-full md:w-1/2"
             />
           </div>
 
