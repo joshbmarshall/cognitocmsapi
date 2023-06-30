@@ -46,6 +46,10 @@ class CognitoTime {
     return format(this.time, 'Y-MM-dd')
   }
 
+  toISO8601String() {
+    return format(this.time, 'Y-MM-dd\'T\'HH:mm:ssXX')
+  }
+
   toDateTimeString() {
     return format(this.time, 'Y-MM-dd HH:mm:ss')
   }
