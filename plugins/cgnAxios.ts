@@ -59,11 +59,12 @@ class CgnAxios {
 
     this.axios.interceptors.request.use(
       (request) => {
+        if (this.userStore().baseURL) {
+          request.baseURL = this.userStore().baseURL
+        }
         if (this.userStore().access_token) {
           const isIgnored = ignoredPaths.some(path => request.url.includes(path))
-          if (request.url.startsWith('http')) {
-            // do not add auth header
-          } else if (isIgnored) {
+          if (isIgnored) {
             // do not add auth header
           } else {
             request.headers.Authorization = `Bearer ${this.userStore().access_token}`
