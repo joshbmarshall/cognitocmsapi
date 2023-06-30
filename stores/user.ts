@@ -19,6 +19,7 @@ export const useUserStore = defineStore({
         email: '',
         mobile_phone: '',
       },
+      link_active: true,
     }
   },
 

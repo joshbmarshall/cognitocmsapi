@@ -80,6 +80,7 @@ class CgnAxios {
     this.axios.interceptors.response.use(
 
       (response) => {
+        this.userStore().link_active = true
         return response
       },
       async (error) => {
@@ -87,6 +88,10 @@ class CgnAxios {
 
         // get the status code from the response
         const statusCode = error.response ? error.response.status : -1
+
+        // Report disconnection from server
+        this.userStore().link_active = statusCode !== -1
+
         if ((statusCode === 401 || statusCode === 422) && !isIgnored) {
           // API should return a reason for the error, represented here by the text_code property
 
