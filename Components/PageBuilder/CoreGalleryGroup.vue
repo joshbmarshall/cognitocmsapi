@@ -48,6 +48,29 @@
       </div>
     </div>
   </div>
+  <cgn-modal v-model="modal_open">
+    <template #clean-content>
+      <div class="mr-4">
+        <h1 class="text-2xl md:text-4xl font-semibold font-display">
+          {{ selectedSlide.heading }}
+        </h1>
+        <div v-if="selectedSlide.sub_heading" class="text-xl font-semibold font-display">
+          {{ selectedSlide.sub_heading }}
+        </div>
+      </div>
+      <div v-if="selectedSlide.content" class="prose-invert max-w-none pb-2" v-html="selectedSlide.content" />
+      <div :class="outerClass(selectedSlide)" class="relative aspect-[16/9]">
+        <cgn-lazy-image :image="selectedSlide.image" extra-aspect="16x9" class="w-full" />
+      </div>
+    </template>
+    <template v-if="selectedSlide.link_button_text" #button-footer>
+      <div class="p-2 w-full">
+        <cgn-button color-brand fullwidth :url="selectedSlide.link" :newtab="selectedSlide.link_target == 'blank'">
+          {{ selectedSlide.link_button_text }}
+        </cgn-button>
+      </div>
+    </template>
+  </cgn-modal>
 </template>
 
 <script lang="ts">
