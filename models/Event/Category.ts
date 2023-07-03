@@ -8,6 +8,7 @@ class EventCategory extends CognitoBase {
   spectator_tickets_per_entry: number
   ticket_type: string
   sold_out: boolean
+  is_entry_transfer: boolean
 
   baseurl() {
     return '/api/v1/event/category'
@@ -22,6 +23,7 @@ class EventCategory extends CognitoBase {
     this.spectator_tickets_per_entry = 0
     this.ticket_type = ''
     this.sold_out = true
+    this.is_entry_transfer = false
     Object.assign(this, source)
   }
 }
