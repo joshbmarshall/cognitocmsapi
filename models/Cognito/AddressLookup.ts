@@ -1,4 +1,4 @@
-import { $axios } from '~cognito/plugins/axios'
+import axios from 'axios'
 
 class CognitoAddressLookup {
   line1: string
@@ -23,7 +23,7 @@ class CognitoAddressLookup {
     id: string
     apiKey: string
   }): Promise<any> {
-    return await $axios
+    return await axios
       .get(
         'https://lookup.search.hereapi.com/v1/lookup', {
           params,
@@ -37,7 +37,7 @@ class CognitoAddressLookup {
     apiKey: string
   }): Promise<any> {
     const at = `${params.latitude},${params.longitude}`
-    return await $axios
+    return await axios
       .get('https://autosuggest.search.hereapi.com/v1/autosuggest', {
         params: {
           at,
