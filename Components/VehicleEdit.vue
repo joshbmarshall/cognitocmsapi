@@ -55,6 +55,10 @@ const props = defineProps({
     type: Array<EventVehicle>,
     default: [],
   },
+  noScroll: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const emit = defineEmits(['update:modelValue', 'update:vehicles', 'close'])
@@ -136,8 +140,10 @@ watch(() => selectedVehicle.value, (newval) => {
 onMounted(() => {
   loadVehicles()
   selectedVehicle.value = props.modelValue || ''
-  vehicleedit.value.scrollIntoView({
-    behavior: 'smooth',
-  })
+  if (!props.noScroll) {
+    vehicleedit.value.scrollIntoView({
+      behavior: 'smooth',
+    })
+  }
 })
 </script>
