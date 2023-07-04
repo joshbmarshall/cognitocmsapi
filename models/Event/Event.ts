@@ -2,6 +2,7 @@ import { CognitoBase } from '../Cognito/Base'
 import { CognitoTime } from '../Cognito/Time'
 import type { EventCategory } from './Category'
 import type { EventExtra } from './Extra'
+import type { EventLicenceType } from './LicenceType'
 import type { EventMerch } from './Merch'
 import type { EventSpectatorType } from './SpectatorType'
 import { EventType } from './Type'
@@ -22,6 +23,7 @@ class EventEvent extends CognitoBase {
   spectator_types: EventSpectatorType[]
   extras: EventExtra[]
   merch: EventMerch[]
+  licence_types: EventLicenceType[]
   last_address_id: number
   last_vehicle_id: number
   user_cannot_enter_reason: string
@@ -43,6 +45,7 @@ class EventEvent extends CognitoBase {
     this.spectator_types = []
     this.extras = []
     this.merch = []
+    this.licence_types = []
     this.last_address_id = 0
     this.last_vehicle_id = 0
     this.user_cannot_enter_reason = ''
