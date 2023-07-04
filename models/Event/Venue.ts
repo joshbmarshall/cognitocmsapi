@@ -1,6 +1,6 @@
 import { CognitoBase } from '../Cognito/Base'
 import { CognitoImage } from '../Cognito/Image'
-import type { EventEvent } from './Event'
+import { EventEvent } from './Event'
 import { $axios } from '~cognito/plugins/axios'
 
 class EventVenue extends CognitoBase {
@@ -23,7 +23,8 @@ class EventVenue extends CognitoBase {
   }
 
   async nextEvents(): Promise<EventEvent[]> {
-    return (await $axios.get(`${this.baseurl()}/nextEvents?image_aspect=1x1`)).data
+    const data = await $axios.get(`${this.baseurl()}/nextEvents?image_aspect=1x1`)
+    return new EventEvent().map(data.data)
   }
 }
 
