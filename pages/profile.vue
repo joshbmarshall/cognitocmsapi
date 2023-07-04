@@ -109,6 +109,11 @@
               required
             />
 
+            <cgn-form-input
+              v-model="formValues.date_of_birth"
+              type="date"
+              label="Date of Birth"
+            />
             <cgn-form-input-text
               v-model="formValues.drivers_licence_number"
               label="Drivers Licence Number"
@@ -167,6 +172,7 @@ const formValues = ref({
   last_name: '',
   email: '',
   mobile_phone: '',
+  date_of_birth: '',
   newpassword: '',
   drivers_licence_number: '',
   drivers_licence_expiry: '',
