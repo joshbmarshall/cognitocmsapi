@@ -7,17 +7,19 @@
   </div>
   <div class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 max-w-6xl p-2 mx-auto gap-2">
     <div v-for="gallery in galleries" :key="gallery.url" class="group bg-black overflow-hidden relative" @click="selectGallery(gallery)">
-      <div class="space-y-2 text-white mx-auto lg:max-w-none lg:row-start-1 lg:col-start-1">
-        <div :class="outerClass(gallery.slides[0])" class="relative aspect-square">
-          <div class="absolute inset-0 bg-center bg-cover transition-opacity duration-300 group-hover:opacity-50" :class="[imageClass(gallery.slides[0])]" :style="{ 'background-image': `url(${gallery.slides[0].image.url})` }" />
+      <div v-if="gallery.slides.length">
+        <div class="space-y-2 text-white mx-auto lg:max-w-none lg:row-start-1 lg:col-start-1">
+          <div :class="outerClass(gallery.slides[0])" class="relative aspect-square">
+            <div class="absolute inset-0 bg-center bg-cover transition-opacity duration-300 group-hover:opacity-50" :class="[imageClass(gallery.slides[0])]" :style="{ 'background-image': `url(${gallery.slides[0].image.url})` }" />
+          </div>
         </div>
-      </div>
-      <div v-if="gallery.heading" class="absolute right-0 bottom-0 p-2 text-right translate-y-full group-hover:translate-y-0 text-white transition-transform duration-300">
-        <div class="text-2xl font-semibold font-display">
-          {{ gallery.heading }}
-        </div>
-        <div v-if="gallery.sub_heading" class="font-semibold font-display">
-          {{ gallery.sub_heading }}
+        <div v-if="gallery.heading" class="absolute right-0 bottom-0 p-2 text-right translate-y-full group-hover:translate-y-0 text-white transition-transform duration-300">
+          <div class="text-2xl font-semibold font-display">
+            {{ gallery.heading }}
+          </div>
+          <div v-if="gallery.sub_heading" class="font-semibold font-display">
+            {{ gallery.sub_heading }}
+          </div>
         </div>
       </div>
     </div>
