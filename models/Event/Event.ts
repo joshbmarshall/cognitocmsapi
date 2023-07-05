@@ -1,6 +1,7 @@
 import { CognitoBase } from '../Cognito/Base'
 import { CognitoTime } from '../Cognito/Time'
 import type { EventCategory } from './Category'
+import { EventDate } from './Date'
 import type { EventExtra } from './Extra'
 import type { EventLicenceType } from './LicenceType'
 import type { EventMerch } from './Merch'
@@ -15,6 +16,7 @@ class EventEvent extends CognitoBase {
   type: EventType
   start_date: CognitoTime
   venue: EventVenue
+  dates: EventDate[]
   entrant_content: string
   spectator_content: string
   entries_open_at: CognitoTime
@@ -38,6 +40,7 @@ class EventEvent extends CognitoBase {
     this.url = ''
     this.type = new EventType()
     this.venue = new EventVenue()
+    this.dates = []
     this.entrant_content = ''
     this.spectator_content = ''
     this.can_enter = false
@@ -52,6 +55,9 @@ class EventEvent extends CognitoBase {
     Object.assign(this, source)
     this.start_date = new CognitoTime(source?.start_date)
     this.entries_open_at = new CognitoTime(source?.entries_open_at)
+    if (source?.dates) {
+      this.dates = new EventDate().map(source?.dates)
+    }
   }
 
   async submitEntry(data: any): Promise<{
