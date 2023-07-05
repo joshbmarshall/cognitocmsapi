@@ -29,13 +29,20 @@ class CognitoPayment extends CognitoBase {
         payment: 0,
       }
     }
-    const data = await $axios.get(`/api/v1/cognito/payment/checkPaid?url=${url}&payum_token=${payum_token}`)
+    const data = await $axios.get(`${this.baseurl()}/checkPaid?url=${url}&payum_token=${payum_token}`)
 
     return {
       has_payment: true,
       success: data.data.success,
       payment: data.data.payment,
     }
+  }
+
+  async creditCardSurchargeOf(amount: number): Promise<number> {
+    const data = await $axios.post(`${this.baseurl()}/creditCardSurchargeOf`, {
+      amount,
+    })
+    return data.data
   }
 }
 
