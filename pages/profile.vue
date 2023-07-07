@@ -147,6 +147,8 @@
             <cgn-profile-sell-addresses />
           </div>
 
+          <cgn-profile-cognito-invoices />
+
           <ProfileElements />
         </div>
       </form>

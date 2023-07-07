@@ -33,8 +33,9 @@ class CognitoInvoice extends CognitoBase {
   total_amount: string
   total_tax: string
   is_quote: boolean
-  cancelled_at: CognitoTime
-  paid_at: CognitoTime
+  cancelled_at?: CognitoTime
+  paid_at?: CognitoTime
+  created_at?: CognitoTime
   invoiceItems: CognitoInvoiceItem[]
 
   baseurl() {
@@ -60,8 +61,15 @@ class CognitoInvoice extends CognitoBase {
     this.is_quote = false
     this.invoiceItems = []
     Object.assign(this, source)
-    this.cancelled_at = new CognitoTime(source?.cancelled_at)
-    this.paid_at = new CognitoTime(source?.paid_at)
+    if (source?.cancelled_at) {
+      this.cancelled_at = new CognitoTime(source?.cancelled_at)
+    }
+    if (source?.paid_at) {
+      this.paid_at = new CognitoTime(source?.paid_at)
+    }
+    if (source?.created_at) {
+      this.created_at = new CognitoTime(source?.created_at)
+    }
   }
 
   async payNow(data: any): Promise<{
@@ -79,6 +87,19 @@ class CognitoInvoice extends CognitoBase {
     return (await $axios.post('/api/v1/cognito/invoice/invoiceText', {
       payment,
     })).data
+  }
+
+  async getInvoiceById(id: number): Promise<{
+    invoiceText: string
+  }> {
+    return (await $axios.post('/api/v1/cognito/invoice/invoiceText', {
+      id,
+    })).data
+  }
+
+  async myInvoices(): Promise<CognitoInvoice[]> {
+    const res = await $axios.get('/api/v1/cognito/invoice/myInvoices')
+    return new CognitoInvoice().map(res.data.data)
   }
 }
 
