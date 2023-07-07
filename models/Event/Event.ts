@@ -28,6 +28,7 @@ class EventEvent extends CognitoBase {
   licence_types: EventLicenceType[]
   last_address_id: number
   last_vehicle_id: number
+  aasa_licence: string
   user_cannot_enter_reason: string
 
   baseurl() {
@@ -51,6 +52,7 @@ class EventEvent extends CognitoBase {
     this.licence_types = []
     this.last_address_id = 0
     this.last_vehicle_id = 0
+    this.aasa_licence = ''
     this.user_cannot_enter_reason = ''
     Object.assign(this, source)
     this.start_date = new CognitoTime(source?.start_date)
