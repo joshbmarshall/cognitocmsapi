@@ -149,6 +149,10 @@
 
           <cgn-profile-cognito-invoices />
 
+          <cgn-profile-event-upcoming-entries />
+
+          <cgn-profile-ticket-upcoming-tickets />
+
           <ProfileElements />
         </div>
       </form>
