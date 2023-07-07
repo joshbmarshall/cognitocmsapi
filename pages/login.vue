@@ -2,7 +2,10 @@
   <div class="min-h-full flex flex-col justify-center py-12 px-6">
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
       <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
-        <div v-if="formSubmitted">
+        <div v-if="signingIn">
+          Signing you in
+        </div>
+        <div v-else-if="formSubmitted">
           Check your email
         </div>
         <div v-else>
@@ -13,7 +16,10 @@
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white dark:bg-darkbg-700 py-8 px-4 drop-shadow-lg rounded-lg sm:px-10">
-        <div v-if="formSubmitted" class="text-center">
+        <div v-if="signingIn" class="text-center">
+          <cgn-spinner />
+        </div>
+        <div v-else-if="formSubmitted" class="text-center">
           <div v-if="sending">
             <div class="mb-3">
               Sending you a link to sign in
@@ -58,6 +64,7 @@
 
 <script setup lang="ts">
 import { CognitoUser } from '~cognito/models/Cognito/User'
+import { $axios } from '~cognito/plugins/axios'
 
 const sending = ref(false)
 const formSubmitted = ref(false)
@@ -66,6 +73,7 @@ const errorMessage = ref('')
 const username = ref('')
 const first_name = ref('')
 const last_name = ref('')
+const signingIn = ref(false)
 
 const sendLink = () => {
   formSubmitted.value = true
@@ -95,4 +103,21 @@ const sendLink = () => {
       })
   }
 }
+
+onMounted(async () => {
+  if ($axios.isSSR()) {
+    return
+  }
+  const access_token = new URL(location.href).searchParams.get('a')
+  const refresh_token = new URL(location.href).searchParams.get('r')
+  if (access_token && refresh_token) {
+    signingIn.value = true
+    const userStore = useUserStore()
+    userStore.setRefreshToken(refresh_token)
+    userStore.setAccessToken(access_token)
+    await $axios.getUser()
+    window.location = userStore.redirect_after_login || '/'
+    userStore.redirect_after_login = ''
+  }
+})
 </script>
