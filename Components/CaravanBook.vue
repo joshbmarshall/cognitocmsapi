@@ -94,6 +94,7 @@ import { CaravanBookingPersonQty } from '~cognito/models/Caravan/BookingPersonQt
 import { CaravanPriceQuote, CaravanQuoteForm } from '~cognito/models/Caravan/PriceQuote'
 import { CaravanPersonType } from '~cognito/models/Caravan/PersonType'
 import { CognitoPayment } from '~cognito/models/Cognito/Payment'
+import { CognitoInvoice } from '~cognito/models/Cognito/Invoice'
 
 const personTypes = ref<CaravanPersonType[]>([])
 const payErrorMessage = ref('')
@@ -180,7 +181,7 @@ onMounted(() => {
       has_payment.value = data.has_payment
       payment_ok.value = data.success
       if (data.success) {
-        new CaravanBooking().getInvoice(data.payment.id)
+        new CognitoInvoice().getInvoice(data.payment.id)
           .then((data) => {
             invoiceText.value = data.invoiceText
           })
