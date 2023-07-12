@@ -22,7 +22,7 @@
       <cgn-form-input v-if="!blankSigner?.phone" v-model="signer.phone" type="phone" label="Phone" required />
       <cgn-form-input v-if="!blankSigner?.email" v-model="signer.email" type="email" label="Email" required />
       <cgn-address-lookup
-        v-if="!blankSigner?.address"
+        v-if="!blankSigner?.address?.line1"
         v-model="signer.address"
         here-api-key="GOBLSSIkkrgjhMahFmXPramj-95rVXZYpj-0pj7DsFU"
         label="Address"
@@ -57,7 +57,7 @@
         <cgn-form-input v-if="!blankSigner?.adult_phone" v-model="signer.adult_phone" type="phone" label="Phone" required />
         <cgn-form-input v-if="!blankSigner?.adult_email" v-model="signer.adult_email" type="email" label="Email" required />
         <cgn-address-lookup
-          v-if="!blankSigner?.adult_address"
+          v-if="!blankSigner?.adult_address?.line1"
           v-model="signer.adult_address"
           here-api-key="GOBLSSIkkrgjhMahFmXPramj-95rVXZYpj-0pj7DsFU"
           label="Address"
