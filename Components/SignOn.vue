@@ -18,17 +18,18 @@
     <form v-if="!form_success" class="p-8 pt-6" @submit.prevent="submitForm">
       <cgn-form-input v-model="signer.first_name" label="First Name" required />
       <cgn-form-input v-model="signer.last_name" label="Last Name" required />
-      <cgn-form-input v-model="signer.date_of_birth" label="Date of Birth" required inputmask="date" placeholder="dd/mm/yyyy" />
-      <cgn-form-input v-model="signer.phone" type="phone" label="Phone" required />
-      <cgn-form-input v-model="signer.email" type="email" label="Email" required />
+      <cgn-form-input v-if="!blankSigner?.date_of_birth" v-model="signer.date_of_birth" label="Date of Birth" required inputmask="date" placeholder="dd/mm/yyyy" />
+      <cgn-form-input v-if="!blankSigner?.phone" v-model="signer.phone" type="phone" label="Phone" required />
+      <cgn-form-input v-if="!blankSigner?.email" v-model="signer.email" type="email" label="Email" required />
       <cgn-address-lookup
+        v-if="!blankSigner?.address"
         v-model="signer.address"
         here-api-key="GOBLSSIkkrgjhMahFmXPramj-95rVXZYpj-0pj7DsFU"
         label="Address"
         required
       />
-      <cgn-form-input v-model="signer.emergency_contact" label="Emergency Contact" required />
-      <cgn-form-input v-model="signer.emergency_contact_phone" type="phone" label="Emergency Contact Phone" required />
+      <cgn-form-input v-if="!blankSigner?.emergency_contact" v-model="signer.emergency_contact" label="Emergency Contact" required />
+      <cgn-form-input v-if="!blankSigner?.emergency_contact_phone" v-model="signer.emergency_contact_phone" type="phone" label="Emergency Contact Phone" required />
       <div v-for="indemnity in signonType.indemnities" :key="indemnity.id">
         <div class="mt-2" v-html="indemnity.content" />
         <div class="text-lg mt-2">
@@ -53,9 +54,10 @@
         <span class="text-lg">Parent / Guardian details</span>
         <cgn-form-input v-model="signer.adult_name" label="Name" required />
         <cgn-form-input v-model="signer.adult_relationship" label="Parent / Guardian relationship" required />
-        <cgn-form-input v-model="signer.adult_phone" type="phone" label="Phone" required />
-        <cgn-form-input v-model="signer.adult_email" type="email" label="Email" required />
+        <cgn-form-input v-if="!blankSigner?.adult_phone" v-model="signer.adult_phone" type="phone" label="Phone" required />
+        <cgn-form-input v-if="!blankSigner?.adult_email" v-model="signer.adult_email" type="email" label="Email" required />
         <cgn-address-lookup
+          v-if="!blankSigner?.adult_address"
           v-model="signer.adult_address"
           here-api-key="GOBLSSIkkrgjhMahFmXPramj-95rVXZYpj-0pj7DsFU"
           label="Address"
