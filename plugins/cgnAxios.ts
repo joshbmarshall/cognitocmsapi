@@ -249,7 +249,11 @@ class CgnAxios {
       userStore.setRefreshToken(refresh_token)
       userStore.setAccessToken(access_token)
       await this.getUser()
-      window.location = userStore.redirect_after_login || '/'
+      if (window.location.host === 'www.qldraceways.com.au' || window.location.host === 'www.hamptondowns.com.au' || window.location.host === 'localhost:3000') {
+        window.location = `/enter/#${userStore.redirect_after_login || '/'}`
+      } else {
+        window.location = userStore.redirect_after_login || '/'
+      }
       userStore.redirect_after_login = ''
     }
   }

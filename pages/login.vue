@@ -108,16 +108,8 @@ onMounted(async () => {
   if ($axios.isSSR()) {
     return
   }
-  const access_token = new URL(location.href).searchParams.get('a')
-  const refresh_token = new URL(location.href).searchParams.get('r')
-  if (access_token && refresh_token) {
-    signingIn.value = true
-    const userStore = useUserStore()
-    userStore.setRefreshToken(refresh_token)
-    userStore.setAccessToken(access_token)
-    await $axios.getUser()
-    window.location = userStore.redirect_after_login || '/'
-    userStore.redirect_after_login = ''
-  }
+  signingIn.value = true
+  await $axios.tokenlogin()
+  signingIn.value = false
 })
 </script>
