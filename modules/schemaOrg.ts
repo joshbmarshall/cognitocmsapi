@@ -7,6 +7,9 @@ export const install: UserModule = async (ctx) => {
   if (ctx.isClient && import.meta.env.PROD) {
     return
   }
+  if (!ctx.head) {
+    return
+  }
 
   const { SchemaOrgUnheadPlugin } = await import('@vueuse/schema-org')
   ctx.head.use(SchemaOrgUnheadPlugin({
