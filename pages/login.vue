@@ -96,10 +96,11 @@ const sendLink = () => {
         errorMessage.value = data.error
         sending.value = false
       })
-      .catch(() => {
+      .catch((error) => {
         formSubmitted.value = false
         sending.value = false
-        createAccountMode.value = true
+        createAccountMode.value = error.response.data.message == 'User not found'
+        errorMessage.value = error.response.data.content
       })
   }
 }
