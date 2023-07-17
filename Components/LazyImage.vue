@@ -81,6 +81,10 @@ async function checkVisible() {
       lazyelement.value.onload = resolve
     })
   }
+  if (!lazyelement.value) {
+    // Possibly unset while awaiting above
+    return
+  }
   if (lazyelement.value.naturalHeight === 0) {
     // Ensure the placeholder image has a height
     return
