@@ -141,8 +141,8 @@ class CgnAxios {
           }
         }
 
-        // ignore all other errors, let component or other error handlers handle them
-        return Promise.reject(error)
+        // Pass through all other errors, let component or other error handlers handle them
+        throw error
       })
   }
 
