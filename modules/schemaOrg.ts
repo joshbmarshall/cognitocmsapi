@@ -1,5 +1,5 @@
 import { type UserModule } from '~/types'
-import { siteURL } from '~/config'
+import { config } from '~/config'
 
 // https://unhead-schema-org.harlanzw.com/
 export const install: UserModule = async (ctx) => {
@@ -14,7 +14,7 @@ export const install: UserModule = async (ctx) => {
   const { SchemaOrgUnheadPlugin } = await import('@vueuse/schema-org')
   ctx.head.use(SchemaOrgUnheadPlugin({
     // config
-    host: siteURL,
+    host: config.siteURL,
   }, () => {
     return {
       path: ctx.router.currentRoute.value.path,

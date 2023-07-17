@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import * as tus from 'tus-js-client'
 import { nanoid } from 'nanoid'
-import { baseURL } from '~/config'
+import { config } from '~/config'
 
 const props = defineProps({
   label: {
@@ -58,7 +58,7 @@ const upload = (e) => {
   // Create a new tus upload
   const upload = new tus.Upload(file, {
     // Endpoint is the upload creation URL from your tus server
-    endpoint: `${baseURL}/cms/cognito/tus`,
+    endpoint: `${config.baseURL}/cms/cognito/tus`,
     // Retry delays will enable tus-js-client to automatically retry on errors
     retryDelays: [0, 3000, 5000, 10000, 20000],
     // Attach additional meta data about the file for the server

@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { baseURL, siteURL } from '~/config'
+import { config } from '~/config'
 import initialData from '~/initialData.json'
 import { CognitoDomain } from '~cognito/models/Cognito/Domain'
 import { CognitoTime } from '~cognito/models/Cognito/Time'
@@ -67,7 +67,7 @@ useHead({
   link: [
     {
       rel: 'preconnect',
-      href: baseURL,
+      href: config.baseURL,
     },
     {
       rel: 'icon',
@@ -85,7 +85,7 @@ useHead({
     },
     {
       rel: 'canonical',
-      href: () => siteURL + (sitemapPage.value?.url || ''),
+      href: () => config.siteURL + (sitemapPage.value?.url || ''),
     },
   ],
 })

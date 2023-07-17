@@ -2,7 +2,7 @@ import type { Axios, AxiosRequestConfig } from 'axios'
 import axios from 'axios'
 import type { Router } from 'vue-router'
 import { nanoid } from 'nanoid'
-import { baseURL } from '~/config'
+import { config } from '~/config'
 import { CognitoUser } from '~cognito/models/Cognito/User'
 import { useUserStore } from '~cognito/stores/user'
 import { useCartStore } from '~cognito/stores/cart'
@@ -43,7 +43,7 @@ class CgnAxios {
     }
 
     this.clientId = settings.clientId
-    this.baseURL = settings.baseURL ? settings.baseURL : baseURL
+    this.baseURL = settings.baseURL ? settings.baseURL : config.baseURL
 
     this.userStore = settings.userStore
 

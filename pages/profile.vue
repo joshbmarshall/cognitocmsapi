@@ -3,18 +3,18 @@
     <cgn-modal v-model="fail" :timeout="3000">
       <template #icon>
         <div
-          class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100 sm:h-10 sm:w-10"
+          class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100 sm:h-10 sm:w-10"
         >
           <i-heroicons-solid:exclamation />
         </div>
       </template>
 
       <template #content>
-        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white select-none">
+        <h3 class="select-none text-lg font-medium leading-6 text-gray-900 dark:text-white">
           Failed
         </h3>
         <div class="mt-2">
-          <p class="text-sm text-gray-500 dark:text-gray-400 select-none">
+          <p class="select-none text-sm text-gray-500 dark:text-gray-400">
             {{ message }}
           </p>
         </div>
@@ -32,18 +32,18 @@
     <cgn-modal v-model="success" :timeout="3000">
       <template #icon>
         <div
-          class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 text-green-80 dark:bg-green-800 dark:text-green-100 sm:h-10 sm:w-10"
+          class="text-green-80 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-green-100 dark:bg-green-800 dark:text-green-100 sm:h-10 sm:w-10"
         >
           <i-heroicons-solid:check />
         </div>
       </template>
 
       <template #content>
-        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white select-none">
+        <h3 class="select-none text-lg font-medium leading-6 text-gray-900 dark:text-white">
           Success!
         </h3>
         <div class="mt-2">
-          <p class="text-sm text-gray-500 dark:text-gray-400 select-none">
+          <p class="select-none text-sm text-gray-500 dark:text-gray-400">
             {{ message }}
           </p>
         </div>
@@ -59,7 +59,7 @@
     </cgn-modal>
 
     <div>
-      <form class="max-w-4xl px-4 py-8 mx-auto space-y-4" @submit.prevent="submitted">
+      <form class="mx-auto max-w-4xl space-y-4 px-4 py-8" @submit.prevent="submitted">
         <div class="space-y-8 sm:space-y-5">
           <div class="flex flex-row justify-between gap-8 sm:gap-5">
             <div class="text-xl">
@@ -68,12 +68,12 @@
               {{ userStore.user.last_name }}
               <span
                 v-if="!name_field_visible"
-                class="block sm:inline-block text-xs cursor-pointer sm:pl-1"
+                class="block cursor-pointer text-xs sm:inline-block sm:pl-1"
                 @click="changeName()"
               >change</span>
             </div>
             <div
-              class="text-right font-medium cursor-pointer"
+              class="cursor-pointer text-right font-medium"
               title="logout"
               @click="logout()"
             >
@@ -81,7 +81,14 @@
             </div>
           </div>
 
-          <div class="grid sm:grid-cols-2 gap-2">
+          <cgn-form-image
+            v-model="formValues.image"
+            :thumbnail="userStore.user.thumbnail"
+            :width="160"
+            label="Photo"
+          />
+
+          <div class="grid gap-2 sm:grid-cols-2">
             <cgn-form-input-text
               v-if="name_field_visible"
               v-model="userStore.user.first_name"
@@ -95,13 +102,6 @@
               required
             />
 
-            <cgn-form-image
-              v-model="formValues.image"
-              :thumbnail="userStore.user.thumbnail"
-              :width="160"
-              label="Photo"
-            />
-
             <cgn-form-input-email v-model="formValues.email" label="Email" required />
             <cgn-form-input-phone
               v-model="formValues.mobile_phone"
@@ -110,39 +110,45 @@
             />
 
             <cgn-form-input
+              v-if="config.profile.edit_date_of_birth"
               v-model="formValues.date_of_birth"
               type="date"
               label="Date of Birth"
             />
-            <cgn-form-input-text
-              v-model="formValues.drivers_licence_number"
-              label="Drivers Licence Number"
-            />
-            <cgn-form-input
-              v-model="formValues.drivers_licence_expiry"
-              type="date"
-              label="Drivers Licence Expiry"
-            />
-            <cgn-form-dropdown v-model="formValues.drivers_licence_state_of_issue_id" :options="states" label="Drivers Licence State of Issue" />
 
-            <cgn-form-input-text
-              v-model="formValues.emergency_contact_name"
-              label="Emergency Contact Name"
-            />
-            <cgn-form-input-phone
-              v-model="formValues.emergency_contact_phone"
-              label="Emergency Contact Phone"
-            />
+            <template v-if="config.profile.edit_drivers_licence">
+              <cgn-form-input-text
+                v-model="formValues.drivers_licence_number"
+                label="Drivers Licence Number"
+              />
+              <cgn-form-input
+                v-model="formValues.drivers_licence_expiry"
+                type="date"
+                label="Drivers Licence Expiry"
+              />
+              <cgn-form-dropdown v-model="formValues.drivers_licence_state_of_issue_id" :options="states" label="Drivers Licence State of Issue" />
+            </template>
+
+            <template v-if="config.profile.edit_emergency_contact">
+              <cgn-form-input-text
+                v-model="formValues.emergency_contact_name"
+                label="Emergency Contact Name"
+              />
+              <cgn-form-input-phone
+                v-model="formValues.emergency_contact_phone"
+                label="Emergency Contact Phone"
+              />
+            </template>
           </div>
 
           <cgn-button color-brand submit>
-            <span class="flex flex-row gap-2 items-center">
-              Submit
+            <span class="flex flex-row items-center gap-2">
+              Save Profile
               <cgn-spinner v-if="is_loading" />
             </span>
           </cgn-button>
 
-          <div v-if="isEcommerce">
+          <div v-if="config.isEcommerce">
             <cgn-profile-previous-orders />
             <cgn-profile-sell-addresses />
           </div>
@@ -161,7 +167,7 @@
 </template>
 
 <script setup lang="ts">
-import { isEcommerce } from '~/config'
+import { config } from '~/config'
 import { CognitoState } from '~cognito/models/Cognito/State'
 import { $axios, getUser } from '~cognito/plugins/axios'
 

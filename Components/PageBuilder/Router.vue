@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { baseURL } from '~/config'
+import { config } from '~/config'
 import { CognitoUrlParts } from '~cognito/models/Cognito/Page'
 import { logout } from '~cognito/plugins/axios'
 import { redirects } from '~/initialData.json'
@@ -76,7 +76,7 @@ onMounted(() => {
   loadPageContent(props.page)
   loading.value = false
   if (props.page == 'cms') {
-    window.location = `${baseURL}/cms`
+    window.location = `${config.baseURL}/cms`
   }
   if (props.page == 'logout') {
     logout()
