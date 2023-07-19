@@ -8,9 +8,9 @@
   <cgn-alert-danger v-else-if="signer.already_signed_on">
     You have already signed on
   </cgn-alert-danger>
-  <div v-else class="max-w-md w-full mx-auto bg-white rounded-lg border border-gray-200 overflow-hidden">
+  <div v-else class="mx-auto w-full max-w-md overflow-hidden rounded-lg border border-gray-200 bg-white">
     <div v-if="form_success">
-      <div class="p-2 bg-green-400 text-white w-full">
+      <div class="w-full bg-green-400 p-2 text-white">
         <i-heroicons-solid:check />
       </div>
       <div class="p-8 pt-4" v-html="signonType.success_content" />
@@ -32,7 +32,7 @@
       <cgn-form-input v-if="!blankSigner?.emergency_contact_phone" v-model="signer.emergency_contact_phone" type="phone" label="Emergency Contact Phone" required />
       <div v-for="indemnity in signonType.indemnities" :key="indemnity.id">
         <div class="mt-2" v-html="indemnity.content" />
-        <div class="text-lg mt-2">
+        <div class="mt-2 text-lg">
           <label>
             <input type="checkbox" required>
             I have read, understood &amp; agree to the above terms &amp; conditions
@@ -43,10 +43,10 @@
       <small>
         It is compulsory to take a photo
       </small>
-      <div class="flex flex-col gap-8 sm:gap-5 mt-2">
+      <div class="mt-2 flex flex-col gap-8 sm:gap-5">
         <SignaturePad
           ref="signaturePad" width="100%" height="200"
-          class="border-4 border-solid border-gray-400 rounded-md"
+          class="rounded-md border-4 border-solid border-gray-400"
         />
       </div>
 
@@ -66,7 +66,7 @@
         <div v-for="indemnity in signonType.indemnities" :key="indemnity.id">
           <div v-if="indemnity.adult_terms_for_minor_content">
             <div class="mt-2" v-html="indemnity.adult_terms_for_minor_content" />
-            <div class="text-lg mt-2">
+            <div class="mt-2 text-lg">
               <label>
                 <input type="checkbox" required>
                 I have read, understood &amp; agree to the above terms &amp; conditions
@@ -78,7 +78,7 @@
         <div class="flex flex-col gap-8 sm:gap-5">
           <SignaturePad
             ref="adult_signaturePad" width="100%" height="200"
-            class="border-4 border-solid border-gray-400 rounded-md"
+            class="rounded-md border-4 border-solid border-gray-400"
           />
         </div>
       </div>
@@ -206,7 +206,7 @@ const submitForm = () => {
 const loadType = () => {
   window.scrollTo(0, 0)
   if (props.blankSigner) {
-    signer.value = new SignonSignOn(props.blankSigner)
+    signer.value = new SignonSignOn(JSON.parse(JSON.stringify(props.blankSigner)))
   }
 
   new SignonType({ url: props.type }).getDetails(signer.value.extra_term_ids).then((data) => {
