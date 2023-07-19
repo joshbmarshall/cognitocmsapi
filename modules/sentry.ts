@@ -7,6 +7,10 @@ export const install: UserModule = ({ app, router, isClient }) => {
       app,
       dsn: 'https://23f886af5a544d3b9984f87eb3862fda@sentry.jm1.me/5',
       integrations: [
+        new Sentry.Integrations.GlobalHandlers({
+          onunhandledrejection: false,
+          onerror: true,
+        }),
         new Sentry.BrowserTracing({
           routingInstrumentation: Sentry.vueRouterInstrumentation(router),
         }),
