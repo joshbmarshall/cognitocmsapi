@@ -150,28 +150,24 @@ async function newImage() {
     }
   }
   if (props.imageHash && props.imageAspect && props.imageWidth) {
-    await new CognitoImage().getByHash({
+    const data = await new CognitoImage().getByHash({
       hash: props.imageHash,
       image_aspect: props.imageAspect,
       image_width: props.imageWidth,
     })
-      .then((data) => {
-        webp = data.webp_url
-        url = data.url
-        placeholder = data.placeholder
-      })
+    webp = data.webp_url
+    url = data.url
+    placeholder = data.placeholder
   }
   if (props.imageId && props.imageAspect && props.imageWidth) {
-    await new CognitoImage().find_one({
+    const data = await new CognitoImage().find_one({
       url: props.imageId,
       image_aspect: props.imageAspect,
       image_width: props.imageWidth,
     })
-      .then((data) => {
-        webp = data.webp_url
-        url = data.url
-        placeholder = data.placeholder
-      })
+    webp = data.webp_url
+    url = data.url
+    placeholder = data.placeholder
   }
   if (last_image_url.value == url) {
     // No need to reload same image
@@ -240,14 +236,21 @@ onServerPrefetch(async () => {
     src.value = props.url
   }
   if (props.imageHash && props.imageAspect && props.imageWidth) {
-    await new CognitoImage().getByHash({
+    const data = await new CognitoImage().getByHash({
       hash: props.imageHash,
       image_aspect: props.imageAspect,
       image_width: props.imageWidth,
     })
-      .then((data) => {
-        src.value = data.url
-      })
+    src.value = data.url
+  }
+  if (props.imageId && props.imageAspect && props.imageWidth) {
+    const data = await new CognitoImage().find_one({
+      url: props.imageId,
+      image_aspect: props.imageAspect,
+      image_width: props.imageWidth,
+    })
+    console.log(data)
+    src.value = data.url
   }
 })
 </script>
