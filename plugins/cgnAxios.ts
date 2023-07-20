@@ -241,19 +241,27 @@ class CgnAxios {
     return true
   }
 
-  async tokenlogin() {
-    const access_token = new URL(location.href).searchParams.get('a')
-    const refresh_token = new URL(location.href).searchParams.get('r')
+  async tokenlogin(access_token = '', refresh_token = '') {
+    if (!access_token) {
+      access_token = new URL(location.href).searchParams.get('a') || ''
+    }
+    if (!refresh_token) {
+      refresh_token = new URL(location.href).searchParams.get('r') || ''
+    }
     if (access_token && refresh_token) {
       const userStore = this.userStore()
       userStore.setRefreshToken(refresh_token)
       userStore.setAccessToken(access_token)
       await this.getUser()
+
+      let redirectTo = userStore.redirect_after_login || '/'
       if (window.location.host === 'www.qldraceways.com.au' || window.location.host === 'www.hamptondowns.com.au' || window.location.host === 'localhost:3000') {
-        window.location = `/enter/#${userStore.redirect_after_login || '/'}`
-      } else {
-        window.location = userStore.redirect_after_login || '/'
+        redirectTo = `/enter/#${userStore.redirect_after_login || '/'}`
       }
+
+      nextTick(() => {
+        window.location = redirectTo
+      })
       userStore.redirect_after_login = ''
     }
   }

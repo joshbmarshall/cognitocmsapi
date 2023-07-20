@@ -112,6 +112,26 @@ class CognitoUser {
     return res.data
   }
 
+  async loginRecoveryCode(data: {
+    email: string
+    code: string
+  }): Promise<{
+    tokens: {
+      access_token: string
+      refresh_token: string
+    }
+    message: string
+  }> {
+    const res = await $axios.get('/api/v1/cognito/user/loginRecoveryCode', {
+      params: {
+        email: data.email,
+        code: data.code,
+        fingerprint: useUserStore().auth_fingerprint,
+      },
+    })
+    return res.data
+  }
+
   /**
    * Get this user's credit balance for a supplier
    * @param supplier supplier id

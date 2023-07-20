@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { CognitoUser } from '~cognito/models/Cognito/User'
-import { login } from '~cognito/plugins/axios'
+import { $axios } from '~cognito/plugins/axios'
 
 const props = defineProps({
   username: {
@@ -38,7 +38,7 @@ const errorMessage = ref('')
 function testResetCode() {
   errorMessage.value = ''
   // test server with OTP, only proceed if correct, get back password from server
-  new CognitoUser().checkRecoveryCode({
+  new CognitoUser().loginRecoveryCode({
     email: props.username,
     code: otp.value,
   })
@@ -46,7 +46,7 @@ function testResetCode() {
       if (data.message) {
         errorMessage.value = data.message
       } else {
-        login(props.username, data.newPassword, router)
+        $axios.tokenlogin(data.tokens.access_token, data.tokens.refresh_token)
       }
     })
     .catch(() => {
