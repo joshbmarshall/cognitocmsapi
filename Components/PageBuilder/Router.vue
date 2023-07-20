@@ -1,11 +1,11 @@
 <template>
   <div v-if="loading" />
-  <div v-else-if="not_found" class="w-full min-h-screen">
+  <div v-else-if="not_found" class="min-h-screen w-full">
     <notFound />
   </div>
   <div v-else>
     <div v-if="currentPage.slug">
-      <div v-for="row in currentPage.rows" :key="row.id" class="space-y-2 text-gray-900 dark:text-gray-200 lg:row-start-1 lg:col-start-1" :class="{ 'grid grid-cols-12': row.row_type == 'columns' }">
+      <div v-for="row in currentPage.rows" :key="row.id" class="space-y-2 text-gray-900 dark:text-gray-200 lg:col-start-1 lg:row-start-1" :class="{ 'grid grid-cols-12': row.row_type == 'columns' }">
         <div v-if="row.row_type == 'tabs'">
           <cgn-tabs v-slot="tabData" :tabs="generateTabs(row.blocks)">
             <div v-for="block in row.blocks" v-show="tabData.selected_tab == block.title" :key="block.id" :style="`grid-column: span ${block.width} / span ${block.width}`">
@@ -23,7 +23,7 @@
       </div>
       <div
         v-if="currentPage.content"
-        class="p-6 sm:p-12 space-y-2 prose prose-brand dark:prose-dark text-gray-500 dark:text-gray-200 mx-auto lg:max-w-none lg:row-start-1 lg:col-start-1"
+        class="prose-brand prose mx-auto space-y-2 p-6 text-gray-500 dark:prose-dark dark:text-gray-200 sm:p-12 lg:col-start-1 lg:row-start-1 lg:max-w-none"
         v-html="currentPage.content"
       />
     </div>
@@ -31,6 +31,7 @@
       <cgn-spinner />
     </div>
   </div>
+  <cgn-back-to-top v-if="config.show_back_to_top" />
 </template>
 
 <script setup lang="ts">
