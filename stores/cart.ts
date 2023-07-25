@@ -41,11 +41,15 @@ export const useCartStore = defineStore({
       shipping_type: 0,
       total_amount: 0,
       total_tax: 0,
+      payment_types: <{
+        id: string
+        name: string
+      }[]>[],
     }
   },
 
   actions: {
-    async addToCart(sku_id: number, qty: number, addons: Object) {
+    async addToCart(sku_id: number, qty: number, addons: any) {
       await $axios
         .post(
           '/api/v1/sell/cart/cartAdd',
@@ -129,10 +133,11 @@ export const useCartStore = defineStore({
           this.shipping_amount = res.data.shipping_amount
           this.total_amount = res.data.total_amount
           this.total_tax = res.data.total_tax
+          this.payment_types = res.data.payment_types
         })
     },
     getAddresses() {
-      new SellAddress().find_many({}).then((data) => {
+      new SellAddress().find_many().then((data) => {
         this.addresses = data.data
       })
     },
@@ -205,8 +210,8 @@ export const useCartStore = defineStore({
         )
       return result.data
     },
-    submitOrder(address: number, shipping_option_id: number, paymentGateway: string, note: string, promotion_code: string) {
-      $axios
+    async submitOrder(address: number, shipping_option_id: number, paymentGateway: string, note: string, promotion_code: string) {
+      const res = await $axios
         .post('/api/v1/sell/cart/submitOrder', {
           address,
           shipping_option_id,
@@ -215,16 +220,14 @@ export const useCartStore = defineStore({
           promotion_code,
           url: location.href,
         })
-        .then((res) => {
-          if (res.data.success) {
-            window.location = res.data.payment
-          } else {
-            alert(`something went wrong: ${res.data.message}`)
-          }
-        })
         .catch(() => {
-          alert('something went wrong')
+          return 'something went wrong'
         })
+      if (res.data.success) {
+        window.location = res.data.payment
+      } else {
+        return res.data.message
+      }
     },
     setPromotionCode(promocode: string) {
       this.promotion_code = promocode
