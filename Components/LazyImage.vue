@@ -17,6 +17,7 @@ const props = defineProps({
   },
   url: {
     type: String,
+    default: '',
   },
   webp: {
     type: String,
@@ -148,15 +149,18 @@ async function newImage() {
   }
   last_image_url.value = url
   show_image.value = ''
-  if (placeholder) {
+  if (placeholder && src.value != placeholder) {
     // Load transparent png
     src.value = placeholder
-    await new Promise((resolve) => {
-      if (!lazyelement.value) {
-        return
-      }
-      lazyelement.value.onload = resolve
-    })
+    if (!lazyelement.value.complete) {
+      await new Promise((resolve) => {
+        if (!lazyelement.value) {
+          return
+        }
+        lazyelement.value.onload = resolve
+        lazyelement.value.onerror = resolve
+      })
+    }
   }
 
   if (use_webp && webp && !url?.endsWith('svg')) {
