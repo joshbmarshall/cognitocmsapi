@@ -32,7 +32,7 @@
     <cgn-modal v-model="success" :timeout="3000">
       <template #icon>
         <div
-          class="text-green-80 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-green-100 dark:bg-green-800 dark:text-green-100 sm:h-10 sm:w-10"
+          class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-success-100 text-success-700 dark:bg-success-700 dark:text-success-100 sm:h-10 sm:w-10"
         >
           <i-heroicons-solid:check />
         </div>
