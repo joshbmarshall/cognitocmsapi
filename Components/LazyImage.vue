@@ -52,48 +52,32 @@ const blank_webp = 'data:image/webp;base64,UklGRkAAAABXRUJQVlA4WAoAAAAQAAAAAAAAA
 const show_image = ref('')
 const last_image_url = ref('')
 const src = ref(blank_webp)
-let lazytimer = 0
+const imageIsVisible = useElementVisibility(lazyelement)
 
-function isInViewport(el: HTMLElement) {
-  const rect = el.getBoundingClientRect()
-  if (rect.width == 0) {
-    return false
-  }
-  let screenheight = window.innerHeight || document.documentElement.clientHeight
-  const screenwidth = window.innerWidth || document.documentElement.clientWidth
-  // Increase height to pre-load on scroll
-  screenheight += 200
-  return (
-    rect.bottom >= 0
-            && rect.right >= 0
-            && rect.top <= screenheight
-            && rect.left <= screenwidth
-  )
-}
 async function checkVisible() {
-  if (!lazyelement.value) {
-    clearInterval(lazytimer)
+  if (!show_image.value) {
     return
   }
-  if (!lazyelement.value.complete) {
-    // Wait for the placeholder image to load
-    await new Promise((resolve) => {
-      lazyelement.value.onload = resolve
-    })
-  }
+
   if (!lazyelement.value) {
-    // Possibly unset while awaiting above
     return
   }
+
   if (lazyelement.value.naturalHeight === 0) {
     // Ensure the placeholder image has a height
     return
   }
-  if (!isInViewport(lazyelement.value)) {
-    return
-  }
 
-  if (!show_image.value) {
+  // Load standard image
+  src.value = show_image.value
+  await new Promise((resolve) => {
+    if (!lazyelement.value) {
+      return
+    }
+    lazyelement.value.onload = resolve
+  })
+
+  if (props.forceSize) {
     return
   }
 
@@ -108,24 +92,13 @@ async function checkVisible() {
   if (filename) {
     src.value = `${show_image.value.replace(filename, '') + width}x${height}:${filename}`
   }
-  clearInterval(lazytimer)
 }
 
-function testWebP(cbfn: Function) {
-  const webP = new Image()
-  webP.onload = webP.onerror = function () {
-    cbfn(webP.height === 2)
-  }
-  webP.src = blank_webp
-}
 async function newImage() {
   // Set/Reset
   show_image.value = ''
   last_image_url.value = ''
   src.value = blank_webp // clear while loading
-  if (lazytimer) {
-    clearInterval(lazytimer)
-  }
 
   // Hide if already set
   let webp = props.webp
@@ -185,49 +158,32 @@ async function newImage() {
       lazyelement.value.onload = resolve
     })
   }
-  if (url) {
-    // Load standard image
-    src.value = url
-    await new Promise((resolve) => {
-      if (!lazyelement.value) {
-        return
-      }
-      lazyelement.value.onload = resolve
-    })
+
+  if (use_webp && webp && !url?.endsWith('svg')) {
+    show_image.value = webp
+  } else if (url) {
+    show_image.value = url
   }
-  if (props.forceSize) {
-    return
+  if (imageIsVisible.value) {
+    await checkVisible()
   }
-  testWebP((canSupportWebp: boolean) => {
-    use_webp = canSupportWebp
-    if (use_webp && webp) {
-      show_image.value = webp
-    } else if (url) {
-      show_image.value = url
-    }
-    // Check immediately if in view
-    checkVisible()
-    // Check every half second
-    lazytimer = setInterval(() => {
-      checkVisible()
-    }, 500)
-  })
 }
+watch(() => imageIsVisible.value, () => {
+  if (imageIsVisible.value) {
+    checkVisible()
+  }
+})
 watch(() => props, () => {
   newImage()
 }, {
   deep: true,
 })
 
-onMounted(() => {
-  newImage()
+onMounted(async () => {
+  use_webp = await useWebpStore().isSupported()
+  await newImage()
 })
 
-onUnmounted(() => {
-  if (lazytimer) {
-    clearInterval(lazytimer)
-  }
-})
 onServerPrefetch(async () => {
   if (props.image) {
     src.value = props.image.url
