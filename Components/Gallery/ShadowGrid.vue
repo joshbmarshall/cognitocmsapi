@@ -1,27 +1,27 @@
 <template>
-  <div v-if="props.heading" class="prose dark:prose-dark mx-auto max-w-6xl">
+  <div v-if="props.heading" class="prose mx-auto max-w-6xl dark:prose-dark">
     <h1>{{ props.heading }}</h1>
     <p v-if="props.subheading">
       {{ props.subheading }}
     </p>
   </div>
-  <div class="grid grid-cols-2 md:grid-cols-3 max-w-6xl p-5 mx-auto gap-5">
-    <div v-for="slide in slides" :key="slide.id" class="group bg-black overflow-hidden relative shadow-md hover:shadow-lg transition-shadow">
-      <router-link :to="slide.link">
-        <div class="space-y-2 text-white mx-auto lg:max-w-none lg:row-start-1 lg:col-start-1">
+  <div class="mx-auto grid max-w-6xl grid-cols-2 gap-5 p-5 md:grid-cols-3">
+    <div v-for="slide in slides" :key="slide.id" class="group relative overflow-hidden bg-black shadow-md transition-shadow hover:shadow-lg">
+      <cgn-link :to="slide.link">
+        <div class="mx-auto space-y-2 text-white lg:col-start-1 lg:row-start-1 lg:max-w-none">
           <div :class="outerClass(slide)" class="relative aspect-square">
-            <div class="absolute inset-0 bg-center bg-cover transition-opacity duration-300" :class="[{ 'group-hover:opacity-50': showHeading }, imageClass(slide)]" :style="{ 'background-image': `url(${slide.image.url})` }" />
+            <div class="absolute inset-0 bg-cover bg-center transition-opacity duration-300" :class="[{ 'group-hover:opacity-50': showHeading }, imageClass(slide)]" :style="{ 'background-image': `url(${slide.image.url})` }" />
           </div>
         </div>
-        <div v-if="showHeading" class="absolute right-0 bottom-0 p-2 text-right translate-y-full group-hover:translate-y-0 text-white transition-transform duration-300">
-          <div class="text-2xl font-semibold font-display">
+        <div v-if="showHeading" class="absolute bottom-0 right-0 translate-y-full p-2 text-right text-white transition-transform duration-300 group-hover:translate-y-0">
+          <div class="font-display text-2xl font-semibold">
             {{ slide.heading }}
           </div>
-          <div v-if="slide.sub_heading" class="font-semibold font-display">
+          <div v-if="slide.sub_heading" class="font-display font-semibold">
             {{ slide.sub_heading }}
           </div>
         </div>
-      </router-link>
+      </cgn-link>
     </div>
   </div>
 </template>

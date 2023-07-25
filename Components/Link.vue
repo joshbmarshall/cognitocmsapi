@@ -1,12 +1,26 @@
 <template>
-  <router-link
-    :to="to"
+  <a
+    v-if="to.startsWith('http')"
+    :href="to"
     class="
+      cursor-pointer
       text-sm
       font-medium
       text-brand-600
       hover:text-brand-500
+      "
+  >
+    <slot />
+  </a>
+  <router-link
+    v-else
+    :to="to"
+    class="
       cursor-pointer
+      text-sm
+      font-medium
+      text-brand-600
+      hover:text-brand-500
       "
   >
     <slot />
@@ -17,6 +31,7 @@
 defineProps({
   to: {
     type: String,
+    required: true,
   },
 })
 </script>
