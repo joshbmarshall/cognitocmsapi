@@ -9,6 +9,7 @@
       text-brand-600
       hover:text-brand-500
       "
+    :target="noblanktarget ? '' : '_blank'"
   >
     <slot />
   </a>
@@ -32,6 +33,10 @@ defineProps({
   to: {
     type: String,
     required: true,
+  },
+  noblanktarget: {
+    type: Boolean,
+    default: false,
   },
 })
 </script>
