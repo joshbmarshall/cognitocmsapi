@@ -28,6 +28,7 @@ class SellProduct extends CognitoBase {
   slug: string
   blurb: string
   brand: string
+  badge: string
   content: string
   price: number
   images: CognitoImage[]
@@ -51,6 +52,7 @@ class SellProduct extends CognitoBase {
     this.slug = ''
     this.blurb = ''
     this.brand = ''
+    this.badge = ''
     this.title = ''
     this.meta_description = ''
     this.content = ''

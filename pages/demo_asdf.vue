@@ -1,8 +1,8 @@
 <template>
-  <div class="max-w-7xl w-full p-2 mx-auto flex flex-col gap-6">
+  <div class="mx-auto flex w-full max-w-7xl flex-col gap-6 p-2">
     <div>
       <!-- ALERTS, notification blocks to give feedback -->
-      <h1 class="text-3xl font-display">
+      <h1 class="font-display text-3xl">
         Alerts
       </h1>
       <cgn-alert-danger>Danger alert</cgn-alert-danger>
@@ -22,8 +22,26 @@
       </cgn-alert>
     </div>
     <div>
+      <!-- Badges -->
+      <h1 class="font-display text-3xl">
+        Badges
+      </h1>
+      <cgn-badge-danger>Danger badge</cgn-badge-danger>
+      <cgn-badge-warning>warning badge</cgn-badge-warning>
+      <cgn-badge-info>info badge</cgn-badge-info>
+      <cgn-badge-success>Success badge</cgn-badge-success>
+      <cgn-badge-brand>Brand badge</cgn-badge-brand>
+      <cgn-badge-primary>Primary badge</cgn-badge-primary>
+      <cgn-badge-secondary>
+        Secondary badge
+      </cgn-badge-secondary>
+      <cgn-badge color="bg-slate-300 text-slate-800">
+        Custom colour
+      </cgn-badge>
+    </div>
+    <div>
       <!-- FORM INPUTS, all things form related -->
-      <h1 class="text-3xl font-display">
+      <h1 class="font-display text-3xl">
         Form inputs
       </h1>
       <cgn-form-label label="form label" />
@@ -54,7 +72,7 @@
       <cgn-button url="/" newtab color-brand>
         button with url, opens in new tab
       </cgn-button>
-      <cgn-button class="bg-yellow-400 hover:bg-yellow-500 dark:hover:bg-yellow-300 text-yellow-900" @click="modal_open = true">
+      <cgn-button class="bg-yellow-400 text-yellow-900 hover:bg-yellow-500 dark:hover:bg-yellow-300" @click="modal_open = true">
         custom coloured modal button
       </cgn-button>
       <cgn-button color-primary @click="toast_fail_open = true">
@@ -67,7 +85,7 @@
 
     <div>
       <!-- NAVIGATION, for getting around the site -->
-      <h1 class="text-3xl font-display">
+      <h1 class="font-display text-3xl">
         Navigation
       </h1>
       <span class="text-lg">breadcrumbs</span>
@@ -78,7 +96,7 @@
 
     <div>
       <!-- LOGINS, for allowing users to access their accounts -->
-      <h1 class="text-3xl font-display">
+      <h1 class="font-display text-3xl">
         Logins
       </h1>
       <span class="text-lg">login</span>
@@ -89,7 +107,7 @@
 
     <div>
       <!-- MISC, random items that don't fit into a category -->
-      <h1 class="text-3xl font-display">
+      <h1 class="font-display text-3xl">
         Misc
       </h1>
       <span class="text-lg">cart shipping quote</span>
@@ -116,7 +134,7 @@
       <cgn-modal v-model="modal_open">
         <template #icon>
           <div
-            class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100 sm:h-10 sm:w-10"
+            class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100 sm:h-10 sm:w-10"
           >
             <i-heroicons-solid:exclamation />
           </div>
@@ -128,7 +146,7 @@
           this is clean content, it works best when there is no icon
         </template>
         <template #button-footer>
-          <div class="px-2 flex flex-col md:flex-row gap-2 justify-between w-full">
+          <div class="flex w-full flex-col justify-between gap-2 px-2 md:flex-row">
             <cgn-button color-info>
               Button Info
             </cgn-button>
