@@ -8,6 +8,8 @@ const config = {
     edit_date_of_birth: false,
     edit_drivers_licence: false,
     edit_emergency_contact: false,
+    edit_company_name: false,
+    edit_abn: false,
   },
   show_back_to_top: true,
 }

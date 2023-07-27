@@ -116,6 +116,18 @@
               label="Date of Birth"
             />
 
+            <cgn-form-input-text
+              v-if="config.profile.edit_company_name"
+              v-model="formValues.company_name"
+              label="Company Name"
+            />
+
+            <cgn-form-input-text
+              v-if="config.profile.edit_abn"
+              v-model="formValues.abn"
+              label="ABN"
+            />
+
             <template v-if="config.profile.edit_drivers_licence">
               <cgn-form-input-text
                 v-model="formValues.drivers_licence_number"
@@ -185,6 +197,8 @@ const formValues = ref({
   email: '',
   mobile_phone: '',
   date_of_birth: '',
+  company_name: '',
+  abn: '',
   newpassword: '',
   drivers_licence_number: '',
   drivers_licence_expiry: '',
