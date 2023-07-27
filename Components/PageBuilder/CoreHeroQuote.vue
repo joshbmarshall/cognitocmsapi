@@ -93,7 +93,7 @@ const imageClass = computed(() => {
 ].find(e => e.id === props.templatevar.image_saturation)?.name}`
 
   if (props.templatevar.parallax == 1) {
-    classes += ' bg-fixed'
+    classes += ' sm:bg-fixed'
   }
 
   return classes
@@ -102,7 +102,7 @@ const imageClass = computed(() => {
 const url = ref('')
 const loadImage = async () => {
   if (props.templatevar.background_image) {
-    url.value = props.templatevar.background_image
+    // url.value = props.templatevar.background_image
     await new CognitoImage().find_one({
       url: props.templatevar.background_image,
       image_aspect: '16x9',
