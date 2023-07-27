@@ -64,7 +64,7 @@ async function checkVisible() {
     return
   }
 
-  if (lazyelement.value.naturalHeight === 0) {
+  if (lazyelement.value.clientHeight === 0) {
     // Ensure the placeholder image has a height
     return
   }
