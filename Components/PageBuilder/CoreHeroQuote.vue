@@ -1,12 +1,12 @@
 <template>
-  <div class="space-y-2 mx-auto lg:max-w-none lg:row-start-1 lg:col-start-1">
+  <div class="mx-auto space-y-2 lg:col-start-1 lg:row-start-1 lg:max-w-none">
     <div :class="outerClass" class="relative">
-      <div class="absolute inset-0 bg-center bg-cover" :class="imageClass" :style="{ 'background-image': `url(${url})` }" />
-      <div class="relative p-8 text-center flex flex-col justify-center items-center h-[500px]" :class="textClass">
-        <h1 class="text-2xl md:text-4xl font-semibold font-display pb-2">
+      <div class="absolute inset-0 bg-cover bg-center" :class="imageClass" :style="{ 'background-image': `url(${url})` }" />
+      <div class="relative flex h-[500px] flex-col items-center justify-center p-8 text-center" :class="textClass">
+        <h1 class="pb-2 font-display text-2xl font-semibold md:text-4xl">
           {{ templatevar.heading }}
         </h1>
-        <h2 v-if="templatevar.subheading" class="text-xl font-semibold font-display">
+        <h2 v-if="templatevar.subheading" class="font-display text-xl font-semibold">
           {{ templatevar.subheading }}
         </h2>
         <div v-if="templatevar.html" class="prose-invert max-w-none pb-2" v-html="templatevar.html" />
@@ -17,6 +17,7 @@
 
 <script lang="ts">
 import { CognitoImage } from '~cognito/models/Cognito/Image'
+
 class Templatevars {
   heading?: string
   subheading?: string
