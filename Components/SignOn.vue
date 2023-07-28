@@ -31,7 +31,7 @@
       <cgn-form-input v-if="!blankSigner?.emergency_contact" v-model="signer.emergency_contact" label="Emergency Contact" required />
       <cgn-form-input v-if="!blankSigner?.emergency_contact_phone" v-model="signer.emergency_contact_phone" type="phone" label="Emergency Contact Phone" required />
       <div v-for="indemnity in signonType.indemnities" :key="indemnity.id">
-        <div class="mt-2" v-html="indemnity.content" />
+        <div class="mt-2 max-h-[300px] overflow-y-scroll rounded-lg border border-gray-200 p-2" v-html="indemnity.content" />
         <div class="mt-2 text-lg">
           <label>
             <input type="checkbox" required>
