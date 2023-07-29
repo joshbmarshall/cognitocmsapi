@@ -46,6 +46,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  sizeLarge: {
+    type: Boolean,
+    default: false,
+  },
   fullwidth: {
     type: Boolean,
     default: false,
@@ -93,7 +97,8 @@ const props = defineProps({
 })
 
 const buttonClass = computed(() => {
-  let classes = 'cgn-button'
+  let classes = ''
+  classes += props.sizeLarge ? 'cgn-button-large' : 'cgn-button'
   classes += props.fullwidth ? ' block w-full' : ' inline-block'
 
   if (props.disabled) {
@@ -139,6 +144,9 @@ onMounted(() => {
 
 /* tailwind.css
 .cgn-button {
+  @apply shadow py-1.5 px-4 text-center select-none rounded-lg my-2 text-white
+}
+.cgn-button-large {
   @apply shadow py-1.5 px-4 text-center select-none rounded-lg my-2 text-white
 }
 */

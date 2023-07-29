@@ -81,6 +81,9 @@
       <cgn-button fullwidth color-secondary @click="toast_success_open = true">
         fullwidth secondary toast success button
       </cgn-button>
+      <cgn-button size-large color-brand>
+        Large button
+      </cgn-button>
     </div>
 
     <div>
