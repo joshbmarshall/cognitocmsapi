@@ -1,18 +1,18 @@
 <template>
-  <div class="relative w-full">
+  <div ref="searchInput" class="relative w-full">
     <div v-if="!valid_address" class="text-xs font-light text-red-500">
       Please include your street number!
     </div>
     <cgn-form-input v-model="searchTerm" :label="label" :placeholder="searchTermPlaceholder" :fake-required="props.required" />
     <div
       v-if="search.length > 0"
-      class="absolute top-14 mt-4 w-full rounded-md overflow-y-auto shadow-lg max-h-96 z-10"
+      class="absolute top-14 z-10 mt-4 max-h-96 w-full overflow-y-auto rounded-md shadow-lg"
     >
-      <div class="grid grid-cols-1 auto-rows-[1fr]">
+      <div class="grid auto-rows-[1fr] grid-cols-1">
         <div
           v-for="(location, index) in search"
           :key="index"
-          class="cursor-pointer p-3 select-none"
+          class="cursor-pointer select-none p-3"
           :class="index % 2 ? 'bg-gray-100 dark:bg-gray-800' : 'bg-white dark:bg-gray-900'"
           @click="selectAddress(location)"
         >
@@ -25,6 +25,7 @@
 
 <script setup lang="ts">
 import { CognitoAddressLookup } from '~cognito/models/Cognito/AddressLookup'
+
 const props = defineProps({
   hereApiKey: {
     type: String,
@@ -56,6 +57,8 @@ const emit = defineEmits([
   'update:valid_address',
   'onChange',
 ])
+
+const searchInput = ref()
 
 const searchTerm = ref('')
 const searchTermPlaceholder = ref('')
@@ -129,6 +132,7 @@ watch(() => searchTerm.value, (newVal) => {
         return
       }
       search.value = result.data.items
+      searchInput.value?.scrollIntoView({ behavior: 'smooth' })
     })
 })
 
