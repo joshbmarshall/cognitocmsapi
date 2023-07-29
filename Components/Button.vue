@@ -144,10 +144,10 @@ onMounted(() => {
 
 /* tailwind.css
 .cgn-button {
-  @apply shadow py-1.5 px-4 text-center select-none rounded-lg my-2 text-white
+  @apply shadow py-1.5 px-4 text-center select-none rounded-lg my-2
 }
 .cgn-button-large {
-  @apply shadow py-1.5 px-4 text-center select-none rounded-lg my-2 text-white
+  @apply shadow py-3 px-8 text-center select-none rounded-xl my-2 text-lg
 }
 */
 </script>
