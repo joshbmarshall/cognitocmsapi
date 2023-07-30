@@ -147,6 +147,10 @@ async function newImage() {
     // No need to reload same image
     return
   }
+  if (!lazyelement.value) {
+    // Might have browsed away or image hidden while awaiting above
+    return
+  }
   last_image_url.value = url
   show_image.value = ''
   if (placeholder && src.value != placeholder) {
