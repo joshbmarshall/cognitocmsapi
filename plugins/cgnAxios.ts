@@ -26,6 +26,7 @@ class CgnAxios {
   useCart: boolean
   clientId: string
   baseURL: string
+  lastRequestAt: number
 
   constructor(settings: {
     clientId?: string
@@ -58,6 +59,8 @@ class CgnAxios {
       timeout: 50000,
     })
 
+    this.lastRequestAt = Date.now()
+
     this.axios.interceptors.request.use(
       (request) => {
         if (this.userStore().baseURL) {
@@ -71,7 +74,23 @@ class CgnAxios {
             request.headers.Authorization = `Bearer ${this.userStore().access_token}`
           }
         }
-        return request
+        // Rate limit
+        const minBetween = this.isSSR() ? 500 : 50
+        const now = Date.now()
+        this.lastRequestAt += minBetween
+        if (this.lastRequestAt < now) {
+          this.lastRequestAt = now
+        }
+        const delay = this.lastRequestAt - now
+        if (this.isSSR()) {
+          console.log({ url: request.url, delay })
+        }
+        return new Promise((resolve) => {
+          setTimeout(
+            () => resolve(request),
+            delay,
+          )
+        })
       },
       (error) => {
         return Promise.reject(error)
