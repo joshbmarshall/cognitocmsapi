@@ -267,21 +267,24 @@ class CgnAxios {
     if (!refresh_token) {
       refresh_token = new URL(location.href).searchParams.get('r') || ''
     }
+
+    const userStore = this.userStore()
+    let redirectTo = userStore.redirect_after_login || '/'
+    if (window.location.host === 'www.qldraceways.com.au' || window.location.host === 'www.hamptondowns.com.au') {
+      redirectTo = `/enter/#${userStore.redirect_after_login || 'profile'}`
+    }
+
     if (access_token && refresh_token) {
-      const userStore = this.userStore()
       userStore.setRefreshToken(refresh_token)
       userStore.setAccessToken(access_token)
       await this.getUser()
 
-      let redirectTo = userStore.redirect_after_login || '/'
-      if (window.location.host === 'www.qldraceways.com.au' || window.location.host === 'www.hamptondowns.com.au' || window.location.host === 'localhost:3000') {
-        redirectTo = `/enter/#${userStore.redirect_after_login || '/'}`
-      }
-
+      userStore.redirect_after_login = ''
+    }
+    if (userStore.isLoggedIn()) {
       nextTick(() => {
         window.location = redirectTo
       })
-      userStore.redirect_after_login = ''
     }
   }
 
