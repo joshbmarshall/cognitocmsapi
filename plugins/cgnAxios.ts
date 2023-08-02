@@ -281,7 +281,7 @@ class CgnAxios {
 
       userStore.redirect_after_login = ''
     }
-    if (userStore.isLoggedIn()) {
+    if (this.isLoggedIn()) {
       nextTick(() => {
         window.location = redirectTo
       })

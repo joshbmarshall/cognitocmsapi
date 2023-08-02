@@ -55,7 +55,10 @@ export const useUserStore = defineStore({
       }
     },
     isLoggedIn(): boolean {
-      return !!this.user.id
+      if (!this.user.id) {
+        this.logout()
+      }
+      return !!this.access_token
     },
     checkLoggedIn() {
       if (this.isLoggedIn()) {
