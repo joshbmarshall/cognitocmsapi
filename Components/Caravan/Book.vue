@@ -67,6 +67,8 @@
               Total: ${{ selectedAmount.toFixed(2) }}
             </div>
             <cgn-form-checkbox v-if="isAdmin" v-model="bookform.paid" label="This booking has already been paid" />
+            <cgn-form-checkbox v-if="!isAdmin" v-model="bookform.newsletter" label="Please subscribe me to your email newsletter" />
+            <cgn-form-checkbox v-if="!isAdmin" label="I have read and accept the terms and conditions" required />
             <cgn-button color-brand fullwidth>
               <template v-if="isAdmin">
                 Create Booking and send
@@ -187,5 +189,7 @@ onMounted(() => {
           })
       }
     })
+
+  bookform.value.newsletter = !isAdmin.value
 })
 </script>
