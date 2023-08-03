@@ -9,7 +9,7 @@ const router = useRouter()
 onMounted(() => {
   logout()
   setTimeout(() => {
-    router.push('/')
+    router.replace('/')
   }, 500)
 })
 </script>
