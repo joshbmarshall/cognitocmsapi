@@ -82,6 +82,11 @@ async function checkVisible() {
     return
   }
 
+  if (!lazyelement.value) {
+    // Element has disappeared, abort
+    return
+  }
+
   const filename = show_image.value.split('/').pop()
   const width = Math.floor(lazyelement.value.clientWidth * window.devicePixelRatio)
   const height = Math.floor(lazyelement.value.clientHeight * window.devicePixelRatio)
