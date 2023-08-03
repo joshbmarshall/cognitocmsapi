@@ -150,7 +150,7 @@ class CgnAxios {
               window.location = '/'
               return
             }
-          } else if (text_code === 'TOKEN_INVALID') {
+          } else if (text_code === 'TOKEN_INVALID' || text_code === 'Signature verification failed') {
             // catch any other JWT-related error (i.e. malformed token) and logout the user
             await this.logout()
 
