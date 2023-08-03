@@ -5,15 +5,15 @@
         v-if="payment_ok"
       >
         <cgn-alert-success
-          class="max-w-2xl w-full mx-auto my-2"
+          class="mx-auto my-2 w-full max-w-2xl"
         >
           Payment Successful
         </cgn-alert-success>
-        <div class="max-w-3xl w-full mx-auto bg-white text-black shadow" v-html="invoiceText" />
+        <div class="mx-auto w-full max-w-3xl bg-white text-black shadow" v-html="invoiceText" />
       </div>
       <cgn-alert-danger
         v-else
-        class="max-w-2xl w-full mx-auto my-2"
+        class="mx-auto my-2 w-full max-w-2xl"
       >
         Payment Failed
       </cgn-alert-danger>
@@ -63,7 +63,7 @@
             {{ payErrorMessage }}
           </cgn-alert-danger>
           <div v-if="selectedAmount">
-            <div class="text-xl font-bold text-center my-4">
+            <div class="my-4 text-center text-xl font-bold">
               Total: ${{ selectedAmount.toFixed(2) }}
             </div>
             <cgn-form-checkbox v-if="isAdmin" v-model="bookform.paid" label="This booking has already been paid" />
