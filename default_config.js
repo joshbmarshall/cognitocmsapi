@@ -14,6 +14,7 @@ const config = {
     edit_abn: false,
     edit_website: false,
     edit_facebook: false,
+    manage_addresses: false,
   },
   show_back_to_top: true,
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-hidden rounded-lg bg-white shadow-lg dark:bg-gray-900">
+  <div class="overflow-hidden rounded-lg bg-white shadow-lg dark:bg-darkbg-700">
     <div class="flex flex-row items-center justify-between bg-gray-100 p-3 dark:bg-darkbg-700">
       <span class="text-xl">Addresses</span>
       <div title="Add address" @click="addAddress()">
@@ -21,13 +21,13 @@
               @click="showAdditionalAddress = false"
             />
           </div>
-          <div class="mt-2 flex w-full flex-col items-start justify-start rounded-lg bg-gray-50">
-            <cgn-address-lookup
-              v-model="hereApiAddress"
-              here-api-key="GOBLSSIkkrgjhMahFmXPramj-95rVXZYpj-0pj7DsFU"
-              label="Search address"
-            />
-            <div class="w-full rounded-lg bg-gray-100 px-2">
+          <div class="mt-2 flex w-full flex-col items-start justify-start rounded-lg">
+            <div class="w-full rounded-lg bg-gray-200 px-2 dark:bg-darkbg-800">
+              <cgn-address-lookup
+                v-model="hereApiAddress"
+                here-api-key="GOBLSSIkkrgjhMahFmXPramj-95rVXZYpj-0pj7DsFU"
+                label="Search address"
+              />
               <cgn-form-input-text v-model="newAddress.street_address" label="Address" class="w-full" required />
               <cgn-form-input-text v-model="newAddress.unit" label="Unit" class="w-full" />
               <div class="grid w-full grid-cols-2 gap-x-2 sm:grid-cols-3">
@@ -41,16 +41,16 @@
                   required
                 />
               </div>
+              <cgn-button
+                color-brand
+                fullwidth
+                extra-classes="w-full mt-2 flex flex-row items-center justify-center"
+                submit
+              >
+                <cgn-spinner v-if="savingAddressSpinner" class="pr-2" />
+                <span>Add address</span>
+              </cgn-button>
             </div>
-            <cgn-button
-              color-brand
-              fullwidth
-              extra-classes="w-full mt-2 flex flex-row items-center justify-center"
-              submit
-            >
-              <cgn-spinner v-if="savingAddressSpinner" class="pr-2" />
-              <span>Add address</span>
-            </cgn-button>
           </div>
         </div>
       </form>
@@ -60,7 +60,7 @@
         v-for="(address, index) in addresses"
         :key="index"
         class="divide-y-2"
-        :class="index % 2 ? 'bg-gray-100 dark:bg-gray-800 divide-gray-400 dark:divide-gray-900' : 'bg-white dark:bg-gray-900 divide-gray-300 dark:divide-gray-800'"
+        :class="index % 2 ? 'bg-gray-100 dark:bg-darkbg-700 divide-gray-400 dark:divide-gray-900' : 'bg-white dark:bg-darkbg-800 divide-gray-300 dark:divide-gray-800'"
       >
         <div class="flex flex-row justify-between p-3">
           <div>

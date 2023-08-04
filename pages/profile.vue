@@ -248,6 +248,8 @@
 
           <cgn-profile-ticket-upcoming-tickets />
 
+          <cgn-profile-cognito-addresses v-if="config.profile.manage_addresses" />
+
           <ProfileElements />
         </div>
       </form>
