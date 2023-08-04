@@ -58,6 +58,66 @@
       </template>
     </cgn-modal>
 
+    <div class="overflow-hidden">
+      <div
+        class="
+          bg-gray-300
+          py-12
+          text-center
+          font-display
+          text-2xl
+          uppercase
+          dark:bg-gray-700
+        "
+      >
+        User profile
+      </div>
+      <div class="mx-auto max-w-6xl">
+        <label class="ml-2 mt-2 flex sm:ml-4">
+          <cgn-upload-image
+            v-slot="slot" v-model="headshot"
+            :thumbnail="userStore.user.thumbnail"
+            :on-success="uploadHeadshot"
+          >
+            <div
+              class="
+            -mt-16
+            h-32
+            w-32
+            cursor-pointer
+            select-none
+            rounded-full
+            border-4
+            border-gray-50
+            bg-gray-800/0
+            bg-cover
+            bg-center
+            py-12 text-center
+            font-medium
+            text-white
+            text-opacity-0
+            bg-blend-overlay transition
+            duration-200
+            ease-in-out
+            hover:bg-gray-800/90
+            hover:text-opacity-100
+          " :style="{ backgroundImage: `url(${slot.thumb})` }"
+            >
+              Edit headshot
+            </div>
+            <div>
+              <div class="-ml-6 -mt-10 h-7 w-7 rounded-full bg-black/75 p-1 text-center text-white">
+                <i-heroicons-solid:pencil />
+              </div>
+              <input type="file" class="hidden" @change="slot.upload">
+            </div>
+            <div>
+              <cgn-progress v-if="slot.progress > 0" :progress="slot.progress" />
+            </div>
+          </cgn-upload-image>
+        </label>
+      </div>
+    </div>
     <div>
       <form class="mx-auto max-w-4xl space-y-4 px-4 py-8" @submit.prevent="submitted">
         <div class="space-y-8 sm:space-y-5">
@@ -80,13 +140,6 @@
               <i-heroicons-solid:logout />
             </div>
           </div>
-
-          <cgn-form-image
-            v-model="formValues.image"
-            :thumbnail="userStore.user.thumbnail"
-            :width="160"
-            label="Photo"
-          />
 
           <div class="grid gap-2 sm:grid-cols-2">
             <cgn-form-input-text
@@ -181,6 +234,7 @@
 <script setup lang="ts">
 import { config } from '~/config'
 import { CognitoState } from '~cognito/models/Cognito/State'
+import { CognitoUser } from '~cognito/models/Cognito/User'
 import { $axios, getUser } from '~cognito/plugins/axios'
 
 const router = useRouter()
@@ -190,6 +244,7 @@ const is_loading = ref(false)
 const success = ref(false)
 const fail = ref(false)
 const message = ref('')
+const headshot = ref('')
 const formValues = ref({
   id: userStore.user.id,
   first_name: '',
@@ -233,6 +288,16 @@ function submitted() {
 }
 function logout() {
   router.push('/logout')
+}
+
+const uploadHeadshot = () => {
+  new CognitoUser().uploadImage(headshot.value)
+    .then((res) => {
+      if (res.error) {
+        fail.value = true
+        message.value = res.error
+      }
+    })
 }
 
 onMounted(async () => {
