@@ -9,7 +9,11 @@ const config = {
     edit_drivers_licence: false,
     edit_emergency_contact: false,
     edit_company_name: false,
+    edit_company_phone: false,
+    edit_trading_name: false,
     edit_abn: false,
+    edit_website: false,
+    edit_facebook: false,
   },
   show_back_to_top: true,
 }

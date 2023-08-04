@@ -181,6 +181,30 @@
               label="ABN"
             />
 
+            <cgn-form-input-text
+              v-if="config.profile.edit_trading_name"
+              v-model="formValues.trading_name"
+              label="Trading Name"
+            />
+
+            <cgn-form-input-phone
+              v-if="config.profile.edit_company_phone"
+              v-model="formValues.company_phone"
+              label="Company Phone"
+            />
+
+            <cgn-form-input-text
+              v-if="config.profile.edit_website"
+              v-model="formValues.website"
+              label="Website"
+            />
+
+            <cgn-form-input-text
+              v-if="config.profile.edit_facebook"
+              v-model="formValues.facebook_link"
+              label="Facebook"
+            />
+
             <template v-if="config.profile.edit_drivers_licence">
               <cgn-form-input-text
                 v-model="formValues.drivers_licence_number"
@@ -253,7 +277,11 @@ const formValues = ref({
   mobile_phone: '',
   date_of_birth: '',
   company_name: '',
+  company_phone: '',
+  trading_name: '',
   abn: '',
+  website: '',
+  facebook_link: '',
   newpassword: '',
   drivers_licence_number: '',
   drivers_licence_expiry: '',
