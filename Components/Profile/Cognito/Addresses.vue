@@ -1,36 +1,36 @@
 <template>
-  <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-lg">
-    <div class="flex flex-row justify-between items-center p-3 bg-gray-100 dark:bg-darkbg-700">
+  <div class="overflow-hidden rounded-lg bg-white shadow-lg dark:bg-gray-900">
+    <div class="flex flex-row items-center justify-between bg-gray-100 p-3 dark:bg-darkbg-700">
       <span class="text-xl">Addresses</span>
       <div title="Add address" @click="addAddress()">
         <i-heroicons-solid:plus
-          class="text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 cursor-pointer"
+          class="cursor-pointer text-gray-600 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
         />
       </div>
     </div>
     <div
       v-if="showAdditionalAddress"
-      class="flex flex-row justify-between p-3 bg-gray-100 dark:bg-darkbg-700 border-t-2 border-gray-400 dark:border-gray-900"
+      class="flex flex-row justify-between border-t-2 border-gray-400 bg-gray-100 p-3 dark:border-gray-900 dark:bg-darkbg-700"
     >
       <form class="w-full" @submit.prevent="saveAddress">
         <div v-if="!modelValue">
-          <div class="flex flex-row justify-between w-full items-center">
+          <div class="flex w-full flex-row items-center justify-between">
             <span class="text-lg font-medium">Add address</span>
             <i-heroicons-solid:x
-              class="text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 cursor-pointer"
+              class="cursor-pointer text-gray-600 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
               @click="showAdditionalAddress = false"
             />
           </div>
-          <div class="mt-2 flex flex-col justify-start items-start w-full bg-gray-50 rounded-lg">
+          <div class="mt-2 flex w-full flex-col items-start justify-start rounded-lg bg-gray-50">
             <cgn-address-lookup
               v-model="hereApiAddress"
               here-api-key="GOBLSSIkkrgjhMahFmXPramj-95rVXZYpj-0pj7DsFU"
               label="Search address"
             />
-            <div class="w-full px-2 bg-gray-100 rounded-lg">
+            <div class="w-full rounded-lg bg-gray-100 px-2">
               <cgn-form-input-text v-model="newAddress.street_address" label="Address" class="w-full" required />
               <cgn-form-input-text v-model="newAddress.unit" label="Unit" class="w-full" />
-              <div class="grid grid-cols-2 sm:grid-cols-3 w-full gap-x-2">
+              <div class="grid w-full grid-cols-2 gap-x-2 sm:grid-cols-3">
                 <cgn-form-input-text v-model="newAddress.suburb_name" label="Suburb" class="w-full" required />
                 <cgn-form-input-text v-model="newAddress.state" label="State" class="w-full" required />
                 <cgn-form-input-text v-model="newAddress.postcode" label="Postcode" class="w-full" required />
@@ -72,7 +72,7 @@
           </div>
           <div title="Delete address">
             <i-heroicons-solid:trash
-              class="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400 cursor-pointer"
+              class="cursor-pointer text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-400"
               @click="deleteAddress(address)"
             />
           </div>
