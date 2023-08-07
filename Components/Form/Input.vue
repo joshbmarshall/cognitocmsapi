@@ -2,57 +2,60 @@
   <cgn-form-label class="cgn-input-wrapper" :label="label" :required="required || fakeRequired">
     <div class="relative" :class="wrapClass">
       <div v-if="type === 'readonly'">
-        <div :class="inputClass" class="cgn-input-field p-2 bg-white">
+        <div :class="inputClass" class="cgn-input-field bg-white p-2">
           <slot />
         </div>
       </div>
       <div v-else-if="type === 'btnlink'">
-        <div :class="inputClass" class="cgn-input-field p-2 bg-white">
-          <router-link ref="inputel" type="submit" class="appearance-none block px-2 w-full text-center" :to="url">
+        <div :class="inputClass" class="cgn-input-field bg-white p-2">
+          <router-link ref="inputel" type="submit" class="block w-full appearance-none px-2 text-center" :to="url">
             <slot />
           </router-link>
         </div>
       </div>
       <div v-else-if="type === 'submit'">
-        <div :class="inputClass" class="cgn-input-field p-2 bg-white">
-          <button ref="inputel" type="submit" class="appearance-none block px-2 w-full" @input="handleInput">
+        <div :class="inputClass" class="cgn-input-field bg-white p-2">
+          <button ref="inputel" type="submit" class="block w-full appearance-none px-2" @input="handleInput">
             <slot />
           </button>
         </div>
       </div>
       <div v-else-if="type === 'textarea'">
-        <textarea ref="inputel" :class="textareaClass" class="appearance-none block w-full cgn-input-textarea-field" :value="modelValue" :required="required" @input="handleInput" />
+        <textarea ref="inputel" :class="textareaClass" class="cgn-input-textarea-field block w-full appearance-none" :value="modelValue" :required="required" @input="handleInput" />
       </div>
       <div v-else>
         <div
-          v-if="type === 'password'" class="absolute inset-y-0 left-0 pl-1 flex items-center cursor-pointer"
+          v-if="type === 'password'" class="absolute inset-y-0 left-0 flex cursor-pointer items-center pl-1"
           :class="iconClass" @click="toggleVisible()"
         >
           <i-heroicons-solid:eye v-if="showPassword" />
           <i-heroicons-solid:eye-off v-else />
         </div>
-        <div v-if="type === 'email'" class="absolute inset-y-0 left-0 pl-1 flex items-center" :class="iconClass">
+        <div v-if="type === 'email'" class="absolute inset-y-0 left-0 flex items-center pl-1" :class="iconClass">
           <i-heroicons-solid:mail />
         </div>
-        <div v-if="type === 'phone'" class="absolute inset-y-0 left-0 pl-1 flex items-center" :class="iconClass">
+        <div v-if="type === 'phone'" class="absolute inset-y-0 left-0 flex items-center pl-1" :class="iconClass">
           <i-heroicons-solid:phone />
         </div>
         <div class="flex">
           <input
             ref="inputel" v-maska:[maska] :min="minAmount" :max="maxAmount" :value="modelValue" :type="inputType"
-            :placeholder="placeholder" :required="required" class="appearance-none block w-full cgn-input-field p-2"
+            :placeholder="placeholder" :required="required" class="cgn-input-field block w-full appearance-none p-2"
             :class="inputClass + (hasIcon ? ' pl-7' : '')" @input="handleInput" @blur="blurInput"
           >
-          <div v-if="showButton" class="cgn-button bg-brand-500 hover:bg-brand-600 text-on-brand dark:hover:bg-brand-400 ml-1" @click="buttonClick">
+          <div v-if="showButton" class="cgn-button ml-1 bg-brand-500 text-on-brand hover:bg-brand-600 dark:hover:bg-brand-400" @click="buttonClick">
             <slot />
           </div>
         </div>
       </div>
     </div>
     <cgn-form-label
-      v-if="type === 'password' && suggestPassword" class="text-sm cursor-pointer"
+      v-if="type === 'password' && suggestPassword" class="cursor-pointer text-sm"
       :label="`Suggested password: ${generated_password}`" @click="setPassword()"
     />
+    <cgn-alert-warning v-if="validationError">
+      {{ validationError }}
+    </cgn-alert-warning>
   </cgn-form-label>
 </template>
 
@@ -123,6 +126,9 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  validationError: {
+    type: String,
+  },
 })
 const emit = defineEmits(['update:modelValue', 'blur', 'buttonClick'])
 const maska = ref(props.inputmask)
@@ -140,8 +146,8 @@ if (props.inputmask === 'date') {
 const inputel = ref(null)
 
 const handleInput = e => emit('update:modelValue', e.currentTarget.value)
-const blurInput = e => emit('blur')
-const buttonClick = e => emit('buttonClick')
+const blurInput = _e => emit('blur')
+const buttonClick = _e => emit('buttonClick')
 
 const showPassword = ref(false)
 const generated_password = ref('')
