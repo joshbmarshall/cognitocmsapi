@@ -13,7 +13,7 @@
         class="divide-y-2"
         :class="index % 2 ? 'bg-gray-100 dark:bg-gray-800 divide-gray-400 dark:divide-gray-600' : 'bg-white dark:bg-gray-900 divide-gray-300 dark:divide-gray-700'"
       >
-        <div class="grid select-none grid-cols-3 gap-2 p-3" @click="selectDropdown(index)">
+        <div class="grid cursor-pointer select-none grid-cols-3 gap-2 p-3" @click="selectDropdown(index)">
           <div>
             <div>
               <span class="mr-1 text-sm">#</span>
