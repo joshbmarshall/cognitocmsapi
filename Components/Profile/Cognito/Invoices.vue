@@ -1,10 +1,10 @@
 <template>
   <div
     v-if="orders.length > 0"
-    class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-lg"
+    class="overflow-hidden rounded-lg bg-white shadow-lg dark:bg-gray-900"
   >
-    <div class="p-3 bg-gray-100 dark:bg-gray-800">
-      <span class="capitalize text-xl">My Invoices</span>
+    <div class="bg-gray-100 p-3 dark:bg-gray-800">
+      <span class="text-xl capitalize">My Invoices</span>
     </div>
     <div>
       <div
@@ -13,10 +13,10 @@
         class="divide-y-2"
         :class="index % 2 ? 'bg-gray-100 dark:bg-gray-800 divide-gray-400 dark:divide-gray-600' : 'bg-white dark:bg-gray-900 divide-gray-300 dark:divide-gray-700'"
       >
-        <div class="grid grid-cols-3 gap-2 p-3 select-none" @click="selectDropdown(index)">
+        <div class="grid select-none grid-cols-3 gap-2 p-3" @click="selectDropdown(index)">
           <div>
             <div>
-              <span class="text-sm mr-1">#</span>
+              <span class="mr-1 text-sm">#</span>
               <span class="text-lg">{{ order.id }}</span>
             </div>
           </div>
@@ -25,12 +25,12 @@
             <div class="flex gap-4 pr-6">
               <router-link :to="`/show-invoice/${order.id}`" title="View invoice">
                 <i-heroicons-solid:eye
-                  class="text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 cursor-pointer"
+                  class="cursor-pointer text-gray-600 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
                 />
               </router-link>
               <router-link :to="`/show-invoice/print/${order.id}`" title="Print invoice" target="_blank">
                 <i-heroicons-solid:printer
-                  class="text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 cursor-pointer"
+                  class="cursor-pointer text-gray-600 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
                 />
               </router-link>
             </div>
@@ -44,16 +44,16 @@
               class="flex flex-row gap-2 p-4 pb-2"
               :class="i % 2 ? 'bg-gray-100 dark:bg-gray-800' : 'bg-white dark:bg-gray-900'"
             >
-              <div class="flex flex-col flex-grow">
+              <div class="flex grow flex-col">
                 <div class="flex justify-between">
                   <div>
                     {{ item.description }}
                     <span
-                      class="text-xs text-gray-600 dark:text-gray-400 block"
+                      class="block text-xs text-gray-600 dark:text-gray-400"
                     >${{ (item.line_price / item.qty).toFixed(2) }} each</span>
                   </div>
                 </div>
-                <div class="flex flex-row justify-between items-baseline">
+                <div class="flex flex-row items-baseline justify-between">
                   <div>
                     <span v-if="item.qty > 1" class="font-semibold">x&nbsp;{{ item.qty }}</span>
                   </div>
