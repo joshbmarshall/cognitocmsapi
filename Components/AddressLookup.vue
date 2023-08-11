@@ -90,6 +90,8 @@ const handleSubmitAddress = (id: string) => {
       newaddress.postcode = result.data.address.postalCode
       newaddress.state = result.data.address.state
       newaddress.country = result.data.address.countryName
+      newaddress.latitude = result.data.position?.lat
+      newaddress.longitude = result.data.position?.lng
       emit('update:modelValue', newaddress)
     })
 }

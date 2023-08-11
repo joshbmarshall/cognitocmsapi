@@ -7,6 +7,8 @@ class CognitoAddressLookup {
   postcode: string
   state: string
   country: string
+  latitude: string
+  longitude: string
 
   constructor(source?: Partial<CognitoAddressLookup>) {
     this.line1 = ''
@@ -15,6 +17,8 @@ class CognitoAddressLookup {
     this.postcode = ''
     this.state = ''
     this.country = ''
+    this.latitude = ''
+    this.longitude = ''
 
     Object.assign(this, source)
   }
