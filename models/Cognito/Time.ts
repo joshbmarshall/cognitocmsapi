@@ -1,4 +1,4 @@
-import { addMinutes, differenceInCalendarDays, format, isFuture, isPast, isSameDay, parseISO, subMinutes } from 'date-fns'
+import { addMinutes, differenceInCalendarDays, format, isFuture, isPast, isSameDay, isSameMonth, parseISO, subMinutes } from 'date-fns'
 
 class CognitoTime {
   time: Date
@@ -38,33 +38,47 @@ class CognitoTime {
     return isSameDay(this.time, compare_to.time)
   }
 
-  format(fmt: string) {
+  isSameMonth(compare_to: CognitoTime): boolean {
+    return isSameMonth(this.time, compare_to.time)
+  }
+
+  format(fmt: string): string {
     return format(this.time, fmt)
   }
 
-  toDateString() {
+  toDateString(): string {
     return format(this.time, 'Y-MM-dd')
   }
 
-  toISO8601String() {
+  toISO8601String(): string {
     return format(this.time, 'Y-MM-dd\'T\'HH:mm:ssXX')
   }
 
-  toDateTimeString() {
+  toDateTimeString(): string {
     return format(this.time, 'Y-MM-dd HH:mm:ss')
   }
 
-  toHumanDateString(include_year: boolean) {
+  toHumanDateString(include_year: boolean): string {
     const formatting = `do MMM${include_year ? ' yyyy' : ''}`
     return format(this.time, formatting)
   }
 
-  toHumanTimeString() {
+  toHumanTimeString(): string {
     return format(this.time, 'h:mmaaa')
   }
 
-  toHuman24HourTimeString() {
+  toHuman24HourTimeString(): string {
     return format(this.time, 'HH:mm')
+  }
+
+  betweenDateString(othertime: CognitoTime): string {
+    if (this.isSameDay(othertime)) {
+      return this.format('eee do MMMM')
+    }
+    if (this.isSameMonth(othertime)) {
+      return `${this.format('eee do')} - ${othertime.format('eee do MMMM')}`
+    }
+    return `${this.format('eee do MMMM')} - ${othertime.format('eee do MMMM')}`
   }
 }
 export { CognitoTime }
