@@ -1,4 +1,5 @@
 import { CognitoBase } from '../Cognito/Base'
+import { CognitoImage } from '../Cognito/Image'
 import { CognitoTime } from '../Cognito/Time'
 import type { EventCategory } from './Category'
 import { EventDate } from './Date'
@@ -15,6 +16,10 @@ class EventEvent extends CognitoBase {
   url: string
   type: EventType
   start_date: CognitoTime
+  end_date: CognitoTime
+  image: CognitoImage
+  blurb: string
+  page_content: string
   venue: EventVenue
   dates: EventDate[]
   entrant_content: string
@@ -44,6 +49,8 @@ class EventEvent extends CognitoBase {
     this.type = new EventType()
     this.venue = new EventVenue()
     this.dates = []
+    this.blurb = ''
+    this.page_content = ''
     this.entrant_content = ''
     this.spectator_content = ''
     this.can_enter = false
@@ -60,7 +67,9 @@ class EventEvent extends CognitoBase {
     this.user_cannot_enter_reason = ''
     Object.assign(this, source)
     this.start_date = new CognitoTime(source?.start_date)
+    this.end_date = new CognitoTime(source?.end_date)
     this.entries_open_at = new CognitoTime(source?.entries_open_at)
+    this.image = new CognitoImage(source?.image)
     if (source?.dates) {
       this.dates = new EventDate().map(source?.dates)
     }
@@ -72,6 +81,11 @@ class EventEvent extends CognitoBase {
     redirect: string
   }> {
     return (await $axios.post(`${this.baseurl()}/submitEntry`, data)).data
+  }
+
+  async upcomingEventList(type?: string): Promise<EventEvent[]> {
+    const res = await $axios.get(`${this.baseurl()}/upcomingEventList?type_id=${type}`)
+    return this.map(res.data.data)
   }
 }
 
