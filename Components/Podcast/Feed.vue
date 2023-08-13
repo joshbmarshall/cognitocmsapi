@@ -41,7 +41,7 @@
           {{ selected_episode.name }}
         </div>
         <media-controller audio>
-          <audio slot="media" :src="selected_episode.media_url" autoplay />
+          <audio slot="media" :src="selected_episode.media_url" :autoplay="autoplay" />
           <media-control-bar>
             <media-play-button />
             <media-seek-backward-button seekoffset="10" />
@@ -74,9 +74,11 @@ const props = defineProps({
 
 const podcast = ref<PodcastChannel>(new PodcastChannel())
 const selected_episode = ref<PodcastEpisode>(new PodcastEpisode())
+const autoplay = ref(false)
 
 const selectEpisode = (episode: PodcastEpisode) => {
   selected_episode.value = new PodcastEpisode()
+  autoplay.value = true
   nextTick(() => {
     selected_episode.value = episode
   })
