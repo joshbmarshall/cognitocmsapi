@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="md:flex">
-      <div class="md:w-1/3">
+    <div class="mb-16 md:flex">
+      <div class="pt-4 md:w-1/3">
         <cgn-lazy-image :image="podcast.cover_art" />
       </div>
       <div class="p-2 md:w-2/3">
@@ -12,16 +12,19 @@
       </div>
     </div>
     <div v-for="episode in podcast.episodes" :key="episode.id">
-      <div class="m-4 md:flex">
-        <div class="relative cursor-pointer md:w-1/5" @click="selectEpisode(episode)">
+      <div class="m-4">
+        <div class="relative float-left mt-2 cursor-pointer md:mr-2 md:w-1/5" @click="selectEpisode(episode)">
           <cgn-lazy-image :image="episode.cover_art" />
-          <i-heroicons-solid:play class="absolute left-1 top-1 text-3xl" />
+          <i-heroicons-solid:play class="absolute left-1 top-1 text-5xl" />
         </div>
-        <div class="py-2 md:ml-2 md:w-4/5">
+        <div class="pb-2 md:ml-2">
           <div class="mb-2 text-2xl">
             {{ episode.name }}
           </div>
-          <div class="prose mb-2 max-w-none dark:prose-invert" v-html="episode.description" />
+          <div class="prose mb-2 max-w-none dark:prose-invert" :class="episode.notclamped ? '' : 'line-clamp-5'" v-html="episode.description" />
+          <div v-if="!episode.notclamped" class="cursor-pointer" @click="episode.notclamped = true">
+            Read More
+          </div>
         </div>
       </div>
     </div>
