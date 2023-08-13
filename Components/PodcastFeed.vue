@@ -16,7 +16,7 @@
         <div class="md:w-1/5">
           <img :src="item.itunes_image?.href">
         </div>
-        <div class="p-2 md:w-2/5">
+        <div class="py-2 md:ml-2 md:w-2/5">
           <div class="mb-2 text-2xl">
             {{ item.title }}
           </div>
