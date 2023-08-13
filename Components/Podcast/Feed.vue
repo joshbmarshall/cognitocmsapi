@@ -18,10 +18,13 @@
           <i-heroicons-solid:play class="absolute left-1 top-1 text-5xl" />
         </div>
         <div class="pb-2 md:ml-2">
-          <div class="mb-2 text-2xl">
+          <div class="text-2xl">
             {{ episode.name }}
           </div>
-          <div class="prose mb-2 max-w-none dark:prose-invert" :class="episode.notclamped ? '' : 'line-clamp-5'" v-html="episode.description" />
+          <div class="mb-1 text-xs">
+            {{ episode.display_start_time.toHumanDateString(true) }}
+          </div>
+          <div class="prose mb-2 max-w-none dark:prose-invert" :class="episode.notclamped ? '' : 'line-clamp-4'" v-html="episode.description" />
           <div v-if="!episode.notclamped" class="cursor-pointer" @click="episode.notclamped = true">
             Read More
           </div>

@@ -1,5 +1,6 @@
 import { CognitoBase } from '../Cognito/Base'
 import { CognitoImage } from '../Cognito/Image'
+import { CognitoTime } from '../Cognito/Time'
 
 class PodcastEpisode extends CognitoBase {
   season: number
@@ -10,6 +11,7 @@ class PodcastEpisode extends CognitoBase {
   cover_art: CognitoImage
   media_url: string
   length: number
+  display_start_time: CognitoTime
 
   baseurl() {
     return '/api/v1/podcast/episode'
@@ -26,6 +28,7 @@ class PodcastEpisode extends CognitoBase {
     this.media_url = ''
     this.length = 0
     Object.assign(this, source)
+    this.display_start_time = new CognitoTime(source?.display_start_time)
   }
 }
 
