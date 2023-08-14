@@ -5,6 +5,32 @@
         <cgn-lazy-image :image="podcast.cover_art" />
       </div>
       <div class="p-2 md:w-2/3">
+        <div class="mb-5 mt-2 grid-cols-8 space-x-4">
+          <a v-if="podcast.amazon_url" :href="podcast.amazon_url" target="_blank" title="Listen on Amazon Music">
+            <i-simple-icons:amazon class="inline-block h-10 w-10" />
+          </a>
+          <a v-if="podcast.itunes_url" :href="podcast.itunes_url" target="_blank" title="Listen on iTunes">
+            <i-simple-icons:itunes class="inline-block h-10 w-10" />
+          </a>
+          <a v-if="podcast.spotify_url" :href="podcast.spotify_url" target="_blank" title="Listen on Spotify">
+            <i-simple-icons:spotify class="inline-block h-10 w-10" />
+          </a>
+          <a v-if="podcast.google_podcast_url" :href="podcast.google_podcast_url" target="_blank" title="Listen on Google">
+            <i-simple-icons:google class="inline-block h-10 w-10" />
+          </a>
+          <a v-if="podcast.deezer_url" :href="podcast.deezer_url" target="_blank" title="Listen on Deezer">
+            <i-simple-icons:deezer class="inline-block h-10 w-10" />
+          </a>
+          <a v-if="podcast.tune_in_url" :href="podcast.tune_in_url" target="_blank" title="Listen on TuneIn">
+            <i-simple-icons:tunein class="inline-block h-10 w-10" />
+          </a>
+          <a v-if="podcast.iheart_url" :href="podcast.iheart_url" target="_blank" title="Listen on iHeart Radio">
+            <i-simple-icons:iheartradio class="inline-block h-10 w-10" />
+          </a>
+          <a v-if="podcast.samsung_cast_url" :href="podcast.samsung_cast_url" target="_blank" title="Listen on Samsung Cast">
+            <i-simple-icons:samsung class="inline-block h-10 w-10" />
+          </a>
+        </div>
         <div class="mb-2 text-2xl">
           {{ podcast.title }}
         </div>
