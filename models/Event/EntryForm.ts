@@ -1,3 +1,4 @@
+import type { CognitoAddress } from '../Cognito/Address'
 import { EventEvent } from './Event'
 import type { EventMerch } from './Merch'
 import { EventVehicle } from './Vehicle'
@@ -240,6 +241,20 @@ class EventEntryForm {
       return null
     }
     return this.eventDetails?.licence_types.find(e => e.id == this.licence_id)
+  }
+
+  selectedAddress(addresses: CognitoAddress[]) {
+    if (this.address_id == 0) {
+      return null
+    }
+    return addresses.find(e => e.id == this.address_id)
+  }
+
+  selectedVehicle(vehicles: EventVehicle[]) {
+    if (this.vehicle_id == 0) {
+      return null
+    }
+    return vehicles.find(e => e.id == this.vehicle_id)
   }
 
   totalPrice() {
