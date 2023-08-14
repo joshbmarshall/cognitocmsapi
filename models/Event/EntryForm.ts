@@ -241,5 +241,31 @@ class EventEntryForm {
     }
     return this.eventDetails?.licence_types.find(e => e.id == this.licence_id)
   }
+
+  totalPrice() {
+    let cost = 0
+    const category = this.selectedCategory()
+    const licence = this.selectedLicence()
+    if (category) {
+      cost += category.price
+    }
+    if (licence) {
+      cost += licence.price
+    }
+    this.extras.forEach((extra) => {
+      if (extra.checked) {
+        cost += extra.price
+      }
+    })
+    this.spectators.forEach((spectator) => {
+      if (spectator.qty > 0) {
+        cost += spectator.price * spectator.qty
+      }
+    })
+    this.merch.forEach((merch) => {
+      cost += merch.price
+    })
+    return cost
+  }
 }
 export { EventEntryForm, EventEntryFormMerch, EventEntryFormLicenceType, EventEntryFormSpectator, EventEntryFormExtra, EventEntryFormCategory }
