@@ -2,7 +2,7 @@ import { CognitoBase } from '../Cognito/Base'
 
 class EventSpectatorType extends CognitoBase {
   name: string
-  cost: number
+  price: number
   qty_available: number
   sold_out: boolean
 
@@ -13,7 +13,7 @@ class EventSpectatorType extends CognitoBase {
   constructor(source?: Partial<EventSpectatorType>) {
     super()
     this.name = ''
-    this.cost = 0
+    this.price = 0
     this.qty_available = 0
     this.sold_out = true
     Object.assign(this, source)
