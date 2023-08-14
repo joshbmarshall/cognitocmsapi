@@ -1,13 +1,97 @@
+import { EventEvent } from './Event'
+import { EventVehicle } from './Vehicle'
+
+class EventEntryFormMerch {
+  id: string | number | undefined
+  option?: number
+  name: string
+  price: number
+
+  constructor(source?: Partial<EventEntryFormMerch>) {
+    this.id = 0
+    this.name = ''
+    this.price = 0
+
+    Object.assign(this, source)
+  }
+}
+
+class EventEntryFormExtra {
+  id?: string | number
+  label: string
+  price: number
+  checked: number
+  disabled: boolean
+
+  constructor(source?: Partial<EventEntryFormExtra>) {
+    this.id = 0
+    this.label = ''
+    this.price = 0
+    this.checked = 0
+    this.disabled = false
+
+    Object.assign(this, source)
+  }
+}
+
+class EventEntryFormSpectator {
+  id: string | number | undefined
+  label: string
+  price: number
+  qty: number
+  max_qty: number
+  disabled: boolean
+
+  constructor(source?: Partial<EventEntryFormSpectator>) {
+    this.id = 0
+    this.label = ''
+    this.price = 0
+    this.qty = 0
+    this.max_qty = 0
+    this.disabled = false
+
+    Object.assign(this, source)
+  }
+}
+
+class EventEntryFormLicenceType {
+  id: string | number | undefined
+  name: string
+  content?: string
+  disabled?: boolean
+
+  constructor(source?: Partial<EventEntryFormLicenceType>) {
+    this.id = 0
+    this.name = ''
+
+    Object.assign(this, source)
+  }
+}
+
+class EventEntryFormCategory {
+  id: string | number | undefined
+  name: string
+  content?: string
+  disabled?: boolean
+
+  constructor(source?: Partial<EventEntryFormCategory>) {
+    this.id = 0
+    this.name = ''
+
+    Object.assign(this, source)
+  }
+}
+
 class EventEntryForm {
-  event_id: number
+  event_id?: string | number
   category_id: number
   address_id: number
   licence_id: number
   vehicle_id: number
   aasa_licence: string
-  extras: []
-  spectators: []
-  merch: []
+  extras: EventEntryFormExtra[]
+  spectators: EventEntryFormSpectator[]
+  merch: EventEntryFormMerch[]
   url: string
   entry_transfer_from_invoice: number
   entry_transfer_from_name: string
@@ -53,6 +137,74 @@ class EventEntryForm {
     this.date_of_last_medical_exam = ''
     Object.assign(this, source)
   }
+
+  async loadEvent(event: string) {
+    const data = await new EventEvent().find_one({
+      url: event,
+      image_width: 1920,
+    })
+    const eventDetails = new EventEvent(data)
+    this.event_id = eventDetails.id
+    this.address_id = eventDetails.last_address_id
+    this.vehicle_id = eventDetails.last_vehicle_id
+    this.url = location.href
+    this.aasa_licence = eventDetails.aasa_licence
+    this.extras = eventDetails.extras.map((e) => {
+      return new EventEntryFormExtra({
+        id: e.id,
+        label: e.name,
+        price: e.price_each,
+        checked: 0,
+        disabled: e.sold_out,
+      })
+    })
+    this.spectators = eventDetails.spectator_types.map((e) => {
+      return new EventEntryFormSpectator({
+        id: e.id,
+        label: `${e.name}`,
+        price: e.price,
+        qty: 0,
+        max_qty: e.qty_available,
+        disabled: e.sold_out,
+      })
+    })
+    const entryCategories = eventDetails.categories.map((e) => {
+      let ticket_note = ''
+      if (false && e.ticket_type && e.spectator_tickets_per_entry > 0) {
+        ticket_note = `<div>Includes ${e.spectator_tickets_per_entry} x Gate Entry Tickets</div>`
+      }
+      return new EventEntryFormCategory({
+        id: e.id,
+        name: `${e.name} ${(e.sold_out) ? '- Sold out' : `$${e.price}`}`,
+        content: `${e.entry_description}${ticket_note}`,
+        disabled: e.sold_out,
+      })
+    })
+    entryCategories.push({ id: 0, name: 'Spectating Only', content: 'See below', disabled: false })
+
+    const licenceTypes = eventDetails.licence_types.map((e) => {
+      return new EventEntryFormLicenceType({
+        id: e.id,
+        name: `${e.name} $${e.price.toFixed(2)}`,
+      })
+    })
+    licenceTypes.push(new EventEntryFormLicenceType({
+      id: 0,
+      name: 'No Licence',
+      content: 'I do not need to purchase a licence',
+      disabled: false,
+    }))
+
+    const vehicles = (await new EventVehicle().find_many({
+      entrant_id: useUserStore().user.id,
+    })).data
+    return {
+      eventDetails,
+      entryCategories,
+      licenceTypes,
+      vehicles,
+    }
+  }
 }
 
-export { EventEntryForm }
+export { EventEntryForm, EventEntryFormMerch, EventEntryFormLicenceType, EventEntryFormSpectator, EventEntryFormExtra, EventEntryFormCategory }
