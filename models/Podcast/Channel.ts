@@ -15,6 +15,7 @@ class PodcastChannel extends CognitoBase {
   samsung_cast_url?: string
   spotify_url?: string
   tune_in_url?: string
+  rss_url: string
 
   baseurl() {
     return '/api/v1/podcast/channel'
@@ -26,6 +27,7 @@ class PodcastChannel extends CognitoBase {
     this.description = ''
     this.cover_art = new CognitoImage()
     this.episodes = []
+    this.rss_url = ''
     Object.assign(this, source)
     if (source?.episodes) {
       this.episodes = source.episodes.map(e => new PodcastEpisode(e))
