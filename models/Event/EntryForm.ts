@@ -1,4 +1,5 @@
 import { EventEvent } from './Event'
+import type { EventMerch } from './Merch'
 import { EventVehicle } from './Vehicle'
 
 class EventEntryFormMerch {
@@ -108,6 +109,7 @@ class EventEntryForm {
   has_hearing_disorder: boolean
   is_normal_eyesight: boolean
   date_of_last_medical_exam: string
+  eventDetails?: EventEvent
 
   constructor(source?: Partial<EventEntryForm>) {
     this.event_id = 0
@@ -198,6 +200,8 @@ class EventEntryForm {
     const vehicles = (await new EventVehicle().find_many({
       entrant_id: useUserStore().user.id,
     })).data
+
+    this.eventDetails = eventDetails
     return {
       eventDetails,
       entryCategories,
@@ -205,6 +209,37 @@ class EventEntryForm {
       vehicles,
     }
   }
-}
 
+  addMerchToOrder(merch: EventMerch) {
+    const option = merch.options.find(e => e.id == merch.selectedOption)
+    let price = merch.price_each
+    let name = merch.name
+    if (option) {
+      if (option.price_each > 0) {
+        price = option.price_each
+      }
+      name += ` ${option.name}`
+    }
+    this.merch.unshift({
+      id: merch.id,
+      option: merch.selectedOption,
+      name,
+      price,
+    })
+  }
+
+  selectedCategory() {
+    if (this.category_id == 0) {
+      return null
+    }
+    return this.eventDetails?.categories.find(e => e.id == this.category_id)
+  }
+
+  selectedLicence() {
+    if (this.licence_id == 0) {
+      return null
+    }
+    return this.eventDetails?.licence_types.find(e => e.id == this.licence_id)
+  }
+}
 export { EventEntryForm, EventEntryFormMerch, EventEntryFormLicenceType, EventEntryFormSpectator, EventEntryFormExtra, EventEntryFormCategory }

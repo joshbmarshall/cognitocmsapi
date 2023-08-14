@@ -18,6 +18,7 @@ class EventMerch extends CognitoBase {
   price_each: number
   photos: CognitoPhoto[]
   options: EventMerchOption[]
+  selectedOption?: number
 
   baseurl() {
     return '/api/v1/event/merch'
