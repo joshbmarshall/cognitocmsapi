@@ -3,7 +3,7 @@ import { CognitoBase } from '../Cognito/Base'
 class EventCategory extends CognitoBase {
   name: string
   entry_description: string
-  entry_fee: number
+  price: number
   qty_available: number
   spectator_tickets_per_entry: number
   ticket_type: string
@@ -18,7 +18,7 @@ class EventCategory extends CognitoBase {
     super()
     this.name = ''
     this.entry_description = ''
-    this.entry_fee = 0
+    this.price = 0
     this.qty_available = 0
     this.spectator_tickets_per_entry = 0
     this.ticket_type = ''
