@@ -99,17 +99,15 @@ export const useCartStore = defineStore({
           }
         })
     },
-    mergeCart() {
-      $axios
+    async mergeCart() {
+      await $axios
         .post(
           '/api/v1/sell/cart/mergeCart',
           {
             session: this.sessionKey,
           },
         )
-        .then(() => {
-          this.getCart()
-        })
+      this.getCart()
     },
     getCart() {
       $axios

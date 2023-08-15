@@ -278,6 +278,9 @@ class CgnAxios {
       userStore.setRefreshToken(refresh_token)
       userStore.setAccessToken(access_token)
       await this.getUser()
+      if (this.useCart) {
+        await useCartStore().mergeCart()
+      }
 
       userStore.redirect_after_login = ''
     }
