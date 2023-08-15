@@ -11,8 +11,17 @@
     v-if="!payum_token"
     class="flex items-center justify-center px-4 py-9 2xl:container md:px-6 md:py-12 lg:px-20 lg:py-16 xl:px-44 2xl:mx-auto"
   >
+    <div v-if="cartStore.cartitemCount == 0" class="text-center">
+      <p>
+        No items in your cart
+      </p>
+      <cgn-button color-brand url="/shop">
+        Shop Now
+      </cgn-button>
+    </div>
     <div
-      class="items-top flex w-full flex-col justify-center space-y-12 sm:w-9/12 lg:w-full lg:flex-row lg:space-x-10 lg:space-y-0 2xl:space-x-36"
+      v-else
+      class="flex w-full flex-col items-start justify-center space-y-12 sm:w-9/12 lg:w-full lg:flex-row lg:space-x-10 lg:space-y-0 2xl:space-x-36"
     >
       <div class="flex w-full flex-col items-start justify-start">
         <div>
