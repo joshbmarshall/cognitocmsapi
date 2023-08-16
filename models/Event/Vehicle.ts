@@ -1,5 +1,6 @@
 import { CognitoBase } from '../Cognito/Base'
 import { CognitoState } from '../Cognito/State'
+import { CognitoTime } from '../Cognito/Time'
 import { EventVehicleBodyStyle } from './VehicleBodyStyle'
 import { EventVehicleEngineType } from './VehicleEngineType'
 import { EventVehicleInductionType } from './VehicleInductionType'
@@ -41,6 +42,10 @@ class EventVehicle extends CognitoBase {
     this.owner_mobile = ''
     this.registration_expiry = ''
     Object.assign(this, source)
+  }
+
+  registrationHasExpired(): boolean {
+    return new CognitoTime(this.registration_expiry).isPast()
   }
 }
 
