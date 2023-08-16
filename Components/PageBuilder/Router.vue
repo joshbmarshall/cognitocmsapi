@@ -32,6 +32,7 @@
     </div>
   </div>
   <cgn-back-to-top v-if="config.show_back_to_top" />
+  <cgn-keep-awake />
 </template>
 
 <script setup lang="ts">
