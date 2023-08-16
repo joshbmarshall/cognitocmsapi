@@ -41,7 +41,7 @@ class EventEntryFormSpectator {
   label: string
   price: number
   qty: number
-  max_qty: number
+  qty_available: number
   disabled: boolean
 
   constructor(source?: Partial<EventEntryFormSpectator>) {
@@ -49,7 +49,7 @@ class EventEntryFormSpectator {
     this.label = ''
     this.price = 0
     this.qty = 0
-    this.max_qty = 0
+    this.qty_available = 0
     this.disabled = false
 
     Object.assign(this, source)
@@ -167,7 +167,7 @@ class EventEntryForm {
         label: `${e.name}`,
         price: e.price,
         qty: 0,
-        max_qty: e.qty_available,
+        qty_available: e.qty_available,
         disabled: e.sold_out,
       })
     })
