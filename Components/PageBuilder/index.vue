@@ -5,6 +5,9 @@
   <div v-else-if="widget.outer == 'core/heading'" :class="props.containedClass">
     <cgn-page-builder-core-heading :templatevar="widget.templatevar" />
   </div>
+  <div v-else-if="widget.outer == 'core/faq'">
+    <cgn-page-builder-faq :templatevar="widget.templatevar" :group="props.urlParts.item_url" :page="props.urlParts.url_parameter_2" />
+  </div>
   <div v-else-if="widget.outer == 'core/demo'" :class="props.containedClass">
     <cgn-page-builder-core-demo :templatevar="widget.templatevar" />
   </div>
