@@ -200,7 +200,7 @@ class EventEntryForm {
 
     const vehicles = (await new EventVehicle().find_many({
       entrant_id: useUserStore().user.id,
-    })).data
+    })).mapped
 
     this.eventDetails = eventDetails
     return {
