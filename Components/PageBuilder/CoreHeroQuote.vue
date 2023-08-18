@@ -3,12 +3,12 @@
     <div :class="outerClass" class="relative">
       <div class="absolute inset-0 bg-cover bg-center" :class="imageClass" :style="{ 'background-image': `url(${url})` }" />
       <div class="relative flex h-[500px] flex-col items-center justify-center p-8 text-center" :class="textClass">
-        <h1 class="pb-2 font-display text-2xl font-semibold md:text-4xl">
+        <div class="pb-2 font-display text-2xl font-semibold md:text-4xl">
           {{ templatevar.heading }}
-        </h1>
-        <h2 v-if="templatevar.subheading" class="font-display text-xl font-semibold">
+        </div>
+        <div v-if="templatevar.subheading" class="font-display text-xl font-semibold">
           {{ templatevar.subheading }}
-        </h2>
+        </div>
         <div v-if="templatevar.html" class="prose-invert max-w-none pb-2" v-html="templatevar.html" />
       </div>
     </div>
