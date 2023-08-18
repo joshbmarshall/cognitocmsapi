@@ -314,7 +314,7 @@ const confirmRemove = () => {
   deleting_modal.value = false
 
   deleting_signon.value?.confirmDelete()
-    .then((result) => {
+    .then(() => {
       deleting_signon.value = null
       fetchSignOns()
     })

@@ -157,7 +157,7 @@ async function selectAddress() {
   showAdditionalAddress.value = false
 }
 
-function deleteAddress(address: Object) {
+function deleteAddress(address: any) {
   new SellAddress(address).disable().then((data) => {
     if (!data.success) {
       // eslint-disable-next-line no-alert

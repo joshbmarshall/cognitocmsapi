@@ -42,7 +42,7 @@ class CognitoCTypesenseHighlights {
 }
 
 class CognitoCTypesenseHits {
-  document: Object
+  document: any
   highlights: CognitoCTypesenseHighlights[]
   text_match: number
 

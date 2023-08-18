@@ -53,7 +53,6 @@ const vehicleDropdown = ref([])
 
 const vehicles = ref<EventVehicle[]>([])
 
-const newVehicle = ref<EventVehicle>(new EventVehicle())
 const showVehicleAdd = ref(false)
 const edit_vehicle_id = ref(0)
 

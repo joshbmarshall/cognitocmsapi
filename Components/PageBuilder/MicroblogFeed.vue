@@ -6,7 +6,7 @@
         #{{ props.tag }}
       </span>
     </div>
-    <div v-for="post, index in posts" :key="post.id" class="mb-4">
+    <div v-for="post in posts" :key="post.id" class="mb-4">
       <div class="rounded-lg border border-slate-200 bg-white shadow-md dark:border-slate-700 dark:bg-slate-800">
         <div v-if="post.image">
           <cgn-lazy-image :image="post.image" class="w-full rounded-t-lg" />

@@ -3,7 +3,7 @@ import { CognitoBase } from './Base'
 class CognitoFormSubmit extends CognitoBase {
   id: number
   form_id: number
-  details: Object
+  details: any
 
   baseurl() {
     return '/api/v1/cognito/formSubmit'

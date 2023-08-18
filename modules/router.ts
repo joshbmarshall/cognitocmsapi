@@ -1,7 +1,7 @@
 import { type UserModule } from '~/types'
 import { isLoggedIn, setRedirectAfterLogin } from '~cognito/plugins/axios'
 
-export const install: UserModule = ({ app, router, isClient }) => {
+export const install: UserModule = ({ router, isClient }) => {
   router.beforeEach((to, from, next) => {
     if (isClient) {
       window.scrollTo(0, 0)
