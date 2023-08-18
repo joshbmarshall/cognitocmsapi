@@ -1,7 +1,7 @@
 <template>
-  <div :style="parallaxStyle" class="bg-fixed bg-center bg-cover">
-    <div class="opacity-40 bg-slate-900 absolute w-full h-[500px] z-0" />
-    <div class="relative z-1" :class="props.class">
+  <div :style="parallaxStyle" class="bg-cover bg-fixed bg-center">
+    <div class="absolute z-0 h-[500px] w-full bg-slate-900 opacity-40" />
+    <div class="z-1 relative" :class="props.class">
       <slot />
     </div>
   </div>

@@ -19,12 +19,12 @@
         <cgn-form-dropdown v-model="input.value" :options="input.values" :prompt="input.placeholder || '-- Select --'" :required="input.required" :label="input.label" />
       </div>
       <div v-if="input.type == 'paragraph'">
-        <div class="prose dark:prose-invert max-w-none">
+        <div class="prose max-w-none dark:prose-invert">
           <p>{{ input.label }}</p>
         </div>
       </div>
       <div v-if="input.type == 'header'">
-        <div class="prose dark:prose-invert max-w-none">
+        <div class="prose max-w-none dark:prose-invert">
           <h1>{{ input.label }}</h1>
         </div>
       </div>

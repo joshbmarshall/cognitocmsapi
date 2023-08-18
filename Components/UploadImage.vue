@@ -13,7 +13,7 @@
         <div>
           <input
             type="file"
-            class="block w-full text-sm text-transparent file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-brand-500 file:text-on-brand hover:file:bg-brand-600 dark:file:bg-brand-500 dark:file:hover:bg-brand-400"
+            class="block w-full text-sm text-transparent file:mr-4 file:rounded-lg file:border-0 file:bg-brand-500 file:px-4 file:py-2 file:text-on-brand hover:file:bg-brand-600 dark:file:bg-brand-500 dark:file:hover:bg-brand-400"
             accept="image/*"
             @change="upload"
           >

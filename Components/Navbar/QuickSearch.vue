@@ -7,22 +7,22 @@
       <div
         v-if="dropdown"
         ref="quicksearch"
-        class="absolute w-72 md:w-96 drop-shadow-xl top-6 rounded-md overflow-hidden text-gray-700 dark:text-gray-300 bg-white dark:bg-darkbg-900 z-50"
+        class="absolute top-6 z-50 w-72 overflow-hidden rounded-md bg-white text-gray-700 drop-shadow-xl dark:bg-darkbg-900 dark:text-gray-300 md:w-96"
         :class="props.dropdownRight ? 'left-0' : 'right-0'"
       >
-        <div class="flex flex-row items-center px-4 py-2 bg-gray-100 dark:bg-darkbg-800">
+        <div class="flex flex-row items-center bg-gray-100 px-4 py-2 dark:bg-darkbg-800">
           <div class="font-bold text-gray-700 dark:text-gray-300">Search</div>
           <span
             v-if="search.length > 0"
-            class="text-sm text-gray-600 dark:text-gray-400 pl-2"
+            class="pl-2 text-sm text-gray-600 dark:text-gray-400"
           >Found {{ searchresults?.found }} results</span>
-          <div class="flex justify-end flex-1 cursor-pointer" @click="dropdownToggle()">
+          <div class="flex flex-1 cursor-pointer justify-end" @click="dropdownToggle()">
             <i-heroicons-solid:x />
           </div>
         </div>
         <cgn-form-input-text
           v-model="search"
-          class="px-4 py-1 -mt-6 border-b-2 border-gray-100 dark:border-darkbg-800"
+          class="-mt-6 border-b-2 border-gray-100 px-4 py-1 dark:border-darkbg-800"
         />
         <router-link
           v-for="result, index in searchresults?.hits"
@@ -34,17 +34,17 @@
             :class="index % 2 ? 'bg-gray-100 dark:bg-darkbg-800' : 'bg-white dark:bg-darkbg-900'"
           >
             <cgn-lazy-image
-              class="aspect-square rounded-md overflow-hidden w-full h-full max-w-[2.5rem] max-h-[2.5rem] dark:bg-white"
+              class="aspect-square h-full max-h-[2.5rem] w-full max-w-[2.5rem] overflow-hidden rounded-md dark:bg-white"
               :placeholder="result.document.image_url"
               :url="result.document.image_url"
               :webp="result.document.image_url"
             />
-            <div class="flex flex-col flex-grow">
+            <div class="flex grow flex-col">
               <div class="flex justify-between">
                 <div>
                   {{ result.document.name }}
                   <div
-                    class="text-xs text-gray-600 dark:text-gray-400 block"
+                    class="block text-xs text-gray-600 dark:text-gray-400"
                     v-html="result.document.blurb"
                   />
                 </div>
@@ -52,7 +52,7 @@
             </div>
           </div>
         </router-link>
-        <div class="flex flex-row justify-end p-4 bg-gray-50 dark:bg-darkbg-800">
+        <div class="flex flex-row justify-end bg-gray-50 p-4 dark:bg-darkbg-800">
           <router-link
             v-if="searchresults?.found > 5"
             class="flex flex-row items-center"

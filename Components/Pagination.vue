@@ -1,29 +1,29 @@
 <template>
   <div v-if="pageCount > 1">
     <div class="flex items-center justify-center py-10">
-      <div class="w-full flex items-center justify-between">
+      <div class="flex w-full items-center justify-between">
         <div class="flex items-center pt-3 text-gray-600">
           <router-link v-if="showFirstLink()" class="hover:text-brand-700" :to="firstLink()">
             <i-heroicons-solid:chevron-double-left />
           </router-link>
           <router-link
             v-if="showPreviousLink()"
-            class="hover:text-brand-700 ml-3"
+            class="ml-3 hover:text-brand-700"
             :to="previousLink()"
           >
             <i-heroicons-solid:chevron-left />
           </router-link>
         </div>
-        <div class="flex mx-2">
+        <div class="mx-2 flex">
           <router-link
             v-if="currentPageNumber > 2"
-            class="flex sm:hidden hover:text-brand-700 border-t border-transparent text-gray-600 hover:border-brand-400"
+            class="flex border-t border-transparent text-gray-600 hover:border-brand-400 hover:text-brand-700 sm:hidden"
             :to="pageLink(1)"
           >
-            <p class="text-sm font-medium leading-none pt-3 px-3">
+            <p class="px-3 pt-3 text-sm font-medium leading-none">
               1
             </p>
-            <p class="text-sm font-medium leading-none pt-3 px-3 pl-0">
+            <p class="px-3 pl-0 pt-3 text-sm font-medium leading-none">
               ...
             </p>
           </router-link>
@@ -31,30 +31,30 @@
             <router-link v-if="showPageLink(pageNum)" :to="pageLink(pageNum)">
               <p
                 v-if="pageNum === currentPageNumber"
-                class="text-sm font-medium leading-none cursor-pointer text-brand-600 border-t border-brand-400 pt-3 px-3"
+                class="cursor-pointer border-t border-brand-400 px-3 pt-3 text-sm font-medium leading-none text-brand-600"
               >{{ pageNum }}</p>
               <p
                 v-else
-                class="text-sm font-medium leading-none cursor-pointer text-gray-600 dark:text-gray-400 hover:text-brand-700 border-t border-transparent hover:border-brand-400 pt-3 px-3"
+                class="cursor-pointer border-t border-transparent px-3 pt-3 text-sm font-medium leading-none text-gray-600 hover:border-brand-400 hover:text-brand-700 dark:text-gray-400"
                 :class="pageNum < currentPageNumber + 2 && pageNum > currentPageNumber - 2 ? '' : 'hidden sm:block'"
               >{{ pageNum }}</p>
             </router-link>
           </span>
           <router-link
             v-if="currentPageNumber < pageCount - 1"
-            class="flex sm:hidden hover:text-brand-700 border-t border-transparent text-gray-600 hover:border-brand-400"
+            class="flex border-t border-transparent text-gray-600 hover:border-brand-400 hover:text-brand-700 sm:hidden"
             :to="pageLink(pageCount)"
           >
-            <p class="text-sm font-medium leading-none pt-3 px-3 pr-0">
+            <p class="px-3 pr-0 pt-3 text-sm font-medium leading-none">
               ...
             </p>
-            <p class="text-sm font-medium leading-none pt-3 px-3">
+            <p class="px-3 pt-3 text-sm font-medium leading-none">
               {{ pageCount }}
             </p>
           </router-link>
         </div>
         <div class="flex items-center pt-3 text-gray-600">
-          <router-link v-if="showNextLink()" class="hover:text-brand-700 mr-3" :to="nextLink()">
+          <router-link v-if="showNextLink()" class="mr-3 hover:text-brand-700" :to="nextLink()">
             <i-heroicons-solid:chevron-right />
           </router-link>
           <router-link v-if="showLastLink()" class="hover:text-brand-700" :to="lastLink()">
@@ -97,7 +97,7 @@ const pageLink = (pageNum: number) => {
   }
   return url
 }
-const currentPageNumber = computed(() => parseInt(props.currentPage))
+const currentPageNumber = computed(() => Number.parseInt(props.currentPage))
 
 const firstLink = () => {
   return pageLink(1)

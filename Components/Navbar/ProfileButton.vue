@@ -1,8 +1,8 @@
 <template>
-  <div class="w-8 h-8">
+  <div class="h-8 w-8">
     <router-link to="/profile" class="cursor-pointer">
       <span v-if="gravatarSrc" title="My Profile">
-        <img :src="gravatarSrc" class="rounded-full bg-white object-cover w-8 h-8">
+        <img :src="gravatarSrc" class="h-8 w-8 rounded-full bg-white object-cover">
       </span>
       <span v-else title="Log In">
         <svg
@@ -27,6 +27,7 @@
 <script setup lang="ts">
 import gravatar from 'gravatar'
 import { useUserStore } from '~cognito/stores/user'
+
 const userStore = useUserStore()
 
 const gravatarSrc = computed(() => {

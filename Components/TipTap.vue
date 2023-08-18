@@ -1,16 +1,16 @@
 <template>
   <div v-if="editor">
-    <div class="flex flex-col gap-1 p-1 mb-1 border-2 border-gray-300 dark:border-gray-700 select-none">
+    <div class="mb-1 flex select-none flex-col gap-1 border-2 border-gray-300 p-1 dark:border-gray-700">
       <div class="flex justify-between gap-2">
         <div class="flex items-center gap-1">
           <div
-            class="p-1 shadow-sm inline-block border-2 border-gray-300 dark:border-gray-700 cursor-pointer"
+            class="inline-block cursor-pointer border-2 border-gray-300 p-1 shadow-sm dark:border-gray-700"
             :class="editor.isActive('paragraph') ? props.buttonActiveClass : props.buttonClass"
             @click="editor.chain().focus().setParagraph().run()"
           >
             <i-carbon:paragraph />
           </div>
-          <div class="border-2 border-gray-300 dark:border-gray-700 text-sm text-center grid grid-cols-3 overflow-hidden">
+          <div class="grid grid-cols-3 overflow-hidden border-2 border-gray-300 text-center text-sm dark:border-gray-700">
             <div
               class="p-1 px-1.5" :class="editor.isActive('heading', { level: 1 }) ? props.buttonActiveClass : props.buttonClass"
               @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
@@ -31,35 +31,35 @@
             </div>
           </div>
           <div
-            class="p-1 shadow-sm inline-block border-2 border-gray-300 dark:border-gray-700 cursor-pointer"
+            class="inline-block cursor-pointer border-2 border-gray-300 p-1 shadow-sm dark:border-gray-700"
             :class="editor.isActive('bulletList') ? props.buttonActiveClass : props.buttonClass"
             @click="editor.chain().focus().toggleBulletList().run()"
           >
             <i-carbon:list-bulleted />
           </div>
           <div
-            class="p-1 shadow-sm inline-block border-2 border-gray-300 dark:border-gray-700 cursor-pointer"
+            class="inline-block cursor-pointer border-2 border-gray-300 p-1 shadow-sm dark:border-gray-700"
             :class="editor.isActive('orderedList') ? props.buttonActiveClass : props.buttonClass"
             @click="editor.chain().focus().toggleOrderedList().run()"
           >
             <i-carbon:list-numbered />
           </div>
           <div
-            class="p-1 shadow-sm inline-block border-2 border-gray-300 dark:border-gray-700 cursor-pointer"
+            class="inline-block cursor-pointer border-2 border-gray-300 p-1 shadow-sm dark:border-gray-700"
             :class="editor.isActive('bold') ? props.buttonActiveClass : props.buttonClass"
             @click="editor.chain().focus().toggleBold().run()"
           >
             <i-carbon:text-bold />
           </div>
           <div
-            class="p-1 shadow-sm inline-block border-2 border-gray-300 dark:border-gray-700 cursor-pointer"
+            class="inline-block cursor-pointer border-2 border-gray-300 p-1 shadow-sm dark:border-gray-700"
             :class="editor.isActive('italic') ? props.buttonActiveClass : props.buttonClass"
             @click="editor.chain().focus().toggleItalic().run()"
           >
             <i-carbon:text-italic />
           </div>
           <div
-            class="p-1 shadow-sm inline-block border-2 border-gray-300 dark:border-gray-700 cursor-pointer"
+            class="inline-block cursor-pointer border-2 border-gray-300 p-1 shadow-sm dark:border-gray-700"
             :class="editor.isActive('underline') ? props.buttonActiveClass : props.buttonClass"
             @click="editor.chain().focus().toggleUnderline().run()"
           >
@@ -69,7 +69,7 @@
       </div>
     </div>
 
-    <EditorContent :editor="editor" class="prose prose-p:mt-0 prose-p:mb-1 dark:prose-invert max-w-none focus:outline-none border-2 border-gray-300 dark:border-gray-700 p-2" />
+    <EditorContent :editor="editor" class="prose max-w-none border-2 border-gray-300 p-2 dark:prose-invert focus:outline-none prose-p:mb-1 prose-p:mt-0 dark:border-gray-700" />
   </div>
 </template>
 

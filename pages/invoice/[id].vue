@@ -1,6 +1,6 @@
 <template>
   <div class="py-6">
-    <div class="max-w-3xl w-full mx-auto bg-white text-black shadow">
+    <div class="mx-auto w-full max-w-3xl bg-white text-black shadow">
       <div v-html="invoice" />
     </div>
   </div>

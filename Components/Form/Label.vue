@@ -2,7 +2,7 @@
   <div>
     <div class="cgn-input-label">
       {{ label }}
-      <span v-if="required" class="text-red-500 text-sm" title="Required">
+      <span v-if="required" class="text-sm text-red-500" title="Required">
         *
       </span>
     </div>

@@ -1,10 +1,10 @@
 <template>
-  <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-lg">
-    <div class="flex flex-row justify-between items-center p-3 bg-gray-100 dark:bg-darkbg-700">
+  <div class="overflow-hidden rounded-lg bg-white shadow-lg dark:bg-gray-900">
+    <div class="flex flex-row items-center justify-between bg-gray-100 p-3 dark:bg-darkbg-700">
       <span class="text-xl">Vehicles</span>
       <div title="Add vehicle" @click="addVehicle()">
         <i-heroicons-solid:plus
-          class="text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 cursor-pointer"
+          class="cursor-pointer text-gray-600 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
         />
       </div>
     </div>
@@ -29,13 +29,13 @@
           <div>
             <span title="Delete vehicle">
               <i-heroicons-solid:trash
-                class="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400 cursor-pointer inline"
+                class="inline cursor-pointer text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-400"
                 @click="deleteVehicle(vehicle)"
               />
             </span>
             <span title="Edit vehicle">
               <i-heroicons-solid:pencil
-                class="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400 cursor-pointer inline"
+                class="inline cursor-pointer text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-400"
                 @click="editVehicle(vehicle)"
               />
             </span>

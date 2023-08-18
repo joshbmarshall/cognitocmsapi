@@ -1,9 +1,9 @@
 <template>
-  <div v-if="showAndroidPrompt" class="sticky bottom-0 p-2 bg-gray-800">
+  <div v-if="showAndroidPrompt" class="sticky bottom-0 bg-gray-800 p-2">
     <div class="text-xl">
       {{ copyTitle }}
     </div>
-    <div class="text-lg pb-2 text-gray-400">
+    <div class="pb-2 text-lg text-gray-400">
       {{ copyBody }}
     </div>
     <div>
@@ -11,11 +11,11 @@
     </div>
   </div>
 
-  <div v-if="showIOSPrompt" class="sticky bottom-0 p-2 bg-gray-800">
+  <div v-if="showIOSPrompt" class="sticky bottom-0 bg-gray-800 p-2">
     <div class="text-xl">
       {{ copyTitle }}
     </div>
-    <div class="text-lg pb-2 text-gray-400">
+    <div class="pb-2 text-lg text-gray-400">
       {{ copyBody }}
     </div>
     <div class="grid grid-cols-2 gap-2">

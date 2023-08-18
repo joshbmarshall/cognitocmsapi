@@ -1,6 +1,6 @@
 <template>
   <div class="mx-auto my-3">
-    <video ref="video" playsinline autoplay class="w-full transform" />
+    <video ref="video" playsinline autoplay class="w-full" />
     <canvas ref="canvas" class="hidden" />
   </div>
 </template>

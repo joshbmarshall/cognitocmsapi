@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mt-1">
-      <label class="inline-block text-sm text-gray-800 dark:text-gray-200 select-none">
+      <label class="inline-block select-none text-sm text-gray-800 dark:text-gray-200">
         <input v-model="checked" type="checkbox" :required="required" @change="handleInput">
         {{ label }}
       </label>

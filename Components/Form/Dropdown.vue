@@ -2,7 +2,7 @@
   <div>
     <cgn-form-label class="cgn-input-wrapper" :label="label" :required="required">
       <select
-        v-model="curval" :required="required" class="block w-full bg-white cgn-input-field p-2"
+        v-model="curval" :required="required" class="cgn-input-field block w-full bg-white p-2"
         :class="inputClass" @change="handleInput"
       >
         <option v-if="!hideSelect" value="">

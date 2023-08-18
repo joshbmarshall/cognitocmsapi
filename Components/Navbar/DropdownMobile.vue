@@ -2,7 +2,7 @@
   <div v-click-away="close" class="flex flex-col">
     <button
       type="button"
-      class="text-left font-medium py-2 flex items-center justify-between"
+      class="flex items-center justify-between py-2 text-left font-medium"
       :class="
         isHidden
           ? ''
@@ -19,9 +19,9 @@
       enter-to-class="opacity-100 translate-y-0"
       leave-from-class="opacity-100 translate-y-0"
       leave-to-class="opacity-0 translate-y-1"
-      class="transition ease-in duration-150"
+      class="transition duration-150 ease-in"
     >
-      <div v-if="!isHidden" class="font-medium text-gray-600 dark:text-gray-400 w-full pl-3">
+      <div v-if="!isHidden" class="w-full pl-3 font-medium text-gray-600 dark:text-gray-400">
         <div class="flex flex-col gap-y-2">
           <slot />
         </div>

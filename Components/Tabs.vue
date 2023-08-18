@@ -1,7 +1,7 @@
 <template>
   <div class="cgn-tab-wrapper">
-    <div class="flex overflow-hidden text-center flex-col md:flex-row cgn-tab-main">
-      <div v-for="tab in props.tabs" :key="tab?.name" class="cursor-pointer cgn-tab" :class="{ 'cgn-tab-active': activeTab == tab?.name }" @click="activeTab = tab?.name">
+    <div class="cgn-tab-main flex flex-col overflow-hidden text-center md:flex-row">
+      <div v-for="tab in props.tabs" :key="tab?.name" class="cgn-tab cursor-pointer" :class="{ 'cgn-tab-active': activeTab == tab?.name }" @click="activeTab = tab?.name">
         {{ tab?.name }}
       </div>
     </div>

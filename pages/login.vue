@@ -15,7 +15,7 @@
     </div>
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-      <div class="dark:bg-darkbg-700 rounded-lg bg-white px-4 py-8 drop-shadow-lg sm:px-10">
+      <div class="rounded-lg bg-white px-4 py-8 drop-shadow-lg dark:bg-darkbg-700 sm:px-10">
         <div v-if="signingIn" class="text-center">
           <cgn-spinner />
         </div>

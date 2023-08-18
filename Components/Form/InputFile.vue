@@ -5,7 +5,7 @@
         <div>
           <input
             type="file"
-            class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700 dark:file:bg-blue-600 dark:file:hover:bg-blue-700"
+            class="block w-full text-sm text-slate-500 file:mr-4 file:rounded-lg file:border-0 file:bg-indigo-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-indigo-700 dark:file:bg-blue-600 dark:file:hover:bg-blue-700"
             disabled-accept="image/*"
             @change="upload"
           >

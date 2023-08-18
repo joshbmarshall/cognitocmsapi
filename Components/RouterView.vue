@@ -21,9 +21,9 @@ const sitemapData = ref(initialData.sitemap)
 const nextUpdateInitialData = ref(new CognitoTime())
 
 const sitemapPage = computed((): {
-  url: String
-  seo_title: String
-  seo_meta_description: String
+  url: string
+  seo_title: string
+  seo_meta_description: string
 } => {
   const url = router?.currentRoute?.value?.path || ''
   const page = sitemapData.value.find(e => e.url == url)

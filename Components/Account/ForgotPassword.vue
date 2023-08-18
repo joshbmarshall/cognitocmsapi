@@ -1,12 +1,12 @@
 <template>
-  <div class="min-h-full flex flex-col justify-center py-12 px-6">
+  <div class="flex min-h-full flex-col justify-center px-6 py-12">
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
       <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
         Recover your password
       </h2>
     </div>
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-      <div class="bg-white dark:bg-darkbg-700 py-8 px-4 drop-shadow-lg rounded-lg sm:px-10">
+      <div class="rounded-lg bg-white px-4 py-8 drop-shadow-lg dark:bg-darkbg-700 sm:px-10">
         <form v-if="password" class="space-y-6" @submit.prevent="userLogin">
           <div>
             <cgn-form-input-text v-model="password" label="Your new password" readonly />

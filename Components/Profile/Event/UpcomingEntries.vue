@@ -1,10 +1,10 @@
 <template>
   <div
     v-if="entries.length > 0"
-    class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-lg"
+    class="overflow-hidden rounded-lg bg-white shadow-lg dark:bg-gray-900"
   >
-    <div class="p-3 bg-gray-100 dark:bg-gray-800">
-      <span class="capitalize text-xl">Upcoming Entries</span>
+    <div class="bg-gray-100 p-3 dark:bg-gray-800">
+      <span class="text-xl capitalize">Upcoming Entries</span>
     </div>
     <div>
       <div
@@ -13,7 +13,7 @@
         class="divide-y-2"
         :class="index % 2 ? 'bg-gray-100 dark:bg-gray-800 divide-gray-400 dark:divide-gray-600' : 'bg-white dark:bg-gray-900 divide-gray-300 dark:divide-gray-700'"
       >
-        <div class="grid grid-cols-3 gap-2 p-3 select-none">
+        <div class="grid select-none grid-cols-3 gap-2 p-3">
           <div>
             {{ entry.event }}
           </div>

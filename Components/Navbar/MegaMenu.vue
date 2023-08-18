@@ -6,15 +6,15 @@
           relative
           z-10
           flex
-          items-center
-          transition-colors
-          ease-out
-          duration-200
-          text-sm
-          font-medium
-          py-2
           cursor-pointer
           select-none
+          items-center
+          py-2
+          text-sm
+          font-medium
+          transition-colors
+          duration-200
+          ease-out
         "
         :class="
           isHidden
@@ -34,20 +34,20 @@
       enter-to-class="opacity-100 translate-y-0"
       leave-from-class="opacity-100 translate-y-0"
       leave-to-class="opacity-0 -translate-y-1"
-      class="transition ease-out duration-150"
+      class="transition duration-150 ease-out"
     >
       <div
         v-if="!isHidden"
-        class="absolute top-full inset-x-0"
+        class="absolute inset-x-0 top-full"
         :class="menu?.image ? 'bg-gray-800 text-white' : 'bg-white dark:bg-darkbg-500'"
       >
-        <cgn-lazy-image class="absolute inset-0 object-cover h-full w-full opacity-40 saturate-50" force-size :image="menu?.image" />
-        <div class="max-w-7xl flex gap-8 p-8 mx-auto max-h-96 relative">
+        <cgn-lazy-image class="absolute inset-0 h-full w-full object-cover opacity-40 saturate-50" force-size :image="menu?.image" />
+        <div class="relative mx-auto flex max-h-96 max-w-7xl gap-8 p-8">
           <div v-for="megaLink in megaLinks" :key="megaLink.name">
             <router-link :to="megaLink.link" class="text-lg">
               {{ megaLink.name }}
             </router-link>
-            <div v-for="link in megaLink.children" :key="link.name" class="text-gray-200 hover:text-gray-100 py-1">
+            <div v-for="link in megaLink.children" :key="link.name" class="py-1 text-gray-200 hover:text-gray-100">
               <router-link :to="link.link">
                 {{ link.name }}
               </router-link>

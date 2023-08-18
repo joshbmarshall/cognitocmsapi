@@ -4,19 +4,19 @@
       <template #icon>
         <div
           v-if="type == 'fail'"
-          class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100 sm:h-10 sm:w-10"
+          class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-danger-100 text-danger-800 dark:bg-danger-800 dark:text-danger-100 sm:h-10 sm:w-10"
         >
           <i-heroicons-solid:exclamation />
         </div>
         <div
           v-else
-          class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 text-green-80 dark:bg-green-800 dark:text-green-100 sm:h-10 sm:w-10"
+          class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-success-100 text-success-800 dark:bg-success-800 dark:text-success-100 sm:h-10 sm:w-10"
         >
           <i-heroicons-solid:check />
         </div>
       </template>
       <template #content>
-        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white select-none">
+        <h3 class="select-none text-lg font-medium leading-6 text-gray-900 dark:text-white">
           <span v-if="type == 'fail'">
             Failed
           </span>
@@ -25,7 +25,7 @@
           </span>
         </h3>
         <div class="mt-2">
-          <p class="text-sm text-gray-500 dark:text-gray-400 select-none">
+          <p class="select-none text-sm text-gray-500 dark:text-gray-400">
             {{ message }}
           </p>
         </div>

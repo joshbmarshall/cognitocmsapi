@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md text-sm text-center">
+  <div class="mt-8 text-center text-sm sm:mx-auto sm:w-full sm:max-w-md">
     Already have an account?
     <cgn-link
       to="/login"
@@ -9,9 +9,9 @@
     </cgn-link>
   </div>
   <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-    <div class="bg-white dark:bg-darkbg-700 py-8 px-4 drop-shadow-lg rounded-lg sm:px-10">
+    <div class="rounded-lg bg-white px-4 py-8 drop-shadow-lg dark:bg-darkbg-700 sm:px-10">
       <form v-if="!sentEmail" class="space-y-4" @submit.prevent="registerAccount()">
-        <div class="flex flex-col sm:flex-row gap-4">
+        <div class="flex flex-col gap-4 sm:flex-row">
           <cgn-form-input-text
             v-model="formValues.first_name"
             label="First name"

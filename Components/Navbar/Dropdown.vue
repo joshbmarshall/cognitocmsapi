@@ -6,15 +6,15 @@
           relative
           z-10
           flex
-          items-center
-          transition-colors
-          ease-out
-          duration-200
-          text-sm
-          font-medium
-          py-2
           cursor-pointer
           select-none
+          items-center
+          py-2
+          text-sm
+          font-medium
+          transition-colors
+          duration-200
+          ease-out
         "
         :class="
           isHidden
@@ -34,13 +34,13 @@
       enter-to-class="opacity-100 translate-y-0"
       leave-from-class="opacity-100 translate-y-0"
       leave-to-class="opacity-0 -translate-y-1"
-      class="transition ease-out duration-150"
+      class="transition duration-150 ease-out"
     >
       <div
         v-if="!isHidden"
-        class="absolute top-full w-56 mt-5 right-0 bg-white dark:bg-gray-800 text-black dark:text-white rounded-md"
+        class="absolute right-0 top-full mt-5 w-56 rounded-md bg-white text-black dark:bg-gray-800 dark:text-white"
       >
-        <div class="max-w-7xl flex flex-col gap-2 p-4 mx-auto max-h-96 relative">
+        <div class="relative mx-auto flex max-h-96 max-w-7xl flex-col gap-2 p-4">
           <div v-for="link in links" :key="link.name" class="py-1">
             <router-link :to="link.link" class="text-base">
               {{ link.name }}
@@ -48,7 +48,7 @@
             <span v-for="childLink in link.children" :key="childLink.name">
               <router-link
                 :to="childLink.link"
-                class="py-2 pl-1 block font-medium text-gray-800 dark:text-gray-200"
+                class="block py-2 pl-1 font-medium text-gray-800 dark:text-gray-200"
               >
                 {{ childLink.name }}
               </router-link>

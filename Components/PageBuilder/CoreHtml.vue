@@ -1,5 +1,5 @@
 <template>
-  <div class="prose dark:prose-invert max-w-none" v-html="templatevar.html" />
+  <div class="prose max-w-none dark:prose-invert" v-html="templatevar.html" />
 </template>
 
 <script lang="ts">

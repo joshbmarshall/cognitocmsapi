@@ -40,14 +40,14 @@
       <div>
         <div
           v-if="price_each"
-          class="font-medium text-xl"
+          class="text-xl font-medium"
           :class="on_special ? 'text-red-400 dark:text-red-600' : 'text-gray-700 dark:text-gray-100'"
         >
           ${{ price_each }}
         </div>
         <div
           v-if="on_special"
-          class="line-through text-xs font-medium text-gray-500 dark:text-gray-400"
+          class="text-xs font-medium text-gray-500 line-through dark:text-gray-400"
         >
           ${{ full_price_each }}
         </div>
@@ -69,7 +69,7 @@
         Checkout now
       </cgn-button>
       <cgn-button v-if="can_add_to_cart" @click="addToCart">
-        <span class="flex flex-row gap-2 items-center">
+        <span class="flex flex-row items-center gap-2">
           Add to cart
           <cgn-spinner v-if="adding_to_cart" />
         </span>

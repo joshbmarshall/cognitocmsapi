@@ -1,16 +1,16 @@
 <template>
   <div
     v-if="modelValue"
-    class="fixed w-full h-full z-10 inset-0 overflow-y-auto"
+    class="fixed inset-0 z-10 h-full w-full overflow-y-auto"
     style="z-index: 9999"
   >
-    <div class="place-content-center min-h-screen pt-4 px-4 pb-20 text-center block sm:p-0">
-      <div class="fixed inset-0 bg-gray-500 dark:bg-gray-700 dark:bg-opacity-75 bg-opacity-75 transition-opacity" @click="close()" />
+    <div class="block min-h-screen place-content-center px-4 pb-20 pt-4 text-center sm:p-0">
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity dark:bg-gray-700 dark:bg-opacity-75" @click="close()" />
       <div
-        class="inline-block bg-white dark:bg-gray-700 rounded-lg overflow-hidden shadow-xl transform w-full my-8 max-w-4xl"
+        class="my-8 inline-block w-full max-w-4xl overflow-hidden rounded-lg bg-white shadow-xl dark:bg-gray-700"
       >
         <div
-          class="absolute top-0 right-0 w-10 h-10 select-none hover:bg-gray-100 dark:hover:bg-gray-600 text-lg p-2.5"
+          class="absolute right-0 top-0 h-10 w-10 select-none p-2.5 text-lg hover:bg-gray-100 dark:hover:bg-gray-600"
           @click="close()"
         >
           <i-heroicons-solid:x />

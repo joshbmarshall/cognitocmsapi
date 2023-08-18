@@ -1,14 +1,14 @@
 <template>
   <div class="m-4">
-    <label v-if="label" class="block font-medium text-base select-none">{{ label }}</label>
+    <label v-if="label" class="block select-none text-base font-medium">{{ label }}</label>
     <div
-      class="border border-gray-100 rounded-lg p-2 cursor-pointer"
+      class="cursor-pointer rounded-lg border border-gray-100 p-2"
       :class="selected_id == -1 ? 'bg-white shadow divide-y-2 divide-gray-200' : 'bg-blue-50 shadow-inner'"
     >
       <div v-for="select in props.options" :key="select.id" @click="pickOption(select)">
         <slot v-if="selected_id == -1 || selected(select.id)" :select="select" :selected="selected(select.id)">
-          <div class="flex gap-4 flex-row p-2">
-            <span class="flex w-full flex-col py-1 select-none">
+          <div class="flex flex-row gap-4 p-2">
+            <span class="flex w-full select-none flex-col py-1">
               <span class="text-xl font-semibold capitalize">{{ select.name }}</span>
               {{ select.subname }}
             </span>

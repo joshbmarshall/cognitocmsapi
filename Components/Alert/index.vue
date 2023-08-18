@@ -1,8 +1,8 @@
 <template>
   <div class="cgn-alert-wrapper">
-    <div class="flex items-stretch flex-row">
+    <div class="flex flex-row items-stretch">
       <div
-        class="mr-3 p-2 text-white flex items-center"
+        class="mr-3 flex items-center p-2 text-white"
         :class="props.color"
       >
         <slot name="icon">

@@ -26,7 +26,7 @@
           Take photo
         </cgn-button>
         <div class="mx-auto my-3">
-          <video ref="video" playsinline autoplay class="w-full transform -scale-x-100" />
+          <video ref="video" playsinline autoplay class="w-full -scale-x-100" />
           <canvas ref="canvas" class="hidden" />
         </div>
       </template>

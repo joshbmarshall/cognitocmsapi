@@ -1,22 +1,22 @@
 <template>
-  <div v-if="props.heading" class="prose dark:prose-dark mx-auto max-w-6xl">
+  <div v-if="props.heading" class="prose mx-auto max-w-6xl dark:prose-dark">
     <h1>{{ props.heading }}</h1>
     <p v-if="props.subheading">
       {{ props.subheading }}
     </p>
   </div>
-  <div class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 max-w-6xl p-2 mx-auto gap-2">
-    <div v-for="slide in slides" :key="slide.id" class="group bg-black overflow-hidden relative" @click="selectedSlide = slide; modal_open = true">
-      <div class="space-y-2 text-white mx-auto lg:max-w-none lg:row-start-1 lg:col-start-1">
+  <div class="mx-auto grid max-w-6xl grid-cols-3 gap-2 p-2 md:grid-cols-4 lg:grid-cols-5">
+    <div v-for="slide in slides" :key="slide.id" class="group relative overflow-hidden bg-black" @click="selectedSlide = slide; modal_open = true">
+      <div class="mx-auto space-y-2 text-white lg:col-start-1 lg:row-start-1 lg:max-w-none">
         <div :class="outerClass(slide)" class="relative aspect-square">
-          <div class="absolute inset-0 bg-white bg-center bg-cover transition-opacity duration-300" :class="[{ 'group-hover:opacity-50': showHeading }, imageClass(slide)]" :style="{ 'background-image': `url(${slide.image.url})` }" />
+          <div class="absolute inset-0 bg-white bg-cover bg-center transition-opacity duration-300" :class="[{ 'group-hover:opacity-50': showHeading }, imageClass(slide)]" :style="{ 'background-image': `url(${slide.image.url})` }" />
         </div>
       </div>
-      <div v-if="showHeading" class="absolute right-0 bottom-0 p-2 text-right translate-y-full group-hover:translate-y-0 text-white transition-transform duration-300">
-        <div class="text-2xl font-semibold font-display">
+      <div v-if="showHeading" class="absolute bottom-0 right-0 translate-y-full p-2 text-right text-white transition-transform duration-300 group-hover:translate-y-0">
+        <div class="font-display text-2xl font-semibold">
           {{ slide.heading }}
         </div>
-        <div v-if="slide.sub_heading" class="font-semibold font-display">
+        <div v-if="slide.sub_heading" class="font-display font-semibold">
           {{ slide.sub_heading }}
         </div>
       </div>
@@ -25,10 +25,10 @@
   <cgn-modal v-if="useLightbox" v-model="modal_open">
     <template #clean-content>
       <div class="mr-4">
-        <h1 class="text-2xl md:text-4xl font-semibold font-display">
+        <h1 class="font-display text-2xl font-semibold md:text-4xl">
           {{ selectedSlide.heading }}
         </h1>
-        <div v-if="selectedSlide.sub_heading" class="text-xl font-semibold font-display">
+        <div v-if="selectedSlide.sub_heading" class="font-display text-xl font-semibold">
           {{ selectedSlide.sub_heading }}
         </div>
       </div>
@@ -38,7 +38,7 @@
       </div>
     </template>
     <template v-if="selectedSlide.link_button_text" #button-footer>
-      <div class="p-2 w-full">
+      <div class="w-full p-2">
         <cgn-button color-brand fullwidth :url="selectedSlide.link" :newtab="selectedSlide.link_target == 'blank'">
           {{ selectedSlide.link_button_text }}
         </cgn-button>

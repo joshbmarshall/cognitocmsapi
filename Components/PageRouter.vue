@@ -1,10 +1,10 @@
 <template>
   <router-view v-if="!showPageEditor" />
   <div v-else class="flex">
-    <div class="w-3/4 h-screen overflow-y-scroll">
+    <div class="h-screen w-3/4 overflow-y-scroll">
       <router-view />
     </div>
-    <div class="w-1/4 relative shadow-xl shadow-slate-700 dark:shadow-black h-screen overflow-y-scroll">
+    <div class="relative h-screen w-1/4 overflow-y-scroll shadow-xl shadow-slate-700 dark:shadow-black">
       <i-heroicons-solid:x v-if="showPageEditor" class="absolute right-1 top-1 cursor-pointer" @click="showPageEditor = false" />
       <div class="p-2">
         Edit page
@@ -24,8 +24,8 @@
   <div v-if="canShowPageEditor" class="absolute left-1 top-1 cursor-pointer">
     <i-heroicons-solid:pencil v-if="!showPageEditor" @click="showPageEditor = true" />
   </div>
-  <div class="fixed top-0 right-0 left-0 z-50 p-2 pointer-events-none">
-    <div v-for="toast in useToastStore().toasts" :key="toast.id" class="w-full max-w-sm ml-auto">
+  <div class="pointer-events-none fixed inset-x-0 top-0 z-50 p-2">
+    <div v-for="toast in useToastStore().toasts" :key="toast.id" class="ml-auto w-full max-w-sm">
       <cgn-alert-success v-if="toast.type == 'success'">
         {{ toast.message }}
       </cgn-alert-success>

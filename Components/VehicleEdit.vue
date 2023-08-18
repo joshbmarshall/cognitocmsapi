@@ -1,23 +1,23 @@
 <template>
   <form ref="vehicleedit" class="w-full" @submit.prevent="saveVehicle">
-    <div class="mt-2 flex flex-col justify-start items-start w-full bg-gray-50 border rounded-lg overflow-hidden">
-      <div class="w-full px-2 border-b bg-gray-100">
-        <div class="flex justify-end mt-2">
+    <div class="mt-2 flex w-full flex-col items-start justify-start overflow-hidden rounded-lg border bg-gray-50">
+      <div class="w-full border-b bg-gray-100 px-2">
+        <div class="mt-2 flex justify-end">
           <i-heroicons-solid:x class="cursor-pointer" @click="emit('close')" />
         </div>
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-x-2">
+        <div class="grid grid-cols-2 gap-x-2 sm:grid-cols-3">
           <cgn-form-input-text v-model="newVehicle.make" label="Make" class="w-full" required />
           <cgn-form-input-text v-model="newVehicle.model" label="Model" class="w-full" required />
-          <cgn-form-input-text v-model="newVehicle.colour" label="Colour" class="w-full col-span-2 sm:col-span-1" required />
+          <cgn-form-input-text v-model="newVehicle.colour" label="Colour" class="col-span-2 w-full sm:col-span-1" required />
         </div>
         <div class="grid grid-cols-2 gap-x-2">
           <cgn-form-dropdown v-model="newVehicle.induction_type_id" :options="inductionTypes" label="Induction type" required />
           <cgn-form-dropdown v-model="newVehicle.engine_type_id" :options="engineTypes" label="Engine type" required />
         </div>
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-x-2">
+        <div class="grid grid-cols-2 gap-x-2 sm:grid-cols-3">
           <cgn-form-input-text v-model="newVehicle.registration" label="Registration" class="w-full" required />
           <cgn-form-dropdown v-model="newVehicle.registration_state_id" :options="states" label="Registration State" required />
-          <cgn-form-input v-model="newVehicle.registration_expiry" type="date" label="Registration Expiry" class="w-full col-span-2 sm:col-span-1" required />
+          <cgn-form-input v-model="newVehicle.registration_expiry" type="date" label="Registration Expiry" class="col-span-2 w-full sm:col-span-1" required />
         </div>
         <cgn-form-dropdown v-model="newVehicle.body_style_id" :options="bodyStyles" label="Body Style" required />
         <cgn-form-input v-model="newVehicle.year_of_manufacture" type="number" label="Year of manufacture" class="w-full" required />
@@ -26,7 +26,7 @@
           <cgn-form-input-phone v-model="newVehicle.owner_mobile" label="Owner mobile" class="w-full" required />
         </div>
       </div>
-      <div class="p-2 w-full">
+      <div class="w-full p-2">
         <cgn-button
           color-brand
           fullwidth

@@ -1,10 +1,10 @@
 <template>
   <div class="relative">
-    <div class="sm:flex pt-16 pb-20 px-4 sm:px-6 lg:pt-12 lg:pb-28 lg:px-8 gap-10">
-      <div class="relative max-w-7xl mx-auto w-full">
+    <div class="gap-10 px-4 pb-20 pt-16 sm:flex sm:px-6 lg:px-8 lg:pb-28 lg:pt-12">
+      <div class="relative mx-auto w-full max-w-7xl">
         <div class="text-center">
           <h2
-            class="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl flex flex-row justify-center gap-2 items-end"
+            class="flex flex-row items-end justify-center gap-2 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl"
           >
             <div class="font-bold text-gray-700 dark:text-gray-300">
               Search
@@ -16,13 +16,13 @@
           </h2>
           <div
             v-if="search.length > 0"
-            class="text-sm font-medium text-gray-700 dark:text-gray-300 text-center"
+            class="text-center text-sm font-medium text-gray-700 dark:text-gray-300"
           >
             Found {{ searchresults?.found }} results
           </div>
           <div
             v-if="page_count > 0"
-            class="text-sm font-medium text-gray-700 dark:text-gray-300 text-center"
+            class="text-center text-sm font-medium text-gray-700 dark:text-gray-300"
           >
             Page
             {{ page }}
@@ -33,15 +33,15 @@
         <cgn-form-input-text v-model="search" label="Search" />
         <div
           v-if="search"
-          class="mt-12 max-w-lg mx-auto grid gap-5 md:grid-cols-2 lg:grid-cols-3 md:max-w-none"
+          class="mx-auto mt-12 grid max-w-lg gap-5 md:max-w-none md:grid-cols-2 lg:grid-cols-3"
         >
           <router-link
             v-for="result, index in searchresults?.hits"
             :key="index"
             :to="`/product/${result.document.url}`"
-            class="flex flex-col rounded-lg shadow-lg overflow-hidden"
+            class="flex flex-col overflow-hidden rounded-lg shadow-lg"
           >
-            <div class="flex-shrink-0">
+            <div class="shrink-0">
               <cgn-lazy-image
                 class="w-full bg-white"
                 :placeholder="result.document.image_url"
@@ -49,7 +49,7 @@
                 :webp="result.document.image_url"
               />
             </div>
-            <div class="flex-1 bg-white dark:bg-gray-800 p-6 flex flex-row gap-2 justify-between">
+            <div class="flex flex-1 flex-row justify-between gap-2 bg-white p-6 dark:bg-gray-800">
               <div class="flex flex-1 flex-col">
                 <p
                   class="text-xl font-semibold text-gray-900 dark:text-gray-100"
@@ -61,13 +61,13 @@
                   v-html="result.document.blurb"
                 />
               </div>
-              <div class="flex items-baseline gap-2 justify-end">
+              <div class="flex items-baseline justify-end gap-2">
                 <cgn-button>Details</cgn-button>
               </div>
             </div>
           </router-link>
         </div>
-        <div class="flex flex-grow justify-center py-5">
+        <div class="flex grow justify-center py-5">
           <PaginateModel v-model="page" :page-count="page_count" />
         </div>
       </div>

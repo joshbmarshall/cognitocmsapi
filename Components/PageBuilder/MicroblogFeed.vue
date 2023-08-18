@@ -7,7 +7,7 @@
       </span>
     </div>
     <div v-for="post, index in posts" :key="post.id" class="mb-4">
-      <div class="bg-white rounded-lg border border-slate-200 shadow-md dark:bg-slate-800 dark:border-slate-700">
+      <div class="rounded-lg border border-slate-200 bg-white shadow-md dark:border-slate-700 dark:bg-slate-800">
         <div v-if="post.image">
           <cgn-lazy-image :image="post.image" class="w-full rounded-t-lg" />
         </div>
@@ -18,23 +18,23 @@
           <div v-else @click="post.showVideo = true">
             <img
               class="
-                rounded-t-lg
-                shadow-lg
-                hover:shadow-xl
                 aspect-square
                 w-full
+                overflow-hidden
+                rounded-t-lg
                 object-cover
                 object-center
-                overflow-hidden
+                shadow-lg
+                hover:shadow-xl
                 " :src="post.video.slate"
             >
-            <i-material-symbols:play-arrow-outline-rounded class="absolute top-0 w-full h-full" />
+            <i-material-symbols:play-arrow-outline-rounded class="absolute top-0 h-full w-full" />
           </div>
         </div>
-        <div class="bg-slate-100 dark:bg-slate-700 p-1 text-sm text-right text-secondary-600 dark:text-secondary-400">
+        <div class="bg-slate-100 p-1 text-right text-sm text-secondary-600 dark:bg-slate-700 dark:text-secondary-400">
           {{ post.published_at.format(props.dateformat) }}
         </div>
-        <div class="prose dark:prose-invert text-secondary-700 dark:text-secondary-400 max-w-none p-6" v-html="post.content" />
+        <div class="prose max-w-none p-6 text-secondary-700 dark:prose-invert dark:text-secondary-400" v-html="post.content" />
         <div v-if="post.link">
           <cgn-button :url="post.link" class="mx-6">
             {{ post.link_text }}
@@ -42,7 +42,7 @@
         </div>
         <div v-if="props.feedurl" class="text-right text-sm text-secondary-600 dark:text-secondary-400">
           <span v-for="tag, idx in post.tags" :key="idx" class="mx-1">
-            <router-link :to="`${props.feedurl}/${encodeURIComponent(tag)}`" class="hover:underline mr-1">#{{ tag }}</router-link>
+            <router-link :to="`${props.feedurl}/${encodeURIComponent(tag)}`" class="mr-1 hover:underline">#{{ tag }}</router-link>
           </span>
         </div>
       </div>
@@ -57,6 +57,7 @@
 
 <script lang="ts">
 import { MicroblogPost } from '~cognito/models/Microblog/Post'
+
 class Templatevars {
   posts_per_page?: number
 }

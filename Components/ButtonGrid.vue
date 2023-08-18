@@ -5,7 +5,7 @@
         {{ warnText }} </span>
     </div>
     <div
-      class="grid grid-cols-1 gap-4 w-full select-none mt-1"
+      class="mt-1 grid w-full select-none grid-cols-1 gap-4"
       :class="gridWidth ? 'sm:grid-cols-3' : 'sm:grid-cols-2'"
     >
       <div
@@ -13,31 +13,31 @@
         :key="button.id"
         class="
           relative
+          flex
+          cursor-pointer
+          items-center
+          space-x-3
           rounded-lg
           bg-white
-          dark:bg-slate-600
           px-6
           py-5
           shadow-md
+          dark:bg-slate-600
           dark:shadow-inner
-          flex
-          items-center
-          space-x-3
-          cursor-pointer
         "
         :class="[
           warn
-            ? 'border-red-300 hover:border-red-400 ring-2 ring-offset-2 ring-red-500'
+            ? 'border-red-300 ring-2 ring-red-500 ring-offset-2 hover:border-red-400'
             : '',
-          modelValue == button.id ? 'ring-2 ring-offset-2 ring-brand-500' : '',
+          modelValue == button.id ? 'ring-2 ring-brand-500 ring-offset-2' : '',
         ]"
       >
-        <div class="flex-1 min-w-0" @click="chooseButton(button.id)">
+        <div class="min-w-0 flex-1" @click="chooseButton(button.id)">
           <span class="absolute inset-0" aria-hidden="true" />
           <p class="text-sm font-medium text-gray-900 dark:text-white">
             {{ button.name }}
           </p>
-          <p class="text-sm text-gray-500 dark:text-gray-400 truncate" />
+          <p class="truncate text-sm text-gray-500 dark:text-gray-400" />
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 <template>
-  <div class="p-6 sm:p-12 space-y-2 max-w-xl mx-auto text-center">
-    <p class="text-2xl font-medium mb-10">
+  <div class="mx-auto max-w-xl space-y-2 p-6 text-center sm:p-12">
+    <p class="mb-10 text-2xl font-medium">
       Links
     </p>
     <div v-for="link in links" :key="link.id">

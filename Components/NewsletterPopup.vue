@@ -11,7 +11,7 @@
             leave-class="transform transition ease-in-out duration-500 sm:duration-700"
             leave-from-class="translate-x-0"
             leave-to-class="translate-x-full"
-            class="transform transition ease-in-out duration-500 sm:duration-700"
+            class="transition duration-500 ease-in-out sm:duration-700"
           >
             <div v-if="open" class="pointer-events-auto w-screen max-w-md">
               <div class="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl">

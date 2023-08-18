@@ -1,27 +1,27 @@
 <template>
-  <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-lg">
-    <div class="flex flex-row justify-between items-center p-3 bg-gray-100 dark:bg-darkbg-700">
+  <div class="overflow-hidden rounded-lg bg-white shadow-lg dark:bg-gray-900">
+    <div class="flex flex-row items-center justify-between bg-gray-100 p-3 dark:bg-darkbg-700">
       <span class="text-xl">Addresses</span>
       <div title="Add address" @click="addAddress()">
         <i-heroicons-solid:plus
-          class="text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 cursor-pointer"
+          class="cursor-pointer text-gray-600 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
         />
       </div>
     </div>
     <div
       v-if="showAdditionalAddress"
-      class="flex flex-row justify-between p-3 bg-gray-100 dark:bg-darkbg-700 border-t-2 border-gray-400 dark:border-gray-900"
+      class="flex flex-row justify-between border-t-2 border-gray-400 bg-gray-100 p-3 dark:border-gray-900 dark:bg-darkbg-700"
     >
       <form class="w-full" @submit.prevent="selectAddress">
-        <div class="flex flex-col justify-start items-start w-full space-y-2">
-          <div class="flex flex-row justify-between w-full items-center">
+        <div class="flex w-full flex-col items-start justify-start space-y-2">
+          <div class="flex w-full flex-row items-center justify-between">
             <span class="text-lg font-medium">Add address</span>
             <i-heroicons-solid:x
-              class="text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 cursor-pointer"
+              class="cursor-pointer text-gray-600 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
               @click="showAdditionalAddress = false"
             />
           </div>
-          <div class="flex flex-row w-full gap-2">
+          <div class="flex w-full flex-row gap-2">
             <cgn-form-input-text v-model="new_address.first_name" label="First Name" class="w-1/2" required />
             <cgn-form-input-text v-model="new_address.last_name" label="Last Name" class="w-1/2" required />
           </div>
@@ -30,8 +30,8 @@
             here-api-key="GOBLSSIkkrgjhMahFmXPramj-95rVXZYpj-0pj7DsFU"
             label="Search address"
           />
-          <div class="space-y-2 w-full">
-            <div class="flex flex-col sm:flex-row w-full gap-2">
+          <div class="w-full space-y-2">
+            <div class="flex w-full flex-col gap-2 sm:flex-row">
               <cgn-form-input-text
                 v-model="new_address.line1"
                 label="Address"
@@ -44,7 +44,7 @@
                 class="w-full sm:w-1/2"
               />
             </div>
-            <div class="grid grid-cols-2 sm:grid-cols-3 w-full gap-2">
+            <div class="grid w-full grid-cols-2 gap-2 sm:grid-cols-3">
               <cgn-form-input-text v-model="new_address.city" label="Suburb" class="w-full" required />
               <cgn-form-input-text v-model="new_address.state" label="State" class="w-full" required />
               <cgn-form-input-text v-model="new_address.postcode" label="Postcode" class="w-full" required />
@@ -56,7 +56,7 @@
               />
             </div>
           </div>
-          <div class="flex flex-col sm:flex-row w-full gap-2">
+          <div class="flex w-full flex-col gap-2 sm:flex-row">
             <cgn-form-input-email v-model="new_address.email" label="Email" class="w-full sm:w-1/2" required />
             <cgn-form-input-phone v-model="new_address.phone" label="Phone" class="w-full sm:w-1/2" required />
           </div>
@@ -85,7 +85,7 @@
           </div>
           <div title="Delete address">
             <i-heroicons-solid:trash
-              class="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400 cursor-pointer"
+              class="cursor-pointer text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-400"
               @click="deleteAddress(address)"
             />
           </div>
