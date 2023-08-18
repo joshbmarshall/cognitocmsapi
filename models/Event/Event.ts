@@ -7,6 +7,7 @@ import type { EventExtra } from './Extra'
 import type { EventLicenceType } from './LicenceType'
 import type { EventMerch } from './Merch'
 import type { EventSpectatorType } from './SpectatorType'
+import type { EventStallSiteType } from './StallSiteType'
 import { EventType } from './Type'
 import { EventVenue } from './Venue'
 import { $axios } from '~cognito/plugins/axios'
@@ -30,6 +31,7 @@ class EventEvent extends CognitoBase {
   can_apply_stall_site: boolean
   categories: EventCategory[]
   spectator_types: EventSpectatorType[]
+  stall_site_types: EventStallSiteType[]
   extras: EventExtra[]
   merch: EventMerch[]
   licence_types: EventLicenceType[]
@@ -58,6 +60,7 @@ class EventEvent extends CognitoBase {
     this.can_apply_stall_site = false
     this.categories = []
     this.spectator_types = []
+    this.stall_site_types = []
     this.extras = []
     this.merch = []
     this.licence_types = []

@@ -56,27 +56,13 @@ class EventEntryFormSpectator {
   }
 }
 
-class EventEntryFormLicenceType {
+class EventEntryFormRadio {
   id: string | number | undefined
   name: string
   content?: string
   disabled?: boolean
 
-  constructor(source?: Partial<EventEntryFormLicenceType>) {
-    this.id = 0
-    this.name = ''
-
-    Object.assign(this, source)
-  }
-}
-
-class EventEntryFormCategory {
-  id: string | number | undefined
-  name: string
-  content?: string
-  disabled?: boolean
-
-  constructor(source?: Partial<EventEntryFormCategory>) {
+  constructor(source?: Partial<EventEntryFormRadio>) {
     this.id = 0
     this.name = ''
 
@@ -87,6 +73,7 @@ class EventEntryFormCategory {
 class EventEntryForm {
   event_id?: string | number
   category_id: number
+  stall_site_type_id: number
   address_id: number
   licence_id: number
   vehicle_id: number
@@ -111,10 +98,15 @@ class EventEntryForm {
   is_normal_eyesight: boolean
   date_of_last_medical_exam: string
   eventDetails?: EventEvent
+  licenceTypeRadio: EventEntryFormRadio[]
+  entryCategoryRadio: EventEntryFormRadio[]
+  stallSiteTypeRadio: EventEntryFormRadio[]
+  vehicles: EventVehicle[]
 
   constructor(source?: Partial<EventEntryForm>) {
     this.event_id = 0
     this.category_id = 0
+    this.stall_site_type_id = 0
     this.address_id = 0
     this.licence_id = 0
     this.vehicle_id = 0
@@ -138,10 +130,14 @@ class EventEntryForm {
     this.has_hearing_disorder = false
     this.is_normal_eyesight = false
     this.date_of_last_medical_exam = ''
+    this.licenceTypeRadio = []
+    this.entryCategoryRadio = []
+    this.stallSiteTypeRadio = []
+    this.vehicles = []
     Object.assign(this, source)
   }
 
-  async loadEvent(event: string) {
+  async loadEvent(event: string): Promise<EventEvent> {
     const data = await new EventEvent().find_one({
       url: event,
       image_width: 1920,
@@ -171,44 +167,44 @@ class EventEntryForm {
         disabled: e.sold_out,
       })
     })
-    const entryCategories = eventDetails.categories.map((e) => {
-      let ticket_note = ''
-      if (false && e.ticket_type && e.spectator_tickets_per_entry > 0) {
-        ticket_note = `<div>Includes ${e.spectator_tickets_per_entry} x Gate Entry Tickets</div>`
-      }
-      return new EventEntryFormCategory({
+    this.entryCategoryRadio = eventDetails.categories.map((e) => {
+      return new EventEntryFormRadio({
         id: e.id,
         name: `${e.name} ${(e.sold_out) ? '- Sold out' : `$${e.price}`}`,
-        content: `${e.entry_description}${ticket_note}`,
+        content: `${e.entry_description}`,
         disabled: e.sold_out,
       })
     })
-    entryCategories.push({ id: 0, name: 'Spectating Only', content: 'See below', disabled: false })
+    this.entryCategoryRadio.push({ id: 0, name: 'Spectating Only', content: 'See below', disabled: false })
 
-    const licenceTypes = eventDetails.licence_types.map((e) => {
-      return new EventEntryFormLicenceType({
+    this.licenceTypeRadio = eventDetails.licence_types.map((e) => {
+      return new EventEntryFormRadio({
         id: e.id,
         name: `${e.name} $${e.price.toFixed(2)}`,
       })
     })
-    licenceTypes.push(new EventEntryFormLicenceType({
+    this.licenceTypeRadio.push(new EventEntryFormRadio({
       id: 0,
       name: 'No Licence',
       content: 'I do not need to purchase a licence',
       disabled: false,
     }))
 
-    const vehicles = (await new EventVehicle().find_many({
+    this.stallSiteTypeRadio = eventDetails.stall_site_types.map((e) => {
+      return new EventEntryFormRadio({
+        id: e.id,
+        name: `${e.name} ${(e.sold_out) ? '- Sold out' : `$${e.price}`}`,
+        content: `${e.site_description}`,
+        disabled: e.sold_out,
+      })
+    })
+    this.vehicles = (await new EventVehicle().find_many({
       entrant_id: useUserStore().user.id,
     })).mapped
 
     this.eventDetails = eventDetails
-    return {
-      eventDetails,
-      entryCategories,
-      licenceTypes,
-      vehicles,
-    }
+
+    return eventDetails
   }
 
   addMerchToOrder(merch: EventMerch) {
@@ -250,11 +246,11 @@ class EventEntryForm {
     return addresses.find(e => e.id == this.address_id)
   }
 
-  selectedVehicle(vehicles: EventVehicle[]) {
+  selectedVehicle() {
     if (this.vehicle_id == 0) {
       return null
     }
-    return vehicles.find(e => e.id == this.vehicle_id)
+    return this.vehicles.find(e => e.id == this.vehicle_id)
   }
 
   totalPrice() {
@@ -283,4 +279,4 @@ class EventEntryForm {
     return cost
   }
 }
-export { EventEntryForm, EventEntryFormMerch, EventEntryFormLicenceType, EventEntryFormSpectator, EventEntryFormExtra, EventEntryFormCategory }
+export { EventEntryForm, EventEntryFormMerch, EventEntryFormRadio, EventEntryFormSpectator, EventEntryFormExtra }
