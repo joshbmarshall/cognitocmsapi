@@ -1,12 +1,6 @@
 <template>
   <cgn-button
-    :color-brand="props.templatevar.button_colour == 'bnd'"
-    :color-primary="props.templatevar.button_colour == 'pri'"
-    :color-secondary="props.templatevar.button_colour == 'sec'"
-    :color-success="props.templatevar.button_colour == 'suc'"
-    :color-info="props.templatevar.button_colour == 'inf'"
-    :color-warning="props.templatevar.button_colour == 'wrn'"
-    :color-danger="props.templatevar.button_colour == 'dng'"
+    :templatevar-colour="props.templatevar.button_colour"
     :url="button_url"
     :newtab="props.templatevar.open_in_new_tab"
     :fullwidth="props.templatevar.full_width"
