@@ -24,8 +24,14 @@
     <cgn-page-builder-core-button-link :templatevar="widget.templatevar" />
   </div>
 
+  <div v-else-if="widget.outer == 'core/call_to_action'" :class="props.uncontainedClass">
+    <cgn-page-builder-core-call-to-action :templatevar="widget.templatevar" />
+  </div>
   <div v-else-if="widget.outer == 'core/hero_quote'" :class="props.uncontainedClass">
     <cgn-page-builder-core-hero-quote :templatevar="widget.templatevar" />
+  </div>
+  <div v-else-if="widget.outer == 'core/hero_testimonial'" :class="props.uncontainedClass">
+    <cgn-page-builder-core-hero-testimonial :templatevar="widget.templatevar" />
   </div>
   <div v-else-if="widget.outer == 'core/gallery'" :class="props.uncontainedClass">
     <cgn-page-builder-core-gallery :templatevar="widget.templatevar" />
