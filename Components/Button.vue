@@ -94,6 +94,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  templatevarColour: {
+    type: String,
+    default: '',
+  },
 })
 
 const buttonClass = computed(() => {
@@ -106,31 +110,31 @@ const buttonClass = computed(() => {
   } else {
     classes += ' cursor-pointer'
   }
-  if (props.colorDanger) {
+  if (props.templatevarColour == 'dng' || props.colorDanger) {
     classes += ' bg-danger-500 hover:bg-danger-600 text-on-danger dark:hover:bg-danger-400'
   }
-  if (props.colorWarning) {
+  if (props.templatevarColour == 'wrn' || props.colorWarning) {
     classes += ' bg-warning-500 hover:bg-warning-600 text-on-warning dark:hover:bg-warning-400'
   }
-  if (props.colorSuccess) {
+  if (props.templatevarColour == 'suc' || props.colorSuccess) {
     classes += ' bg-success-500 hover:bg-success-600 text-on-success dark:hover:bg-success-400'
   }
-  if (props.colorInfo) {
+  if (props.templatevarColour == 'inf' || props.colorInfo) {
     classes += ' bg-info-500 hover:bg-info-600 text-on-info dark:hover:bg-info-400'
   }
-  if (props.colorPrimary) {
+  if (props.templatevarColour == 'pri' || props.colorPrimary) {
     classes += ' bg-primary-500 hover:bg-primary-600 text-on-primary dark:hover:bg-primary-400'
   }
-  if (props.colorSecondary) {
+  if (props.templatevarColour == 'sec' || props.colorSecondary) {
     classes += ' bg-secondary-500 hover:bg-secondary-600 text-on-secondary dark:hover:bg-secondary-400'
   }
-  if (props.colorBrand) {
+  if (props.templatevarColour == 'bnd' || props.colorBrand) {
     classes += ' bg-brand-500 hover:bg-brand-600 text-on-brand dark:hover:bg-brand-400'
   }
-  if (props.colorWhite) {
+  if (props.templatevarColour == 'wht' || props.colorWhite) {
     classes += ' bg-white text-gray-500'
   }
-  if (props.colorBlack) {
+  if (props.templatevarColour == 'blk' || props.colorBlack) {
     classes += ' bg-black text-gray-500'
   }
   return classes

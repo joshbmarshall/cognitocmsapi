@@ -6,10 +6,13 @@
         <div class="pb-2 font-display text-2xl font-semibold md:text-4xl">
           {{ templatevar.heading }}
         </div>
-        <div v-if="templatevar.subheading" class="font-display text-xl font-semibold">
+        <div v-if="templatevar.subheading" class="mb-2 font-display text-xl font-semibold">
           {{ templatevar.subheading }}
         </div>
         <div v-if="templatevar.html" class="prose-invert max-w-none pb-2" v-html="templatevar.html" />
+        <cgn-button v-if="templatevar.button_link" :url="templatevar.button_link" :templatevar-colour="templatevar.button_colour">
+          {{ templatevar.button_text }}
+        </cgn-button>
       </div>
     </div>
   </div>
@@ -28,6 +31,9 @@ class Templatevars {
   image_saturation?: string
   text_colour?: string
   parallax?: number
+  button_link?: string
+  button_text?: string
+  button_colour?: string
 }
 </script>
 
