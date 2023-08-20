@@ -10,14 +10,14 @@
           <cgn-tabs v-slot="tabData" :tabs="generateTabs(row.blocks)">
             <div v-for="block in row.blocks" v-show="tabData.selected_tab == block.title" :key="block.id" :style="`grid-column: span ${block.width} / span ${block.width}`">
               <div v-for="widget, index in block.widgets" :key="index">
-                <page-builder-content :widget="widget" :url-parts="urlParts" />
+                <cgn-page-builder-wrapper :widget="widget" :url-parts="urlParts" />
               </div>
             </div>
           </cgn-tabs>
         </div>
         <div v-for="block in row.blocks" v-show="row.row_type == 'columns'" :key="block.id" :style="`grid-column: span ${block.width} / span ${block.width}`">
           <div v-for="widget, index in block.widgets" :key="index">
-            <page-builder-content v-if="widgetVisible(widget.templatevar)" :widget="widget" :url-parts="urlParts" />
+            <cgn-page-builder-wrapper :widget="widget" :url-parts="urlParts" />
           </div>
         </div>
       </div>
@@ -41,7 +41,6 @@ import { config } from '~/config'
 import { CognitoUrlParts } from '~cognito/models/Cognito/Page'
 import { logout } from '~cognito/plugins/axios'
 import { redirects } from '~/initialData.json'
-import { CognitoTime } from '~cognito/models/Cognito/Time'
 
 const props = defineProps({
   page: {
@@ -68,25 +67,6 @@ function generateTabs(blocks) {
 async function loadPageContent(url: string | string[]) {
   pageStore.loadPage(url)
   urlParts.value = new CognitoUrlParts().parse(url)
-}
-
-const widgetVisible = (widget: any): boolean => {
-  if (widget.widget_is_visible == '0') {
-    return false
-  }
-  if (widget.widget_hidden_before) {
-    const hide_before = new CognitoTime(widget.widget_hidden_before)
-    if (hide_before.isFuture()) {
-      return false
-    }
-  }
-  if (widget.widget_hidden_after) {
-    const hide_after = new CognitoTime(widget.widget_hidden_after)
-    if (hide_after.isPast()) {
-      return false
-    }
-  }
-  return true
 }
 
 watch(() => props, () => {
