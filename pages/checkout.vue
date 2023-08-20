@@ -107,7 +107,7 @@
           <div>
             If you can't pick up, I can email you a shipping quote.
           </div>
-          <cgn-button color-brand class="my-2" @click="requestShippingQuote">
+          <cgn-button color-brand class="my-2 w-full" @click="requestShippingQuote">
             Request a shipping quote
           </cgn-button>
           <cgn-spinner v-if="gettingShippingQuote" />
@@ -217,7 +217,7 @@
           <cgn-button
             v-if="canCheckout"
             color-brand
-            class="my-2"
+            class="my-2 w-full"
             :locked="selectedPaymentMethod == ''"
             @click="payNow()"
           >
