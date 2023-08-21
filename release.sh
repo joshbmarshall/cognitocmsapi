@@ -14,7 +14,6 @@ VCMS=`cd cognitocmsapi; git rev-parse --short HEAD`
 VSITE=`git rev-parse --short HEAD`
 VERSION="${SENTRY_PROJECT}-${VSITE}-${VCMS}"
 
-echo $VERSION
 echo "VITE_RELEASE=\"${VERSION}\"" > .env
 pnpm sentry-cli releases new "$VERSION"
 pnpm build || exit
