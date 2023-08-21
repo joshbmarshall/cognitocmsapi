@@ -16,6 +16,7 @@ const config = {
     edit_facebook: false,
     manage_addresses: false,
   },
+  sentryDsn: '',
   show_back_to_top: true,
 }
 
