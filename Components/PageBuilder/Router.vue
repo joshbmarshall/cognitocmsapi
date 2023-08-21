@@ -70,7 +70,12 @@ async function loadPageContent(url: string | string[]) {
 }
 
 watch(() => props, () => {
-  loadPageContent(props.page)
+  loading.value = true
+  nextTick(() => {
+    // Load on next tick to refresh blocks on page change
+    loadPageContent(props.page)
+    loading.value = false
+  })
 }, {
   deep: true,
 })
