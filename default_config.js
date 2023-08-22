@@ -18,6 +18,23 @@ const config = {
   },
   sentryDsn: '',
   show_back_to_top: true,
+  pagebuilderImages: [
+    {
+      widget: 'core/call_to_action',
+      images: [
+        {
+          name: 'left_image',
+          aspect: '16x9',
+          width: 300,
+        },
+        {
+          name: 'right_image',
+          aspect: '16x9',
+          width: 300,
+        },
+      ],
+    },
+  ],
 }
 
 export { config }

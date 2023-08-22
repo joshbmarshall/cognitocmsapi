@@ -2,6 +2,7 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import { usePagesStore } from './pages'
 import { CognitoPage, CognitoUrlParts } from '~cognito/models/Cognito/Page'
 import { $axios } from '~cognito/plugins/axios'
+import { config } from '~/config'
 
 export const usePageStore = defineStore({
   id: 'page',
@@ -51,6 +52,7 @@ export const usePageStore = defineStore({
         new CognitoPage().find_one({
           url: urlParts.page_url,
           pb: 1,
+          config,
         })
           .then((data) => {
             // Check if currentPage has changed since loading (ie navigated to another page)

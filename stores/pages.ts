@@ -4,6 +4,7 @@ import { CognitoTime } from '~cognito/models/Cognito/Time'
 import { CognitoDomain } from '~cognito/models/Cognito/Domain'
 import initialData from '~/initialData.json'
 import { $axios } from '~cognito/plugins/axios'
+import { config } from '~/config'
 
 export const usePagesStore = defineStore({
   id: 'pages',
@@ -30,6 +31,7 @@ export const usePagesStore = defineStore({
       const data = await new CognitoPage().find_many({
         page_size: 100,
         pb: 1,
+        config,
       })
       this.pages = data.data
       this.currentDomain = await new CognitoDomain().currentDomain()

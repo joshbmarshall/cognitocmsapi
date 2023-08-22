@@ -1,5 +1,6 @@
 import { CognitoBase } from './Base'
 import initialData from '~/initialData.json'
+import { config } from '~/config'
 
 class CognitoUrlParts {
   full_url: string
@@ -172,6 +173,7 @@ class CognitoPage extends CognitoBase {
     const data = await new CognitoPage().find_many({
       page_size: 100,
       pb: 1,
+      config,
     })
     return data.data
   }
@@ -180,6 +182,7 @@ class CognitoPage extends CognitoBase {
     const url = this.resolveurlpath(urlToLoad)
     const data = {
       url,
+      config,
     }
     if (pagebuilder) {
       data.pb = 1

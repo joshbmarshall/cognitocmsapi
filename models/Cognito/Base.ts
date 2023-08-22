@@ -56,9 +56,7 @@ class CognitoBase {
     data: any[]
     mapped: any[]
   }> {
-    const res = await $axios.get(this.baseurl(), {
-      params: data,
-    })
+    const res = await $axios.post(this.baseurl(), data)
     res.data.mapped = this.map(res.data.data)
     return res.data
   }
@@ -72,16 +70,12 @@ class CognitoBase {
     if (data.id) {
       const id = data.id
       delete data.id
-      const res = await $axios.get(`${this.baseurl()}/${id}`, {
-        params: data,
-      })
+      const res = await $axios.post(`${this.baseurl()}/${id}`, data)
       return res.data
     }
     const url = data.url
     delete data.url
-    const res = await $axios.get(`${this.baseurl()}/${url}`, {
-      params: data,
-    })
+    const res = await $axios.post(`${this.baseurl()}/${url}`, data)
     return res.data
   }
 
