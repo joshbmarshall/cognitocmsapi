@@ -26,6 +26,9 @@ const props = defineProps({
 })
 
 const widgetBackgroundImageUrl = computedAsync(async () => {
+  if (!props.widget.templatevar.widget_background_image) {
+    return
+  }
   const data = await new CognitoImage().find_one({
     url: props.widget.templatevar.widget_background_image,
     image_aspect: '16x9',
