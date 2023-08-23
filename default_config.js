@@ -34,6 +34,16 @@ const config = {
         },
       ],
     },
+    {
+      widget: 'core/hero_quote',
+      images: [
+        {
+          name: 'background_image',
+          aspect: '16x9',
+          width: 1920,
+        },
+      ],
+    },
   ],
 }
 

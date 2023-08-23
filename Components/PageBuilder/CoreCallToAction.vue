@@ -1,7 +1,7 @@
 <template>
   <div class="mx-auto space-y-2 lg:col-start-1 lg:row-start-1 lg:max-w-none">
     <div class="flex flex-col items-center justify-center gap-2 md:flex-row">
-      <cgn-lazy-image v-if="templatevar.left_image" :image="templatevar.left_image_rendered" class="w-full md:w-1/2" />
+      <cgn-lazy-image v-if="templatevar.left_image" :image="templatevar.left_image" class="w-full md:w-1/2" />
       <div class="w-full p-4 md:w-1/2 md:p-8">
         <div class="pb-2 font-display text-xl font-semibold xl:text-4xl">
           {{ templatevar.heading }}
@@ -14,7 +14,7 @@
           {{ templatevar.button_text }}
         </cgn-button>
       </div>
-      <cgn-lazy-image v-if="templatevar.right_image" :image="templatevar.right_image_rendered" />
+      <cgn-lazy-image v-if="templatevar.right_image" :image="templatevar.right_image" />
     </div>
   </div>
 </template>
@@ -26,10 +26,8 @@ class Templatevars {
   heading?: string
   subheading?: string
   html?: string
-  left_image?: string
-  left_image_rendered?: CognitoImage
-  right_image?: string
-  right_image_rendered?: CognitoImage
+  left_image?: CognitoImage
+  right_image?: CognitoImage
   button_link?: string
   button_text?: string
   button_colour?: string

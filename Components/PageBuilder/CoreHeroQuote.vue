@@ -19,13 +19,13 @@
 </template>
 
 <script lang="ts">
-import { CognitoImage } from '~cognito/models/Cognito/Image'
+import type { CognitoImage } from '~cognito/models/Cognito/Image'
 
 class Templatevars {
   heading?: string
   subheading?: string
   html?: string
-  background_image?: string
+  background_image?: CognitoImage
   overlay_colour?: string
   image_opacity?: string
   image_saturation?: string
@@ -106,19 +106,9 @@ const imageClass = computed(() => {
 })
 
 const url = ref('')
-const loadImage = async () => {
+const loadImage = () => {
   if (props.templatevar.background_image) {
-    // url.value = props.templatevar.background_image
-    await new CognitoImage().find_one({
-      url: props.templatevar.background_image,
-      image_aspect: '16x9',
-      image_width: 1920,
-    })
-      .then((data) => {
-        if (data.url) {
-          url.value = data.url
-        }
-      })
+    url.value = props.templatevar.background_image.url
   }
 }
 onMounted(() => {
