@@ -9,7 +9,7 @@
         <div class="cgn-radio-button text-sm">
           <div class="flex items-center">
             <input v-if="!option.disabled" v-model="curval" type="radio" class="mr-2" :value="option.id" @change="handleInput">
-            <div>{{ option.name }}</div>
+            <div :class="option.class">{{ option.name }}</div>
           </div>
           <div v-if="option.content" class="cgn-radio-button-content text-xs" v-html="option.content" />
         </div>

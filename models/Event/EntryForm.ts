@@ -60,6 +60,7 @@ class EventEntryFormRadio {
   id: string | number | undefined
   name: string
   content?: string
+  class?: string
   disabled?: boolean
 
   constructor(source?: Partial<EventEntryFormRadio>) {
@@ -171,6 +172,7 @@ class EventEntryForm {
       return new EventEntryFormRadio({
         id: e.id,
         name: `${e.name} ${(e.sold_out) ? '- Sold out' : `$${e.price}`}`,
+        class: e.sold_out ? 'text-danger-500' : '',
         content: `${e.entry_description}`,
         disabled: e.sold_out,
       })
@@ -194,6 +196,7 @@ class EventEntryForm {
       return new EventEntryFormRadio({
         id: e.id,
         name: `${e.name} ${(e.sold_out) ? '- Sold out' : `$${e.price}`}`,
+        class: e.sold_out ? 'text-danger-500' : '',
         content: `${e.site_description}`,
         disabled: e.sold_out,
       })
