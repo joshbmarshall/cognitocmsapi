@@ -4,14 +4,13 @@
       v-if="widget.templatevar.widget_background_image"
       class="absolute inset-0 bg-cover bg-center"
       :class="widgetBackgroundImageClass"
-      :style="{ 'background-image': `url(${widgetBackgroundImageUrl})` }"
+      :style="{ 'background-image': `url(${widget.templatevar.widget_background_image.url})` }"
     />
     <page-builder-content v-if="widgetVisible" :widget="widget" :url-parts="urlParts" :class="pbcClass" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { CognitoImage } from '~cognito/models/Cognito/Image'
 import { CognitoUrlParts } from '~cognito/models/Cognito/Page'
 import { CognitoTime } from '~cognito/models/Cognito/Time'
 
@@ -23,18 +22,6 @@ const props = defineProps({
     type: CognitoUrlParts,
     required: true,
   },
-})
-
-const widgetBackgroundImageUrl = computedAsync(async () => {
-  if (!props.widget.templatevar.widget_background_image) {
-    return
-  }
-  const data = await new CognitoImage().find_one({
-    url: props.widget.templatevar.widget_background_image,
-    image_aspect: '16x9',
-    image_width: 1920,
-  })
-  return data.url
 })
 
 const widgetBackgroundImageClass = computed(() => {
@@ -349,6 +336,10 @@ const pbcClass = computed(() => {
       blk: 'text-black',
     }
     wclass += classes[props.widget.templatevar.widget_text_colour]
+  }
+
+  if (props.widget.templatevar.widget_background_image) {
+    wclass += ' relative'
   }
   return wclass
 })
