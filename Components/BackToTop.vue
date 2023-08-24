@@ -6,7 +6,7 @@
     leave-to-class="translate-x-[200%]"
     class="transition duration-500 ease-in-out"
   >
-    <div v-if="y > 100" class="fixed bottom-16 right-4 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-brand-500 text-on-brand print:hidden" @click="scrollToTop">
+    <div v-if="y > 100" class="fixed bottom-4 right-4 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-brand-500 text-on-brand print:hidden" @click="scrollToTop">
       <i-heroicons-solid:arrow-up />
     </div>
   </transition>
