@@ -59,6 +59,13 @@
           <cgn-form-input v-model="bookform.registration" label="Caravan Registration" required />
           <cgn-form-input v-model="bookform.car_registration" label="Car Registration" />
           <cgn-form-input v-model="bookform.est_arrival_time" type="time" label="Estimated Arrival Time" required />
+          <cgn-form-tristate v-model="has_animals" label="Will you have any domestic animals on your site?" required />
+          <div v-if="has_animals">
+            <cgn-form-input v-model="bookform.number_of_animals" type="number" min-amount="0" max-amount="10" label="Number of animals" />
+            <cgn-alert-warning>
+              If you have 2 or more dogs, please email management for approval in writing (info@ipswichshow.com.au)
+            </cgn-alert-warning>
+          </div>
           <cgn-alert-danger v-if="payErrorMessage">
             {{ payErrorMessage }}
           </cgn-alert-danger>
@@ -109,6 +116,7 @@ const has_payment = ref(false)
 const payment_ok = ref(false)
 const no_availability = ref(false)
 const invoiceText = ref('')
+const has_animals = ref('')
 
 const price_from = computed(() => {
   if (quotes.value.available_sites.length === 0) {
