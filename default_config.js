@@ -24,13 +24,13 @@ const config = {
       images: [
         {
           name: 'left_image',
-          aspect: '16x9',
-          width: 300,
+          image_aspect: '16x9',
+          image_width: 300,
         },
         {
           name: 'right_image',
-          aspect: '16x9',
-          width: 300,
+          image_aspect: '16x9',
+          image_width: 300,
         },
       ],
     },
@@ -38,9 +38,18 @@ const config = {
       widget: 'core/hero_quote',
       images: [
         {
+          name: 'overlay_image',
+          image_width: 300,
+        },
+        {
           name: 'background_image',
-          aspect: '16x9',
-          width: 1920,
+          image_aspect: '16x9',
+          image_width: 1920,
+        },
+        {
+          name: 'background_video',
+          image_aspect: '16x9',
+          image_width: 1920,
         },
       ],
     },

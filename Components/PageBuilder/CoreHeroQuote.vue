@@ -1,8 +1,25 @@
 <template>
   <div class="mx-auto space-y-2 lg:col-start-1 lg:row-start-1 lg:max-w-none">
-    <div :class="outerClass" class="relative">
-      <div class="absolute inset-0 bg-cover bg-center" :class="imageClass" :style="{ 'background-image': `url(${url})` }" />
+    <div :class="outerClass" class="relative overflow-hidden">
+      <div v-if="!templatevar.background_video?.file" class="absolute inset-0 bg-cover bg-center" :class="imageClass" :style="{ 'background-image': `url(${templatevar.background_image?.url})` }" />
+      <div v-else class="absolute inset-0">
+        <video
+          :poster="templatevar.background_video.slate"
+          autoplay
+          loop
+          muted
+          playsinline
+          class="inset-0 z-10 h-full w-full object-cover object-center"
+          :class="imageClass"
+        >
+          <source
+            :src="templatevar.background_video?.file"
+            type="video/mp4"
+          >
+        </video>
+      </div>
       <div class="relative flex h-[500px] flex-col p-8" :class="textClass">
+        <cgn-lazy-image v-if="templatevar.overlay_image" class="h-16 p-2" :image="templatevar.overlay_image" />
         <div class="pb-2 font-title text-2xl font-semibold md:text-4xl">
           {{ templatevar.heading }}
         </div>
@@ -20,12 +37,15 @@
 
 <script lang="ts">
 import type { CognitoImage } from '~cognito/models/Cognito/Image'
+import type { CognitoVideo } from '~cognito/models/Cognito/Video'
 
 class Templatevars {
   heading?: string
   subheading?: string
   html?: string
+  overlay_image?: CognitoImage
   background_image?: CognitoImage
+  background_video?: CognitoVideo
   overlay_colour?: string
   image_opacity?: string
   image_saturation?: string
@@ -48,28 +68,16 @@ const props = defineProps({
 })
 
 const outerClass = computed(() => {
-  if (props.templatevar.overlay_colour == 'wht') {
-    return 'bg-white'
-  }
-  if (props.templatevar.overlay_colour == 'blk') {
-    return 'bg-black'
-  }
-  if (props.templatevar.overlay_colour == 'bnd') {
-    return 'bg-brand-500'
-  }
-  if (props.templatevar.overlay_colour == 'suc') {
-    return 'bg-success-500'
-  }
-  if (props.templatevar.overlay_colour == 'inf') {
-    return 'bg-info-500'
-  }
-  if (props.templatevar.overlay_colour == 'wrn') {
-    return 'bg-warning-500'
-  }
-  if (props.templatevar.overlay_colour == 'dng') {
-    return 'bg-danger-500'
-  }
-  return ''
+  return [
+    { name: 'bg-white', id: 'wht' },
+    { name: 'bg-black', id: 'blk' },
+    { name: 'bg-brand-500', id: 'bnd' },
+    { name: 'bg-success-500', id: 'suc' },
+    { name: 'bg-info-500', id: 'inf' },
+    { name: 'bg-warning-500', id: 'wrn' },
+    { name: 'bg-danger-500', id: 'dng' },
+    { name: '', id: '' },
+  ].find(e => e.id === props.templatevar.overlay_colour)?.name
 })
 
 const textClass = computed(() => {
@@ -91,12 +99,15 @@ const textClass = computed(() => {
     classes += ' text-center items-center justify-center'
   }
 
-  if (props.templatevar.text_colour == 'wht') {
-    classes += ' text-white'
-  }
-  if (props.templatevar.text_colour == 'blk') {
-    classes += ' text-black'
-  }
+  classes += ` ${[
+  { name: 'text-white', id: 'wht' },
+  { name: 'text-black', id: 'blk' },
+  { name: 'text-brand-500', id: 'bnd' },
+  { name: 'text-success-500', id: 'suc' },
+  { name: 'text-info-500', id: 'inf' },
+  { name: 'text-warning-500', id: 'wrn' },
+  { name: 'text-danger-500', id: 'dng' },
+  ].find(e => e.id === props.templatevar.text_colour)?.name}`
 
   if (props.templatevar.parallax == 1) {
     classes += ' sm:bg-fixed'
@@ -128,18 +139,5 @@ const imageClass = computed(() => {
   }
 
   return classes
-})
-
-const url = ref('')
-const loadImage = () => {
-  if (props.templatevar.background_image) {
-    url.value = props.templatevar.background_image.url
-  }
-}
-onMounted(() => {
-  loadImage()
-})
-onServerPrefetch(async () => {
-  await loadImage()
 })
 </script>
