@@ -25,7 +25,17 @@
           </div>
           <div class="text-right">
             <span v-if="stallSite.approved">
-              Approved
+              <span v-if="stallSite.paid">
+                Paid
+              </span>
+              <span v-else>
+                Approved
+                <cgn-link :to="`${config.baseURL}/cms/cognito/invoice/pay/${stallSite.invoice_id}`" title="Pay invoice">
+                  <i-heroicons-solid:currency-dollar
+                    class="inline-block cursor-pointer"
+                  />
+                </cgn-link>
+              </span>
             </span>
             <span v-else>
               Awaiting Approval
@@ -39,6 +49,7 @@
 
 <script setup lang="ts">
 import { EventStallSite } from '~cognito/models/Event/StallSite'
+import { config } from '~/config'
 
 const stallSites = ref<EventStallSite[]>([])
 
