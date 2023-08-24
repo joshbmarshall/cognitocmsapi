@@ -32,6 +32,7 @@ class CognitoInvoice extends CognitoBase {
   title: string
   total_amount: string
   total_tax: string
+  amount_outstanding: number
   is_quote: boolean
   cancelled_at?: CognitoTime
   paid_at?: CognitoTime
@@ -58,6 +59,7 @@ class CognitoInvoice extends CognitoBase {
     this.title = ''
     this.total_amount = ''
     this.total_tax = ''
+    this.amount_outstanding = 0
     this.is_quote = false
     this.invoiceItems = []
     Object.assign(this, source)

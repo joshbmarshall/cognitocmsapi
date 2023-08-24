@@ -33,6 +33,11 @@
                   class="cursor-pointer text-gray-600 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
                 />
               </router-link>
+              <cgn-link v-if="order.amount_outstanding" :to="`${config.baseURL}/cms/cognito/invoice/pay/${order.id}`" title="Pay invoice">
+                <i-heroicons-solid:currency-dollar
+                  class="cursor-pointer text-gray-600 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+                />
+              </cgn-link>
             </div>
             <i-heroicons-solid:chevron-up v-if="dropdown_index == index" />
             <i-heroicons-solid:chevron-down v-else />
@@ -72,6 +77,7 @@
 
 <script setup lang="ts">
 import { CognitoInvoice } from '~cognito/models/Cognito/Invoice'
+import { config } from '~/config'
 
 const orders = ref<CognitoInvoice[]>([])
 const dropdown_index = ref(-1)
