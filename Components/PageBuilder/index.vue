@@ -21,6 +21,9 @@
     <cgn-page-builder-core-button-link :templatevar="widget.templatevar" />
   </div>
 
+  <div v-else-if="widget.outer == 'core/person_list'" :class="props.uncontainedClass">
+    <cgn-page-builder-core-person-list :templatevar="widget.templatevar" />
+  </div>
   <div v-else-if="widget.outer == 'core/call_to_action'" :class="props.uncontainedClass">
     <cgn-page-builder-core-call-to-action :templatevar="widget.templatevar" />
   </div>
