@@ -1,6 +1,8 @@
 import type { CognitoAddress } from '../Cognito/Address'
+import type { CognitoPhoto } from '../Cognito/Photo'
 import { EventEvent } from './Event'
 import type { EventMerch } from './Merch'
+import type { EventStallSitePower } from './StallSitePower'
 import { EventVehicle } from './Vehicle'
 
 class EventEntryFormMerch {
@@ -74,7 +76,6 @@ class EventEntryFormRadio {
 class EventEntryForm {
   event_id?: string | number
   category_id: number
-  stall_site_type_id: number
   address_id: number
   licence_id: number
   vehicle_id: number
@@ -102,12 +103,26 @@ class EventEntryForm {
   licenceTypeRadio: EventEntryFormRadio[]
   entryCategoryRadio: EventEntryFormRadio[]
   stallSiteTypeRadio: EventEntryFormRadio[]
+  stallSiteLocationRadio: EventEntryFormRadio[]
   vehicles: EventVehicle[]
+  stall_site_type_id: number
+  stall_site_location_id: number
+  stall_site_preferred_location: string
+  stall_products_and_display_description: string
+  stall_company_product_overview: string
+  stall_width: number
+  stall_length: number
+  stall_height: number
+  stall_vehicle_make_and_model: string
+  stall_vehicle_registration: string
+  stall_public_liability_insurance_id: number
+  stall_food_licence_id: number
+  stall_power: EventStallSitePower[]
+  stall_photos: CognitoPhoto[]
 
   constructor(source?: Partial<EventEntryForm>) {
     this.event_id = 0
     this.category_id = 0
-    this.stall_site_type_id = 0
     this.address_id = 0
     this.licence_id = 0
     this.vehicle_id = 0
@@ -134,7 +149,22 @@ class EventEntryForm {
     this.licenceTypeRadio = []
     this.entryCategoryRadio = []
     this.stallSiteTypeRadio = []
+    this.stallSiteLocationRadio = []
+    this.stall_site_type_id = 0
+    this.stall_site_location_id = 0
+    this.stall_power = []
     this.vehicles = []
+    this.stall_site_preferred_location = ''
+    this.stall_products_and_display_description = ''
+    this.stall_company_product_overview = ''
+    this.stall_width = 0
+    this.stall_length = 0
+    this.stall_height = 0
+    this.stall_vehicle_make_and_model = ''
+    this.stall_vehicle_registration = ''
+    this.stall_public_liability_insurance_id = 0
+    this.stall_food_licence_id = 0
+    this.stall_photos = []
     Object.assign(this, source)
   }
 
@@ -199,6 +229,13 @@ class EventEntryForm {
         class: e.sold_out ? 'text-danger-500' : '',
         content: `${e.site_description}`,
         disabled: e.sold_out,
+      })
+    })
+    this.stallSiteLocationRadio = eventDetails.stall_locations.map((e) => {
+      return new EventEntryFormRadio({
+        id: e.id,
+        name: e.name,
+        content: '',
       })
     })
     this.vehicles = (await new EventVehicle().find_many({
