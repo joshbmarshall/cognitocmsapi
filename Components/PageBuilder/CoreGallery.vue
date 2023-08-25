@@ -2,6 +2,7 @@
   <div>
     <cgn-gallery-slider v-if="props.templatevar.type == 'slider'" :gallery="gallery" />
     <cgn-gallery-shadow-grid v-else-if="props.templatevar.type == 'shadowgrid'" :gallery="gallery" />
+    <cgn-gallery-centered-grid v-else-if="props.templatevar.type == 'centeredgrid'" :gallery="gallery" />
     <cgn-gallery-grid
       v-else-if="props.templatevar.type == 'grid'"
       :gallery="gallery"
