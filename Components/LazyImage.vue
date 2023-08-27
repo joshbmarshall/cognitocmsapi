@@ -22,6 +22,9 @@ const props = defineProps({
   webp: {
     type: String,
   },
+  avif: {
+    type: String,
+  },
   imageClass: {
     type: String,
   },
@@ -49,6 +52,7 @@ const props = defineProps({
 const lazyelement = ref()
 
 let use_webp = false
+let use_avif = false
 const blank_webp = 'data:image/webp;base64,UklGRkAAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAIAAAAQAFZQOCAYAAAAMAEAnQEqAQABAAEYOCekAANwAP77nMAA'
 const show_image = ref('')
 const last_image_url = ref('')
@@ -108,6 +112,7 @@ async function newImage() {
 
   // Hide if already set
   let webp = props.webp
+  let avif = props.avif
   let url = props.url
   let placeholder = props.placeholder
   let image = props.image
@@ -117,12 +122,14 @@ async function newImage() {
       image = image.image
     }
     webp = image.webp_url
+    avif = image.avif_url
     url = image.url
     placeholder = image.placeholder
     if (props.extraAspect) {
       const extraAspect = image.extra_aspects.find(e => e.aspect === props.extraAspect)
       if (extraAspect) {
         webp = extraAspect.webp_url
+        avif = extraAspect.avif_url
         url = extraAspect.url
         placeholder = extraAspect.placeholder
       }
@@ -135,6 +142,7 @@ async function newImage() {
       image_width: props.imageWidth,
     })
     webp = data.webp_url
+    avif = data.avif_url
     url = data.url
     placeholder = data.placeholder
   }
@@ -145,6 +153,7 @@ async function newImage() {
       image_width: props.imageWidth,
     })
     webp = data.webp_url
+    avif = data.avif_url
     url = data.url
     placeholder = data.placeholder
   }
@@ -172,7 +181,9 @@ async function newImage() {
     }
   }
 
-  if (use_webp && webp && !url?.endsWith('svg')) {
+  if (use_avif && avif && !url?.endsWith('svg')) {
+    show_image.value = avif
+  } else if (use_webp && webp && !url?.endsWith('svg')) {
     show_image.value = webp
   } else if (url) {
     show_image.value = url
@@ -194,6 +205,7 @@ watch(() => props, () => {
 
 onMounted(async () => {
   use_webp = await useWebpStore().isSupported()
+  use_avif = await useAVIFStore().isSupported()
   await newImage()
 })
 

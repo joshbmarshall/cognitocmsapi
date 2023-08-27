@@ -6,11 +6,13 @@ class CognitoImageExtraAspect {
   placeholder: string
   url: string
   webp_url: string
+  avif_url: string
   constructor() {
     this.aspect = ''
     this.placeholder = ''
     this.url = ''
     this.webp_url = ''
+    this.avif_url = ''
   }
 }
 
@@ -18,6 +20,7 @@ class CognitoImage extends CognitoBase {
   placeholder: string
   url: string
   webp_url: string
+  avif_url: string
   extra_aspects: CognitoImageExtraAspect[]
 
   baseurl(): string {
@@ -29,6 +32,7 @@ class CognitoImage extends CognitoBase {
     this.placeholder = ''
     this.url = ''
     this.webp_url = ''
+    this.avif_url = ''
     this.extra_aspects = []
     Object.assign(this, source)
   }
@@ -39,6 +43,7 @@ class CognitoImage extends CognitoBase {
     image_width: string
   }): Promise<{
     webp_url: string
+    avif_url: string
     url: string
     placeholder: string
   }> {
