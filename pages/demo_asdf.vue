@@ -52,6 +52,7 @@
       <cgn-form-input-text label="form input text" placeholder="text placeholder" />
       <cgn-form-input-textarea label="form input textarea" />
       <cgn-form-instant-photo label="form instant photo" />
+      <cgn-form-photos label="form multiple photos" />
 
       <cgn-address-lookup
         v-model="address_lookup_modelvalue" :here-api-key="here_api_key"

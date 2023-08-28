@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-2">
     <label class="block select-none pl-1 text-sm text-gray-800 dark:text-gray-200">{{ label }}</label>
-    <div class="flex">
+    <div class="flex gap-2">
       <div v-for="photo in photos" :key="photo.id">
         <img :src="photo.uploadthumb" width="150" height="150">
         <cgn-progress v-if="!photo.is_completed" :progress="photo.uploadProgress" />
