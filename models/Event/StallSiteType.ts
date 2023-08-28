@@ -4,6 +4,7 @@ class EventStallSiteType extends CognitoBase {
   name: string
   site_description: string
   price: number
+  is_food_vendor: boolean
   qty_available: number
   sold_out: boolean
 
@@ -16,6 +17,7 @@ class EventStallSiteType extends CognitoBase {
     this.name = ''
     this.site_description = ''
     this.price = 0
+    this.is_food_vendor = false
     this.qty_available = 0
     this.sold_out = true
     Object.assign(this, source)
