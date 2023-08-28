@@ -43,6 +43,7 @@ class EventEvent extends CognitoBase {
   last_vehicle_id: number
   aasa_licence: string
   user_cannot_enter_reason: string
+  user_cannot_apply_stall_site_reason: string
 
   baseurl() {
     return '/api/v1/event/event'
@@ -74,6 +75,7 @@ class EventEvent extends CognitoBase {
     this.last_vehicle_id = 0
     this.aasa_licence = ''
     this.user_cannot_enter_reason = ''
+    this.user_cannot_apply_stall_site_reason = ''
     Object.assign(this, source)
     this.start_date = new CognitoTime(source?.start_date)
     this.end_date = new CognitoTime(source?.end_date)
