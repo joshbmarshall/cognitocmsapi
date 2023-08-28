@@ -7,6 +7,7 @@ class EventType extends CognitoBase {
   entrant_content: string
   spectator_content: string
   terms_and_conditions: CognitoTermsAndConditions
+  stallholder_application_terms_and_conditions: CognitoTermsAndConditions
   photo: CognitoImage
 
   baseurl() {
@@ -19,6 +20,7 @@ class EventType extends CognitoBase {
     this.entrant_content = ''
     this.spectator_content = ''
     this.terms_and_conditions = new CognitoTermsAndConditions()
+    this.stallholder_application_terms_and_conditions = new CognitoTermsAndConditions()
     this.photo = new CognitoImage()
     Object.assign(this, source)
   }

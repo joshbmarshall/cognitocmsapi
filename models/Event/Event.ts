@@ -8,6 +8,7 @@ import type { EventLicenceType } from './LicenceType'
 import type { EventMerch } from './Merch'
 import type { EventSpectatorType } from './SpectatorType'
 import type { EventStallLocation } from './StallLocation'
+import type { EventStallPowerType } from './StallPowerType'
 import type { EventStallSiteType } from './StallSiteType'
 import { EventType } from './Type'
 import { EventVenue } from './Venue'
@@ -34,6 +35,7 @@ class EventEvent extends CognitoBase {
   spectator_types: EventSpectatorType[]
   stall_site_types: EventStallSiteType[]
   stall_locations: EventStallLocation[]
+  stall_power_types: EventStallPowerType[]
   extras: EventExtra[]
   merch: EventMerch[]
   licence_types: EventLicenceType[]
@@ -64,6 +66,7 @@ class EventEvent extends CognitoBase {
     this.spectator_types = []
     this.stall_site_types = []
     this.stall_locations = []
+    this.stall_power_types = []
     this.extras = []
     this.merch = []
     this.licence_types = []

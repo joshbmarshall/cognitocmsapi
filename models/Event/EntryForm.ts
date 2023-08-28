@@ -2,8 +2,19 @@ import type { CognitoAddress } from '../Cognito/Address'
 import type { CognitoPhoto } from '../Cognito/Photo'
 import { EventEvent } from './Event'
 import type { EventMerch } from './Merch'
-import type { EventStallSitePower } from './StallSitePower'
 import { EventVehicle } from './Vehicle'
+
+class EventEntryFormStallPower {
+  id: string | number | undefined
+  reason: string
+
+  constructor(source?: Partial<EventEntryFormStallPower>) {
+    this.id = 0
+    this.reason = ''
+
+    Object.assign(this, source)
+  }
+}
 
 class EventEntryFormMerch {
   id: string | number | undefined
@@ -117,7 +128,7 @@ class EventEntryForm {
   stall_vehicle_registration: string
   stall_public_liability_insurance_id: number
   stall_food_licence_id: number
-  stall_power: EventStallSitePower[]
+  stall_power: EventEntryFormStallPower[]
   stall_photos: CognitoPhoto[]
 
   constructor(source?: Partial<EventEntryForm>) {
@@ -319,4 +330,4 @@ class EventEntryForm {
     return cost
   }
 }
-export { EventEntryForm, EventEntryFormMerch, EventEntryFormRadio, EventEntryFormSpectator, EventEntryFormExtra }
+export { EventEntryForm, EventEntryFormMerch, EventEntryFormRadio, EventEntryFormSpectator, EventEntryFormExtra, EventEntryFormStallPower }
