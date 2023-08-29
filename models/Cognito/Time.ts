@@ -1,4 +1,4 @@
-import { addMinutes, differenceInCalendarDays, format, isFuture, isPast, isSameDay, isSameMonth, parseISO, subMinutes } from 'date-fns'
+import { addMinutes, differenceInCalendarDays, format, isAfter, isFuture, isPast, isSameDay, isSameMonth, parseISO, subMinutes } from 'date-fns'
 
 class CognitoTime {
   time: Date
@@ -79,6 +79,10 @@ class CognitoTime {
       return `${this.format('eee do')} - ${othertime.format('eee do MMMM')}`
     }
     return `${this.format('eee do MMMM')} - ${othertime.format('eee do MMMM')}`
+  }
+
+  isAfter(othertime: CognitoTime): boolean {
+    return isAfter(this.time, othertime.time)
   }
 }
 export { CognitoTime }

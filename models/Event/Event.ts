@@ -1,6 +1,7 @@
 import { CognitoBase } from '../Cognito/Base'
 import { CognitoImage } from '../Cognito/Image'
 import { CognitoTime } from '../Cognito/Time'
+import { CognitoUserDocument } from '../Cognito/UserDocument'
 import type { EventCategory } from './Category'
 import { EventDate } from './Date'
 import type { EventExtra } from './Extra'
@@ -44,6 +45,8 @@ class EventEvent extends CognitoBase {
   aasa_licence: string
   user_cannot_enter_reason: string
   user_cannot_apply_stall_site_reason: string
+  stall_public_liability_insurance?: CognitoUserDocument
+  stall_food_licence?: CognitoUserDocument
 
   baseurl() {
     return '/api/v1/event/event'
@@ -83,6 +86,12 @@ class EventEvent extends CognitoBase {
     this.image = new CognitoImage(source?.image)
     if (source?.dates) {
       this.dates = new EventDate().map(source?.dates)
+    }
+    if (source?.stall_public_liability_insurance) {
+      this.stall_public_liability_insurance = new CognitoUserDocument(source.stall_public_liability_insurance)
+    }
+    if (source?.stall_food_licence) {
+      this.stall_food_licence = new CognitoUserDocument(source.stall_food_licence)
     }
   }
 

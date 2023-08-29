@@ -126,8 +126,13 @@ class EventEntryForm {
   stall_height: number
   stall_vehicle_make_and_model: string
   stall_vehicle_registration: string
-  stall_public_liability_insurance_id: number
-  stall_food_licence_id: number
+  stall_public_liability_insurance_file: string
+  stall_public_liability_insurance_expiry: string
+  stall_public_liability_insurance_use_ours: boolean
+  stall_public_liability_insurance_will_update_on_renewal: boolean
+  stall_food_licence_will_update_on_renewal: boolean
+  stall_food_licence_file: string
+  stall_food_licence_expiry: string
   stall_power: EventEntryFormStallPower[]
   stall_photos: CognitoPhoto[]
 
@@ -173,8 +178,13 @@ class EventEntryForm {
     this.stall_height = 0
     this.stall_vehicle_make_and_model = ''
     this.stall_vehicle_registration = ''
-    this.stall_public_liability_insurance_id = 0
-    this.stall_food_licence_id = 0
+    this.stall_public_liability_insurance_file = ''
+    this.stall_public_liability_insurance_expiry = ''
+    this.stall_public_liability_insurance_use_ours = false
+    this.stall_public_liability_insurance_will_update_on_renewal = false
+    this.stall_food_licence_will_update_on_renewal = false
+    this.stall_food_licence_file = ''
+    this.stall_food_licence_expiry = ''
     this.stall_photos = []
     Object.assign(this, source)
   }
