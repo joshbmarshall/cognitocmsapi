@@ -13,12 +13,12 @@
           <div :class="outerClass(slide)" class="relative">
             <div class="absolute inset-0 bg-cover bg-center" :class="imageClass(slide)" :style="{ 'background-image': `url(${slide.image.url})` }" />
             <div class="relative flex h-[500px] flex-col items-center justify-center p-8 text-center" :class="textClass(slide)">
-              <h1 class="pb-2 font-display text-2xl font-semibold md:text-4xl">
+              <div class="pb-2 font-title text-2xl font-semibold md:text-4xl">
                 {{ slide.heading }}
-              </h1>
-              <h2 v-if="slide.sub_heading" class="font-display text-xl font-semibold">
+              </div>
+              <div v-if="slide.sub_heading" class="font-display text-xl font-semibold">
                 {{ slide.sub_heading }}
-              </h2>
+              </div>
               <div v-if="slide.content" class="prose-invert max-w-none pb-2" v-html="slide.content" />
               <cgn-button v-if="slide.link_button_text && slide.link" color-brand :url="slide.link" class="pointer-events-auto w-full md:w-auto" extra-classes="w-full md:w-auto">
                 {{ slide.link_button_text }}
