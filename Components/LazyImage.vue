@@ -74,20 +74,11 @@ async function checkVisible() {
   }
 
   // Load standard image
+  const img = new Image()
+  img.src = show_image.value
+  await img.decode()
   src.value = show_image.value
-  await new Promise((resolve) => {
-    if (!lazyelement.value) {
-      return
-    }
-    lazyelement.value.onload = resolve
-  })
-
   if (props.forceSize) {
-    return
-  }
-
-  if (!lazyelement.value) {
-    // Element has disappeared, abort
     return
   }
 
@@ -100,7 +91,14 @@ async function checkVisible() {
   }
 
   if (filename) {
-    src.value = `${show_image.value.replace(filename, '') + width}x${height}:${filename}`
+    nextTick(() => {
+      if (!lazyelement.value) {
+        // Element has disappeared, abort
+        return
+      }
+
+      src.value = `${show_image.value.replace(filename, '') + width}x${height}:${filename}`
+    })
   }
 }
 
@@ -193,7 +191,9 @@ async function newImage() {
     show_image.value = url
   }
   if (imageIsVisible.value) {
-    await checkVisible()
+    nextTick(() => {
+      checkVisible()
+    })
   }
 }
 watch(() => imageIsVisible.value, () => {
