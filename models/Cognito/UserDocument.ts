@@ -1,6 +1,7 @@
 import { CognitoBase } from './Base'
 import { CognitoTime } from './Time'
 import { CognitoUserDocumentType } from './UserDocumentType'
+import { $axios } from '~cognito/plugins/axios'
 
 class CognitoUserDocument extends CognitoBase {
   type: CognitoUserDocumentType
@@ -18,6 +19,11 @@ class CognitoUserDocument extends CognitoBase {
     this.download_url = ''
     Object.assign(this, source)
     this.expiry = new CognitoTime(source?.expiry)
+  }
+
+  async myList() {
+    const data = await $axios.get(`${this.baseurl()}/myList`)
+    return new CognitoUserDocument().map(data.data)
   }
 }
 
