@@ -263,6 +263,15 @@ class EventEntryForm {
       entrant_id: useUserStore().user.id,
     })).mapped
 
+    this.stall_products_and_display_description = eventDetails.stall_products_and_display_description
+    this.stall_company_product_overview = eventDetails.stall_company_product_overview
+    this.stall_width = eventDetails.stall_width
+    this.stall_length = eventDetails.stall_length
+    this.stall_height = eventDetails.stall_height
+    this.stall_vehicle_make_and_model = eventDetails.stall_vehicle_make_and_model
+    this.stall_vehicle_registration = eventDetails.stall_vehicle_registration
+    this.stall_power = eventDetails.stall_power
+
     this.eventDetails = eventDetails
 
     return eventDetails

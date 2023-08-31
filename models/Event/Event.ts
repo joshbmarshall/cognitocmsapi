@@ -4,6 +4,7 @@ import { CognitoTime } from '../Cognito/Time'
 import { CognitoUserDocument } from '../Cognito/UserDocument'
 import type { EventCategory } from './Category'
 import { EventDate } from './Date'
+import { EventEntryFormStallPower } from './EntryForm'
 import type { EventExtra } from './Extra'
 import type { EventLicenceType } from './LicenceType'
 import type { EventMerch } from './Merch'
@@ -47,6 +48,14 @@ class EventEvent extends CognitoBase {
   user_cannot_apply_stall_site_reason: string
   stall_public_liability_insurance?: CognitoUserDocument
   stall_food_licence?: CognitoUserDocument
+  stall_products_and_display_description: string
+  stall_company_product_overview: string
+  stall_width: number
+  stall_length: number
+  stall_height: number
+  stall_vehicle_make_and_model: string
+  stall_vehicle_registration: string
+  stall_power: EventEntryFormStallPower[]
 
   baseurl() {
     return '/api/v1/event/event'
@@ -79,6 +88,14 @@ class EventEvent extends CognitoBase {
     this.aasa_licence = ''
     this.user_cannot_enter_reason = ''
     this.user_cannot_apply_stall_site_reason = ''
+    this.stall_products_and_display_description = ''
+    this.stall_company_product_overview = ''
+    this.stall_width = 0
+    this.stall_length = 0
+    this.stall_height = 0
+    this.stall_vehicle_make_and_model = ''
+    this.stall_vehicle_registration = ''
+    this.stall_power = []
     Object.assign(this, source)
     this.start_date = new CognitoTime(source?.start_date)
     this.end_date = new CognitoTime(source?.end_date)
@@ -92,6 +109,9 @@ class EventEvent extends CognitoBase {
     }
     if (source?.stall_food_licence) {
       this.stall_food_licence = new CognitoUserDocument(source.stall_food_licence)
+    }
+    if (source?.stall_power) {
+      this.stall_power = source?.stall_power.map(e => new EventEntryFormStallPower(e))
     }
   }
 
