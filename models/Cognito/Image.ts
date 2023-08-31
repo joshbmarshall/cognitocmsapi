@@ -50,6 +50,18 @@ class CognitoImage extends CognitoBase {
     const res = await $axios.post('/api/v1/cognito/image/getByHash', data)
     return res.data
   }
+
+  blankImageUrl(width: number, height: number) {
+    const canvas = document.createElement('canvas')
+    canvas.width = width
+    canvas.height = height
+
+    const ctx = canvas.getContext('2d')
+    ctx.fillStyle = 'rgba(0, 0, 0, 0)'
+    ctx.fillRect(0, 0, width, height)
+
+    return canvas.toDataURL()
+  }
 }
 
 export { CognitoImage }

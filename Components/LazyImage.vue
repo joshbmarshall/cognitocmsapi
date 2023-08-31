@@ -125,6 +125,10 @@ async function newImage() {
     avif = image.avif_url
     url = image.url
     placeholder = image.placeholder
+    if (image.width && image.height) {
+      // Create image of that size so no need for http request
+      placeholder = new CognitoImage().blankImageUrl(image.width, image.height)
+    }
     if (props.extraAspect) {
       const extraAspect = image.extra_aspects.find(e => e.aspect === props.extraAspect)
       if (extraAspect) {
