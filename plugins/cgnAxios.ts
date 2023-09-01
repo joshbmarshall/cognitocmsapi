@@ -194,7 +194,7 @@ class CgnAxios {
       code,
       client_id: this.clientId,
     })
-    this.userStore().setAccessToken(res.data.access_token)
+    this.userStore().setAccessToken(res.data.access_token, this.doRefresh)
     this.userStore().setRefreshToken(res.data.refresh_token)
     return res
   }
@@ -221,7 +221,7 @@ class CgnAxios {
       fingerprint,
     })
 
-    this.userStore().setAccessToken(tokens.data.access_token)
+    this.userStore().setAccessToken(tokens.data.access_token, this.doRefresh)
     this.userStore().setRefreshToken(tokens.data.refresh_token)
   }
 
@@ -244,7 +244,7 @@ class CgnAxios {
         password,
         fingerprint,
       })
-      userStore.setAccessToken(tokens.data.access_token)
+      userStore.setAccessToken(tokens.data.access_token, this.doRefresh)
       userStore.setRefreshToken(tokens.data.refresh_token)
       await this.getUser()
       router.push(userStore.redirect_after_login)
@@ -276,7 +276,7 @@ class CgnAxios {
 
     if (access_token && refresh_token) {
       userStore.setRefreshToken(refresh_token)
-      userStore.setAccessToken(access_token)
+      userStore.setAccessToken(access_token, this.doRefresh)
       await this.getUser()
       if (this.useCart) {
         await useCartStore().mergeCart()
