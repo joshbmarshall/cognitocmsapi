@@ -167,7 +167,7 @@ class CgnAxios {
 
     setInterval(() => {
       this.checkRefresh()
-    }, 5000)
+    }, 10000)
   }
 
   oauth2AuthorizeUrl(siteurl?: string, redirect_uri?: string) {
@@ -217,16 +217,20 @@ class CgnAxios {
   }
 
   checkRefresh() {
-    const decoded = jwt_decode(this.userStore().access_token)
-    if (!decoded?.exp) {
-      return
+    try {
+      const decoded = jwt_decode(this.userStore().access_token)
+      if (!decoded?.exp) {
+        return
+      }
+      const expires_in = decoded.exp - Math.floor(Date.now() / 1000)
+      if (expires_in > 30) {
+        return
+      }
+      // Renew the token as it will expire in 30 seconds
+      this.doRefresh()
+    } catch (error) {
+      // Probably not logged on
     }
-    const expires_in = decoded.exp - Math.floor(Date.now() / 1000)
-    if (expires_in > 30) {
-      return
-    }
-    // Renew the token as it will expire in 30 seconds
-    this.doRefresh()
   }
 
   async doRefresh() {
