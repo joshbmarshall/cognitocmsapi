@@ -2,6 +2,7 @@ import { $axios } from '~cognito/plugins/axios'
 
 class CognitoFindManyParams {
   image_aspect?: string
+  extra_aspects?: string[]
   image_width?: number
   page_size?: number
   page?: number

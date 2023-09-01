@@ -10,7 +10,7 @@
       <div v-if="gallery.slides.length">
         <div class="mx-auto space-y-2 text-white lg:col-start-1 lg:row-start-1 lg:max-w-none">
           <div :class="outerClass(gallery.slides[0])" class="relative aspect-square">
-            <div class="absolute inset-0 bg-cover bg-center transition-opacity duration-300 group-hover:opacity-50" :class="[imageClass(gallery.slides[0])]" :style="{ 'background-image': `url(${gallery.slides[0].image.url})` }" />
+            <cgn-lazy-image :image="gallery.slides[0].image" class="absolute inset-0 h-full object-cover object-center transition-opacity duration-300 group-hover:opacity-50" :class="[imageClass(gallery.slides[0])]" />
           </div>
         </div>
         <div v-if="gallery.heading" class="absolute bottom-0 right-0 translate-y-full p-2 text-right text-white transition-transform duration-300 group-hover:translate-y-0">
@@ -36,7 +36,7 @@
       <div v-for="slide in selectedGallery.slides" :key="slide.id" class="group relative overflow-hidden bg-black" @click="selectedSlide = slide; modal_open = true">
         <div class="mx-auto space-y-2 text-white lg:col-start-1 lg:row-start-1 lg:max-w-none">
           <div :class="outerClass(slide)" class="relative aspect-square">
-            <div class="absolute inset-0 bg-cover bg-center transition-opacity duration-300 group-hover:opacity-50" :class="[imageClass(slide)]" :style="{ 'background-image': `url(${slide.image.url})` }" />
+            <cgn-lazy-image :image="slide.image" class="absolute inset-0 h-full object-cover object-center transition-opacity duration-300 group-hover:opacity-50" :class="[imageClass(slide)]" />
           </div>
         </div>
         <div v-if="slide.heading" class="absolute bottom-0 right-0 translate-y-full p-2 text-right text-white transition-transform duration-300 group-hover:translate-y-0">
@@ -50,7 +50,7 @@
       </div>
     </div>
   </div>
-  <cgn-modal v-model="modal_open">
+  <cgn-modal v-model="modal_open" fullheight>
     <template #clean-content>
       <div class="mr-4">
         <h1 class="font-display text-2xl font-semibold md:text-4xl">
@@ -120,6 +120,9 @@ const selectGallery = (gallery: CognitoGallery) => {
 onMounted(() => {
   new CognitoGallery().find_many({
     group: props.templatevar.group,
+    image_width: 300,
+    image_aspect: '1x1',
+    extra_aspects: ['16x9'],
   }).then((data) => {
     galleries.value = data.mapped
   })

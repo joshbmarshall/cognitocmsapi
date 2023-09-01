@@ -12,7 +12,7 @@
       >
         <i-heroicons-solid:x />
       </div>
-      <div class="max-h-[500px] overflow-y-scroll overscroll-contain px-4 py-5 sm:p-6">
+      <div class="overflow-y-scroll overscroll-contain px-4 py-5 sm:p-6" :class="{ 'max-h-[500px]': !props.fullheight }">
         <div class="flex items-start">
           <div>
             <slot name="icon" />
@@ -38,6 +38,10 @@ const props = defineProps({
   },
   timeout: {
     type: Number,
+  },
+  fullheight: {
+    type: Boolean,
+    default: false,
   },
 })
 
