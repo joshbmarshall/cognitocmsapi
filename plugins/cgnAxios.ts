@@ -169,6 +169,7 @@ class CgnAxios {
     setInterval(() => {
       this.checkRefresh()
     }, 10000)
+    this.checkRefresh()
   }
 
   oauth2AuthorizeUrl(siteurl?: string, redirect_uri?: string) {
