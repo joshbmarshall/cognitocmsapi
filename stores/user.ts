@@ -1,6 +1,5 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { nanoid } from 'nanoid'
-import jwt_decode from 'jwt-decode'
 
 export const useUserStore = defineStore({
   id: 'user',
@@ -31,22 +30,8 @@ export const useUserStore = defineStore({
       }
       return this.auth_fingerprint
     },
-    setAccessToken(token: string, renewCallback?: CallableFunction) {
+    setAccessToken(token: string) {
       this.access_token = token
-      if (!renewCallback) {
-        return
-      }
-      const decoded = jwt_decode(token)
-      if (!decoded?.exp) {
-        return
-      }
-      const expires_in = decoded.exp - Math.floor(Date.now() / 1000)
-      const renew_at = expires_in - (10 + Math.random() * 30)
-      if (renew_at > 0) {
-        setTimeout(() => {
-          renewCallback()
-        }, renew_at * 1000)
-      }
     },
     setRefreshToken(token: string) {
       this.refresh_token = token

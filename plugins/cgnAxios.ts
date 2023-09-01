@@ -2,6 +2,7 @@ import type { Axios, AxiosRequestConfig } from 'axios'
 import axios from 'axios'
 import type { Router } from 'vue-router'
 import { nanoid } from 'nanoid'
+import jwt_decode from 'jwt-decode'
 import { config } from '~/config'
 import { CognitoUser } from '~cognito/models/Cognito/User'
 import { useUserStore } from '~cognito/stores/user'
@@ -163,6 +164,10 @@ class CgnAxios {
         // Pass through all other errors, let component or other error handlers handle them
         throw error
       })
+
+    setInterval(() => {
+      this.checkRefresh()
+    }, 5000)
   }
 
   oauth2AuthorizeUrl(siteurl?: string, redirect_uri?: string) {
@@ -194,7 +199,7 @@ class CgnAxios {
       code,
       client_id: this.clientId,
     })
-    this.userStore().setAccessToken(res.data.access_token, this.doRefresh)
+    this.userStore().setAccessToken(res.data.access_token)
     this.userStore().setRefreshToken(res.data.refresh_token)
     return res
   }
@@ -211,6 +216,19 @@ class CgnAxios {
     this.userStore().setRedirectAfterLogin(path)
   }
 
+  checkRefresh() {
+    const decoded = jwt_decode(this.userStore().access_token)
+    if (!decoded?.exp) {
+      return
+    }
+    const expires_in = decoded.exp - Math.floor(Date.now() / 1000)
+    if (expires_in > 30) {
+      return
+    }
+    // Renew the token as it will expire in 30 seconds
+    this.doRefresh()
+  }
+
   async doRefresh() {
     const refresh_token = this.userStore().refresh_token
     const fingerprint = this.userStore().getAuthFingerprint()
@@ -221,7 +239,7 @@ class CgnAxios {
       fingerprint,
     })
 
-    this.userStore().setAccessToken(tokens.data.access_token, this.doRefresh)
+    this.userStore().setAccessToken(tokens.data.access_token)
     this.userStore().setRefreshToken(tokens.data.refresh_token)
   }
 
@@ -244,7 +262,7 @@ class CgnAxios {
         password,
         fingerprint,
       })
-      userStore.setAccessToken(tokens.data.access_token, this.doRefresh)
+      userStore.setAccessToken(tokens.data.access_token)
       userStore.setRefreshToken(tokens.data.refresh_token)
       await this.getUser()
       router.push(userStore.redirect_after_login)
@@ -276,7 +294,7 @@ class CgnAxios {
 
     if (access_token && refresh_token) {
       userStore.setRefreshToken(refresh_token)
-      userStore.setAccessToken(access_token, this.doRefresh)
+      userStore.setAccessToken(access_token)
       await this.getUser()
       if (this.useCart) {
         await useCartStore().mergeCart()
