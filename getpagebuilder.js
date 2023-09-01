@@ -12,7 +12,7 @@ writeFile('./src/initialData.json', JSON.stringify(data.data), (err) => {
 })
 
 writeFile('.graphqlrc', JSON.stringify({
-  schema: config.baseURL,
+  schema: `${config.baseURL}/graphql`,
 }), (err) => {
   if (err) {
     throw err
