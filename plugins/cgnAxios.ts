@@ -3,6 +3,7 @@ import axios from 'axios'
 import type { Router } from 'vue-router'
 import { nanoid } from 'nanoid'
 import jwt_decode from 'jwt-decode'
+import { GraphQLClient } from 'graphql-request'
 import { config } from '~/config'
 import { CognitoUser } from '~cognito/models/Cognito/User'
 import { useUserStore } from '~cognito/stores/user'
@@ -323,6 +324,22 @@ class CgnAxios {
 
   isSSR(): boolean {
     return import.meta.env?.SSR
+  }
+
+  graphql(query: string) {
+    const endpoint = `${config.baseURL}/graphql`
+    const access_token = useUserStore().access_token
+    const headers = access_token
+      ? {
+          authorization: `Bearer ${access_token}`,
+        }
+      : {}
+
+    const graphQLClient = new GraphQLClient(endpoint, {
+      headers,
+    })
+
+    return graphQLClient.request(query)
   }
 }
 

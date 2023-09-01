@@ -10,3 +10,11 @@ writeFile('./src/initialData.json', JSON.stringify(data.data), (err) => {
     throw err
   }
 })
+
+writeFile('.graphqlrc', JSON.stringify({
+  schema: config.baseURL,
+}), (err) => {
+  if (err) {
+    throw err
+  }
+})
