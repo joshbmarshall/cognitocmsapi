@@ -56,7 +56,7 @@ class CognitoSlide extends CognitoBase {
   }
 
   outerClass(): string {
-    if (this.overlay_color === 'white') {
+    if (this.overlay_color === 'white' || !this.overlay_color) {
       return 'bg-white'
     }
     if (this.overlay_color === 'black') {
