@@ -41,7 +41,10 @@
           <input
             ref="inputel" v-maska:[maska] :min="minAmount" :max="maxAmount" :value="modelValue" :type="inputType"
             :placeholder="placeholder" :required="required" class="cgn-input-field block w-full appearance-none p-2"
-            :class="inputClass + (hasIcon ? ' pl-7' : '')" @input="handleInput" @blur="blurInput"
+            :class="inputClass + (hasIcon ? ' pl-7' : '')"
+            :autocomplete="autocomplete"
+            @input="handleInput"
+            @blur="blurInput"
           >
           <div v-if="showButton" class="cgn-button ml-1 bg-brand-500 text-on-brand hover:bg-brand-600 dark:hover:bg-brand-400" @click="buttonClick">
             <slot />
@@ -74,6 +77,9 @@ const props = defineProps({
     type: String,
   },
   url: {
+    type: String,
+  },
+  autocomplete: {
     type: String,
   },
   modelValue: {
