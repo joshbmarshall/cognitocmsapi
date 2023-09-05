@@ -1,6 +1,6 @@
 <template>
   <div v-for="tag in tags" :key="tag.name">
-    <cgn-link :to="`/shop/byurl/${tag.name}`">
+    <cgn-link :to="`/shop/bytag/${tag.name}`">
       {{ tag.name }}
       ({{ tag.countModel }})
     </cgn-link>
