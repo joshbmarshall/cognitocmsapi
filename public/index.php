@@ -18,6 +18,16 @@ if (isSecure()) {
   $request_page = trim($_SERVER['REQUEST_URI'], '/');
 
   foreach ($redirects as $r) {
+    if (strpos($r['from'], '*') !== false) {
+      $from = substr($r['from'], 0, -1);
+      if (strncmp($request_page, $from, strlen($from)) !== false) {
+        if (strpos($r['to'], '*') !== false) {
+          $r['to'] = substr($r['to'], 0, -1);
+        }
+        $urlsuffix = substr($request_page, strlen($from));
+        $redirect_to = $r['to'] . $urlsuffix;
+      }
+    }
     if ($r['from'] == $request_page) {
       $redirect_to = $r['to'];
     }
