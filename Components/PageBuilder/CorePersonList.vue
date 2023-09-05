@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-6 p-6">
     <div v-for="(person, index) in people" :key="index" class="flex flex-col sm:flex-row sm:p-6" :class="{ 'sm:justify-end': index % 2 }">
-      <cgn-lazy-image :image="person.photo" class="sm:w-1/2 sm:px-4" :class="{ 'sm:order-last': index % 2 }" />
+      <cgn-lazy-image :image="person.photo" class="aspect-[4/3] sm:w-1/2 sm:px-4" :class="{ 'sm:order-last': index % 2 }" />
       <div class="flex flex-col sm:w-1/2" :class="{ 'sm:items-end sm:text-right': index % 2 }">
         <div class="font-title text-3xl font-semibold uppercase">
           {{ person.first_name }}
