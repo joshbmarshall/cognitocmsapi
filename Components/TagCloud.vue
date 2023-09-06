@@ -1,9 +1,13 @@
 <template>
-  <div v-for="tag in tags" :key="tag.name">
-    <cgn-link :to="`/shop/bytag/${tag.name}`">
-      {{ tag.name }}
-      ({{ tag.countModel }})
-    </cgn-link>
+  <div class="mx-auto flex max-w-7xl flex-wrap gap-2 p-2">
+    <div v-for="tag in tags" :key="tag.name" class="border-l-2 border-brand-500 py-0.5 pl-2 pr-0.5 text-black shadow transition-shadow duration-300 hover:shadow-md dark:bg-darkbg-500 dark:text-white">
+      <cgn-link :to="`/shop/bytag/${tag.name}`">
+        <div class="flex text-base text-black dark:text-white">
+          <span>{{ tag.name }}</span>
+          <span class="pl-1 text-xs">{{ tag.countModel }}</span>
+        </div>
+      </cgn-link>
+    </div>
   </div>
 </template>
 
