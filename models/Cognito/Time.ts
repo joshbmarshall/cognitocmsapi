@@ -1,4 +1,4 @@
-import { addMinutes, differenceInCalendarDays, format, isAfter, isFuture, isPast, isSameDay, isSameMonth, parseISO, subMinutes } from 'date-fns'
+import { addMinutes, differenceInCalendarDays, format, isAfter, isFuture, isPast, isSameDay, isSameMonth, parseISO, subMinutes, subMonths } from 'date-fns'
 
 class CognitoTime {
   time: Date
@@ -20,6 +20,10 @@ class CognitoTime {
 
   subMinutes(minutes: number): CognitoTime {
     return new CognitoTime(subMinutes(this.time, minutes))
+  }
+
+  subMonths(months: number): CognitoTime {
+    return new CognitoTime(subMonths(this.time, months))
   }
 
   diffInDays(compare_to: CognitoTime): number {
