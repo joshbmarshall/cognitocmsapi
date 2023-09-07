@@ -40,6 +40,13 @@
             </cgn-alert-info>
             <cgn-form-input-text v-model="first_name" label="First Name" required />
             <cgn-form-input-text v-model="last_name" label="Last Name" required />
+            <cgn-form-input
+              v-if="config.signUp.ask_date_of_birth"
+              v-model="date_of_birth"
+              type="date"
+              label="Date of Birth"
+              required
+            />
           </div>
           <cgn-alert-danger v-if="errorMessage">
             {{ errorMessage }}
@@ -63,6 +70,7 @@
 </template>
 
 <script setup lang="ts">
+import { config } from '~/config'
 import { CognitoUser } from '~cognito/models/Cognito/User'
 import { $axios } from '~cognito/plugins/axios'
 
@@ -73,6 +81,7 @@ const errorMessage = ref('')
 const username = ref('')
 const first_name = ref('')
 const last_name = ref('')
+const date_of_birth = ref('')
 const signingIn = ref(false)
 
 const sendLink = () => {
@@ -84,6 +93,7 @@ const sendLink = () => {
       email: username.value,
       first_name: first_name.value,
       last_name: last_name.value,
+      date_of_birth: date_of_birth.value,
     })
       .then((data) => {
         errorMessage.value = data.error

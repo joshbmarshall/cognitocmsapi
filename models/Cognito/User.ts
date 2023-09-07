@@ -69,6 +69,7 @@ class CognitoUser {
     email: string
     first_name: string
     last_name: string
+    date_of_birth?: string
   }): Promise<{
     success: boolean
     message: string
@@ -77,6 +78,7 @@ class CognitoUser {
       email: data.email,
       first_name: data.first_name,
       last_name: data.last_name,
+      date_of_birth: data.date_of_birth,
       fingerprint: useUserStore().getAuthFingerprint(),
     })
     return res.data

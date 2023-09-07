@@ -16,6 +16,9 @@ const config = {
     edit_facebook: false,
     manage_addresses: false,
   },
+  signUp: {
+    ask_date_of_birth: false,
+  },
   sentryDsn: '',
   show_back_to_top: true,
   pagebuilderImages: [
