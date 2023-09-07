@@ -19,6 +19,10 @@ const config = {
   signUp: {
     ask_date_of_birth: false,
   },
+  racers: {
+    clientApiId: '',
+    eventManager: '',
+  },
   sentryDsn: '',
   show_back_to_top: true,
   pagebuilderImages: [
