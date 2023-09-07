@@ -20,4 +20,5 @@ pnpm build || exit
 pnpm sentry-cli releases files "$VERSION" upload-sourcemaps dist
 pnpm sentry-cli releases finalize "$VERSION"
 pnpm golive
+# Note npm_config_deploy_path is defined in .npmrc
 
