@@ -1,9 +1,9 @@
 <template>
   <div v-if="payment_ok">
     <cgn-alert-success class="mx-auto my-2 w-full max-w-2xl">
-      Payment Successful
+      Payment Successful.
+      Please check your email for your receipt
     </cgn-alert-success>
-    <invoice :payment="payment.id" />
   </div>
   <div v-else class="flex flex-col">
     <span class="w-full pt-2 text-center text-2xl">Choose membership type</span>
