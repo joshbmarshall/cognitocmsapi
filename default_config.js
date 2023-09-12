@@ -62,7 +62,8 @@ const config = {
     },
   ],
   group_args: {
-    image_aspect: '',
+    image_aspect: '1x1',
+    image_width: 300,
   },
 }
 

@@ -3,12 +3,11 @@ import { CognitoGroup } from '~cognito/models/Cognito/Group'
 import { $axios } from '~cognito/plugins/axios'
 import { CognitoTime } from '~cognito/models/Cognito/Time'
 import initialData from '~/initialData.json'
+import { config } from '~/config.js'
 
 export const useGroupStore = defineStore('group', {
   state: () => {
     return {
-      image_aspect: '1x1',
-      image_width: 300,
       groups: [],
       lastUpdate: new CognitoTime('2000-01-01').toDateTimeString(),
     }
@@ -47,8 +46,8 @@ export const useGroupStore = defineStore('group', {
       setTimeout(async () => {
         const res = await $axios.get('/api/v1/cognito/group', {
           params: {
-            image_aspect: this.image_aspect,
-            image_width: this.image_width,
+            image_aspect: config.group_args.image_aspect,
+            image_width: config.group_args.image_width,
           },
         })
         this.groups = res.data.data
