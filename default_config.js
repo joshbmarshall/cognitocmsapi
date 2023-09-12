@@ -61,6 +61,9 @@ const config = {
       ],
     },
   ],
+  group_args: {
+    image_aspect: '',
+  },
 }
 
 export { config }
