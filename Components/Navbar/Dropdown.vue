@@ -11,16 +11,9 @@
           items-center
           py-2
           text-sm
-          font-medium
-          transition-colors
-          duration-200
           ease-out
         "
-        :class="
-          isHidden
-            ? 'text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-100'
-            : 'text-brand-500'
-        "
+        :class="{ 'text-brand-500': !isHidden }"
         aria-expanded="false"
         @click="toggle()"
       >
@@ -38,7 +31,7 @@
     >
       <div
         v-if="!isHidden"
-        class="absolute right-0 top-full mt-5 w-56 rounded-md bg-white text-black dark:bg-gray-800 dark:text-white"
+        class="absolute right-0 top-full mt-5 w-56 rounded-md border-2 bg-white text-black dark:bg-gray-800 dark:text-white"
       >
         <div class="relative mx-auto flex max-h-96 max-w-7xl flex-col gap-2 p-4">
           <div v-for="link in links" :key="link.name" class="py-1">
