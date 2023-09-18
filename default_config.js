@@ -1,4 +1,7 @@
+import { devbase } from '../devbase.js'
+
 const config = {
+  devbase,
   devURL: '',
   prodURL: '',
   siteURL: '',
