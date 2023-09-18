@@ -25,12 +25,15 @@ class EventSeries extends CognitoBase {
     this.entries_close_at = new CognitoTime(source?.entries_close_at)
   }
 
-  async submitEntry(data: any): Promise<{
+  async submitEntry(): Promise<{
     success: boolean
     message: string
     redirect: string
   }> {
-    return (await $axios.post(`${this.baseurl()}/submitEntry`, data)).data
+    return (await $axios.post(`${this.baseurl()}/submitEntry`, {
+      series_id: this.id,
+      url: location.href,
+    })).data
   }
 }
 
