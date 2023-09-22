@@ -88,6 +88,7 @@ class EventEntryForm {
   event_id?: string | number
   category_id: number
   address_id: number
+  garage_id: number
   licence_id: number
   vehicle_id: number
   aasa_licence: string
@@ -111,6 +112,7 @@ class EventEntryForm {
   is_normal_eyesight: boolean
   date_of_last_medical_exam: string
   eventDetails?: EventEvent
+  garageTypeRadio: EventEntryFormRadio[]
   licenceTypeRadio: EventEntryFormRadio[]
   entryCategoryRadio: EventEntryFormRadio[]
   stallSiteTypeRadio: EventEntryFormRadio[]
@@ -140,6 +142,7 @@ class EventEntryForm {
     this.event_id = 0
     this.category_id = 0
     this.address_id = 0
+    this.garage_id = 0
     this.licence_id = 0
     this.vehicle_id = 0
     this.aasa_licence = ''
@@ -162,6 +165,7 @@ class EventEntryForm {
     this.has_hearing_disorder = false
     this.is_normal_eyesight = false
     this.date_of_last_medical_exam = ''
+    this.garageTypeRadio = []
     this.licenceTypeRadio = []
     this.entryCategoryRadio = []
     this.stallSiteTypeRadio = []
@@ -230,6 +234,13 @@ class EventEntryForm {
     })
     this.entryCategoryRadio.push({ id: 0, name: 'Spectating Only', content: 'See below', disabled: false })
 
+    this.garageTypeRadio = eventDetails.garages.map((e) => {
+      return new EventEntryFormRadio({
+        id: e.id,
+        name: e.available ? `${e.name} $${e.price.toFixed(2)}` : `${e.name} ${e.booked_by}`,
+        disabled: !e.available,
+      })
+    })
     this.licenceTypeRadio = eventDetails.licence_types.map((e) => {
       return new EventEntryFormRadio({
         id: e.id,

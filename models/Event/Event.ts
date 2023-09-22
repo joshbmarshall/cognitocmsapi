@@ -6,6 +6,7 @@ import type { EventCategory } from './Category'
 import { EventDate } from './Date'
 import { EventEntryFormStallPower } from './EntryForm'
 import type { EventExtra } from './Extra'
+import type { EventGarage } from './Garage'
 import type { EventLicenceType } from './LicenceType'
 import type { EventMerch } from './Merch'
 import type { EventSpectatorType } from './SpectatorType'
@@ -38,6 +39,8 @@ class EventEvent extends CognitoBase {
   stall_site_types: EventStallSiteType[]
   stall_locations: EventStallLocation[]
   stall_power_types: EventStallPowerType[]
+  garage_map?: CognitoImage
+  garages: EventGarage[]
   extras: EventExtra[]
   merch: EventMerch[]
   licence_types: EventLicenceType[]
@@ -80,6 +83,7 @@ class EventEvent extends CognitoBase {
     this.stall_site_types = []
     this.stall_locations = []
     this.stall_power_types = []
+    this.garages = []
     this.extras = []
     this.merch = []
     this.licence_types = []
