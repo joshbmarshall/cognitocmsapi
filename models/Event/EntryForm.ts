@@ -2,6 +2,7 @@ import type { CognitoAddress } from '../Cognito/Address'
 import type { CognitoPhoto } from '../Cognito/Photo'
 import { EventEvent } from './Event'
 import type { EventMerch } from './Merch'
+import type { EventProduct } from './Product'
 import { EventVehicle } from './Vehicle'
 
 class EventEntryFormStallPower {
@@ -23,6 +24,20 @@ class EventEntryFormMerch {
   price: number
 
   constructor(source?: Partial<EventEntryFormMerch>) {
+    this.id = 0
+    this.name = ''
+    this.price = 0
+
+    Object.assign(this, source)
+  }
+}
+
+class EventEntryFormSku {
+  id: string | number | undefined
+  name: string
+  price: number
+
+  constructor(source?: Partial<EventEntryFormSku>) {
     this.id = 0
     this.name = ''
     this.price = 0
@@ -95,6 +110,7 @@ class EventEntryForm {
   extras: EventEntryFormExtra[]
   spectators: EventEntryFormSpectator[]
   merch: EventEntryFormMerch[]
+  skus: EventEntryFormSku[]
   url: string
   entry_transfer_from_invoice: number
   entry_transfer_from_name: string
@@ -149,6 +165,7 @@ class EventEntryForm {
     this.extras = []
     this.spectators = []
     this.merch = []
+    this.skus = []
     this.url = ''
     this.entry_transfer_from_invoice = 0
     this.entry_transfer_from_name = ''
@@ -306,6 +323,20 @@ class EventEntryForm {
     })
   }
 
+  addProductToOrder(product: EventProduct) {
+    const option = product.options.find(e => e.id == product.selectedOption)
+    if (!option) {
+      return false
+    }
+    const price = option?.price
+    const name = `${product.name} ${option.name}`
+    this.skus.unshift({
+      id: option.id,
+      name,
+      price,
+    })
+  }
+
   selectedCategory() {
     if (this.category_id == 0) {
       return null
@@ -356,6 +387,9 @@ class EventEntryForm {
     })
     this.merch.forEach((merch) => {
       cost += merch.price
+    })
+    this.skus.forEach((sku) => {
+      cost += sku.price
     })
     return cost
   }

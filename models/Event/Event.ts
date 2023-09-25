@@ -9,6 +9,7 @@ import type { EventExtra } from './Extra'
 import type { EventGarage } from './Garage'
 import type { EventLicenceType } from './LicenceType'
 import type { EventMerch } from './Merch'
+import type { EventProduct } from './Product'
 import type { EventSpectatorType } from './SpectatorType'
 import type { EventStallLocation } from './StallLocation'
 import type { EventStallPowerType } from './StallPowerType'
@@ -43,6 +44,7 @@ class EventEvent extends CognitoBase {
   garages: EventGarage[]
   extras: EventExtra[]
   merch: EventMerch[]
+  products: EventProduct[]
   licence_types: EventLicenceType[]
   last_address_id: number
   last_vehicle_id: number
@@ -86,6 +88,7 @@ class EventEvent extends CognitoBase {
     this.garages = []
     this.extras = []
     this.merch = []
+    this.products = []
     this.licence_types = []
     this.last_address_id = 0
     this.last_vehicle_id = 0
