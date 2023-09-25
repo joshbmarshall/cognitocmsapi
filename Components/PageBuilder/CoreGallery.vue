@@ -12,6 +12,7 @@
       :limit-slides="props.templatevar.limit_slides"
       :lightbox-aspect="props.templatevar.lightbox_aspect"
       :use-lightbox="props.templatevar.use_lightbox > 0"
+      :grid-width="props.templatevar.grid_width"
     />
   </div>
 </template>
@@ -22,6 +23,7 @@ import { CognitoGallery } from '~cognito/models/Cognito/Gallery'
 class Templatevars {
   heading?: string
   subheading?: string
+  grid_width?: string
   show_heading?: number
   use_lightbox?: number
   limit_slides?: number

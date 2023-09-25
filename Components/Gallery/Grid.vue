@@ -5,10 +5,10 @@
       {{ props.subheading }}
     </p>
   </div>
-  <div class="mx-auto grid max-w-6xl grid-cols-3 gap-2 p-2 md:grid-cols-4 lg:grid-cols-5">
+  <div class="mx-auto grid max-w-6xl gap-2 p-2" :class="widthClass">
     <div v-for="slide in slides" :key="slide.id" class="group relative overflow-hidden bg-black" @click="selectedSlide = slide; modal_open = true">
       <div class="mx-auto space-y-2 text-white lg:col-start-1 lg:row-start-1 lg:max-w-none">
-        <div :class="outerClass(slide)" class="relative aspect-square">
+        <div :class="outerClass(slide)" class="relative aspect-[1/1]">
           <cgn-lazy-image :image="slide.image" class="absolute inset-0 h-full object-cover object-center transition-opacity duration-300" :class="[{ 'group-hover:opacity-50': showHeading }, imageClass(slide)]" />
         </div>
       </div>
@@ -74,6 +74,20 @@ const props = defineProps({
   useLightbox: {
     type: Boolean,
   },
+  gridWidth: {
+    type: String,
+  },
+})
+
+const widthClass = computed(() => {
+  return [
+    { classes: 'grid-cols-1', id: '1' },
+    { classes: 'grid-cols-2', id: '2' },
+    { classes: 'grid-cols-3', id: '3' },
+    { classes: 'grid-cols-2 md:grid-cols-4', id: '4' },
+    { classes: 'grid-cols-3 md:grid-cols-4 lg:grid-cols-5', id: '5' },
+    { classes: 'grid-cols-3 md:grid-cols-4 lg:grid-cols-6', id: '6' },
+  ].find(e => e.id === props.gridWidth)?.classes
 })
 
 const slides = computed(() => {
