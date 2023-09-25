@@ -2,6 +2,7 @@
   <form @submit.prevent="go">
     <div class="mt-4 grid grid-cols-2 gap-2">
       <cgn-form-input-text v-model="postcode" label="Postcode" required />
+      <cgn-form-input-text v-model="suburb" label="Suburb" />
       <cgn-form-input-text v-model="country" label="Country" required />
     </div>
     <cgn-button submit fullwidth color-brand>
@@ -34,13 +35,14 @@ import { useCartStore } from '~cognito/stores/cart'
 const cartStore = useCartStore()
 
 const postcode = ref('')
+const suburb = ref('')
 const country = ref('Australia')
 
 const shippingQuotes = ref<any[]>([])
 const noShippingQuotes = ref(false)
 
 const go = async () => {
-  shippingQuotes.value = await cartStore.getShippingQuotes(postcode.value, country.value)
+  shippingQuotes.value = await cartStore.getShippingQuotes(postcode.value, suburb.value, country.value)
   noShippingQuotes.value = shippingQuotes.value.length == 0
 }
 </script>

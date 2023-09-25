@@ -173,14 +173,15 @@ export const useCartStore = defineStore({
       if (!address) {
         return []
       }
-      return this.getShippingQuotes(address.postcode, address.country)
+      return this.getShippingQuotes(address.postcode, address.city, address.country)
     },
-    async getShippingQuotes(postcode: string, country: string) {
+    async getShippingQuotes(postcode: string, suburb: string, country: string) {
       const quotelist = await $axios
         .post(
           '/api/v1/sell/cart/shippingQuote',
           {
             session: this.sessionKey,
+            suburb,
             postcode,
             country,
           },
