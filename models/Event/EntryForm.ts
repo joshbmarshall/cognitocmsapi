@@ -1,4 +1,5 @@
 import type { CognitoAddress } from '../Cognito/Address'
+import { CognitoPayment } from '../Cognito/Payment'
 import type { CognitoPhoto } from '../Cognito/Photo'
 import { EventEvent } from './Event'
 import type { EventMerch } from './Merch'
@@ -100,6 +101,12 @@ class EventEntryFormRadio {
 }
 
 class EventEntryForm {
+  payment_options: {
+    id: string
+    value: string
+  }[]
+
+  payment_gateway: string
   event_id?: string | number
   category_id: number
   address_id: number
@@ -155,6 +162,8 @@ class EventEntryForm {
   stall_photos: CognitoPhoto[]
 
   constructor(source?: Partial<EventEntryForm>) {
+    this.payment_options = []
+    this.payment_gateway = ''
     this.event_id = 0
     this.category_id = 0
     this.address_id = 0
@@ -392,6 +401,39 @@ class EventEntryForm {
       cost += sku.price
     })
     return cost
+  }
+
+  async calculatedPrice(): Promise<{
+    total: number
+    payable: number
+    surcharges: {
+      type: string
+      surcharge: number
+      amount: number
+    }[]
+  }> {
+    const total = this.totalPrice()
+    let payable = total
+
+    if (this.eventDetails?.credit_balance) {
+      payable -= this.eventDetails.credit_balance
+      if (payable < 0) {
+        payable = 0
+      }
+    }
+    const surcharges = await new CognitoPayment().paymentSurchargesOf(payable)
+
+    return {
+      total,
+      surcharges: surcharges.map((e) => {
+        return {
+          type: e.type,
+          surcharge: e.surcharge,
+          amount: payable + e.surcharge,
+        }
+      }),
+      payable,
+    }
   }
 }
 export { EventEntryForm, EventEntryFormMerch, EventEntryFormRadio, EventEntryFormSpectator, EventEntryFormExtra, EventEntryFormStallPower }

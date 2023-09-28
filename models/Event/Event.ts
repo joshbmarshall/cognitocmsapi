@@ -61,6 +61,13 @@ class EventEvent extends CognitoBase {
   stall_vehicle_make_and_model: string
   stall_vehicle_registration: string
   stall_power: EventEntryFormStallPower[]
+  payment_methods: {
+    id: string
+    name: string
+    enabled: boolean
+  }[]
+
+  credit_balance: number
 
   baseurl() {
     return '/api/v1/event/event'
@@ -103,6 +110,9 @@ class EventEvent extends CognitoBase {
     this.stall_vehicle_make_and_model = ''
     this.stall_vehicle_registration = ''
     this.stall_power = []
+    this.payment_methods = []
+    this.credit_balance = 0
+
     Object.assign(this, source)
     this.start_date = new CognitoTime(source?.start_date)
     this.end_date = new CognitoTime(source?.end_date)

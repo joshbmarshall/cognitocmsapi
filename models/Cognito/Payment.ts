@@ -44,6 +44,16 @@ class CognitoPayment extends CognitoBase {
     })
     return data.data
   }
+
+  async paymentSurchargesOf(amount: number): Promise<[{
+    type: string
+    surcharge: number
+  }]> {
+    const data = await $axios.post(`${this.baseurl()}/paymentSurchargesOf`, {
+      amount,
+    })
+    return data.data
+  }
 }
 
 export { CognitoPayment }
