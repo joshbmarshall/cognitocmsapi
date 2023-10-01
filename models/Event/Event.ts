@@ -42,6 +42,7 @@ class EventEvent extends CognitoBase {
   stall_power_types: EventStallPowerType[]
   garage_map?: CognitoImage
   garages: EventGarage[]
+  garage_hire: boolean
   extras: EventExtra[]
   merch: EventMerch[]
   products: EventProduct[]
@@ -93,6 +94,7 @@ class EventEvent extends CognitoBase {
     this.stall_locations = []
     this.stall_power_types = []
     this.garages = []
+    this.garage_hire = false
     this.extras = []
     this.merch = []
     this.products = []

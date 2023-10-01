@@ -225,6 +225,7 @@ class EventEntryForm {
       image_width: 1920,
     })
     const eventDetails = new EventEvent(data)
+    this.payment_gateway = eventDetails.payment_methods[0]?.id
     this.event_id = eventDetails.id
     this.address_id = eventDetails.last_address_id
     this.vehicle_id = eventDetails.last_vehicle_id
@@ -260,13 +261,6 @@ class EventEntryForm {
     })
     this.entryCategoryRadio.push({ id: 0, name: 'Spectating Only', content: 'See below', disabled: false })
 
-    this.garageTypeRadio = eventDetails.garages.map((e) => {
-      return new EventEntryFormRadio({
-        id: e.id,
-        name: e.available ? `${e.name} $${e.price.toFixed(2)}` : `${e.name} ${e.booked_by}`,
-        disabled: !e.available,
-      })
-    })
     this.licenceTypeRadio = eventDetails.licence_types.map((e) => {
       return new EventEntryFormRadio({
         id: e.id,
@@ -310,6 +304,7 @@ class EventEntryForm {
     this.stall_power = eventDetails.stall_power
 
     this.eventDetails = eventDetails
+    this.calculateGarageTypeRadio({})
 
     return eventDetails
   }
@@ -353,6 +348,13 @@ class EventEntryForm {
     return this.eventDetails?.categories.find(e => e.id == this.category_id)
   }
 
+  selectedGarage() {
+    if (this.garage_id == 0) {
+      return null
+    }
+    return this.eventDetails?.garages.find(e => e.id == this.garage_id)
+  }
+
   selectedLicence() {
     if (this.licence_id == 0) {
       return null
@@ -374,15 +376,50 @@ class EventEntryForm {
     return this.vehicles.find(e => e.id == this.vehicle_id)
   }
 
+  calculateGarageTypeRadio({ show_booked_by = false, price_included_in_entry = false }) {
+    if (!this.eventDetails) {
+      return []
+    }
+
+    this.garageTypeRadio = this.eventDetails.garages.map((e) => {
+      let name = `${e.type} ${e.name}`
+      if (e.available) {
+        if (!price_included_in_entry) {
+          name += ` - $${e.price.toFixed(2)}`
+        }
+      } else {
+        if (show_booked_by) {
+          name += ` - ${e.booked_by}`
+        } else {
+          name += ' - Unavailable'
+        }
+      }
+      return new EventEntryFormRadio({
+        id: e.id,
+        name,
+        disabled: !e.available,
+      })
+    })
+  }
+
   totalPrice() {
     let cost = 0
     const category = this.selectedCategory()
     const licence = this.selectedLicence()
+    const garage = this.selectedGarage()
+
     if (category) {
       cost += category.price
     }
     if (licence) {
       cost += licence.price
+    }
+    if (garage) {
+      if (category && category.garage_included_in_entry_fee) {
+        // No additional cost
+      } else {
+        cost += garage.price
+      }
     }
     this.extras.forEach((extra) => {
       if (extra.checked) {

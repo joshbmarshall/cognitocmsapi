@@ -2,6 +2,7 @@ import { CognitoBase } from '../Cognito/Base'
 
 class EventGarage extends CognitoBase {
   name: string
+  type: string
   available: boolean
   booked_by: string
   price: number
@@ -13,6 +14,7 @@ class EventGarage extends CognitoBase {
   constructor(source?: Partial<EventGarage>) {
     super()
     this.name = ''
+    this.type = ''
     this.available = false
     this.booked_by = ''
     this.price = 0

@@ -9,6 +9,8 @@ class EventCategory extends CognitoBase {
   ticket_type: string
   sold_out: boolean
   is_entry_transfer: boolean
+  requires_garage: boolean
+  garage_included_in_entry_fee: boolean
 
   baseurl() {
     return '/api/v1/event/category'
@@ -24,6 +26,8 @@ class EventCategory extends CognitoBase {
     this.ticket_type = ''
     this.sold_out = true
     this.is_entry_transfer = false
+    this.requires_garage = false
+    this.garage_included_in_entry_fee = false
     Object.assign(this, source)
   }
 }
