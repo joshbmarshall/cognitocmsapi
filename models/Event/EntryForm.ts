@@ -265,6 +265,7 @@ class EventEntryForm {
       return new EventEntryFormRadio({
         id: e.id,
         name: `${e.name} $${e.price.toFixed(2)}`,
+        content: e.content,
       })
     })
     this.licenceTypeRadio.push(new EventEntryFormRadio({

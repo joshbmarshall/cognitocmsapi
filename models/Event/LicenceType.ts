@@ -8,6 +8,7 @@ class EventLicenceType extends CognitoBase {
   is_annual: boolean
   terms_and_conditions?: CognitoTermsAndConditions
   blood_types: EventBloodType[]
+  content: string
 
   baseurl() {
     return '/api/v1/event/licenceType'
@@ -19,6 +20,7 @@ class EventLicenceType extends CognitoBase {
     this.price = 0
     this.is_annual = false
     this.blood_types = []
+    this.content = ''
     Object.assign(this, source)
   }
 }
