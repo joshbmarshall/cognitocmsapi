@@ -58,6 +58,7 @@
 <script setup lang="ts">
 import { useElementSize } from '@vueuse/core'
 import { CognitoImage } from '~cognito/models/Cognito/Image'
+import type { CognitoMapSite } from '~cognito/models/Cognito/MapSite'
 
 const props = defineProps({
   selectedColour: {
@@ -81,8 +82,8 @@ const props = defineProps({
     default: '#000000',
   },
   opacity: {
-    type: String,
-    default: '0.5',
+    type: Number,
+    default: 0.5,
   },
   image: {
     type: [CognitoImage, Object],
@@ -95,6 +96,9 @@ const props = defineProps({
     type: Number,
     default: 1,
   },
+  sites: {
+    required: true,
+  },
 })
 const emit = defineEmits(['update:modelValue'])
 
@@ -103,45 +107,7 @@ const { width, height } = useElementSize(outerDiv)
 
 const screenScale = 10000
 
-const rects = ref([
-  {
-    id: 1,
-    pos_x: 200,
-    pos_y: 100,
-    pos_width: 400,
-    pos_height: 800,
-    rotation: 15,
-    available: true,
-    hoverText: 'Garage A11 - $110.00',
-  },
-  {
-    id: 2,
-    pos_x: 550,
-    pos_y: 500,
-    pos_width: 400,
-    pos_height: 800,
-    available: true,
-    hoverText: 'Garage A12 - $110.00',
-  },
-  {
-    id: 3,
-    pos_x: 9000,
-    pos_y: 7000,
-    pos_width: 600,
-    pos_height: 400,
-    available: false,
-    hoverText: 'Garage B3 - $180.00',
-  },
-  {
-    id: 3,
-    pos_x: 1400,
-    pos_y: 500,
-    pos_width: 600,
-    pos_height: 400,
-    available: false,
-    hoverText: 'Garage B2 - $150.00',
-  },
-])
+const rects = ref<CognitoMapSite[]>([])
 
 const setColours = () => {
   rects.value.forEach((e) => {
@@ -160,7 +126,7 @@ const setColours = () => {
 }
 
 const stage = ref()
-const rectMouseMove = (rect) => {
+const rectMouseMove = (rect: CognitoMapSite) => {
   rect.is_hovered = true
   const mousePos = stage.value.getStage().getPointerPosition()
 
@@ -187,7 +153,7 @@ const rectMouseMove = (rect) => {
   rect.fill = props.hoverColour
 }
 
-const rectMouseOut = (rect) => {
+const rectMouseOut = (rect: CognitoMapSite) => {
   rect.is_hovered = false
   if (rect.id == props.modelValue) {
     rect.fill = props.selectedColour
@@ -196,14 +162,14 @@ const rectMouseOut = (rect) => {
   }
 }
 
-const rectTouchStart = (rect) => {
+const rectTouchStart = (rect: CognitoMapSite) => {
   rectMouseMove(rect)
   setTimeout(() => {
     rectMouseOut(rect)
   }, 2000)
 }
 
-const selectSite = (rect) => {
+const selectSite = (rect: CognitoMapSite) => {
   if (!rect.available) {
     return
   }
@@ -225,7 +191,8 @@ watch(() => width.value, () => {
 })
 
 onMounted(() => {
-  rects.value.forEach((e) => {
+  rects.value = props.sites
+  rects.value.forEach((e: CognitoMapSite) => {
     e.stroke = props.strokeColour
     e.opacity = props.opacity
     e.strokeWidth = 1
