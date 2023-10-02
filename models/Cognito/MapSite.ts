@@ -27,6 +27,7 @@ class CognitoMapSite {
   }
 
   constructor(source?: Partial<CognitoMapSite>) {
+    this.id = ''
     this.pos_x = 0
     this.pos_y = 0
     this.pos_width = 0
