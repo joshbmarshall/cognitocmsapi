@@ -14,7 +14,7 @@
       ref="stage"
       :config="{
         width,
-        height: width / props.aspect,
+        height: width / aspect,
       }"
     >
       <v-layer>
@@ -92,10 +92,6 @@ const props = defineProps({
     type: [String, Number],
     default: '',
   },
-  aspect: {
-    type: Number,
-    default: 1,
-  },
   sites: {
     required: true,
   },
@@ -108,6 +104,13 @@ const { width, height } = useElementSize(outerDiv)
 const screenScale = 10000
 
 const rects = ref<CognitoMapSite[]>([])
+
+const aspect = computed(() => {
+  if (!props.image) {
+    return 1
+  }
+  return props.image.width / props.image.height
+})
 
 const setColours = () => {
   rects.value.forEach((e) => {
