@@ -1,4 +1,5 @@
 import { CognitoBase } from '../Cognito/Base'
+import type { CognitoMapSite } from '../Cognito/MapSite'
 
 class EventGarage extends CognitoBase {
   name: string
@@ -6,6 +7,7 @@ class EventGarage extends CognitoBase {
   available: boolean
   booked_by: string
   price: number
+  map_site?: CognitoMapSite
 
   baseurl() {
     return '/api/v1/event/garage'

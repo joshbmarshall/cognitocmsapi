@@ -1,4 +1,5 @@
 import type { CognitoAddress } from '../Cognito/Address'
+import { CognitoMapSite } from '../Cognito/MapSite'
 import { CognitoPayment } from '../Cognito/Payment'
 import type { CognitoPhoto } from '../Cognito/Photo'
 import { EventEvent } from './Event'
@@ -135,6 +136,7 @@ class EventEntryForm {
   is_normal_eyesight: boolean
   date_of_last_medical_exam: string
   eventDetails?: EventEvent
+  garageTypeMap: CognitoMapSite[]
   garageTypeRadio: EventEntryFormRadio[]
   licenceTypeRadio: EventEntryFormRadio[]
   entryCategoryRadio: EventEntryFormRadio[]
@@ -191,6 +193,7 @@ class EventEntryForm {
     this.has_hearing_disorder = false
     this.is_normal_eyesight = false
     this.date_of_last_medical_exam = ''
+    this.garageTypeMap = []
     this.garageTypeRadio = []
     this.licenceTypeRadio = []
     this.entryCategoryRadio = []
@@ -400,6 +403,32 @@ class EventEntryForm {
         name,
         disabled: !e.available,
       })
+    })
+  }
+
+  calculateGarageTypeMap({ show_booked_by = false, price_included_in_entry = false }) {
+    if (!this.eventDetails) {
+      return []
+    }
+
+    this.garageTypeMap = this.eventDetails.garages.map((e) => {
+      let name = `${e.type} ${e.name}`
+      if (e.available) {
+        if (!price_included_in_entry) {
+          name += ` - $${e.price.toFixed(2)}`
+        }
+      } else {
+        if (show_booked_by) {
+          name += ` - ${e.booked_by}`
+        } else {
+          name += ' - Unavailable'
+        }
+      }
+      const site = new CognitoMapSite(e.map_site)
+      site.id = e.id
+      site.available = e.available
+      site.hoverText = name
+      return site
     })
   }
 
