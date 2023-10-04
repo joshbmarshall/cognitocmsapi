@@ -1,4 +1,5 @@
 import { CognitoBase } from '../Cognito/Base'
+import { CognitoImage } from '../Cognito/Image'
 import { CognitoState } from '../Cognito/State'
 import { CognitoTime } from '../Cognito/Time'
 import { EventVehicleBodyStyle } from './VehicleBodyStyle'
@@ -20,6 +21,7 @@ class EventVehicle extends CognitoBase {
   engine_type_id: number
   vehicle_owner: string
   owner_mobile: string
+  photo: CognitoImage
 
   baseurl() {
     return '/api/v1/event/vehicle'
@@ -42,6 +44,7 @@ class EventVehicle extends CognitoBase {
     this.owner_mobile = ''
     this.registration_expiry = ''
     Object.assign(this, source)
+    this.photo = new CognitoImage(source?.photo)
   }
 
   registrationHasExpired(): boolean {

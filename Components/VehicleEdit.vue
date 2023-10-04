@@ -25,6 +25,7 @@
           <cgn-form-input-text v-model="newVehicle.vehicle_owner" label="Vehicle Owner" class="w-full" required />
           <cgn-form-input-phone v-model="newVehicle.owner_mobile" label="Owner mobile" class="w-full" required />
         </div>
+        <cgn-form-image v-model="newVehiclePhoto" label="Photo" :required="props.requirePhoto" :thumbnail="newVehicle.photo?.url" />
       </div>
       <div class="w-full p-2">
         <cgn-button
@@ -59,6 +60,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  requirePhoto: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const emit = defineEmits(['update:modelValue', 'update:vehicles', 'close'])
@@ -72,7 +77,8 @@ const bodyStyles = ref<EventVehicleBodyStyle[]>([])
 const states = ref<CognitoState[]>([])
 
 const newVehicle = ref<EventVehicle>(new EventVehicle())
-const selectedVehicle = ref()
+const selectedVehicle = ref(0)
+const newVehiclePhoto = ref('')
 
 const loadInductionTypes = async () => {
   const data = await new EventVehicleInductionType().find_many({})
@@ -97,6 +103,7 @@ const loadStates = async () => {
 const selectVehicle = () => {
   const id = props.modelValue
   selectedVehicle.value = id
+  newVehiclePhoto.value = ''
   newVehicle.value = new EventVehicle(props.vehicles.find(e => id == e.id))
 }
 
@@ -113,6 +120,7 @@ const loadVehicles = async () => {
 }
 
 const saveVehicle = async () => {
+  newVehicle.value.photo = newVehiclePhoto.value
   const data = await newVehicle.value.save()
   await loadVehicles()
   selectedVehicle.value = data.item.id

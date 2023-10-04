@@ -49,6 +49,7 @@ class EventEvent extends CognitoBase {
   licence_types: EventLicenceType[]
   last_address_id: number
   last_vehicle_id: number
+  require_vehicle_photo: boolean
   aasa_licence: string
   user_cannot_enter_reason: string
   user_cannot_apply_stall_site_reason: string
@@ -101,6 +102,7 @@ class EventEvent extends CognitoBase {
     this.licence_types = []
     this.last_address_id = 0
     this.last_vehicle_id = 0
+    this.require_vehicle_photo = false
     this.aasa_licence = ''
     this.user_cannot_enter_reason = ''
     this.user_cannot_apply_stall_site_reason = ''
