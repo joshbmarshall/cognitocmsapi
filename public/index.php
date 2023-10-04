@@ -20,7 +20,7 @@ if (isSecure()) {
   foreach ($redirects as $r) {
     if (strpos($r['from'], '*') !== false) {
       $from = substr($r['from'], 0, -1);
-      if (strncmp($request_page, $from, strlen($from)) !== false) {
+      if (strncmp($request_page, $from, strlen($from)) === 0) {
         if (strpos($r['to'], '*') !== false) {
           $r['to'] = substr($r['to'], 0, -1);
         }
