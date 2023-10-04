@@ -327,7 +327,7 @@ class CgnAxios {
     return import.meta.env?.SSR
   }
 
-  graphql(query: string, variables?: any) {
+  async graphql(query: string, variables?: any) {
     const endpoint = `${config.baseURL}/graphql`
     const access_token = useUserStore().access_token
     const headers = access_token
@@ -341,6 +341,10 @@ class CgnAxios {
     })
 
     return graphQLClient.request(query, variables)
+      .catch(async () => {
+        await this.doRefresh()
+        return graphQLClient.request(query, variables)
+      })
   }
 }
 
