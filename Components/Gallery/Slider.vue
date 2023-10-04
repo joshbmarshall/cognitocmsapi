@@ -11,7 +11,7 @@
       <router-link :to="slide.link" :class="{ 'pointer-events-none': !slide.link }">
         <div class="mx-auto space-y-2 text-white lg:col-start-1 lg:row-start-1 lg:max-w-none">
           <div :class="outerClass(slide)" class="relative">
-            <cgn-lazy-image :class="imageClass(slide)" :image="slide.image" />
+            <cgn-lazy-image :class="imageClass(slide)" :image="slide.image" class="w-full" />
             <div class="absolute inset-0 flex flex-col items-center justify-center p-8 text-center" :class="textClass(slide)">
               <div class="pb-2 font-title text-2xl font-semibold md:text-4xl">
                 {{ slide.heading }}
