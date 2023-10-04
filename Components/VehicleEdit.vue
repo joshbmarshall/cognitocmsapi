@@ -103,8 +103,8 @@ const loadStates = async () => {
 const selectVehicle = () => {
   const id = props.modelValue
   selectedVehicle.value = id
-  newVehiclePhoto.value = ''
   newVehicle.value = new EventVehicle(props.vehicles.find(e => id == e.id))
+  newVehiclePhoto.value = newVehicle.value?.photo?.url ? 'x' : ''
 }
 
 const loadVehicles = async () => {
