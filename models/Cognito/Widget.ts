@@ -23,7 +23,7 @@ class CognitoWidget {
 
   async getList(): Promise<CognitoWidget[]> {
     const res = await $axios.get('/api/v1/cognito/page/widgetList')
-    return res.data
+    return res?.data
   }
 }
 
