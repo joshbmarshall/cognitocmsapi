@@ -30,8 +30,7 @@ class CognitoMenu extends CognitoBase {
   }
 
   async getMenu(name: string, image_aspect?: string, image_width?: string): Promise<CognitoMenu[]> {
-    const res = await $axios.post('/api/v1/cognito/menu/tree', { name, image_aspect, image_width })
-    return res.data
+    return (await $axios.post('/api/v1/cognito/menu/tree', { name, image_aspect, image_width }))?.data ?? []
   }
 }
 
