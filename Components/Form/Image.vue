@@ -1,6 +1,6 @@
 <template>
   <div class="space-y-2">
-    <label class="block select-none pl-1 text-sm text-gray-800 dark:text-gray-200">{{ label }}</label>
+    <cgn-form-label :label="label" :required="required" />
     <div class="flex items-center space-x-4">
       <div v-if="thumb" class="shrink-0">
         <img class="h-16 w-16 rounded-full bg-white object-cover" :src="thumb" :width="width">
@@ -15,8 +15,7 @@
             type="file"
             accept="image/*"
             capture="camera"
-            :required="required"
-            class="hidden"
+            class="h-0 w-0"
             @change="upload"
           >
         </cgn-button>
@@ -24,7 +23,7 @@
           v-model="is_completed"
           type="text"
           :required="required"
-          class="hidden"
+          class="h-0 w-0"
         >
       </div>
     </div>
@@ -144,4 +143,11 @@ const upload = (e) => {
   // Start the upload
   upload.start()
 }
+const checkAlreadyExists = () => {
+  is_completed.value = props.modelValue ? 'yes' : ''
+}
+watch(() => props.modelValue, checkAlreadyExists)
+onMounted(() => {
+  checkAlreadyExists()
+})
 </script>
