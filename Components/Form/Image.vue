@@ -14,7 +14,6 @@
           <input
             type="file"
             accept="image/*"
-            capture="camera"
             class="h-0 w-0"
             @change="upload"
           >
