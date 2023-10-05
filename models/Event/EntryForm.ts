@@ -425,7 +425,7 @@ class EventEntryForm {
         }
       }
       const site = new CognitoMapSite(e.map_site)
-      site.id = e.id
+      site.id = `${e.id}`
       site.available = e.available
       site.hoverText = name
       return site

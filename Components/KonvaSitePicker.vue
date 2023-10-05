@@ -3,7 +3,7 @@
     <div
       :style="{
         width: `${width}px`,
-        height: `${height}px`,
+        height: `${Math.round(width / aspect)}px`,
       }"
       class="absolute"
     >
@@ -14,7 +14,7 @@
       ref="stage"
       :config="{
         width,
-        height: width / aspect,
+        height: Math.round(width / aspect),
       }"
     >
       <v-layer>
