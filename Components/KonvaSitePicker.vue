@@ -17,8 +17,8 @@
         height: Math.round(width / aspect),
       }"
     >
-      <v-layer>
-        <template v-for="rect in rects" :key="rect.id">
+      <template v-for="rect in rects" :key="rect.id">
+        <v-layer>
           <v-rect
             :config="rect"
             @mousemove="rectMouseMove(rect)"
@@ -27,7 +27,9 @@
             @touchstart="rectTouchStart(rect)"
             @touchend="selectSite(rect)"
           />
-        </template>
+        </v-layer>
+      </template>
+      <v-layer v-if="0">
         <template v-for="rect in rects" :key="rect.id">
           <template
             v-if="rect.is_hovered"
@@ -112,18 +114,25 @@ const aspect = computed(() => {
   return props.image.width / props.image.height
 })
 
-const setColours = () => {
+const setPositions = () => {
   rects.value.forEach((e) => {
     e.x = e.pos_x * width.value / screenScale
     e.y = e.pos_y * width.value / screenScale
     e.width = e.pos_width * width.value / screenScale
     e.height = e.pos_height * width.value / screenScale
+  })
+}
+
+const setColours = () => {
+  rects.value.forEach((e) => {
+    let changeTo = props.unselectedColour
     if (!e.available) {
-      e.fill = props.unavailableColour
+      changeTo = props.unavailableColour
     } else if (e.id == props.modelValue) {
-      e.fill = props.selectedColour
-    } else {
-      e.fill = props.unselectedColour
+      changeTo = props.selectedColour
+    }
+    if (e.fill != changeTo) {
+      e.fill = changeTo
     }
   })
 }
@@ -186,10 +195,12 @@ const selectSite = (rect: CognitoMapSite) => {
 }
 
 watch(() => props.modelValue, () => {
+  setPositions()
   setColours()
 })
 
 watch(() => width.value, () => {
+  setPositions()
   setColours()
 })
 
@@ -203,6 +214,7 @@ onMounted(() => {
     e.align = 'left'
     e.valign = 'top'
   })
+  setPositions()
   setColours()
 })
 </script>
