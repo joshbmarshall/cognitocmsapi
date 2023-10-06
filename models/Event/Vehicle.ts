@@ -48,6 +48,9 @@ class EventVehicle extends CognitoBase {
   }
 
   registrationHasExpired(): boolean {
+    if (!this.registration_expiry) {
+      return true
+    }
     return new CognitoTime(this.registration_expiry).isPast()
   }
 }

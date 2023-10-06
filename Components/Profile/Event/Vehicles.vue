@@ -8,7 +8,7 @@
         />
       </div>
     </div>
-    <cgn-vehicle-edit v-if="showVehicleAdd" v-model="edit_vehicle_id" v-model:vehicles="vehicles" @close="showVehicleAdd = false" />
+    <cgn-vehicle-edit v-if="showVehicleAdd" v-model="edit_vehicle_id" v-model:vehicles="vehicles" :require-registration="false" @close="showVehicleAdd = false" />
     <div>
       <div
         v-for="(vehicle, index) in vehicles"
