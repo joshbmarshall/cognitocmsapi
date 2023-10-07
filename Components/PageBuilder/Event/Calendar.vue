@@ -158,27 +158,6 @@
           &nbsp;
       </div>
       <a
-        v-if="modal_event.has_products"
-        :href="`/enter#/shop/event/${modal_event.id}`"
-        class="
-            inline-flex
-            w-full
-            justify-center
-            border-t-2
-            border-gray-200
-            px-4
-            py-3
-            text-sm
-            font-medium
-            text-gray-600
-            shadow-sm
-            hover:bg-gray-100
-          "
-        :class="modal_event.can_enter_online ? 'sm:w-1/2 border-l' : ''"
-      >
-        Shop Merch
-      </a>
-      <a
         v-if="modal_event.can_buy_spectator_tickets"
         :href="`/enter#/spectate/${modal_event.id}`"
         class="
@@ -225,7 +204,7 @@
         Enter from ${{ modal_event.event_entry_price }}
       </a>
       <a
-        v-if="modal_event.can_enter_online && !modal_event.title.is_experience && modal_event.title.purchase_multiple_entries"
+        v-if="modal_event.can_enter_online"
         :href="`/enter#/enterMe/${modal_event.id}`"
         class="
             inline-flex
@@ -247,52 +226,12 @@
       >
         Enter from ${{ modal_event.event_entry_price }}
       </a>
-      <a
-        v-if="modal_event.title.is_experience"
-        class="
-            inline-flex
-            w-full
-            justify-center
-            border-t-2
-            border-gray-200
-            px-4
-            py-3
-            text-sm
-            font-medium
-            text-gray-600
-            shadow-sm
-            hover:bg-gray-100
-          "
-        :href="`/enter#/experienceBuy/${modal_event.title.gift_voucher_theme_id}/${format(parseISO(modal_event.start_time), 'yyyy-MM-dd')}`"
-      >
-        Buy gift voucher
-      </a>
-      <a
-        v-if="modal_event.title.is_experience"
-        class="
-            inline-flex
-            w-full
-            justify-center
-            border-t-2
-            border-gray-200
-            px-4
-            py-3
-            text-sm
-            font-medium
-            text-gray-600
-            shadow-sm
-            hover:bg-gray-100
-          "
-        :href="`/enter#/enterMe/${modal_event.id}`"
-      >
-        Book Now
-      </a>
     </template>
   </cgn-modal>
 </template>
 
 <script setup lang="ts">
-import { addDays, addMonths, format, formatISO, isAfter, isBefore, isMonday, isSameDay, parse, parseISO, previousMonday, startOfDay, startOfMonth, subMonths } from 'date-fns'
+import { addDays, addMonths, format, formatISO, isAfter, isBefore, isMonday, isSameDay, parse, previousMonday, startOfDay, startOfMonth, subMonths } from 'date-fns'
 import { $axios } from '~cognito/plugins/axios'
 import { EventEvent } from '~cognito/models/Event/Event'
 
@@ -312,8 +251,8 @@ const event_popup = ref(false)
 
 const modal_event_date = computed(() => {
   return modal_event.value.isOneDayEvent()
-    ? `${modal_event.value.start_time_fmt.format('d MMMM h:mma')} - ${modal_event.value.end_time_fmt.format('h:mma')}`
-    : `${modal_event.value.start_time_fmt.format('d MMMM h:mma')} - ${modal_event.value.end_time_fmt.format('d MMMM h:mma')}`
+    ? `${modal_event.value.start_time.format('d MMMM h:mma')} - ${modal_event.value.end_time.format('h:mma')}`
+    : `${modal_event.value.start_time.format('d MMMM h:mma')} - ${modal_event.value.end_time.format('d MMMM h:mma')}`
 })
 const getEvents = () => {
   const start = format(subMonths(curMonth.value, 1), 'yyyy-MM-dd')

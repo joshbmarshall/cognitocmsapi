@@ -148,6 +148,10 @@ class EventEvent extends CognitoBase {
     const res = await $axios.get(`${this.baseurl()}/upcomingEventList?type_id=${type}`)
     return this.map(res.data.data)
   }
+
+  isOneDayEvent() {
+    return this.start_date.toDateString() == this.end_date.toDateString()
+  }
 }
 
 export { EventEvent }
