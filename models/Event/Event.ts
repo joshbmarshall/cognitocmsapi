@@ -63,6 +63,9 @@ class EventEvent extends CognitoBase {
   stall_vehicle_make_and_model: string
   stall_vehicle_registration: string
   stall_power: EventEntryFormStallPower[]
+  featured_event?: boolean
+  featured_desktop_image?: CognitoImage
+  featured_mobile_image?: CognitoImage
   payment_methods: {
     id: string
     name: string
