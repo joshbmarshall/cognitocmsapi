@@ -2,7 +2,7 @@
   <div>
     We've sent you a link to sign in to your account
     <form class="space-y-6" @submit.prevent="testResetCode">
-      <cgn-form-input-text v-model="otp" label="OTP code" required />
+      <cgn-form-input-text v-model="otp" inputmode="numeric" label="OTP code" required />
 
       <cgn-alert-danger v-if="errorMessage">
         {{ errorMessage }}
