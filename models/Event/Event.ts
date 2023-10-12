@@ -26,6 +26,7 @@ class EventEvent extends CognitoBase {
   end_date: CognitoTime
   image: CognitoImage
   blurb: string
+  calendar_content: string
   page_content: string
   venue: EventVenue
   dates: EventDate[]
@@ -87,6 +88,7 @@ class EventEvent extends CognitoBase {
     this.venue = new EventVenue()
     this.dates = []
     this.blurb = ''
+    this.calendar_content = ''
     this.page_content = ''
     this.entrant_content = ''
     this.spectator_content = ''

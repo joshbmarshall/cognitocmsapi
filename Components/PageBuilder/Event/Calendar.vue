@@ -147,85 +147,14 @@
       <div class="prose" v-html="modal_event.calendar_content" />
     </template>
     <template #button-footer>
-      <div
-        v-if="
-          !modal_event.can_enter_online
-            && !modal_event.can_buy_spectator_tickets
-            && !modal_event.title.is_experience
-        "
-        class="w-full border-t-2 border-gray-200 py-3"
+      <cgn-button
+        v-if="modal_event.can_enter"
+        :url="`/event/${modal_event.url}`"
+        color-brand
+        fullwidth
       >
-          &nbsp;
-      </div>
-      <a
-        v-if="modal_event.can_buy_spectator_tickets"
-        :href="`/enter#/spectate/${modal_event.id}`"
-        class="
-            inline-flex
-            w-full
-            justify-center
-            border-t-2
-            border-gray-200
-            px-4
-            py-3
-            text-sm
-            font-medium
-            text-gray-600
-            shadow-sm
-            hover:bg-gray-100
-          "
-        :class="modal_event.can_enter_online ? 'sm:w-1/2 border-l' : ''"
-      >
-        <span>
-          {{ modal_event.spectator_prompt }} ${{ modal_event.spectator_price }}
-        </span>
-      </a>
-      <a
-        v-if="modal_event.can_enter_online && !modal_event.title.is_experience && !modal_event.title.purchase_multiple_entries"
-        :href="`/enter#/enter/${modal_event.id}`"
-        class="
-            inline-flex
-            w-full
-            justify-center
-            border-t-2
-            border-gray-200
-            px-4
-            py-3
-            text-sm
-            font-medium
-            text-gray-600
-            shadow-sm
-            hover:bg-gray-100
-          "
-        :class="
-          modal_event.can_buy_spectator_tickets ? 'sm:w-1/2 border-r' : ''
-        "
-      >
-        Enter from ${{ modal_event.event_entry_price }}
-      </a>
-      <a
-        v-if="modal_event.can_enter_online"
-        :href="`/enter#/enterMe/${modal_event.id}`"
-        class="
-            inline-flex
-            w-full
-            justify-center
-            border-t-2
-            border-gray-200
-            px-4
-            py-3
-            text-sm
-            font-medium
-            text-gray-600
-            shadow-sm
-            hover:bg-gray-100
-          "
-        :class="
-          modal_event.can_buy_spectator_tickets ? 'sm:w-1/2 border-r' : ''
-        "
-      >
-        Enter from ${{ modal_event.event_entry_price }}
-      </a>
+        Details
+      </cgn-button>
     </template>
   </cgn-modal>
 </template>
@@ -251,8 +180,8 @@ const event_popup = ref(false)
 
 const modal_event_date = computed(() => {
   return modal_event.value.isOneDayEvent()
-    ? `${modal_event.value.start_time.format('d MMMM h:mma')} - ${modal_event.value.end_time.format('h:mma')}`
-    : `${modal_event.value.start_time.format('d MMMM h:mma')} - ${modal_event.value.end_time.format('d MMMM h:mma')}`
+    ? `${modal_event.value.start_date.format('d MMMM')}`
+    : `${modal_event.value.start_date.format('d MMMM')} - ${modal_event.value.end_date.format('d MMMM')}`
 })
 const getEvents = () => {
   const start = format(subMonths(curMonth.value, 1), 'yyyy-MM-dd')
