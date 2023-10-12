@@ -33,6 +33,7 @@ class EventEvent extends CognitoBase {
   spectator_content: string
   entries_open_at: CognitoTime
   can_enter: boolean
+  cant_enter_reason: string
   can_buy_spectator_ticket: boolean
   can_apply_stall_site: boolean
   categories: EventCategory[]
@@ -90,6 +91,7 @@ class EventEvent extends CognitoBase {
     this.entrant_content = ''
     this.spectator_content = ''
     this.can_enter = false
+    this.cant_enter_reason = ''
     this.can_buy_spectator_ticket = false
     this.can_apply_stall_site = false
     this.categories = []
