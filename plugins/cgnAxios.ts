@@ -236,6 +236,7 @@ class CgnAxios {
   }
 
   async doRefresh() {
+    console.log('doing refresh')
     const refresh_token = this.userStore().refresh_token
     const fingerprint = this.userStore().getAuthFingerprint()
 
@@ -343,7 +344,7 @@ class CgnAxios {
     return graphQLClient.request(query, variables)
       .catch(async () => {
         await this.doRefresh()
-        return graphQLClient.request(query, variables)
+        return this.graphql(query, variables)
       })
   }
 }
