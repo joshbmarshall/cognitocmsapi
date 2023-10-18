@@ -140,6 +140,8 @@ class EventEvent extends CognitoBase {
     }
     if (source?.stall_power) {
       this.stall_power = source?.stall_power.map(e => new EventEntryFormStallPower(e))
+    } else {
+      this.stall_power = []
     }
   }
 
