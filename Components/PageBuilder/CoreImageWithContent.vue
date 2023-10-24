@@ -1,6 +1,6 @@
 <template>
   <div class="gap-4 sm:flex">
-    <cgn-lazy-image v-if="templatevar.image" :image="templatevar.image" class="sm:w-2/5" :class="{ 'order-last': templatevar.image_align == 'right' }" />
+    <cgn-lazy-image v-if="templatevar.image" :image="templatevar.image" class="sm:w-2/5" :class="{ 'sm:order-last': templatevar.image_align == 'right' }" />
     <div class="prose flex max-w-none grow flex-col dark:prose-invert" v-html="templatevar.html" />
   </div>
 </template>
