@@ -63,6 +63,16 @@ const config = {
         },
       ],
     },
+    {
+      widget: 'core/image_with_content',
+      images: [
+        {
+          name: 'image',
+          image_aspect: '16x9',
+          image_width: 1920,
+        },
+      ],
+    },
   ],
   group_args: {
     image_aspect: '1x1',

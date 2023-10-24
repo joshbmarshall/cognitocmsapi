@@ -34,10 +34,10 @@
         class="absolute right-0 top-full mt-5 w-56 rounded-md border-2 bg-white text-black dark:bg-gray-800 dark:text-white"
       >
         <div class="relative mx-auto flex max-h-96 max-w-7xl flex-col gap-2 p-4">
-          <div v-for="link in links" :key="link.name" class="py-1">
-            <router-link :to="link.link" class="text-base">
+          <router-link v-for="link in links" :key="link.name" :to="link.link" class="block py-1">
+            <div class="text-base">
               {{ link.name }}
-            </router-link>
+            </div>
             <span v-for="childLink in link.children" :key="childLink.name">
               <router-link
                 :to="childLink.link"
@@ -46,7 +46,7 @@
                 {{ childLink.name }}
               </router-link>
             </span>
-          </div>
+          </router-link>
         </div>
       </div>
     </transition>

@@ -20,7 +20,9 @@
   <div v-else-if="widget.outer == 'core/button_link'" :class="props.containedClass">
     <cgn-page-builder-core-button-link :templatevar="widget.templatevar" />
   </div>
-
+  <div v-else-if="widget.outer == 'core/image_with_content'" :class="props.containedClass">
+    <cgn-page-builder-core-image-with-content :templatevar="widget.templatevar" />
+  </div>
   <div v-else-if="widget.outer == 'core/person_list'" :class="props.uncontainedClass">
     <cgn-page-builder-core-person-list :templatevar="widget.templatevar" />
   </div>
