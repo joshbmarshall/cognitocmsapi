@@ -11,9 +11,11 @@ class EventVehicle extends CognitoBase {
   year_of_manufacture: string
   model: string
   colour: string
-  body_style_id: EventVehicleBodyStyle
+  body_style_id: number
+  body_style: EventVehicleBodyStyle
   registration: string
-  registration_state_id: CognitoState
+  registration_state_id: number
+  registration_state: CognitoState
   registration_expiry: string
   induction_type: EventVehicleInductionType
   induction_type_id: number
@@ -33,9 +35,11 @@ class EventVehicle extends CognitoBase {
     this.year_of_manufacture = ''
     this.model = ''
     this.colour = ''
-    this.body_style_id = new EventVehicleBodyStyle()
+    this.body_style_id = 0
+    this.body_style = new EventVehicleBodyStyle()
     this.registration = ''
-    this.registration_state_id = new CognitoState()
+    this.registration_state_id = 0
+    this.registration_state = new CognitoState()
     this.induction_type = new EventVehicleInductionType()
     this.induction_type_id = 0
     this.engine_type = new EventVehicleEngineType()
