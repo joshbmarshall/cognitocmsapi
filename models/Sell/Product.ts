@@ -36,7 +36,16 @@ class SellProduct extends CognitoBase {
   in_stock: boolean
   is_new: boolean
   is_on_special: boolean
-  groups: string[]
+  groups: {
+    slug: string
+    name: string
+  }[]
+
+  primary_group?: {
+    slug: string
+    name: string
+  }
+
   video: CognitoVideo
   skus: SellSku[]
   addons: string[]
