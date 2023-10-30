@@ -162,10 +162,9 @@
               required
             />
 
-            <cgn-form-input
+            <cgn-form-input-date-of-birth
               v-if="config.profile.edit_date_of_birth"
               v-model="formValues.date_of_birth"
-              type="date"
               label="Date of Birth"
             />
 

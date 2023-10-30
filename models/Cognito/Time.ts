@@ -1,4 +1,4 @@
-import { addMinutes, differenceInCalendarDays, format, isAfter, isFuture, isPast, isSameDay, isSameMonth, parseISO, subMinutes, subMonths } from 'date-fns'
+import { addMinutes, differenceInCalendarDays, differenceInYears, format, isAfter, isFuture, isPast, isSameDay, isSameMonth, parseISO, subMinutes, subMonths } from 'date-fns'
 
 class CognitoTime {
   time: Date
@@ -36,6 +36,10 @@ class CognitoTime {
 
   isPast(): boolean {
     return isPast(this.time)
+  }
+
+  age(): number {
+    return differenceInYears(new Date(), this.time)
   }
 
   isSameDay(compare_to: CognitoTime): boolean {
