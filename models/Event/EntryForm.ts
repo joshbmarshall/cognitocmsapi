@@ -112,6 +112,7 @@ class EventEntryForm {
   category_id: number
   address_id: number
   garage_id: number
+  camp_site_id: number
   licence_id: number
   vehicle_id: number
   aasa_licence: string
@@ -138,6 +139,8 @@ class EventEntryForm {
   eventDetails?: EventEvent
   garageTypeMap: CognitoMapSite[]
   garageTypeRadio: EventEntryFormRadio[]
+  campSiteTypeMap: CognitoMapSite[]
+  campSiteTypeRadio: EventEntryFormRadio[]
   licenceTypeRadio: EventEntryFormRadio[]
   entryCategoryRadio: EventEntryFormRadio[]
   stallSiteTypeRadio: EventEntryFormRadio[]
@@ -170,6 +173,7 @@ class EventEntryForm {
     this.category_id = 0
     this.address_id = 0
     this.garage_id = 0
+    this.camp_site_id = 0
     this.licence_id = 0
     this.vehicle_id = 0
     this.aasa_licence = ''
@@ -195,6 +199,8 @@ class EventEntryForm {
     this.date_of_last_medical_exam = ''
     this.garageTypeMap = []
     this.garageTypeRadio = []
+    this.campSiteTypeMap = []
+    this.campSiteTypeRadio = []
     this.licenceTypeRadio = []
     this.entryCategoryRadio = []
     this.stallSiteTypeRadio = []
@@ -256,11 +262,11 @@ class EventEntryForm {
     this.entryCategoryRadio = eventDetails.categories.map((e) => {
       let name = e.name
       if (e.sold_out) {
-        name += '- Sold out'
+        name += ' - Sold out'
       } else if (e.cannot_enter_reason) {
         name += ` - ${e.cannot_enter_reason}`
       } else {
-        name += `$${e.price}`
+        name += ` $${e.price}`
       }
       return new EventEntryFormRadio({
         id: e.id,
@@ -367,6 +373,13 @@ class EventEntryForm {
     return this.eventDetails?.garages.find(e => e.id == this.garage_id)
   }
 
+  selectedCampSite() {
+    if (this.camp_site_id == 0) {
+      return null
+    }
+    return this.eventDetails?.camp_sites.find(e => e.id == this.camp_site_id)
+  }
+
   selectedLicence() {
     if (this.licence_id == 0) {
       return null
@@ -440,11 +453,64 @@ class EventEntryForm {
     })
   }
 
+  calculateCampSiteTypeRadio({ show_booked_by = false, price_included_in_entry = false }) {
+    if (!this.eventDetails) {
+      return []
+    }
+
+    this.campSiteTypeRadio = this.eventDetails.camp_sites.map((e) => {
+      let name = `${e.type} ${e.name}`
+      if (e.available) {
+        if (!price_included_in_entry) {
+          name += ` - $${e.price.toFixed(2)}`
+        }
+      } else {
+        if (show_booked_by) {
+          name += ` - ${e.booked_by}`
+        } else {
+          name += ' - Unavailable'
+        }
+      }
+      return new EventEntryFormRadio({
+        id: e.id,
+        name,
+        disabled: !e.available,
+      })
+    })
+  }
+
+  calculateCampSiteTypeMap({ show_booked_by = false, price_included_in_entry = false }) {
+    if (!this.eventDetails) {
+      return []
+    }
+
+    this.campSiteTypeMap = this.eventDetails.camp_sites.map((e) => {
+      let name = `${e.type} ${e.name}`
+      if (e.available) {
+        if (!price_included_in_entry) {
+          name += ` - $${e.price.toFixed(2)}`
+        }
+      } else {
+        if (show_booked_by) {
+          name += ` - ${e.booked_by}`
+        } else {
+          name += ' - Unavailable'
+        }
+      }
+      const site = new CognitoMapSite(e.map_site)
+      site.id = `${e.id}`
+      site.available = e.available
+      site.hoverText = name
+      return site
+    })
+  }
+
   totalPrice() {
     let cost = 0
     const category = this.selectedCategory()
     const licence = this.selectedLicence()
     const garage = this.selectedGarage()
+    const campSite = this.selectedCampSite()
 
     if (category) {
       cost += category.price
@@ -458,6 +524,9 @@ class EventEntryForm {
       } else {
         cost += garage.price
       }
+    }
+    if (campSite) {
+      cost += campSite.price
     }
     this.extras.forEach((extra) => {
       if (extra.checked) {

@@ -2,6 +2,7 @@ import { CognitoBase } from '../Cognito/Base'
 import { CognitoImage } from '../Cognito/Image'
 import { CognitoTime } from '../Cognito/Time'
 import { CognitoUserDocument } from '../Cognito/UserDocument'
+import type { EventCampSite } from './CampSite'
 import type { EventCategory } from './Category'
 import { EventDate } from './Date'
 import { EventEntryFormStallPower } from './EntryForm'
@@ -45,6 +46,9 @@ class EventEvent extends CognitoBase {
   garage_map?: CognitoImage
   garages: EventGarage[]
   garage_hire: boolean
+  camp_site_map?: CognitoImage
+  camp_sites: EventCampSite[]
+  offer_camp_sites: boolean
   extras: EventExtra[]
   merch: EventMerch[]
   products: EventProduct[]
@@ -103,6 +107,8 @@ class EventEvent extends CognitoBase {
     this.stall_power_types = []
     this.garages = []
     this.garage_hire = false
+    this.camp_sites = []
+    this.offer_camp_sites = false
     this.extras = []
     this.merch = []
     this.products = []
