@@ -254,12 +254,20 @@ class EventEntryForm {
       })
     })
     this.entryCategoryRadio = eventDetails.categories.map((e) => {
+      let name = e.name
+      if (e.sold_out) {
+        name += '- Sold out'
+      } else if (e.cannot_enter_reason) {
+        name += ` - ${e.cannot_enter_reason}`
+      } else {
+        name += `$${e.price}`
+      }
       return new EventEntryFormRadio({
         id: e.id,
-        name: `${e.name} ${(e.sold_out) ? '- Sold out' : `$${e.price}`}`,
+        name,
         class: e.sold_out ? 'text-danger-500' : '',
         content: `${e.entry_description}`,
-        disabled: e.sold_out,
+        disabled: e.sold_out || e.cannot_enter_reason.length > 0,
       })
     })
     this.entryCategoryRadio.push({ id: 0, name: 'Spectating Only', content: 'See below', disabled: false })
