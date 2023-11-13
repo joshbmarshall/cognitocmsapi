@@ -59,15 +59,20 @@ const props = defineProps({
   },
   hereApiKey: {
     type: String,
+    required: true,
+  },
+  addresses: {
+    type: Array<CognitoAddress>,
+    default: [],
   },
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'update:addresses'])
 
 const hereApiAddress = ref()
+const addressDropdown = ref([])
 
 const newAddress = ref<CognitoAddress>(new CognitoAddress())
-const addresses = ref<CognitoAddress[]>([])
 
 const selectedAddress = ref()
 
@@ -75,13 +80,7 @@ const loadAddresses = async () => {
   const data = await new CognitoAddress().find_many({
     user_id: useUserStore().user.id,
   })
-  addresses.value = data.mapped
-  if (props.modelValue) {
-    return
-  }
-  if (addresses.value[0]) {
-    selectedAddress.value = addresses.value[0].id
-  }
+  emit('update:addresses', data.mapped)
 }
 
 const saveAddress = async () => {
@@ -109,8 +108,8 @@ watch(() => props.modelValue, (newval) => {
   selectedAddress.value = newval
 })
 
-const addressDropdown = computed(() => {
-  return addresses.value.map((e) => {
+watch(() => props.addresses, (newval) => {
+  addressDropdown.value = newval.map((e) => {
     return {
       id: e.id,
       name: `${e.street_address} ${e.suburb_name} ${e.state}`,
