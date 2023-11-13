@@ -276,7 +276,11 @@ class EventEntryForm {
         disabled: e.sold_out || e.cannot_enter_reason.length > 0,
       })
     })
-    this.entryCategoryRadio.push({ id: 0, name: 'Spectating Only', content: 'See below', disabled: false })
+    if (eventDetails.spectator_types.length > 0) {
+      this.entryCategoryRadio.push({ id: 0, name: 'Spectating Only', content: 'See below', disabled: false })
+    } else {
+      this.entryCategoryRadio.push({ id: 0, name: 'Not Entering', content: 'Choose from other options below', disabled: false })
+    }
 
     this.licenceTypeRadio = eventDetails.licence_types.map((e) => {
       return new EventEntryFormRadio({
