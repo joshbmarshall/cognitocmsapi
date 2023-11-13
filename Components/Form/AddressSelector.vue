@@ -76,11 +76,21 @@ const newAddress = ref<CognitoAddress>(new CognitoAddress())
 
 const selectedAddress = ref()
 
+const calculateDropdown = (newval: CognitoAddress[]) => {
+  addressDropdown.value = newval.map((e) => {
+    return {
+      id: e.id,
+      name: `${e.street_address} ${e.suburb_name} ${e.state}`,
+    }
+  })
+}
+
 const loadAddresses = async () => {
   const data = await new CognitoAddress().find_many({
     user_id: useUserStore().user.id,
   })
   emit('update:addresses', data.mapped)
+  calculateDropdown(data.mapped)
 }
 
 const saveAddress = async () => {
@@ -108,14 +118,7 @@ watch(() => props.modelValue, (newval) => {
   selectedAddress.value = newval
 })
 
-watch(() => props.addresses, (newval) => {
-  addressDropdown.value = newval.map((e) => {
-    return {
-      id: e.id,
-      name: `${e.street_address} ${e.suburb_name} ${e.state}`,
-    }
-  })
-})
+watch(() => props.addresses, calculateDropdown)
 
 watch(() => selectedAddress.value, (newval) => {
   emit('update:modelValue', newval)
