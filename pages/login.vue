@@ -32,6 +32,9 @@
         </div>
 
         <form v-else @submit.prevent="sendLink">
+          <p v-if="!createAccountMode">
+            Please enter your email below to log in or sign up.
+          </p>
           <cgn-form-input-email v-model="username" label="Email address" required />
           <div v-if="createAccountMode">
             <cgn-alert-info>
