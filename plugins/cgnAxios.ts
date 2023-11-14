@@ -342,9 +342,13 @@ class CgnAxios {
     })
 
     return graphQLClient.request(query, variables)
-      .catch(async () => {
-        await this.doRefresh()
-        return this.graphql(query, variables)
+      .catch(async (e) => {
+        if (e.response.status === 401 || e.response.status === 422) {
+          await this.doRefresh()
+          return this.graphql(query, variables)
+        }
+        console.log(e.message)
+        return e.response.data
       })
   }
 }
