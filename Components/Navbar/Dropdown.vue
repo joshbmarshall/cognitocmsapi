@@ -33,7 +33,7 @@
         v-if="!isHidden"
         class="absolute right-0 top-full mt-5 w-56 rounded-md border-2 bg-white text-black dark:bg-gray-800 dark:text-white"
       >
-        <div class="relative mx-auto flex max-h-96 max-w-7xl flex-col gap-2 p-4">
+        <div class="relative mx-auto flex max-w-7xl flex-col gap-2 p-4">
           <router-link v-for="link in links" :key="link.name" :to="link.link" class="block py-1">
             <div class="text-base">
               {{ link.name }}
