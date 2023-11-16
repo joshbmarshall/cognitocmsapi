@@ -1,7 +1,17 @@
 <template>
   <div class="gap-4 sm:flex">
-    <cgn-lazy-image v-if="templatevar.image" :image="templatevar.image" class="sm:w-2/5" :class="{ 'sm:order-last': templatevar.image_align == 'right' }" />
-    <div class="prose flex max-w-none grow flex-col dark:prose-invert" v-html="templatevar.html" />
+    <div class="sm:w-2/5" :class="{ 'sm:order-last': templatevar.image_align == 'right' }">
+      <cgn-lazy-image v-if="templatevar.image" :image="templatevar.image" class="rounded-md" />
+    </div>
+    <div class="flex w-3/5 flex-col">
+      <div class="pb-2 font-display text-3xl text-black dark:text-white">
+        {{ templatevar.heading }}
+      </div>
+      <div class="prose max-w-none dark:prose-invert" v-html="templatevar.html" />
+      <cgn-button v-if="templatevar.button_text" color-brand size-large :url="templatevar.button_link">
+        {{ templatevar.button_text }}
+      </cgn-button>
+    </div>
   </div>
 </template>
 
@@ -9,9 +19,12 @@
 import type { CognitoImage } from '~cognito/models/Cognito/Image'
 
 class Templatevars {
+  heading?: string
   html?: string
   image?: CognitoImage
   image_align?: string
+  button_link?: string
+  button_text?: string
 }
 </script>
 
