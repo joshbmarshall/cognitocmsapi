@@ -68,7 +68,7 @@
           </cgn-button>
         </form>
         <div v-if="!createAccountMode" class="text-right">
-          <cgn-link to="https://iss.j.jm1.au/cms/cognito/default/goToSite" noblanktarget>
+          <cgn-link :to="`${config.baseURL}/cms/cognito/default/goToSite`" noblanktarget>
             Log on with a password
           </cgn-link>
         </div>
