@@ -81,12 +81,12 @@ class CognitoTime {
 
   betweenDateString(othertime: CognitoTime): string {
     if (this.isSameDay(othertime)) {
-      return this.format('eee do MMMM')
+      return this.format('eeee do MMMM')
     }
     if (this.isSameMonth(othertime)) {
-      return `${this.format('eee do')} - ${othertime.format('eee do MMMM')}`
+      return `${this.format('eeee do')} - ${othertime.format('eeee do MMMM')}`
     }
-    return `${this.format('eee do MMMM')} - ${othertime.format('eee do MMMM')}`
+    return `${this.format('eeee do MMMM')} - ${othertime.format('eeee do MMMM')}`
   }
 
   isAfter(othertime: CognitoTime): boolean {
