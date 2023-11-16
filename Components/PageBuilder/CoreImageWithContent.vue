@@ -3,7 +3,7 @@
     <div class="sm:w-2/5" :class="{ 'sm:order-last': templatevar.image_align == 'right' }">
       <cgn-lazy-image v-if="templatevar.image" :image="templatevar.image" class="rounded-md" />
     </div>
-    <div class="flex w-3/5 flex-col">
+    <div class="flex flex-col sm:w-3/5">
       <div v-if="templatevar.heading" class="cgn-heading cgn-heading-1 font-display text-black dark:text-white">
         {{ templatevar.heading }}
       </div>
