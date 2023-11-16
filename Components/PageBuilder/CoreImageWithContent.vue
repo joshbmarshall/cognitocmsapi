@@ -4,7 +4,7 @@
       <div class="sm:w-2/5" :class="{ 'sm:order-last': templatevar.image_align == 'right' }">
         <cgn-lazy-image v-if="templatevar.image" :image="templatevar.image" class="rounded-md" />
       </div>
-      <div class="flex flex-col sm:w-3/5">
+      <div class="flex flex-col pt-2 sm:w-3/5 sm:pt-0">
         <div v-if="templatevar.heading" class="cgn-heading cgn-heading-1 font-display text-black dark:text-white">
           {{ templatevar.heading }}
         </div>
