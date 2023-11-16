@@ -5,6 +5,7 @@
     <cgn-gallery-centered-grid v-else-if="props.templatevar.type == 'centeredgrid'" :gallery="gallery" />
     <cgn-gallery-grid
       v-else-if="props.templatevar.type == 'grid'"
+      :class="props.containedClass"
       :gallery="gallery"
       :heading="props.templatevar.heading"
       :subheading="props.templatevar.subheading"
@@ -40,6 +41,9 @@ const props = defineProps({
   templatevar: {
     type: Templatevars,
     required: true,
+  },
+  containedClass: {
+    type: String,
   },
 })
 
