@@ -4,7 +4,7 @@
       <cgn-lazy-image v-if="templatevar.image" :image="templatevar.image" class="rounded-md" />
     </div>
     <div class="flex w-3/5 flex-col">
-      <div class="pb-2 font-display text-3xl text-black dark:text-white">
+      <div v-if="templatevar.heading" class="cgn-heading cgn-heading-1 font-display text-black dark:text-white">
         {{ templatevar.heading }}
       </div>
       <div class="prose max-w-none dark:prose-invert" v-html="templatevar.html" />
