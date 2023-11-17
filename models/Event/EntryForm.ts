@@ -108,6 +108,10 @@ class EventEntryForm {
   }[]
 
   payment_gateway: string
+  first_name: string
+  last_name: string
+  email: string
+  mobile_phone: string
   event_id?: string | number
   category_id: number
   address_id: number
@@ -167,6 +171,10 @@ class EventEntryForm {
   stall_photos: CognitoPhoto[]
 
   constructor(source?: Partial<EventEntryForm>) {
+    this.first_name = ''
+    this.last_name = ''
+    this.email = ''
+    this.mobile_phone = ''
     this.payment_options = []
     this.payment_gateway = ''
     this.event_id = 0
@@ -229,6 +237,13 @@ class EventEntryForm {
   }
 
   async loadEvent(event: string): Promise<EventEvent> {
+    const user = useUserStore().user
+    if (user) {
+      this.first_name = user.first_name
+      this.last_name = user.last_name
+      this.email = user.email
+      this.mobile_phone = user.mobile_phone
+    }
     const data = await new EventEvent().find_one({
       url: event,
       image_width: 1920,
