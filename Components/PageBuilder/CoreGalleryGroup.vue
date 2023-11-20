@@ -15,10 +15,10 @@
             </div>
           </div>
           <div v-if="gallery.heading" class="absolute bottom-0 right-0 translate-y-full p-2 text-right text-white transition-transform duration-300 group-hover:translate-y-0">
-            <div class="font-display text-2xl font-semibold">
+            <div class="font-display font-semibold sm:text-2xl">
               {{ gallery.heading }}
             </div>
-            <div v-if="gallery.sub_heading" class="font-display font-semibold">
+            <div v-if="gallery.sub_heading" class="font-display text-sm font-semibold sm:text-base">
               {{ gallery.sub_heading }}
             </div>
           </div>
@@ -41,10 +41,10 @@
             </div>
           </div>
           <div v-if="slide.heading" class="absolute bottom-0 right-0 translate-y-full p-2 text-right text-white transition-transform duration-300 group-hover:translate-y-0">
-            <div class="font-display text-2xl font-semibold">
+            <div class="font-display font-semibold sm:text-2xl">
               {{ slide.heading }}
             </div>
-            <div v-if="slide.sub_heading" class="font-display font-semibold">
+            <div v-if="slide.sub_heading" class="font-display text-sm font-semibold sm:text-base">
               {{ slide.sub_heading }}
             </div>
           </div>
