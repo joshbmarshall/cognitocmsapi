@@ -1,11 +1,11 @@
 <template>
-  <div v-if="props.templatevar.heading" class="prose dark:prose-dark">
-    <div class="cgn-heading cgn-heading-1">
+  <div v-if="props.templatevar.heading" class="prose dark:prose-invert">
+    <div class="cgn-heading cgn-heading-3 text-white">
       {{ props.templatevar.heading }}
     </div>
-    <p v-if="props.templatevar.subheading">
+    <div v-if="props.templatevar.subheading">
       {{ props.templatevar.subheading }}
-    </p>
+    </div>
   </div>
   <div class="grid gap-6 py-4 md:grid-cols-2">
     <div v-for="testimonial in testimonials" :key="testimonial.id" class="rounded-md bg-gray-200 p-6 pb-3 dark:bg-darkbg-500">
