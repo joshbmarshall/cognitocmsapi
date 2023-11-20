@@ -1,4 +1,12 @@
 <template>
+  <div v-if="props.templatevar.heading" class="prose dark:prose-dark">
+    <div class="cgn-heading cgn-heading-1">
+      {{ props.templatevar.heading }}
+    </div>
+    <p v-if="props.templatevar.subheading">
+      {{ props.templatevar.subheading }}
+    </p>
+  </div>
   <div class="grid gap-6 py-4 md:grid-cols-2">
     <div v-for="testimonial in testimonials" :key="testimonial.id" class="rounded-md bg-gray-200 p-6 pb-3 dark:bg-darkbg-500">
       <div class="relative p-2">
@@ -19,10 +27,24 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import { gql } from 'graphql-request'
 import { CognitoTestimonial } from '~cognito/models/Cognito/Testimonial'
 import { $axios } from '~cognito/plugins/axios'
+
+class Templatevars {
+  heading?: string
+  subheading?: string
+}
+</script>
+
+<script setup lang="ts">
+const props = defineProps({
+  templatevar: {
+    type: Templatevars,
+    required: true,
+  },
+})
 
 const testimonials = ref<CognitoTestimonial[]>([])
 
