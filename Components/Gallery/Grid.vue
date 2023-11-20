@@ -6,7 +6,7 @@
         {{ props.subheading }}
       </p>
     </div>
-    <div class="mx-auto grid gap-2 p-2" :class="widthClass">
+    <div class="mx-auto grid gap-2 pt-2" :class="widthClass">
       <div v-for="slide in slides" :key="slide.id" class="group relative overflow-hidden bg-black" @click="selectedSlide = slide; modal_open = true">
         <div class="mx-auto space-y-2 text-white lg:col-start-1 lg:row-start-1 lg:max-w-none">
           <div :class="outerClass(slide)" class="relative aspect-[1/1]">

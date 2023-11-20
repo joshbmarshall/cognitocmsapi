@@ -38,7 +38,7 @@
   <div v-else-if="widget.outer == 'core/gallery'" :class="props.uncontainedClass">
     <cgn-page-builder-core-gallery :templatevar="widget.templatevar" :contained-class="props.containedClass" />
   </div>
-  <div v-else-if="widget.outer == 'core/gallery_group'" :class="props.uncontainedClass">
+  <div v-else-if="widget.outer == 'core/gallery_group'" :class="props.containedClass">
     <cgn-page-builder-core-gallery-group :templatevar="widget.templatevar" />
   </div>
   <div v-else-if="widget.outer == 'core/link_children'" :class="props.uncontainedClass">
