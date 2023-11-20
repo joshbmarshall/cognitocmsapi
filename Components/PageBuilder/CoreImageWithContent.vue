@@ -8,7 +8,7 @@
         <div v-if="templatevar.heading" class="cgn-heading cgn-heading-1 font-display text-black dark:text-white">
           {{ templatevar.heading }}
         </div>
-        <div class="prose max-w-none dark:prose-invert" v-html="templatevar.html" />
+        <div class="prose max-w-none dark:prose-invert prose-p:mt-0" v-html="templatevar.html" />
       </div>
     </div>
     <div class="pt-1">

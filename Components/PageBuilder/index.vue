@@ -35,6 +35,9 @@
   <div v-else-if="widget.outer == 'core/hero_testimonial'" :class="props.uncontainedClass">
     <cgn-page-builder-core-hero-testimonial :templatevar="widget.templatevar" />
   </div>
+  <div v-else-if="widget.outer == 'core/testimonial_grid'" :class="props.containedClass">
+    <cgn-page-builder-core-testimonial-grid :templatevar="widget.templatevar" />
+  </div>
   <div v-else-if="widget.outer == 'core/gallery'" :class="props.uncontainedClass">
     <cgn-page-builder-core-gallery :templatevar="widget.templatevar" :contained-class="props.containedClass" />
   </div>
