@@ -31,7 +31,7 @@
     >
       <div
         v-if="!isHidden"
-        class="absolute right-0 top-full mt-5 w-56 rounded-md border-2 bg-white text-black dark:bg-gray-800 dark:text-white"
+        class="absolute right-0 top-full mt-5 w-56 rounded-md border-2 border-gray-200 bg-white text-black dark:border-brand-500 dark:bg-darkbg-600 dark:text-white"
       >
         <div class="relative mx-auto flex max-w-7xl flex-col gap-2 p-4">
           <router-link v-for="link in links" :key="link.name" :to="link.link" class="block py-1">
