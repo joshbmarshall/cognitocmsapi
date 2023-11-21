@@ -67,7 +67,7 @@
           font-display
           text-2xl
           uppercase
-          dark:bg-gray-700
+          dark:bg-darkbg-700
         "
       >
         User profile
