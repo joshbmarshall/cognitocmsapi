@@ -2,7 +2,7 @@
   <div
     v-if="modelValue"
   >
-    <div class="fixed inset-0 z-[9999] h-screen w-screen bg-gray-500/75 transition-opacity dark:bg-darkbg-700/75" @click="close()" />
+    <div class="fixed inset-0 z-[9999] h-screen w-screen bg-gray-500/75 transition-opacity dark:bg-black/60" @click="close()" />
     <div
       class="fixed inset-x-0 top-0 z-[9999] mx-auto my-8 inline-block w-full max-w-4xl overflow-hidden rounded-lg bg-white shadow-xl dark:bg-darkbg-700"
     >
