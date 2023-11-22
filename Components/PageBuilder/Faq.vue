@@ -15,7 +15,15 @@
             <i-heroicons-outline:plus-circle v-else class="h-6 w-6" />
           </div>
         </div>
-        <div v-if="selected_faq == faq.id" class="prose p-2 dark:prose-invert" v-html="faq.content" />
+        <transition
+          enter-from-class="opacity-0 -translate-y-2"
+          enter-to-class="opacity-100 translate-y-0"
+          leave-from-class="opacity-100 translate-y-0"
+          leave-to-class="opacity-0 -translate-y-2"
+          class="transition duration-150 ease-out"
+        >
+          <div v-if="selected_faq == faq.id" class="prose p-2 dark:prose-invert" v-html="faq.content" />
+        </transition>
       </div>
     </div>
   </div>
