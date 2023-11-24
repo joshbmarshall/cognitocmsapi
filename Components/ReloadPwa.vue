@@ -1,0 +1,27 @@
+<template>
+  <div
+    v-if="needRefresh"
+    class="fixed inset-x-0 bottom-0 z-50 p-2"
+  >
+    <div class="ml-auto w-full max-w-sm">
+      <cgn-alert-brand>
+        <span>
+          New content available
+        </span>
+
+        <cgn-button color-brand class="ml-3" @click="updateServiceWorker()">
+          Update
+        </cgn-button>
+      </cgn-alert-brand>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { useRegisterSW } from 'virtual:pwa-register/vue'
+
+const {
+  needRefresh,
+  updateServiceWorker,
+} = useRegisterSW()
+</script>

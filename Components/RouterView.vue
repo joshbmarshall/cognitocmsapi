@@ -1,5 +1,6 @@
 <template>
   <router-view />
+  <cgn-reload-pwa />
 </template>
 
 <script setup lang="ts">
