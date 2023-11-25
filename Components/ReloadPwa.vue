@@ -8,10 +8,11 @@
         <span>
           New content available
         </span>
-
-        <cgn-button color-brand class="ml-3" @click="updateServiceWorker()">
-          Update
-        </cgn-button>
+        <template #btn>
+          <cgn-button color-brand @click="updateServiceWorker()">
+            Update
+          </cgn-button>
+        </template>
       </cgn-alert-brand>
     </div>
   </div>
