@@ -20,6 +20,12 @@
           <i-heroicons-solid:chevron-double-right />
         </template>
       </cgn-alert>
+      <cgn-alert-info dismissable>
+        Dismissable alert
+      </cgn-alert-info>
+      <cgn-alert-info dismiss-after="3000">
+        Auto-dismissed alert after 3 seconds
+      </cgn-alert-info>
     </div>
     <div>
       <!-- Badges -->
