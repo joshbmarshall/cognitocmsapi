@@ -18,9 +18,9 @@
           <p class="cgn-alert-text">
             <slot />
           </p>
-          <div class="mr-2">
+          <div>
             <slot name="btn" />
-            <i-heroicons-solid:x v-if="props.dismissable" class="ml-2 inline cursor-pointer" @click="dismiss" />
+            <i-heroicons-solid:x v-if="props.dismissable" class="mx-2 inline cursor-pointer" @click="dismiss" />
           </div>
         </div>
       </div>
