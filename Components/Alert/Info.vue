@@ -6,5 +6,8 @@
       </slot>
     </template>
     <slot />
+    <template #btn>
+      <slot name="btn" />
+    </template>
   </cgn-alert>
 </template>

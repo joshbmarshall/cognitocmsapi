@@ -20,6 +20,22 @@
           <i-heroicons-solid:chevron-double-right />
         </template>
       </cgn-alert>
+      <cgn-alert-info>
+        With action button
+        <template #btn>
+          <cgn-button color-info>
+            Button
+          </cgn-button>
+        </template>
+      </cgn-alert-info>
+      <cgn-alert-info dismissable>
+        Dismissable alert with action button
+        <template #btn>
+          <cgn-button color-info>
+            Button
+          </cgn-button>
+        </template>
+      </cgn-alert-info>
       <cgn-alert-info dismissable>
         Dismissable alert
       </cgn-alert-info>
