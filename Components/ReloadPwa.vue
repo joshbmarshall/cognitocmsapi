@@ -4,7 +4,7 @@
     class="fixed inset-x-0 bottom-0 z-50 p-2"
   >
     <div class="ml-auto w-full max-w-sm">
-      <cgn-alert-brand>
+      <cgn-alert-brand dismiss-after="6000">
         <span>
           New content available
         </span>
