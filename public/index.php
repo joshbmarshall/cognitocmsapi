@@ -1,7 +1,8 @@
 <?php
+
 $redirects = [];
 try {
-  $data = json_decode(file_get_contents(__DIR__ . '/initialData.json'), true);
+  $data      = json_decode(file_get_contents(__DIR__ . '/initialData.json'), true);
   $redirects = $data['redirects']['data'];
 } catch (\Exception $e) {
 }
@@ -11,10 +12,10 @@ function isSecure() {
     || $_SERVER['SERVER_PORT'] == 443;
 }
 if (isSecure()) {
-  $redirect = '';
+  $redirect     = '';
   $redirectbase = 'https://' . $_SERVER['HTTP_HOST'];
 
-  $redirect_to = '';
+  $redirect_to  = '';
   $request_page = trim($_SERVER['REQUEST_URI'], '/');
 
   foreach ($redirects as $r) {
@@ -24,7 +25,7 @@ if (isSecure()) {
         if (strpos($r['to'], '*') !== false) {
           $r['to'] = substr($r['to'], 0, -1);
         }
-        $urlsuffix = substr($request_page, strlen($from));
+        $urlsuffix   = substr($request_page, strlen($from));
         $redirect_to = $r['to'] . $urlsuffix;
       }
     }
