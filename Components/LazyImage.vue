@@ -78,6 +78,10 @@ async function checkVisible() {
   const img = new Image()
   img.src = show_image.value
   await img.decode()
+  if (!lazyelement.value) {
+    // Element has disappeared, abort
+    return
+  }
   src.value = show_image.value
   if (props.forceSize) {
     return
