@@ -53,6 +53,7 @@ const lazyelement = ref()
 
 let use_webp = false
 let use_avif = false
+let all_done = false
 const blank_webp = 'data:image/webp;base64,UklGRkAAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAIAAAAQAFZQOCAYAAAAMAEAnQEqAQABAAEYOCekAANwAP77nMAA'
 const show_image = ref('')
 const last_image_url = ref('')
@@ -81,7 +82,6 @@ async function checkVisible() {
   if (props.forceSize) {
     return
   }
-
   if (!lazyelement.value) {
     // Element has disappeared, abort
     return
@@ -96,14 +96,17 @@ async function checkVisible() {
   }
 
   if (filename) {
+    const hires_url = `${show_image.value.replace(filename, '') + width}x${height}:${filename}`
     nextTick(() => {
-      src.value = `${show_image.value.replace(filename, '') + width}x${height}:${filename}`
+      src.value = hires_url
+      all_done = true
     })
   }
 }
 
 async function newImage() {
   // Set/Reset
+  all_done = false
   show_image.value = ''
   last_image_url.value = ''
   src.value = blank_webp // clear while loading
@@ -197,6 +200,9 @@ async function newImage() {
   }
 }
 watch(() => imageIsVisible.value, () => {
+  if (all_done) {
+    return
+  }
   if (imageIsVisible.value) {
     checkVisible()
   }
