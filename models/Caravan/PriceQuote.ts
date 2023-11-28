@@ -60,10 +60,14 @@ class CaravanQuoteSite {
 class CaravanPriceQuote {
   prices: CaravanPrice[]
   available_sites: CaravanQuoteSite[]
+  over_max_stay: boolean
+  error: string
 
   constructor() {
     this.prices = []
     this.available_sites = []
+    this.over_max_stay = false
+    this.error = ''
   }
 
   async searchAvailability(data: any): Promise<CaravanPriceQuote> {

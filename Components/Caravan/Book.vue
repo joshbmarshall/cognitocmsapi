@@ -39,7 +39,10 @@
           Search
         </cgn-button>
       </form>
-      <cgn-alert-danger v-if="no_availability">
+      <cgn-alert-danger v-if="quotes.error">
+        {{ quotes.error }}
+      </cgn-alert-danger>
+      <cgn-alert-danger v-else-if="no_availability">
         Sorry, there are no sites available for those dates
       </cgn-alert-danger>
       <div v-if="price_from" class="mt-4">
