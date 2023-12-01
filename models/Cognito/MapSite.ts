@@ -7,6 +7,7 @@ class CognitoMapSite {
   rotation: number
   available: boolean
   hoverText: string
+  coordinates: Array<Array<number>>
 
   is_hovered?: boolean
   hover_x?: number
@@ -35,6 +36,7 @@ class CognitoMapSite {
     this.rotation = 0
     this.available = false
     this.hoverText = ''
+    this.coordinates = []
     Object.assign(this, source)
   }
 }

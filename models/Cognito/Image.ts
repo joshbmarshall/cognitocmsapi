@@ -22,6 +22,8 @@ class CognitoImage extends CognitoBase {
   webp_url: string
   avif_url: string
   extra_aspects: CognitoImageExtraAspect[]
+  width: number
+  height: number
 
   baseurl(): string {
     return '/api/v1/cognito/image'
@@ -34,6 +36,8 @@ class CognitoImage extends CognitoBase {
     this.webp_url = ''
     this.avif_url = ''
     this.extra_aspects = []
+    this.width = 1
+    this.height = 1
     Object.assign(this, source)
   }
 
