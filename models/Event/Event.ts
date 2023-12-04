@@ -47,6 +47,8 @@ class EventEvent extends CognitoBase {
   garage_map?: CognitoImage
   garages: EventGarage[]
   garage_hire: boolean
+  only_event_entrants_can_hire_garage: boolean
+  user_has_entered_this_event: boolean
   camp_site_map?: CognitoImage
   camp_sites: EventCampSite[]
   offer_camp_sites: boolean
@@ -109,6 +111,8 @@ class EventEvent extends CognitoBase {
     this.stall_power_types = []
     this.garages = []
     this.garage_hire = false
+    this.only_event_entrants_can_hire_garage = false
+    this.user_has_entered_this_event = false
     this.camp_sites = []
     this.offer_camp_sites = false
     this.extras = []

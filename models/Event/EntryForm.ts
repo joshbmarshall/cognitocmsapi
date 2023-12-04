@@ -524,6 +524,25 @@ class EventEntryForm {
     })
   }
 
+  calculateCanHireGarage({ category = 0 }): boolean {
+    if (!this.eventDetails) {
+      return false
+    }
+    if (!this.eventDetails.garage_hire) {
+      return false
+    }
+    if (this.eventDetails.garages.length == 0) {
+      return false
+    }
+    if (category > 0) {
+      return true
+    }
+    if (this.eventDetails.only_event_entrants_can_hire_garage && !this.eventDetails.user_has_entered_this_event) {
+      return false
+    }
+    return true
+  }
+
   totalPrice() {
     let cost = 0
     const category = this.selectedCategory()
