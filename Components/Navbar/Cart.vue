@@ -1,11 +1,15 @@
 <template>
   <span v-if="cartStore.hasCartItems">
-    <span class="relative inline-block cursor-pointer" @click="dropdownToggle()">
-      <i-heroicons-solid:shopping-cart class="mr-2 mt-2" />
-      <span
-        class="absolute right-0 top-0 h-4 w-4 rounded-full bg-red-500 text-center text-xs font-bold text-white dark:bg-red-600"
-      >{{ cartStore.cartitemCount }}</span>
-    </span>
+    <div class="flex cursor-pointer items-center gap-1" @click="dropdownToggle()">
+      <span class="relative inline-block">
+        <i-heroicons-solid:shopping-cart class="inline-block" :class="{ 'mr-2 mt-2': props.showIcon }" />
+        <span
+          v-if="props.showIcon"
+          class="absolute right-0 top-0 h-4 w-4 rounded-full bg-red-500 text-center text-xs font-bold text-white dark:bg-red-600"
+        >{{ cartStore.cartitemCount }}</span>
+      </span>
+      <slot />
+    </div>
     <teleport to="body">
       <div
         v-if="dropdown"
@@ -85,6 +89,13 @@
 <script setup lang="ts">
 import { onClickOutside } from '@vueuse/core'
 import { useCartStore } from '~cognito/stores/cart'
+
+const props = defineProps({
+  showIcon: {
+    type: Boolean,
+    default: true,
+  },
+})
 
 const cartStore = useCartStore()
 
