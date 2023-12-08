@@ -10,7 +10,6 @@
           select-none
           items-center
           py-2
-          text-sm
           font-medium
           transition-colors
           duration-200
