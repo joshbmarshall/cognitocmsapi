@@ -10,7 +10,6 @@
           select-none
           items-center
           py-2
-          text-sm
           ease-out
         "
         :class="{ 'text-brand-500': !isHidden }"

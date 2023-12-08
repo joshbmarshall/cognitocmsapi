@@ -10,7 +10,6 @@
           select-none
           items-center
           py-2
-          font-medium
           transition-colors
           duration-200
           ease-out
