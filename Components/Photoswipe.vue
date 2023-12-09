@@ -2,15 +2,17 @@
   <div :id="props.galleryId">
     <slot>
       <a
-        v-for="(image, key) in props.images"
-        :key="key"
-        :href="image.largeURL"
-        :data-pswp-width="image.width"
-        :data-pswp-height="image.height"
+        v-for="(image, index) in images"
+        :key="index"
+        :href="image.getScaledUrl(1920)"
+        data-pswp-width="1920"
+        :data-pswp-height="image.getScaledHeight(1920)"
         target="_blank"
         rel="noreferrer"
       >
-        <img :src="image.thumbnailURL" alt="">
+        <cgn-lazy-image
+          :image="image"
+        />
       </a>
     </slot>
   </div>
@@ -19,15 +21,11 @@
 <script setup lang="ts">
 import PhotoSwipeLightbox from 'photoswipe/lightbox'
 import 'photoswipe/style.css'
+import { CognitoImage } from '~cognito/models/Cognito/Image'
 
 const props = defineProps({
   images: {
-    type: Array<{
-      largeURL: string
-      thumbnailURL: string
-      width: number
-      height: number
-    }>,
+    type: Array<CognitoImage>,
     default: () => [],
   },
   galleryId: {
@@ -37,6 +35,9 @@ const props = defineProps({
 })
 
 let lightbox: any = null
+const images = computed(() => {
+  return props.images.map(e => new CognitoImage(e))
+})
 
 onMounted(() => {
   if (lightbox) {

@@ -66,6 +66,20 @@ class CognitoImage extends CognitoBase {
 
     return canvas.toDataURL()
   }
+
+  getScaledUrl(width: number): string {
+    const filename = this.url.split('/').pop()
+    const height = this.getScaledHeight(width)
+    return `${this.url.replace(filename, '') + width}x${height}:${filename}`
+  }
+
+  getScaledWidth(height: number): number {
+    return Math.round(height / this.height * this.width)
+  }
+
+  getScaledHeight(width: number): number {
+    return Math.round(width / this.width * this.height)
+  }
 }
 
 export { CognitoImage }
