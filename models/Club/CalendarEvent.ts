@@ -1,25 +1,38 @@
 import { format } from 'date-fns'
 import { $racersaxios } from '~cognito/plugins/racersapi'
+import { $axios } from '~cognito/plugins/axios'
 import { config } from '~/config'
 
 class CalendarEvent {
   id: number
+  url: string
   title: string
   longtitle: string
   start: string
   finish: string
   venue: string
+  can_enter: boolean
+  can_spectate: boolean
   isEntered: boolean
 
   constructor(source?: Partial<CalendarEvent>) {
     this.id = 0
+    this.url = ''
     this.title = ''
     this.longtitle = ''
     this.start = ''
     this.finish = ''
     this.venue = ''
+    this.can_enter = false
+    this.can_spectate = false
     this.isEntered = false
     Object.assign(this, source)
+  }
+
+  async getEventEvents() {
+    // Get the calendar of events from the Event Module
+    const res = await $axios.get('/api/v1/event/event/upcoming')
+    return res.data
   }
 
   async getEvents() {
