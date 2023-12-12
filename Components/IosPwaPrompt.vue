@@ -11,11 +11,11 @@
     </div>
   </div>
 
-  <div v-if="showIOSPrompt" class="sticky bottom-0 bg-gray-800 p-2">
+  <div v-if="showIOSPrompt" class="sticky bottom-0 bg-gray-800 p-2 dark:text-white">
     <div class="text-xl">
       {{ copyTitle }}
     </div>
-    <div class="pb-2 text-lg text-gray-900 dark:text-white">
+    <div class="pb-2 text-lg">
       {{ copyBody }}
     </div>
     <div class="grid grid-cols-2 gap-2">

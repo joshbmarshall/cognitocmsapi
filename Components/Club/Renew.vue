@@ -8,7 +8,7 @@
   <div v-else class="flex flex-col">
     <span class="w-full pt-2 text-center text-2xl">Choose membership type</span>
     <div v-for="membership_type in membership_types" :key="membership_type.id">
-      <cgn-button color-brand fullwidth @click="renew(membership_type)">
+      <cgn-button fullwidth @click="renew(membership_type)">
         {{ membership_type.name }}
         ${{ membership_type.price }}
       </cgn-button>
