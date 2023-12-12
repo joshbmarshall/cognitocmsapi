@@ -92,11 +92,26 @@ async function checkVisible() {
   }
 
   const filename = show_image.value.split('/').pop()
-  const width = Math.floor(lazyelement.value.clientWidth * window.devicePixelRatio)
-  const height = Math.floor(lazyelement.value.clientHeight * window.devicePixelRatio)
+  let width = Math.round(lazyelement.value.clientWidth * window.devicePixelRatio)
+  let height = Math.round(lazyelement.value.clientHeight * window.devicePixelRatio)
 
   if (height === 0) {
     return
+  }
+
+  // Keep ratio for images that are cropped on-screen by hiding portions of the image, ie square thumbnails
+  if (props.image?.width && props.image?.height) {
+    const ratio = props.image.width / props.image.height
+    const checkWidth = Math.abs(Math.floor(props.image.height * width / height) - props.image.width)
+
+    if (checkWidth > 1) {
+      // Is definitely a different shape
+      if (width / height > ratio) {
+        height = Math.round(width * ratio)
+      } else {
+        width = Math.round(height * ratio)
+      }
+    }
   }
 
   if (filename) {
