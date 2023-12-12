@@ -1,5 +1,5 @@
 import { CognitoBase } from './Base'
-import type { CognitoSlide } from './Slide'
+import { CognitoSlide } from './Slide'
 
 class CognitoGallery extends CognitoBase {
   name: string
@@ -16,6 +16,9 @@ class CognitoGallery extends CognitoBase {
     this.url = ''
     this.slides = []
     Object.assign(this, source)
+    if (source?.slides) {
+      this.slides = source.slides.map(e => new CognitoSlide(e))
+    }
   }
 }
 

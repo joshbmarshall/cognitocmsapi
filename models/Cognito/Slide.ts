@@ -32,6 +32,9 @@ class CognitoSlide extends CognitoBase {
     this.link_button_text = ''
     this.link_target = ''
     Object.assign(this, source)
+    if (source?.image) {
+      this.image = new CognitoImage(source.image)
+    }
   }
 
   imageClass(): string {
