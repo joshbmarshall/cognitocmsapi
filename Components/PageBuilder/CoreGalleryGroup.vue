@@ -11,7 +11,7 @@
         <div v-if="gallery.slides.length">
           <div class="mx-auto space-y-2 text-white lg:col-start-1 lg:row-start-1 lg:max-w-none">
             <div :class="outerClass(gallery.slides[0])" class="relative aspect-square">
-              <cgn-lazy-image :image="gallery.slides[0].image" class="absolute inset-0 h-full object-cover object-center transition-opacity duration-300 group-hover:opacity-50" :class="[imageClass(gallery.slides[0])]" />
+              <cgn-lazy-image :image="gallery.slides[0].image" class="absolute inset-0 aspect-square h-full overflow-hidden object-cover object-center transition-opacity duration-300 group-hover:opacity-50" :class="[imageClass(gallery.slides[0])]" />
             </div>
           </div>
           <div v-if="gallery.heading" class="absolute bottom-0 right-0 translate-y-full p-2 text-right text-white transition-transform duration-300 group-hover:translate-y-0">
@@ -33,11 +33,19 @@
           {{ selectedGallery.subheading }}
         </p>
       </div>
-      <div class="mx-auto grid max-w-6xl grid-cols-3 gap-2 pt-2 md:grid-cols-4 lg:grid-cols-5">
-        <div v-for="slide in selectedGallery.slides" :key="slide.id" class="group relative overflow-hidden bg-black" @click="selectedSlide = slide; modal_open = true">
+      <cgn-photoswipe class="mx-auto grid max-w-6xl grid-cols-3 gap-2 pt-2 md:grid-cols-4 lg:grid-cols-5">
+        <a
+          v-for="slide in selectedGallery.slides"
+          :key="slide.id"
+          :href="slide.image.getScaledUrl(2000)"
+          data-pswp-width="2000"
+          :data-pswp-height="slide.image.getScaledHeight(2000)"
+          data-cropped="true"
+          class="group relative overflow-hidden bg-black"
+        >
           <div class="mx-auto space-y-2 text-white lg:col-start-1 lg:row-start-1 lg:max-w-none">
             <div :class="outerClass(slide)" class="relative aspect-square">
-              <cgn-lazy-image :image="slide.image" class="absolute inset-0 h-full object-cover object-center transition-opacity duration-300 group-hover:opacity-50" :class="[imageClass(slide)]" />
+              <cgn-lazy-image :image="slide.image" class="absolute inset-0 aspect-square h-full overflow-hidden object-cover object-center transition-opacity duration-300 group-hover:opacity-50" :class="[imageClass(slide)]" />
             </div>
           </div>
           <div v-if="slide.heading" class="absolute bottom-0 right-0 translate-y-full p-2 text-right text-white transition-transform duration-300 group-hover:translate-y-0">
@@ -48,32 +56,9 @@
               {{ slide.sub_heading }}
             </div>
           </div>
-        </div>
-      </div>
+        </a>
+      </cgn-photoswipe>
     </div>
-    <cgn-modal v-model="modal_open" fullheight>
-      <template #clean-content>
-        <div class="mr-4">
-          <h1 class="font-display text-2xl font-semibold md:text-4xl">
-            {{ selectedSlide.heading }}
-          </h1>
-          <div v-if="selectedSlide.sub_heading" class="font-display text-xl font-semibold">
-            {{ selectedSlide.sub_heading }}
-          </div>
-        </div>
-        <div v-if="selectedSlide.content" class="prose-invert max-w-none pb-2" v-html="selectedSlide.content" />
-        <div :class="outerClass(selectedSlide)" class="relative aspect-[16/9]">
-          <cgn-lazy-image :image="selectedSlide.image" extra-aspect="16x9" class="w-full" />
-        </div>
-      </template>
-      <template v-if="selectedSlide.link_button_text" #button-footer>
-        <div class="w-full p-2">
-          <cgn-button color-brand fullwidth :url="selectedSlide.link" :newtab="selectedSlide.link_target == 'blank'">
-            {{ selectedSlide.link_button_text }}
-          </cgn-button>
-        </div>
-      </template>
-    </cgn-modal>
   </div>
 </template>
 
@@ -109,11 +94,8 @@ function imageClass(slide: CognitoSlide) {
   return new CognitoSlide(slide).imageClass()
 }
 
-const selectedSlide = ref(new CognitoSlide())
-const modal_open = ref(false)
-
 const selectGallery = (gallery: CognitoGallery) => {
-  selectedGallery.value = gallery
+  selectedGallery.value = new CognitoGallery(gallery)
   miniGallery.value.scrollIntoView({
     behavior: 'smooth',
   })
@@ -122,9 +104,8 @@ const selectGallery = (gallery: CognitoGallery) => {
 onMounted(() => {
   new CognitoGallery().find_many({
     group: props.templatevar.group,
-    image_width: 300,
-    image_aspect: '1x1',
-    extra_aspects: ['16x9'],
+    image_width: 400,
+    image_aspect: '16x9',
   }).then((data) => {
     galleries.value = data.mapped
   })
