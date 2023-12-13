@@ -12,6 +12,7 @@ export const useClubMemberStore = defineStore({
       racers_id: 0,
       name: '',
       valid_to: '',
+      type: '',
     }
   },
   getters: {
@@ -42,6 +43,7 @@ export const useClubMemberStore = defineStore({
           this.name = res.data.name
           this.valid_to = res.data.valid_to
           this.racers_id = res.data.racers_id
+          this.type = res.data.type
         })
     },
     setRacersId(racers_id: number) {
