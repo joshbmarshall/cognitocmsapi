@@ -1,5 +1,6 @@
 import { CognitoImage } from './Image'
 import { $axios } from '~cognito/plugins/axios'
+import { config } from '~/config'
 
 class CognitoUser {
   id: number
@@ -61,6 +62,7 @@ class CognitoUser {
     const res = await $axios.post(`${this.baseurl()}/sendLoginLink`, {
       email,
       fingerprint,
+      code_only: config.login.code_only,
     })
     return res.data
   }

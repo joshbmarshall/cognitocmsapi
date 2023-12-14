@@ -19,6 +19,9 @@ const config = {
     edit_facebook: false,
     manage_addresses: false,
   },
+  login: {
+    code_only: false,
+  },
   signUp: {
     ask_date_of_birth: false,
   },

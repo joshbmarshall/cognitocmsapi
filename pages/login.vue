@@ -67,7 +67,7 @@
             </span>
           </cgn-button>
         </form>
-        <div v-if="!createAccountMode" class="text-right">
+        <div v-if="showLogonPasswordLink" class="text-right">
           <cgn-link :to="`${config.baseURL}/cms/cognito/default/goToSite`" noblanktarget>
             Log on with a password
           </cgn-link>
@@ -122,7 +122,15 @@ const sendLink = () => {
       })
   }
 }
-
+const showLogonPasswordLink = computed(() => {
+  if (createAccountMode.value) {
+    return false
+  }
+  if (config.login.code_only) {
+    return false
+  }
+  return true
+})
 onMounted(async () => {
   if ($axios.isSSR()) {
     return
