@@ -21,7 +21,14 @@
         </div>
       </div>
       <div v-else-if="type === 'textarea'">
-        <textarea ref="inputel" :class="textareaClass" class="cgn-input-textarea-field block w-full appearance-none" :value="modelValue" :required="required" @input="handleInput" />
+        <textarea
+          ref="inputel"
+          :class="textareaClass" class="cgn-input-textarea-field block w-full appearance-none"
+          :value="modelValue"
+          :required="required"
+          :placeholder="placeholder"
+          @input="handleInput"
+        />
       </div>
       <div v-else>
         <div
