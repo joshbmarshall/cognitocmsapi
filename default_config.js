@@ -7,6 +7,7 @@ const config = {
   siteURL: '',
   baseURL: '',
   isEcommerce: false,
+  payment_to_user_id: 1,
   profile: {
     edit_date_of_birth: false,
     edit_drivers_licence: false,

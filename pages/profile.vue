@@ -141,6 +141,8 @@
             </div>
           </div>
 
+          <cgn-profile-cognito-credits />
+
           <div class="grid gap-2 sm:grid-cols-2">
             <cgn-form-input-text
               v-if="name_field_visible"
