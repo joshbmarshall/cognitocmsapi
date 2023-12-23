@@ -107,7 +107,7 @@ async function checkVisible() {
     if (checkWidth > 1) {
       // Is definitely a different shape
       if (width / height > ratio) {
-        height = Math.round(width * ratio)
+        height = Math.round(width / ratio)
       } else {
         width = Math.round(height * ratio)
       }
