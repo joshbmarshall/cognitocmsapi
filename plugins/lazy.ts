@@ -74,9 +74,9 @@ const lazy = () => {
     screenheight += 200
     return (
       rect.bottom >= 0
-            && rect.right >= 0
-            && rect.top <= screenheight
-            && rect.left <= screenwidth
+      && rect.right >= 0
+      && rect.top <= screenheight
+      && rect.left <= screenwidth
     )
   }
 

@@ -164,7 +164,8 @@ class CgnAxios {
 
         // Pass through all other errors, let component or other error handlers handle them
         throw error
-      })
+      },
+    )
 
     setInterval(() => {
       this.checkRefresh()

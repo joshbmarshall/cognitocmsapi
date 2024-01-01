@@ -89,7 +89,8 @@ class CognitoCTypesense {
           host: CognitoCTypesense.typesensedata.host,
           port: CognitoCTypesense.typesensedata.port,
           protocol: CognitoCTypesense.typesensedata.protocol,
-        }],
+        },
+      ],
       apiKey: CognitoCTypesense.typesensedata.apiKey,
       connectionTimeoutSeconds: 10,
     })

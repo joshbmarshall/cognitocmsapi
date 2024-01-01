@@ -1,4 +1,4 @@
-import { type UserModule } from '~/types'
+import type { UserModule } from '~/types'
 import { config } from '~/config'
 
 // https://unhead-schema-org.harlanzw.com/

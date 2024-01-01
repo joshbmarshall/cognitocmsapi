@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { config } from '~/config';
+import { config } from '~/config'
 import { CognitoUser } from '~cognito/models/Cognito/User'
 
 const creditBalance = ref(0)

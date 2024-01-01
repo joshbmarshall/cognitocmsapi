@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/vue'
-import { type UserModule } from '~/types'
+import type { UserModule } from '~/types'
 import { config } from '~/config'
 
 export const install: UserModule = ({ app, isClient }) => {

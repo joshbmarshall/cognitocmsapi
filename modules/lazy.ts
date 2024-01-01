@@ -1,5 +1,5 @@
 import { lazy } from '~cognito/plugins/lazy'
-import { type UserModule } from '~/types'
+import type { UserModule } from '~/types'
 
 export const install: UserModule = ({ isClient }) => {
   if (isClient) {

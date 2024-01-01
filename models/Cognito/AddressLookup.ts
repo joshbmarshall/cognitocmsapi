@@ -29,9 +29,11 @@ class CognitoAddressLookup {
   }): Promise<any> {
     return await axios
       .get(
-        'https://lookup.search.hereapi.com/v1/lookup', {
+        'https://lookup.search.hereapi.com/v1/lookup',
+        {
           params,
-        })
+        },
+      )
   }
 
   async search(params: {
