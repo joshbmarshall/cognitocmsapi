@@ -12,7 +12,7 @@ export const defineCustomElement = (component: any, { plugins = [] }) =>
     render: () => h(component),
     props: component.props,
     setup(props) {
-      const app = createApp()
+      const app = createApp({})
 
       // install plugins
       plugins.forEach(app.use)
