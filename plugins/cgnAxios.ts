@@ -64,6 +64,10 @@ class CgnAxios {
     this.lastRequestAt = Date.now()
 
     this.axios.interceptors.request.use(
+      (config) => {
+        config.baseURL = this.baseURL
+        return config
+      },
       (request) => {
         if (this.userStore().baseURL) {
           request.baseURL = this.userStore().baseURL
@@ -186,6 +190,10 @@ class CgnAxios {
     const state = nanoid()
     this.userStore().oauth2_state = state
     return `${siteurl}?client_id=${this.clientId}&redirect_uri=${encodeURIComponent(redirect_uri)}&scope=all&state=${state}&nonce=${nonce}`
+  }
+
+  setBaseUrl(baseURL: string) {
+    this.baseURL = baseURL
   }
 
   async oauth2GetToken(code?: string, state?: string, sitepath?: string) {
@@ -330,7 +338,7 @@ class CgnAxios {
   }
 
   async graphql(query: string, variables?: any) {
-    const endpoint = `${config.baseURL}/graphql`
+    const endpoint = `${this.baseURL}/graphql`
     const access_token = useUserStore().access_token
     const headers = access_token
       ? {
