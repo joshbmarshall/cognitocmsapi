@@ -20,7 +20,7 @@ export const useUserStore = defineStore({
         mobile_phone: '',
       },
       link_active: true,
-      baseUrl: '',
+      baseURL: '',
     }
   },
 
