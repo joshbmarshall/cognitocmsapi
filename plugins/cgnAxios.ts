@@ -64,11 +64,8 @@ class CgnAxios {
     this.lastRequestAt = Date.now()
 
     this.axios.interceptors.request.use(
-      (config) => {
-        config.baseURL = this.baseURL
-        return config
-      },
       (request) => {
+        request.baseURL = this.baseURL
         if (this.userStore().baseURL) {
           request.baseURL = this.userStore().baseURL
         }
