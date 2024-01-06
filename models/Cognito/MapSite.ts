@@ -10,6 +10,7 @@ class CognitoMapSite {
   coordinates: Array<Array<number>>
 
   is_hovered?: boolean
+  is_selected: boolean
   hover_x?: number
   hover_y?: number
   align?: string
@@ -37,6 +38,7 @@ class CognitoMapSite {
     this.available = false
     this.hoverText = ''
     this.coordinates = []
+    this.is_selected = false
     Object.assign(this, source)
   }
 }

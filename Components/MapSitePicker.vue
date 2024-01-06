@@ -79,8 +79,12 @@ const props = defineProps({
   image: {
     type: [CognitoImage, Object],
   },
+  chooseMultiple: {
+    type: Boolean,
+    default: false,
+  },
   modelValue: {
-    type: [String, Number],
+    type: [String, Number, Array],
     default: '',
   },
   sites: {
@@ -118,8 +122,18 @@ const setColours = () => {
     let changeTo = props.unselectedColour
     if (!e.available) {
       changeTo = props.unavailableColour
-    } else if (e.id == props.modelValue) {
-      changeTo = props.selectedColour
+    } else {
+      if (props.chooseMultiple) {
+        if (Array.isArray(props.modelValue)) {
+          if (props.modelValue.includes(e.id)) {
+            changeTo = props.selectedColour
+          }
+        }
+      } else {
+        if (e.id == props.modelValue) {
+          changeTo = props.selectedColour
+        }
+      }
     }
     if (e.fill != changeTo) {
       e.fill = changeTo
@@ -158,10 +172,15 @@ const selectSite = (rect: CognitoMapSite) => {
   if (!rect.available) {
     return
   }
-  if (rect.id == props.modelValue) {
-    emit('update:modelValue', 0)
+  if (props.chooseMultiple) {
+    rect.is_selected = !rect.is_selected
+    emit('update:modelValue', rects.value.filter(e => e.is_selected).map(e => e.id))
   } else {
-    emit('update:modelValue', rect.id)
+    if (rect.id == props.modelValue) {
+      emit('update:modelValue', 0)
+    } else {
+      emit('update:modelValue', rect.id)
+    }
   }
 }
 

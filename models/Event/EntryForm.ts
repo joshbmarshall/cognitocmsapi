@@ -117,6 +117,7 @@ class EventEntryForm {
   address_id: number
   garage_id: number
   camp_site_id: number
+  camp_site_ids: number[]
   licence_id: number
   vehicle_id: number
   aasa_licence: string
@@ -182,6 +183,7 @@ class EventEntryForm {
     this.address_id = 0
     this.garage_id = 0
     this.camp_site_id = 0
+    this.camp_site_ids = []
     this.licence_id = 0
     this.vehicle_id = 0
     this.aasa_licence = ''
@@ -574,6 +576,12 @@ class EventEntryForm {
     this.spectators.forEach((spectator) => {
       if (spectator.qty > 0) {
         cost += spectator.price * spectator.qty
+      }
+    })
+    this.camp_site_ids.forEach((camp_site_id) => {
+      const camp_site = this.eventDetails?.camp_sites.find(e => e.id == camp_site_id)
+      if (camp_site) {
+        cost += camp_site.price
       }
     })
     this.merch.forEach((merch) => {
