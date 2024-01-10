@@ -57,7 +57,7 @@
                   <span class="font-semibold">x&nbsp;{{ cartitem.qty }}</span>
                 </div>
                 <div>
-                  <span class="text-lg font-semibold">${{ cartitem.subtotal }}</span>
+                  <span class="text-lg font-semibold">${{ cartitem.subtotal.toFixed(2) }}</span>
                 </div>
               </div>
               <div v-if="!cartitem.can_purchase_qty">
