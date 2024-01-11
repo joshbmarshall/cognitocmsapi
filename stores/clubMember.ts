@@ -37,16 +37,14 @@ export const useClubMemberStore = defineStore({
     },
   },
   actions: {
-    refresh() {
-      $axios.get('/api/v1/club/member/getMembership')
-        .then((res) => {
-          this.number = res.data.number
-          this.name = res.data.name
-          this.valid_to = res.data.valid_to
-          this.racers_id = res.data.racers_id
-          this.type = res.data.type
-          this.color = res.data.colour
-        })
+    async refresh() {
+      const res = await $axios.get('/api/v1/club/member/getMembership')
+      this.number = res.data.number
+      this.name = res.data.name
+      this.valid_to = res.data.valid_to
+      this.racers_id = res.data.racers_id
+      this.type = res.data.type
+      this.color = res.data.colour
     },
     setRacersId(racers_id: number) {
       this.racers_id = racers_id
