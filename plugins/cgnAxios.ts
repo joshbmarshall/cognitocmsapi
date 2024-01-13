@@ -29,6 +29,7 @@ class CgnAxios {
   clientId: string
   baseURL: string
   lastRequestAt: number
+  ready: boolean
 
   constructor(settings: {
     clientId?: string
@@ -36,6 +37,7 @@ class CgnAxios {
     userStore?: any
     useCart?: boolean
   }) {
+    this.ready = false
     if (typeof (settings.useCart) == 'undefined') {
       settings.useCart = false
     }
@@ -64,13 +66,19 @@ class CgnAxios {
     this.lastRequestAt = Date.now()
 
     this.axios.interceptors.request.use(
-      (request) => {
+      async (request) => {
+        const isIgnored = ignoredPaths.some(path => request.url.includes(path))
+        if (!isIgnored) {
+          while (!this.ready) {
+            // wait for api to become ready
+            await new Promise(r => setTimeout(r, 100))
+          }
+        }
         request.baseURL = this.baseURL
         if (this.userStore().baseURL) {
           request.baseURL = this.userStore().baseURL
         }
         if (this.userStore().access_token) {
-          const isIgnored = ignoredPaths.some(path => request.url.includes(path))
           if (isIgnored) {
             // do not add auth header
           } else {
@@ -224,20 +232,36 @@ class CgnAxios {
     this.userStore().setRedirectAfterLogin(path)
   }
 
-  checkRefresh() {
+  async checkRefresh() {
+    let access_token = ''
     try {
-      const decoded = jwt_decode(this.userStore().access_token)
+      access_token = this.userStore().access_token
+    } catch (error) {
+      // Pinia store not yet initialised, check again shortly.
+      // This is so we can unlock startup requests waiting for a valid token
+      nextTick(() => {
+        this.checkRefresh()
+      })
+      return
+    }
+
+    try {
+      const decoded = jwt_decode(access_token)
       if (!decoded?.exp) {
+        this.ready = true
         return
       }
       const expires_in = decoded.exp - Math.floor(Date.now() / 1000)
+      // console.log({ expires_in })
       if (expires_in > 30) {
+        this.ready = true
         return
       }
       // Renew the token as it will expire in 30 seconds
-      this.doRefresh()
+      await this.doRefresh()
     } catch (error) {
       // Probably not logged on
+      this.ready = true
     }
   }
 
@@ -254,6 +278,7 @@ class CgnAxios {
 
     this.userStore().setAccessToken(tokens.data.access_token)
     this.userStore().setRefreshToken(tokens.data.refresh_token)
+    this.ready = true
   }
 
   isLoggedIn(): boolean {
@@ -335,6 +360,10 @@ class CgnAxios {
   }
 
   async graphql(query: string, variables?: any) {
+    while (!this.ready) {
+      // Wait for api to become ready
+      await new Promise(r => setTimeout(r, 100))
+    }
     const endpoint = `${this.baseURL}/graphql`
     const access_token = useUserStore().access_token
     const headers = access_token
