@@ -10,6 +10,9 @@
     <div v-for="membership_type in membership_types" :key="membership_type.id">
       <cgn-button fullwidth @click="renew(membership_type)">
         {{ membership_type.name }}
+        <div class="text-muted">
+          {{ membership_type.subtitle }}
+        </div>
         ${{ membership_type.price }}
       </cgn-button>
     </div>

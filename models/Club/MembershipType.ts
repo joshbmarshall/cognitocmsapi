@@ -3,11 +3,13 @@ import { $axios } from '~cognito/plugins/axios'
 
 class ClubMembershipType extends CognitoBase {
   name: string
+  subtitle: string
   price: string
 
   constructor(source?: Partial<ClubMembershipType>) {
     super()
     this.name = ''
+    this.subtitle = ''
     this.price = ''
     Object.assign(this, source)
   }
