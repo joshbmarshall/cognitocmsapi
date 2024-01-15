@@ -239,9 +239,9 @@ class CgnAxios {
     } catch (error) {
       // Pinia store not yet initialised, check again shortly.
       // This is so we can unlock startup requests waiting for a valid token
-      nextTick(() => {
+      setTimeout(() => {
         this.checkRefresh()
-      })
+      }, 100)
       return
     }
 
