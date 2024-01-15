@@ -1,6 +1,7 @@
 <template>
   <cgn-form-input
     type="email"
+    inputmode="email"
   />
 </template>
 

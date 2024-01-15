@@ -50,6 +50,7 @@
             :placeholder="placeholder" :required="required" class="cgn-input-field block w-full appearance-none p-2"
             :class="inputClass + (hasIcon ? ' pl-7' : '')"
             :autocomplete="autocomplete"
+            :inputmode="props.inputmode"
             @input="handleInput"
             @blur="blurInput"
           >
@@ -117,6 +118,9 @@ const props = defineProps({
     default: false,
   },
   inputmask: {
+    type: String,
+  },
+  inputmode: {
     type: String,
   },
   inputClass: {
