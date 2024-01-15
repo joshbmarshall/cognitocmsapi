@@ -37,7 +37,7 @@ class CgnAxios {
     userStore?: any
     useCart?: boolean
   }) {
-    this.ready = false
+    this.ready = true // temporary workaround
     if (typeof (settings.useCart) == 'undefined') {
       settings.useCart = false
     }
