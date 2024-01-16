@@ -6,16 +6,22 @@
     </cgn-alert-success>
   </div>
   <div v-else class="flex flex-col">
-    <span class="w-full pt-2 text-center text-2xl">Choose membership type</span>
-    <form @submit.prevent="renew">
-      <cgn-form-radio-button v-model="selected_membership_type_id" :options="membershipTypesRadio" required />
-      <div v-if="selected_membership_type_id" class="my-2">
+    <span class="w-full pt-2 text-center text-2xl">Apply to become a Member</span>
+    <form @submit.prevent="apply">
+      <cgn-form-input-phone v-model="applicationForm.phone" label="Mobile Phone" required />
+      <cgn-address-lookup
+        v-model="applicationForm.address"
+        here-api-key="GOBLSSIkkrgjhMahFmXPramj-95rVXZYpj-0pj7DsFU"
+        label="Address"
+        required
+      />
+      <div class="my-2">
         <div v-if="terms">
           <div class="prose-dark" v-html="terms" />
           <cgn-form-checkbox required label="I accept these terms" />
         </div>
         <cgn-button>
-          Pay ${{ selected_membership_type?.price.toFixed(2) }} Now
+          Pay ${{ fee.toFixed(2) }} Now
         </cgn-button>
       </div>
     </form>
@@ -25,50 +31,35 @@
 <script setup lang="ts">
 import { gql } from 'graphql-request'
 import { ClubMembershipType } from '~cognito/models/Club/MembershipType'
+import { CognitoAddressLookup } from '~cognito/models/Cognito/AddressLookup'
 import { $axios } from '~cognito/plugins/axios'
 
 const payment_ok = ref(false)
 const payment = ref()
-const membership_types = ref<ClubMembershipType[]>([])
-const selected_membership_type_id = ref(0)
 const terms = ref('')
-
-const selected_membership_type = computed(() => {
-  return membership_types.value.find(e => e.id == selected_membership_type_id.value)
+const applicationForm = ref({
+  phone: '',
+  address: new CognitoAddressLookup(),
 })
 
-const membershipTypesRadio = computed(() => {
-  return membership_types.value.map((e) => {
-    return {
-      id: e.id,
-      name: `${e.name} $${e.price.toFixed(2)}`,
-      content: e.subtitle,
-      disabled: false,
-    }
-  })
-})
+const fee = ref(0)
 
-const renew = () => {
-  new ClubMembershipType(selected_membership_type.value).renew()
+const apply = () => {
+  new ClubMembershipType().apply(applicationForm.value)
 }
 
 onMounted(async () => {
   const gqldata = await $axios.graphql(gql`query clubMembershipRenewInfo {
-    clubMembershipTypes(isCanPurchase: true) {
-      id
-      name
-      subtitle
-      price
-    }
     clubMisc {
-      membership_terms {
+      application_terms {
         content
       }
+      application_fee
     }
   }`)
 
-  membership_types.value = gqldata.clubMembershipTypes
-  terms.value = gqldata.clubMisc.membership_terms?.content
+  terms.value = gqldata.clubMisc.application_terms?.content
+  fee.value = gqldata.clubMisc.application_fee
 
   const payum_token = new URL(location.href).searchParams.get('payum_token')
   const url = btoa(location.href)

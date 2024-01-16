@@ -39,6 +39,19 @@ class ClubMembershipType extends CognitoBase {
         }
       })
   }
+
+  apply(applicationForm: any) {
+    const formValues = {
+      form: applicationForm,
+      url: btoa(location.href),
+    }
+    $axios.post(`${this.baseurl()}/apply`, formValues)
+      .then((res) => {
+        if (res.data.success) {
+          window.location = res.data.payment
+        }
+      })
+  }
 }
 
 export { ClubMembershipType }
