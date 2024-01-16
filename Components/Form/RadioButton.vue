@@ -3,8 +3,7 @@
     <label v-if="radioOptions?.length > 0" class="block select-none text-xl font-medium">{{ label }}</label>
     <div v-for="option in radioOptions" :key="option.id" class="mt-1">
       <label
-        class="block cursor-pointer rounded-lg border-2 bg-white px-6 py-4 shadow-sm dark:bg-slate-600 sm:flex sm:justify-between"
-        :class="curval === option.id ? 'border-brand-500' : 'border-gray-300 dark:border-gray-700'"
+        :class="curval === option.id ? 'cgn-radio-button-label-active' : 'cgn-radio-button-label'"
       >
         <div class="cgn-radio-button text-sm">
           <div class="flex items-center">
