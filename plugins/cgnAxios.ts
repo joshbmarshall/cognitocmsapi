@@ -338,6 +338,11 @@ class CgnAxios {
         await useCartStore().mergeCart()
       }
 
+      const baseURL = new URL(location.href).searchParams.get('b') || ''
+      if (baseURL) {
+        userStore.baseURL = baseURL
+      }
+
       userStore.redirect_after_login = ''
     }
     if (this.isLoggedIn()) {
