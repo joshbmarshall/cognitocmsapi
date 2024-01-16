@@ -8,6 +8,7 @@ import { EventDate } from './Date'
 import { EventEntryFormStallPower } from './EntryForm'
 import type { EventExtra } from './Extra'
 import type { EventGarage } from './Garage'
+import type { EventLicenceIssuer } from './LicenceIssuer'
 import type { EventLicenceType } from './LicenceType'
 import type { EventMerch } from './Merch'
 import type { EventProduct } from './Product'
@@ -59,6 +60,7 @@ class EventEvent extends CognitoBase {
   last_address_id: number
   last_vehicle_id: number
   require_vehicle_photo: boolean
+  race_licence_required?: EventLicenceIssuer
   aasa_licence: string
   user_cannot_enter_reason: string
   user_cannot_apply_stall_site_reason: string
