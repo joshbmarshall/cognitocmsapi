@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+.cgn-alert-wrapper {
+  @apply bg-white dark:bg-gray-700 shadow rounded flex items-center justify-between overflow-hidden my-2
+}
+.cgn-alert-text {
+  @apply mr-2 my-1 text-sm dark:text-gray-300 text-gray-600 text-left
+}
+
+.cgn-input-wrapper {
+  @apply my-2
+}
+.cgn-input-textarea-field {
+  @apply rounded-md shadow-md dark:shadow-inner placeholder-gray-400 focus:ring-brand-500 focus:border-brand-500 sm:text-sm dark:bg-gray-600 p-2
+}
+.cgn-input-field {
+  @apply dark:shadow-inner placeholder-gray-400 focus:ring-brand-500 focus:border-brand-500 sm:text-sm dark:bg-gray-600 border border-gray-200 text-xl p-2
+}
+
+.cgn-input-label {
+  @apply text-base
+}
+
+.cgn-button {
+  @apply shadow py-1.5 px-4 text-center select-none rounded-lg
+}
+
+.cgn-button-large {
+  @apply shadow py-3 px-8 text-center select-none rounded-xl my-2 text-lg
+}
+
+.cgn-tab-wrapper {
+  @apply mt-4
+}
+
+.cgn-tab-main {
+  @apply mb-1 md:px-2 md:gap-6 bg-gray-50 dark:bg-slate-700 md:bg-transparent md:dark:bg-transparent rounded-md md:rounded-none divide-y-2 md:divide-y-0 divide-gray-300 dark:divide-gray-500 md:border-b-2 border-gray-300 dark:border-gray-500
+}
+
+.cgn-radio-button-label {
+  @apply block cursor-pointer rounded-lg border-2 bg-white px-6 py-4 shadow-sm dark:bg-slate-600 sm:flex sm:justify-between border-gray-300 dark:border-gray-700
+}
+
+.cgn-radio-button-label-active {
+  @apply block cursor-pointer rounded-lg border-2 bg-white px-6 py-4 shadow-sm dark:bg-slate-600 sm:flex sm:justify-between border-brand-500
+}
+
+.text-muted {
+  @apply text-gray-600 dark:text-gray-400
+  }
+
+  .cgn-heading {
+  }
+
+  .cgn-heading-1 {
+    @apply text-3xl
+  }
+  .cgn-heading-2 {
+    @apply text-2xl
+  }
+  .cgn-heading-3 {
+    @apply text-xl
+  }
+}
