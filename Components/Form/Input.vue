@@ -229,7 +229,7 @@ onMounted(() => {
   @apply rounded-md p-2 shadow-md dark:shadow-inner placeholder-gray-400 focus:ring-brand-500 focus:border-brand-500 sm:text-sm dark:bg-slate-600
 }
 .cgn-input-field {
-  @apply rounded-md p-2 shadow-md dark:shadow-inner placeholder-gray-400 focus:ring-brand-500 focus:border-brand-500 sm:text-sm dark:bg-slate-600
+  @apply rounded-md shadow-md dark:shadow-inner placeholder-gray-400 focus:ring-brand-500 focus:border-brand-500 sm:text-sm dark:bg-slate-600
 }
 */
 </script>

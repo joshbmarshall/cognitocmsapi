@@ -14,10 +14,10 @@
   @apply my-2
 }
 .cgn-input-textarea-field {
-  @apply placeholder-gray-400 focus:border-info-300 focus:shadow-info-300 focus:shadow-sm sm:text-sm border border-gray-300 text-xl p-2 w-full
+  @apply placeholder-gray-400 p-2 focus:border-brand-500 focus:shadow-sm sm:text-sm border border-gray-300 text-xl w-full outline-none transition-colors duration-150
 }
 .cgn-input-field {
-  @apply placeholder-gray-400 focus:border-info-300 focus:shadow-info-300 focus:shadow-sm sm:text-sm border border-gray-300 text-xl p-2 w-full
+  @apply placeholder-gray-400 focus:border-brand-500 focus:shadow-sm sm:text-sm border border-gray-300 text-xl w-full outline-none transition-colors duration-150
 }
 
 .cgn-input-label {
