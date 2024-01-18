@@ -5,12 +5,12 @@
       <label
         :class="curval === option.id ? 'cgn-radio-button-label-active' : 'cgn-radio-button-label'"
       >
-        <div class="cgn-radio-button text-sm">
-          <div class="flex items-center">
-            <input v-if="!option.disabled" v-model="curval" type="radio" class="mr-2" :value="option.id" @change="handleInput">
+        <div class="cgn-radio-button flex items-start gap-1 text-sm">
+          <input v-if="!option.disabled" v-model="curval" type="radio" class="mr-2" :value="option.id" @change="handleInput">
+          <div>
             <div :class="option.class">{{ option.name }}</div>
+            <div v-if="option.content" class="cgn-radio-button-content text-xs" v-html="option.content" />
           </div>
-          <div v-if="option.content" class="cgn-radio-button-content text-xs" v-html="option.content" />
         </div>
       </label>
     </div>
