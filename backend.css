@@ -4,32 +4,32 @@
 
 @layer utilities {
 .cgn-alert-wrapper {
-  @apply bg-white dark:bg-gray-700 shadow rounded flex items-center justify-between overflow-hidden my-2
+  @apply bg-white border border-gray-500 border-opacity-10 rounded-sm flex items-center justify-between overflow-hidden my-2
 }
 .cgn-alert-text {
-  @apply mr-2 my-1 text-sm dark:text-gray-300 text-gray-600 text-left
+  @apply mr-2 my-1 text-sm text-gray-600 text-left
 }
 
 .cgn-input-wrapper {
   @apply my-2
 }
 .cgn-input-textarea-field {
-  @apply rounded-md shadow-md dark:shadow-inner placeholder-gray-400 focus:ring-brand-500 focus:border-brand-500 sm:text-sm dark:bg-gray-600 p-2
+  @apply placeholder-gray-400 focus:border-info-300 focus:shadow-info-300 focus:shadow-sm sm:text-sm border border-gray-300 text-xl p-2 w-full
 }
 .cgn-input-field {
-  @apply dark:shadow-inner placeholder-gray-400 focus:ring-brand-500 focus:border-brand-500 sm:text-sm dark:bg-gray-600 border border-gray-200 text-xl p-2
+  @apply placeholder-gray-400 focus:border-info-300 focus:shadow-info-300 focus:shadow-sm sm:text-sm border border-gray-300 text-xl p-2 w-full
 }
 
 .cgn-input-label {
-  @apply text-base
+  @apply text-base font-medium
 }
 
 .cgn-button {
-  @apply shadow py-1.5 px-4 text-center select-none rounded-lg
+  @apply py-1.5 px-4 text-center select-none rounded border border-black border-opacity-10
 }
 
 .cgn-button-large {
-  @apply shadow py-3 px-8 text-center select-none rounded-xl my-2 text-lg
+  @apply py-3 px-8 text-center select-none rounded-md my-2 text-lg border border-black border-opacity-10
 }
 
 .cgn-tab-wrapper {
@@ -40,12 +40,20 @@
   @apply mb-1 md:px-2 md:gap-6 bg-gray-50 dark:bg-slate-700 md:bg-transparent md:dark:bg-transparent rounded-md md:rounded-none divide-y-2 md:divide-y-0 divide-gray-300 dark:divide-gray-500 md:border-b-2 border-gray-300 dark:border-gray-500
 }
 
+.cgn-radio-button {
+  @apply text-base
+}
+
+.cgn-radio-button-content {
+  @apply text-sm
+}
+
 .cgn-radio-button-label {
-  @apply block cursor-pointer rounded-lg border-2 bg-white px-6 py-4 shadow-sm dark:bg-slate-600 sm:flex sm:justify-between border-gray-300 dark:border-gray-700
+  @apply block cursor-pointer rounded-sm border bg-white px-6 py-4 shadow-sm sm:flex sm:justify-between border-gray-300 font-medium font-sans
 }
 
 .cgn-radio-button-label-active {
-  @apply block cursor-pointer rounded-lg border-2 bg-white px-6 py-4 shadow-sm dark:bg-slate-600 sm:flex sm:justify-between border-brand-500
+  @apply block cursor-pointer rounded-sm border bg-white px-6 py-4 shadow-sm sm:flex sm:justify-between border-brand-500 shadow-info-300 font-medium font-sans
 }
 
 .text-muted {

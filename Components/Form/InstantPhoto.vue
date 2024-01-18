@@ -1,12 +1,12 @@
 <template>
   <div class="space-y-2">
-    <label class="block select-none pl-1 text-sm text-gray-800 dark:text-gray-200">{{ label }}</label>
+    <label class="cgn-input-label block select-none">{{ label }}</label>
     <div class="flex items-center space-x-4">
       <div v-if="thumb" class="shrink-0">
-        <img class="h-16 w-16 rounded-full bg-white object-cover" :src="thumb" :width="width">
+        <img class="size-16 rounded-full bg-white object-cover" :src="thumb" :width="width">
       </div>
       <div v-else>
-        <i-heroicons-outline:user-circle class="h-16 w-16 text-gray-500" />
+        <i-heroicons-outline:user-circle class="size-16 text-gray-500" />
       </div>
       <div>
         <cgn-button is-label color-brand @click="startPhoto">

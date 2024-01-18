@@ -1,11 +1,11 @@
 <template>
   <div class="space-y-2">
-    <label class="block select-none pl-1 text-sm text-gray-800 dark:text-gray-200">{{ label }}</label>
+    <label class="cgn-input-label block select-none">{{ label }}</label>
     <div class="flex flex-wrap">
       <div v-for="photo in photos" :key="photo.id" class="w-1/2 p-2 sm:w-1/3 md:w-1/6">
         <div class="flex aspect-square">
           <div class="flex items-center justify-center overflow-hidden rounded bg-secondary-100 dark:bg-darkbg-500">
-            <img :src="photo.uploadthumb" class="h-48 w-48 object-contain">
+            <img :src="photo.uploadthumb" class="size-48 object-contain">
           </div>
         </div>
         <cgn-progress v-if="!photo.is_completed" :progress="photo.uploadProgress" />
