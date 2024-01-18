@@ -62,6 +62,8 @@ class EventEvent extends CognitoBase {
   require_vehicle_photo: boolean
   race_licence_required?: EventLicenceIssuer
   aasa_licence: string
+  race_licence_number: string
+  race_licence_expiry: string
   user_cannot_enter_reason: string
   user_cannot_apply_stall_site_reason: string
   stall_public_liability_insurance?: CognitoUserDocument
@@ -125,6 +127,8 @@ class EventEvent extends CognitoBase {
     this.last_vehicle_id = 0
     this.require_vehicle_photo = false
     this.aasa_licence = ''
+    this.race_licence_number = ''
+    this.race_licence_expiry = ''
     this.user_cannot_enter_reason = ''
     this.user_cannot_apply_stall_site_reason = ''
     this.stall_products_and_display_description = ''

@@ -121,6 +121,8 @@ class EventEntryForm {
   licence_id: number
   vehicle_id: number
   aasa_licence: string
+  race_licence_number: string
+  race_licence_expiry: string
   extras: EventEntryFormExtra[]
   spectators: EventEntryFormSpectator[]
   merch: EventEntryFormMerch[]
@@ -187,6 +189,8 @@ class EventEntryForm {
     this.licence_id = 0
     this.vehicle_id = 0
     this.aasa_licence = ''
+    this.race_licence_number = ''
+    this.race_licence_expiry = ''
     this.extras = []
     this.spectators = []
     this.merch = []
@@ -257,6 +261,10 @@ class EventEntryForm {
     this.vehicle_id = eventDetails.last_vehicle_id
     this.url = location.href
     this.aasa_licence = eventDetails.aasa_licence
+    if (eventDetails.race_licence_number) {
+      this.race_licence_number = eventDetails.race_licence_number
+      this.race_licence_expiry = eventDetails.race_licence_expiry
+    }
     this.extras = eventDetails.extras.map((e) => {
       return new EventEntryFormExtra({
         id: e.id,
@@ -420,6 +428,28 @@ class EventEntryForm {
       return null
     }
     return this.vehicles.find(e => e.id == this.vehicle_id)
+  }
+
+  raceLicenceName() {
+    if (this.eventDetails?.race_licence_required) {
+      return `${this.eventDetails.race_licence_required.name} Licence Number`
+    }
+    return 'Race Licence Number'
+  }
+
+  showLicencePurchase() {
+    // Only if the event requires it
+    if (!this.eventDetails?.race_licence_required) {
+      return false
+    }
+    const category = this.selectedCategory()
+    if (category && category.no_race_licence_required) {
+      return false
+    }
+    if (this.category_id > -1) {
+      return true
+    }
+    return false
   }
 
   calculateGarageTypeRadio({ show_booked_by = false, price_included_in_entry = false }) {

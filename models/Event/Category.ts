@@ -13,6 +13,7 @@ class EventCategory extends CognitoBase {
   garage_included_in_entry_fee: boolean
   vehicle_must_be_registered: boolean
   cannot_enter_reason: string
+  no_race_licence_required: boolean
 
   baseurl() {
     return '/api/v1/event/category'
@@ -32,6 +33,7 @@ class EventCategory extends CognitoBase {
     this.garage_included_in_entry_fee = false
     this.vehicle_must_be_registered = true
     this.cannot_enter_reason = ''
+    this.no_race_licence_required = false
     Object.assign(this, source)
   }
 }
