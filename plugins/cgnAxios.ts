@@ -37,7 +37,7 @@ class CgnAxios {
     userStore?: any
     useCart?: boolean
   }) {
-    this.ready = true // temporary workaround
+    this.ready = false
     if (typeof (settings.useCart) == 'undefined') {
       settings.useCart = false
     }
@@ -180,6 +180,10 @@ class CgnAxios {
       this.checkRefresh()
     }, 10000)
     this.checkRefresh()
+    setTimeout(() => {
+      // In case something else went wrong, we proceed as normal after 2 seconds
+      this.ready = true
+    }, 2000)
   }
 
   oauth2AuthorizeUrl(siteurl?: string, redirect_uri?: string) {
