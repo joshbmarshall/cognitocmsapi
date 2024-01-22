@@ -3,7 +3,7 @@
     <label v-if="props.label" class="pl-1 text-sm text-gray-800 dark:text-gray-200">{{ props.label }}</label>
     <div v-for="option in radioOptions" :key="option.id">
       <label>
-        <input v-model="curval" type="radio" :value="option.id" @change="handleInput">
+        <input v-model="curval" type="radio" :value="option.id" :required="props.required" :name="name" @change="handleInput">
         {{ option.name }}
       </label>
     </div>
@@ -11,6 +11,8 @@
 </template>
 
 <script setup lang="ts">
+import { nanoid } from 'nanoid'
+
 const props = defineProps({
   label: {
     type: String,
@@ -36,6 +38,7 @@ const emit = defineEmits(['update:modelValue', 'change', 'input'])
 
 const curval = ref('')
 const radioOptions = ref(props.options)
+const name = ref('')
 
 const handleInput = () => {
   emit('change')
@@ -84,5 +87,6 @@ onMounted(() => {
     curval.value = ''
   }
   formatOptions()
+  name.value = nanoid()
 })
 </script>
