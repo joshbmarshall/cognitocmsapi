@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label class="pl-1 text-sm text-gray-800 dark:text-gray-200">{{ props.label }}</label>
+    <label v-if="props.label" class="pl-1 text-sm text-gray-800 dark:text-gray-200">{{ props.label }}</label>
     <div v-for="option in radioOptions" :key="option.id">
       <label>
         <input v-model="curval" type="radio" :value="option.id" @change="handleInput">
