@@ -15,7 +15,7 @@
     </div>
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-      <div class="rounded-lg bg-white px-4 py-8 drop-shadow-lg dark:bg-darkbg-700 sm:px-10">
+      <div class="dark:bg-darkbg-700 rounded-lg bg-white px-4 py-8 drop-shadow-lg sm:px-10">
         <div v-if="signingIn" class="text-center">
           <cgn-spinner />
         </div>
@@ -67,10 +67,21 @@
             </span>
           </cgn-button>
         </form>
-        <div v-if="showLogonPasswordLink" class="text-right">
-          <cgn-link :to="`${config.baseURL}/cms/cognito/default/goToSite`" noblanktarget>
-            Log on with a password
-          </cgn-link>
+        <div v-if="showOtherLogins">
+          <div class="text-center">
+            -- OR --
+          </div>
+          <div v-if="showGoogleLogin" class="text-right">
+            <cgn-button color-danger :url="`${config.baseURL}/cms/cognito/default/goToSite/google`" fullwidth>
+              <i-ri:google-fill class="inline" />
+              Log on with Google
+            </cgn-button>
+          </div>
+          <div v-if="showLogonPasswordLink" class="text-right">
+            <cgn-button color-secondary :url="`${config.baseURL}/cms/cognito/default/goToSite`" fullwidth>
+              Log on with a password
+            </cgn-button>
+          </div>
         </div>
       </div>
     </div>
@@ -131,6 +142,21 @@ const showLogonPasswordLink = computed(() => {
   }
   return true
 })
+
+const showGoogleLogin = computed(() => {
+  return config.login.google
+})
+
+const showOtherLogins = computed(() => {
+  if (showLogonPasswordLink.value) {
+    return true
+  }
+  if (showGoogleLogin.value) {
+    return true
+  }
+  return false
+})
+
 onMounted(async () => {
   if ($axios.isSSR()) {
     return

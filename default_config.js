@@ -22,6 +22,7 @@ const config = {
   },
   login: {
     code_only: false,
+    google: false,
   },
   signUp: {
     ask_date_of_birth: false,
