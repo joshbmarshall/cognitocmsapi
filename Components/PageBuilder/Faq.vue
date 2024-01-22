@@ -22,7 +22,7 @@
           leave-to-class="opacity-0 -translate-y-2"
           class="transition duration-150 ease-out"
         >
-          <div v-if="selected_faq == faq.id" class="prose p-2 dark:prose-invert" v-html="faq.content" />
+          <div v-if="selected_faq == faq.id" class="prose max-w-none p-2 dark:prose-invert" v-html="faq.content" />
         </transition>
       </div>
     </div>
