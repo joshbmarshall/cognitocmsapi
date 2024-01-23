@@ -2,7 +2,7 @@
   <div v-if="payment_ok">
     <cgn-alert-success class="mx-auto my-2 w-full max-w-2xl">
       Payment Successful.
-      Please check your email for your receipt
+      You will be notified as soon as we process your application
     </cgn-alert-success>
   </div>
   <div v-else class="flex flex-col">
