@@ -15,7 +15,7 @@
     </div>
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-      <div class="dark:bg-darkbg-700 rounded-lg bg-white px-4 py-8 drop-shadow-lg sm:px-10">
+      <div class="rounded-lg bg-white px-4 py-8 drop-shadow-lg dark:bg-darkbg-700 sm:px-10">
         <div v-if="signingIn" class="text-center">
           <cgn-spinner />
         </div>
@@ -43,10 +43,9 @@
             </cgn-alert-info>
             <cgn-form-input-text v-model="first_name" label="First Name" required />
             <cgn-form-input-text v-model="last_name" label="Last Name" required />
-            <cgn-form-input
+            <cgn-form-input-date-of-birth
               v-if="config.signUp.ask_date_of_birth"
               v-model="date_of_birth"
-              type="date"
               label="Date of Birth"
               required
             />
