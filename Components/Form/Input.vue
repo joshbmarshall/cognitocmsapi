@@ -3,7 +3,7 @@
     <div class="relative" :class="wrapClass">
       <div v-if="type === 'readonly'">
         <div :class="inputClass" class="cgn-input-field bg-white p-2">
-          <slot />
+          <slot>{{ modelValue }}</slot>
         </div>
       </div>
       <div v-else-if="type === 'btnlink'">
