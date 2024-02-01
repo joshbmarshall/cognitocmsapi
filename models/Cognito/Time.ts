@@ -1,4 +1,4 @@
-import { addMinutes, differenceInCalendarDays, differenceInYears, format, isAfter, isFuture, isPast, isSameDay, isSameMonth, parseISO, subMinutes, subMonths } from 'date-fns'
+import { addMinutes, differenceInCalendarDays, differenceInYears, format, isAfter, isFuture, isPast, isSameDay, isSameMonth, isWeekend, parseISO, subMinutes, subMonths } from 'date-fns'
 
 class CognitoTime {
   time: Date
@@ -48,6 +48,10 @@ class CognitoTime {
 
   isSameMonth(compare_to: CognitoTime): boolean {
     return isSameMonth(this.time, compare_to.time)
+  }
+
+  isWeekend(): boolean {
+    return isWeekend(this.time)
   }
 
   format(fmt: string): string {
