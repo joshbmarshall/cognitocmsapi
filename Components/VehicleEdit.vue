@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { EventVehicleEngineType } from '~cognito/models/Event/VehicleEngineType.js'
+import { EventVehicleEngineType } from '~cognito/models/Event/VehicleEngineType'
 import { EventVehicleInductionType } from '~cognito/models/Event/VehicleInductionType'
 import { EventVehicle } from '~cognito/models/Event/Vehicle'
 import { EventVehicleBodyStyle } from '~cognito/models/Event/VehicleBodyStyle'
