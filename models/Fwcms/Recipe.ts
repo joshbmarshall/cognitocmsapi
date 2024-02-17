@@ -16,7 +16,11 @@ class FwcmsRecipe extends CognitoBase {
   method: string
   hints: string
   image: CognitoImage
-  related_recipes: Array<FwcmsRecipe>
+  related_recipes: FwcmsRecipe[]
+  documents: {
+    name: string
+    url: string
+  }[]
 
   baseurl(): string {
     return '/api/v1/fwcms/recipe'
@@ -39,6 +43,7 @@ class FwcmsRecipe extends CognitoBase {
     this.hints = ''
     this.image = new CognitoImage()
     this.related_recipes = []
+    this.documents = []
     Object.assign(this, source)
   }
 }
