@@ -105,7 +105,7 @@
             Sorry, we don't have a price to ship to your address.
           </div>
           <div>
-            If you can't pick up, I can email you a shipping quote.
+            If you can't pick up, we can email you a shipping quote.
           </div>
           <cgn-button color-brand class="my-2 w-full" @click="requestShippingQuote">
             Request a shipping quote
