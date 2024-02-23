@@ -112,7 +112,7 @@
           </cgn-button>
           <cgn-spinner v-if="gettingShippingQuote" />
           <cgn-alert-success v-if="gotShippingQuote">
-            Shipping quote requested. I'll get back to you as soon as I can
+            Shipping quote requested. We'll get back to you as soon as we can
           </cgn-alert-success>
         </div>
         <div v-else-if="noShippingQuotes" class="mt-4">
