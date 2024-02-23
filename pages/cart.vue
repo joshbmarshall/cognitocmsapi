@@ -5,7 +5,7 @@
         <span class="text-2xl">Cart</span>
         <span class="text-sm text-gray-600 dark:text-gray-200">({{ cartStore.cartitemCount }} Items)</span>
       </div>
-      <CartList />
+      <cgn-sell-cart-list />
       <div class="flex flex-row gap-4">
         <div class="mt-4 flex w-full flex-col justify-end gap-2">
           <div class="flex justify-between">
