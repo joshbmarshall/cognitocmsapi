@@ -27,7 +27,7 @@
             :class="index % 2 ? 'bg-gray-100 dark:bg-gray-800' : 'bg-white dark:bg-gray-900'"
           >
             <cgn-lazy-image
-              class="aspect-square h-full max-h-[3rem] w-full max-w-[3rem] overflow-hidden rounded-md dark:bg-white"
+              class="aspect-square h-full max-h-[3rem] w-full max-w-[3rem] overflow-hidden rounded-md object-cover dark:bg-white"
               :image="cartitem.img"
             />
             <div class="flex grow flex-col">
