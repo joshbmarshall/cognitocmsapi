@@ -120,7 +120,7 @@
         </div>
       </div>
       <div class="flex w-full flex-col items-start justify-start">
-        <cart-list class="mt-4 w-full lg:mb-4 lg:mt-0" />
+        <cgn-sell-cart-list class="mt-4 w-full lg:mb-4 lg:mt-0" />
         <div class="order-first w-full lg:order-last">
           <div class="flex flex-row items-baseline gap-2">
             <span class="text-2xl font-semibold leading-6">Order Summary</span>
