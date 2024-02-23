@@ -52,7 +52,7 @@ const pageStore = usePageStore()
 const { currentPage } = storeToRefs(pageStore)
 const loading = ref(true)
 const not_found = computed(() => {
-  return !currentPage.value.updated_at
+  return !currentPage.value.id
 })
 const urlParts = ref(new CognitoUrlParts())
 
