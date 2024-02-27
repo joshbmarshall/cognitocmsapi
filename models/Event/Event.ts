@@ -179,6 +179,22 @@ class EventEvent extends CognitoBase {
   isOneDayEvent() {
     return this.start_date.toDateString() == this.end_date.toDateString()
   }
+
+  cheapest_price() {
+    if (this.spectator_types?.length) {
+      const cheapest_spectator_price = this.spectator_types.reduce((min, p) => p.price < min ? p.price : min, 9999999)
+      if (cheapest_spectator_price > 0) {
+        return cheapest_spectator_price
+      }
+    }
+    if (this.categories?.length) {
+      const cheapest_entry_price = this.categories.reduce((min, p) => p.price < min ? p.price : min, 9999999)
+      if (cheapest_entry_price > 0) {
+        return cheapest_entry_price
+      }
+    }
+    return null
+  }
 }
 
 export { EventEvent }
