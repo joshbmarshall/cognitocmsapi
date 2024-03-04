@@ -56,6 +56,8 @@ function handleInput() {
 
 function formatOptions() {
   if (!dropdownOptions.value) {
+    curval.value = ''
+    handleInput()
     return
   }
   for (let index = 0; index < dropdownOptions.value.length; index++) {
@@ -77,6 +79,16 @@ function formatOptions() {
       }
     }
   }
+
+  // Does the current value exist in the dropdown Options?
+  for (let index = 0; index < dropdownOptions.value.length; index++) {
+    const element = dropdownOptions.value[index]
+    if (curval.value == element.value) {
+      return
+    }
+  }
+  curval.value = ''
+  handleInput()
 }
 
 watch(() => props.modelValue, () => {
