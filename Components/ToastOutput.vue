@@ -4,10 +4,10 @@
       <cgn-alert-success v-if="toast.type == 'success'">
         {{ toast.message }}
       </cgn-alert-success>
-      <cgn-alert-info v-if="toast.type == 'info'">
+      <cgn-alert-info v-else-if="toast.type == 'info'">
         {{ toast.message }}
       </cgn-alert-info>
-      <cgn-alert-danger v-if="toast.type == 'fail'">
+      <cgn-alert-danger v-else>
         {{ toast.message }}
       </cgn-alert-danger>
     </div>
