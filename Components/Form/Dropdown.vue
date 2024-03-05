@@ -86,6 +86,9 @@ function formatOptions() {
     if (curval.value == element.value) {
       return
     }
+    if (curval.value == element.id) {
+      return
+    }
   }
   curval.value = ''
   handleInput()
