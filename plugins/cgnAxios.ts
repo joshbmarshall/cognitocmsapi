@@ -291,7 +291,7 @@ class CgnAxios {
 
   async getUser() {
     const user = await new CognitoUser().getLoggedInUser(this)
-    this.userStore().setUser(user)
+    this.userStore().user = JSON.parse(JSON.stringify(user))
   }
 
   async login(username: string, password: string, router: Router) {

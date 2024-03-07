@@ -29,9 +29,6 @@ export const useRacersUserStore = defineStore({
     setRefreshToken(token: string) {
       this.refresh_token = token
     },
-    setUser(user: any) {
-      this.user = user
-    },
     setRedirectAfterLogin(path: string) {
       this.redirect_after_login = path
     },
