@@ -8,12 +8,13 @@ export const useClubMemberStore = defineStore({
 
   state: () => {
     return {
-      number: 0,
+      number: '',
       racers_id: 0,
       name: '',
       valid_to: '',
       hasPrior: false,
       is_approved: false,
+      home_track: 0,
       type: '',
       color: '#ffffff',
     }
@@ -49,6 +50,7 @@ export const useClubMemberStore = defineStore({
       this.color = res.data.colour
       this.hasPrior = res.data.hasPrior
       this.is_approved = res.data.is_approved
+      this.home_track = res.data.home_track
     },
     setRacersId(racers_id: number) {
       this.racers_id = racers_id
