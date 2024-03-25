@@ -1,4 +1,9 @@
 <template>
+  <div class="absolute left-2 top-2 z-10">
+    <cgn-button color-brand url="/">
+      Back
+    </cgn-button>
+  </div>
   <div>
     <cgn-modal v-model="fail" :timeout="3000">
       <template #icon>
@@ -61,10 +66,10 @@
     <div class="overflow-hidden">
       <div
         class="
+          font-display
           bg-gray-300
           py-12
           text-center
-          font-display
           text-2xl
           uppercase
           dark:bg-darkbg-700
