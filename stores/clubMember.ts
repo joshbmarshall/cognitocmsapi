@@ -17,6 +17,7 @@ export const useClubMemberStore = defineStore({
       home_track: 0,
       type: '',
       color: '#ffffff',
+      track_color: '#ffffff',
     }
   },
   getters: {
@@ -51,6 +52,7 @@ export const useClubMemberStore = defineStore({
       this.hasPrior = res.data.hasPrior
       this.is_approved = res.data.is_approved
       this.home_track = res.data.home_track
+      this.track_color = res.data.track_color
     },
     setRacersId(racers_id: number) {
       this.racers_id = racers_id
