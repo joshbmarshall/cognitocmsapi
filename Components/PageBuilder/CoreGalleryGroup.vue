@@ -7,7 +7,7 @@
       </p>
     </div>
     <div class="grid grid-cols-3 gap-2 pt-2 md:grid-cols-4 lg:grid-cols-5">
-      <div v-for="gallery in galleries" :key="gallery.url" class="group relative overflow-hidden bg-black" @click="selectGallery(gallery)">
+      <div v-for="gallery in galleries" :key="gallery.url" class="group relative overflow-hidden bg-black" @click="selectGallery(gallery.id)">
         <div v-if="gallery.slides.length">
           <div class="mx-auto space-y-2 text-white lg:col-start-1 lg:row-start-1 lg:max-w-none">
             <div :class="outerClass(gallery.slides[0])" class="relative aspect-square">
@@ -63,6 +63,8 @@
 </template>
 
 <script lang="ts">
+import { gql } from 'graphql-request'
+import { $axios } from '~cognito/plugins/axios'
 import { CognitoGallery } from '~cognito/models/Cognito/Gallery'
 import { CognitoSlide } from '~cognito/models/Cognito/Slide'
 
@@ -94,20 +96,51 @@ function imageClass(slide: CognitoSlide) {
   return new CognitoSlide(slide).imageClass()
 }
 
-const selectGallery = (gallery: CognitoGallery) => {
-  selectedGallery.value = new CognitoGallery(gallery)
+const selectGallery = async (gallery_id: number) => {
+  const data = await $axios.graphql(gql`query cognitoGalleryQuery($id: ID){
+    cognitoGallery(id: $id) {
+      url
+      heading
+      sub_heading
+      slides {
+        image(image_width: 400, image_aspect: "16x9") {
+          url
+          width
+          height
+        }
+      }
+    }
+  }`, {
+    id: gallery_id,
+  })
   miniGallery.value.scrollIntoView({
     behavior: 'smooth',
   })
+  selectedGallery.value = new CognitoGallery(data.cognitoGallery)
+}
+
+const loadGalleries = async () => {
+  const data = await $axios.graphql(gql`query cognitoGallerysQuery($group: String!){
+    cognitoGallerys(byGroup: $group) {
+      id
+      url
+      heading
+      sub_heading
+      slides(first: 1) {
+        image(image_width: 400, image_aspect: "16x9") {
+          url
+          width
+          height
+        }
+      }
+    }
+  }`, {
+    group: props.templatevar.group,
+  })
+  galleries.value = data.cognitoGallerys
 }
 
 onMounted(() => {
-  new CognitoGallery().find_many({
-    group: props.templatevar.group,
-    image_width: 400,
-    image_aspect: '16x9',
-  }).then((data) => {
-    galleries.value = data.mapped
-  })
+  loadGalleries()
 })
 </script>
