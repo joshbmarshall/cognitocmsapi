@@ -132,11 +132,11 @@ async function checkVisible() {
 
   if (filename) {
     const hires_url = `${show_image.value.replace(filename, '') + width}x${height}:${filename}`
-    nextTick(() => {
+    setTimeout(() => {
       show_image.value = hires_url
       all_done = true
       checkVisible()
-    })
+    }, 1000)
   }
 }
 
