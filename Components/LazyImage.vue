@@ -107,6 +107,14 @@ async function checkVisible() {
     return
   }
 
+  // Make it to the closest 25px - not pixel perfect but close for similar sized screens
+  const roundTo = 25
+  const newWidth = Math.round(width / roundTo) * roundTo
+  if (newWidth > 0) {
+    height = Math.ceil(height * newWidth / width)
+    width = newWidth
+  }
+
   // Keep ratio for images that are cropped on-screen by hiding portions of the image, ie square thumbnails
   if (props.image?.width && props.image?.height) {
     const ratio = props.image.width / props.image.height
