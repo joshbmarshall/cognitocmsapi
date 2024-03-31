@@ -5,6 +5,7 @@
 <script setup lang="ts">
 import { CognitoImage } from '~cognito/models/Cognito/Image'
 import { CognitoPhoto } from '~cognito/models/Cognito/Photo'
+import { hiresFetchMutex } from '~cognito/plugins/mutex'
 
 const props = defineProps({
   // Give just the image if you have a CognitoImage
@@ -76,12 +77,24 @@ async function checkVisible() {
 
   // Load standard image
   const img = new Image()
-  img.src = show_image.value
-  try {
-    await img.decode()
-  } catch (error) {
-    console.log({ error, src: img.src })
-    return
+  if (all_done) {
+    // Only load one hi-res image at a time
+    await hiresFetchMutex.dispatch(async () => {
+      img.src = show_image.value
+      try {
+        await img.decode()
+      } catch (error) {
+        console.log({ error, src: img.src })
+      }
+    })
+  } else {
+    img.src = show_image.value
+    try {
+      await img.decode()
+    } catch (error) {
+      console.log({ error, src: img.src })
+      return
+    }
   }
   if (!lazyelement.value) {
     // Element has disappeared, abort
@@ -132,11 +145,11 @@ async function checkVisible() {
 
   if (filename) {
     const hires_url = `${show_image.value.replace(filename, '') + width}x${height}:${filename}`
-    setTimeout(() => {
-      show_image.value = hires_url
+    nextTick(() => {
       all_done = true
+      show_image.value = hires_url
       checkVisible()
-    }, 1000)
+    })
   }
 }
 
