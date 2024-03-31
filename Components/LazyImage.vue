@@ -77,13 +77,21 @@ async function checkVisible() {
   // Load standard image
   const img = new Image()
   img.src = show_image.value
-  await img.decode()
+  try {
+    await img.decode()
+  } catch (error) {
+    console.log({ error, src: img.src })
+    return
+  }
   if (!lazyelement.value) {
     // Element has disappeared, abort
     return
   }
   src.value = show_image.value
   if (props.forceSize) {
+    return
+  }
+  if (all_done) {
     return
   }
   if (!lazyelement.value) {
@@ -117,8 +125,9 @@ async function checkVisible() {
   if (filename) {
     const hires_url = `${show_image.value.replace(filename, '') + width}x${height}:${filename}`
     nextTick(() => {
-      src.value = hires_url
+      show_image.value = hires_url
       all_done = true
+      checkVisible()
     })
   }
 }
