@@ -120,9 +120,9 @@ async function checkVisible() {
     return
   }
 
-  // Make it to the closest 25px - not pixel perfect but close for similar sized screens
+  // Make it to the closest upper 25px - not pixel perfect but close for similar sized screens
   const roundTo = 25
-  const newWidth = Math.round(width / roundTo) * roundTo
+  const newWidth = Math.ceil(width / roundTo) * roundTo
   if (newWidth > 0) {
     height = Math.ceil(height * newWidth / width)
     width = newWidth
@@ -136,9 +136,9 @@ async function checkVisible() {
     if (checkWidth > 1) {
       // Is definitely a different shape
       if (width / height > ratio) {
-        height = Math.round(width / ratio)
+        height = Math.ceil(width / ratio)
       } else {
-        width = Math.round(height * ratio)
+        width = Math.ceil(height * ratio)
       }
     }
   }
