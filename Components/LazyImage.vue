@@ -80,6 +80,10 @@ async function checkVisible() {
   if (all_done) {
     // Only load one hi-res image at a time
     await hiresFetchMutex.dispatch(async () => {
+      if (!lazyelement.value) {
+        // Element has disappeared, abort
+        return
+      }
       img.src = show_image.value
       try {
         await img.decode()
