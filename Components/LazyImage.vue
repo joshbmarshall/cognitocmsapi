@@ -215,6 +215,13 @@ async function newImage() {
     url = data.url
     placeholder = data.placeholder
   }
+  const urlprefix = url.split('.').slice(0, -1).join('.')
+  if (!webp) {
+    webp = `${urlprefix}.webp`
+  }
+  if (!avif) {
+    avif = `${urlprefix}.avif`
+  }
   if (last_image_url.value == url) {
     // No need to reload same image
     return
