@@ -123,6 +123,8 @@ class EventEntryForm {
   aasa_licence: string
   race_licence_number: string
   race_licence_expiry: string
+  expected_time?: number
+  sharing_vehicle_with?: string
   extras: EventEntryFormExtra[]
   spectators: EventEntryFormSpectator[]
   merch: EventEntryFormMerch[]

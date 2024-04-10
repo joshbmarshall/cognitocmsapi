@@ -14,6 +14,8 @@ class EventCategory extends CognitoBase {
   vehicle_must_be_registered: boolean
   cannot_enter_reason: string
   no_race_licence_required: boolean
+  ask_if_sharing_vehicle: boolean
+  ask_expected_time: boolean
 
   baseurl() {
     return '/api/v1/event/category'
@@ -34,6 +36,8 @@ class EventCategory extends CognitoBase {
     this.vehicle_must_be_registered = true
     this.cannot_enter_reason = ''
     this.no_race_licence_required = false
+    this.ask_if_sharing_vehicle = false
+    this.ask_expected_time = false
     Object.assign(this, source)
   }
 }
