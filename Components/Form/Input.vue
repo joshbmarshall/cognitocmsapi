@@ -44,6 +44,9 @@
         <div v-if="type === 'phone'" class="absolute inset-y-0 left-0 flex items-center pl-1" :class="iconClass">
           <i-heroicons-solid:phone />
         </div>
+        <div v-if="type === 'currency'" class="absolute inset-y-0 left-1 flex items-center pl-1" :class="iconClass">
+          $
+        </div>
         <div class="flex">
           <input
             ref="inputel" v-maska:[maska] :min="minAmount" :max="maxAmount" :value="modelValue" :type="inputType"
@@ -199,6 +202,9 @@ const hasIcon = computed(() => {
     return true
   }
   if (props.type === 'phone') {
+    return true
+  }
+  if (props.type === 'currency') {
     return true
   }
   return false
