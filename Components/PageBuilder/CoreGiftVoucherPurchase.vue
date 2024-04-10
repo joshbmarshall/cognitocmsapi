@@ -19,8 +19,8 @@
       </cgn-button>
     </div>
     <form v-if="buy_gift_voucher_mode" @submit.prevent="submitPayment">
-      <div class="mb-2 flex gap-2">
-        <div class="w-1/2">
+      <div class="mb-2 grid-cols-2 gap-2 md:grid">
+        <div>
           <cgn-form-dropdown
             v-model="formValues.theme_id"
             label="Gift Voucher Theme" :options="voucherThemes.map(e => {
@@ -30,7 +30,7 @@
           <cgn-form-dropdown v-model="amount" label="Gift Voucher Amount" :options="dropdown_amounts" required />
           <cgn-form-input-currency v-if="props.templatevar.allow_custom_amounts && amount == '-1'" v-model="custom_amount" label="Custom Amount" />
         </div>
-        <cgn-lazy-image v-if="selectedTheme" :image="selectedTheme.image" class="w-1/2 rounded-lg" />
+        <cgn-lazy-image v-if="selectedTheme" :image="selectedTheme.image" class="rounded-lg" />
       </div>
       <cgn-alert-danger v-if="errorMessage">
         {{ errorMessage }}
