@@ -10,7 +10,15 @@
   </div>
   <cgn-spinner v-else-if="loading" />
   <div v-else>
-    <form @submit.prevent="submitPayment">
+    <div class="mb-2 text-right">
+      <cgn-button v-if="buy_gift_voucher_mode" color-brand @click="buy_gift_voucher_mode = false">
+        Redeem a gift voucher
+      </cgn-button>
+      <cgn-button v-else color-brand @click="buy_gift_voucher_mode = true">
+        Buy a gift voucher
+      </cgn-button>
+    </div>
+    <form v-if="buy_gift_voucher_mode" @submit.prevent="submitPayment">
       <div class="mb-2 flex gap-2">
         <div class="w-1/2">
           <cgn-form-dropdown
@@ -29,6 +37,18 @@
       </cgn-alert-danger>
       <cgn-button v-if="price > 0" color-brand fullwidth class="font-bold">
         Pay ${{ price.toFixed(2) }} Now
+      </cgn-button>
+    </form>
+    <form v-else @submit.prevent="redeemVoucher">
+      <div class="text-xl">
+        Redeem gift voucher
+      </div>
+      <cgn-form-input-text v-model="redeem_code" label="Code" />
+      <cgn-alert-danger v-if="errorMessage">
+        {{ errorMessage }}
+      </cgn-alert-danger>
+      <cgn-button color-brand fullwidth class="font-bold">
+        Redeem Now
       </cgn-button>
     </form>
   </div>
@@ -58,7 +78,10 @@ const props = defineProps({
   },
 })
 
+const router = useRouter()
 const loading = ref(false)
+const buy_gift_voucher_mode = ref(true)
+const redeem_code = ref('')
 const has_payment = ref(false)
 const payment_ok = ref(false)
 const custom_amount = ref('0')
@@ -109,6 +132,14 @@ const submitPayment = async () => {
   errorMessage.value = result.message
   if (result.success) {
     window.location = result.payment
+  }
+}
+
+const redeemVoucher = async () => {
+  const result = (await $axios.post('/api/v1/cognito/giftVoucher/redeem', { code: redeem_code.value })).data
+  errorMessage.value = result.message
+  if (result.success) {
+    router.push('/profile')
   }
 }
 
