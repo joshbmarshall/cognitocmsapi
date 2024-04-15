@@ -62,7 +62,7 @@ export const useUserStore = defineStore('user', () => {
     router.replace('/login')
   }
 
-  return { access_token, refresh_token, redirect_after_login, oauth2_state, user, link_active, baseURL, getAuthFingerprint, setAccessToken, setRefreshToken, setRedirectAfterLogin, logout, isLoggedIn, checkLoggedIn }
+  return { access_token, refresh_token, redirect_after_login, auth_fingerprint, oauth2_state, user, link_active, baseURL, getAuthFingerprint, setAccessToken, setRefreshToken, setRedirectAfterLogin, logout, isLoggedIn, checkLoggedIn }
 }, {
   persist: true,
   share: {
