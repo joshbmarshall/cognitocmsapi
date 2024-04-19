@@ -4,6 +4,7 @@ import type { CognitoMapSite } from '../Cognito/MapSite'
 class EventGarage extends CognitoBase {
   name: string
   type: string
+  type_id: number
   available: boolean
   booked_by: string
   price: number
@@ -17,6 +18,7 @@ class EventGarage extends CognitoBase {
     super()
     this.name = ''
     this.type = ''
+    this.type_id = 0
     this.available = false
     this.booked_by = ''
     this.price = 0
