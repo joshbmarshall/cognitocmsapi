@@ -480,14 +480,15 @@ class EventEntryForm {
     })
   }
 
-  calculateGarageTypeMap({ show_booked_by = false, price_included_in_entry = false }) {
+  calculateGarageTypeMap({ show_booked_by = false, price_included_in_entry = false, disabled_types = [] }) {
     if (!this.eventDetails) {
       return []
     }
 
     this.garageTypeMap = this.eventDetails.garages.map((e) => {
       let name = `${e.type} ${e.name}`
-      if (e.available) {
+      const available = e.available && !disabled_types.includes(e.type_id)
+      if (available) {
         if (!price_included_in_entry) {
           name += ` - $${e.price.toFixed(2)}`
         }
@@ -500,7 +501,7 @@ class EventEntryForm {
       }
       const site = new CognitoMapSite(e.map_site)
       site.id = `${e.id}`
-      site.available = e.available
+      site.available = available
       site.hoverText = name
       return site
     })
