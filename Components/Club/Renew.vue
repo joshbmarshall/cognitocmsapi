@@ -17,13 +17,25 @@
         required
       />
       <cgn-form-radio-button v-model="membershipForm.membership_type" :options="membershipTypesRadio" required />
+      <div v-if="membershipForm.extras.length">
+        <div class="w-full pt-2 text-center text-2xl">
+          Extras
+        </div>
+        <div v-for="extra in membershipForm.extras" :key="extra.id">
+          <div class="text-2xl">
+            {{ extra.name }}
+          </div>
+          <div v-html="extra.content" />
+          <cgn-form-input v-model="extra.qty" type="number" :min-amount="0" />
+        </div>
+      </div>
       <div v-if="membershipForm.membership_type" class="my-2">
         <div v-if="terms">
           <div class="prose-dark" v-html="terms" />
           <cgn-form-checkbox required label="I accept these terms" />
         </div>
-        <cgn-button>
-          Pay ${{ selected_membership_type?.price.toFixed(2) }} Now
+        <cgn-button v-if="totalPrice > 0">
+          Pay ${{ totalPrice.toFixed(2) }} Now
         </cgn-button>
       </div>
     </form>
@@ -47,10 +59,25 @@ const membershipForm = ref({
   phone: '',
   address: new CognitoAddressLookup(),
   membership_type: 0,
+  extras: [],
 })
 
 const selected_membership_type = computed(() => {
   return membership_types.value.find(e => e.id == membershipForm.value.membership_type)
+})
+
+const totalPrice = computed(() => {
+  let total = 0
+  if (selected_membership_type.value) {
+    total = Number.parseFloat(selected_membership_type.value.price)
+  }
+  membershipForm.value.extras.forEach((e) => {
+    if (!e.qty) {
+      e.qty = 0
+    }
+    total += e.qty * e.cost
+  })
+  return total
 })
 
 const membershipTypesRadio = computed(() => {
@@ -81,9 +108,16 @@ onMounted(async () => {
         content
       }
     }
+    clubExtras {
+      id
+      name
+      content
+      cost
+    }
   }`)
 
   membership_types.value = gqldata.clubMembershipTypes
+  membershipForm.value.extras = gqldata.clubExtras
   terms.value = gqldata.clubMisc.membership_terms?.content
 
   const user = await (new CognitoUser()).getLoggedInUser()

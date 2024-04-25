@@ -30,11 +30,13 @@ class ClubMembershipType extends CognitoBase {
   renew(data: {
     phone?: string
     address?: any
+    extras: any
   }) {
     const formValues = {
       type_id: this.id,
       phone: data.phone,
       address: data.address,
+      extras: data.extras,
       url: btoa(location.href),
     }
     $axios.post(`${this.baseurl()}/renew`, formValues)
