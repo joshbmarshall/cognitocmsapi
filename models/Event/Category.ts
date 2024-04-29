@@ -9,6 +9,7 @@ class EventCategory extends CognitoBase {
   ticket_type: string
   sold_out: boolean
   is_entry_transfer: boolean
+  requires_vehicle: boolean
   requires_garage: boolean
   garage_included_in_entry_fee: boolean
   unavailable_garage_types: number[]
@@ -32,6 +33,7 @@ class EventCategory extends CognitoBase {
     this.ticket_type = ''
     this.sold_out = true
     this.is_entry_transfer = false
+    this.requires_vehicle = true
     this.requires_garage = false
     this.garage_included_in_entry_fee = false
     this.unavailable_garage_types = []
