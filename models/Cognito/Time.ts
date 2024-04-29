@@ -96,5 +96,9 @@ class CognitoTime {
   isAfter(othertime: CognitoTime): boolean {
     return isAfter(this.time, othertime.time)
   }
+
+  hour(): number {
+    return Number.parseInt(format(this.time, 'HH'))
+  }
 }
 export { CognitoTime }
