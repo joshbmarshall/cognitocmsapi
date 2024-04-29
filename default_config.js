@@ -18,6 +18,8 @@ const config = {
     edit_abn: false,
     edit_website: false,
     edit_facebook: false,
+    edit_club_additional_member: false,
+    club_additional_member_label: 'Partner Name',
     manage_addresses: false,
   },
   login: {

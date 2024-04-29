@@ -234,6 +234,11 @@
                 label="Emergency Contact Phone"
               />
             </template>
+            <cgn-form-input-text
+              v-if="config.profile.edit_club_additional_member"
+              v-model="formValues.club_additional_member"
+              :label="config.profile.club_additional_member_label"
+            />
           </div>
 
           <cgn-button color-brand submit>
@@ -300,6 +305,7 @@ const formValues = ref({
   drivers_licence_state_of_issue_id: '',
   emergency_contact_name: '',
   emergency_contact_phone: '',
+  club_additional_member: '',
   image: '',
   addresses: [],
 })

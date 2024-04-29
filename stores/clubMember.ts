@@ -11,6 +11,7 @@ export const useClubMemberStore = defineStore({
       number: '',
       racers_id: 0,
       name: '',
+      additional_member: '',
       valid_to: '',
       hasPrior: false,
       is_approved: false,
@@ -45,6 +46,7 @@ export const useClubMemberStore = defineStore({
       const res = await $axios.get('/api/v1/club/member/getMembership')
       this.number = res.data.number
       this.name = res.data.name
+      this.additional_member = res.data.additional_member
       this.valid_to = res.data.valid_to
       this.racers_id = res.data.racers_id
       this.type = res.data.type
