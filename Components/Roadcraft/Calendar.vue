@@ -1,0 +1,311 @@
+<template>
+  <div>
+    <div class="flex flex-col justify-between md:flex-row">
+      <div class="flex max-w-2xl flex-1 flex-wrap justify-between px-2 capitalize">
+        <div class="flex w-3/5 items-center gap-1 lg:w-auto">
+          <div class="size-4 rounded-full bg-yellow-200" />
+          2 courses concurrently
+        </div>
+        <div class="flex w-2/5 items-center gap-1 lg:w-auto">
+          <div class="size-4 rounded-full bg-orange-200" />
+          weekends
+        </div>
+        <div class="flex w-3/5 items-center gap-1 lg:w-auto">
+          <div class="size-4 rounded-full bg-lime-500" />
+          school holidays
+        </div>
+        <div class="flex w-2/5 items-center gap-1 lg:w-auto">
+          <div class="size-4 rounded-full bg-red-600" />
+          public holidays
+        </div>
+      </div>
+      <div class="flex justify-center py-2">
+        <cgn-button color-brand fullwidth @click="toggleEventView()">
+          {{ showAllEvents ? 'All events' : 'Your events' }}
+        </cgn-button>
+      </div>
+    </div>
+    <div ref="roadcraftCalendarContainer" class="h-[80vh] overflow-x-scroll">
+      <div class="sticky top-0 z-10 w-fit bg-white xl:w-full">
+        <div class="flex flex-row">
+          <div class="sticky left-0 top-0 min-w-16 border-r-2 border-gray-400 bg-white" />
+          <div
+            v-for="facility in facilities" :key="facility.id"
+            class="w-full min-w-32 border-r-2 border-gray-400 text-center xl:min-w-0"
+          >
+            {{ facility.name }}
+          </div>
+          <div class="hidden min-w-16 xl:block" />
+        </div>
+      </div>
+      <div class="w-fit xl:w-full">
+        <div
+          v-for="day, idx in filteredDays" :key="idx" class="flex border-t border-gray-500/20 hover:bg-gray-300"
+          :class="{ 'bg-blue-100': day.date.format('d') == '1', 'bg-orange-200 hover:bg-orange-300': day.date.isWeekend() && day.date.format('d') != '1', 'currentDay border-t-2 border-purple-600': day.date.isSameDay(today) }"
+        >
+          <div
+            class="sticky left-0 min-w-16 border-r-2 border-gray-400 bg-gray-100 p-1 xl:relative"
+            :class="{ 'border-orange-400 bg-orange-200': day.date.isWeekend() && !day.holiday, 'bg-lime-500': day.holiday?.is_school_holiday, 'bg-red-600 text-on-danger': day.holiday?.is_public_holiday }"
+          >
+            <div v-if="showMonthLabel(day)" class="text-xl font-bold">
+              {{ day.date.format('MMM') }}
+            </div>
+            {{ day.date.format('EEEEEE') }}
+            {{ day.date.format('d') }}
+          </div>
+          <div
+            v-for="facility in facilities" :key="facility.id"
+            class="w-full min-w-32 border-r-2 border-gray-400 text-center xl:min-w-0"
+            :class="{ 'border-orange-400': day.date.isWeekend(), 'bg-yellow-200': day.events.filter(e => e.facilities.find(e => e.id == facility.id)).length > 1, 'bg-purple-200': day.date.isSameDay(today) }"
+          >
+            <template v-for="event in day.events" :key="event.id">
+              <template v-for="evfacility in event.facilities" :key="evfacility.id">
+                <div v-if="evfacility.id == facility.id" class="relative cursor-pointer py-1 hover:bg-gray-500/30" @click="selectEvent(event)">
+                  <div>{{ event.course?.name }}</div>
+                  <div>Day {{ day.date.diffInDays(event.start_date) + 1 }}</div>
+                  <div>{{ event.customer?.short_name }}</div>
+                  <div>{{ event.group_number }}</div>
+                  <div>{{ event.student_numbers }}</div>
+                  <div v-if="event.status == 'Offered'" class="absolute right-1 top-1 text-danger-500" title="Offered">
+                    <i-heroicons-solid:question-mark-circle />
+                  </div>
+                </div>
+              </template>
+            </template>
+          </div>
+          <div
+            class="hidden min-w-16 bg-gray-100 p-1 xl:block"
+            :class="{ 'bg-orange-200': day.date.isWeekend() && !day.holiday, 'bg-lime-500': day.holiday?.is_school_holiday, 'bg-red-600 text-on-danger': day.holiday?.is_public_holiday }"
+          >
+            <div v-if="showMonthLabel(day)" class="text-xl font-bold">
+              {{ day.date.format('MMM') }}
+            </div>
+            {{ day.date.format('EEEEEE') }}
+            {{ day.date.format('d') }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <cgn-modal v-model="modal_open">
+      <template #clean-content>
+        <div class="flex flex-col gap-2">
+          <div class="text-3xl font-bold">
+            {{ modalEvent.course.name }}
+          </div>
+          <div class="text-xl">
+            <span>{{ modalEvent.start_date.format('E do LLL') }}</span>
+            <span v-if="modalEvent.number_of_days > 1"> - {{ format(addDays(modalEvent.start_date.time, modalEvent.number_of_days - 1), 'E do LLL') }}</span>
+          </div>
+          <cgn-alert-warning v-if="modalEvent.status == 'Offered'">
+            Status: Offered
+          </cgn-alert-warning>
+          <div v-if="modalEvent.customer">
+            <span class="text-base">Customer</span>
+            <div>
+              {{ modalEvent.customer.name }}
+            </div>
+          </div>
+          <div v-if="modalEvent.facilities.length > 0" class="text-lg">
+            <span class="text-base">Facilities</span>
+            <div v-for="facility in modalEvent.facilities" :key="facility.id">
+              {{ facility.name }}
+            </div>
+          </div>
+          <div v-if="modalEvent.eventEducators.length > 0" class="text-lg">
+            <span class="text-base">Educators</span>
+            <div v-for="educator in modalEvent.eventEducators" :key="educator.educator_id">
+              <span>{{ educator.educator.first_name }} {{ educator.educator.last_name }}</span>
+              <span v-if="false" class="text-sm text-gray-600"> absent 1st Mar, 5th Mar, 3rd Mar</span>
+            </div>
+          </div>
+        </div>
+      </template>
+    </cgn-modal>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { addDays, addMonths, endOfMonth, format, formatISO, startOfMonth, subMonths } from 'date-fns'
+import { gql } from 'graphql-request'
+import { CognitoTime } from '~cognito/models/Cognito/Time'
+import { $axios } from '~cognito/plugins/axios'
+import { useUserStore } from '~cognito/stores/user'
+
+const userStore = useUserStore()
+const today = ref<CognitoTime>(new CognitoTime())
+
+class RoadcraftFacility {
+  id: number
+  name: string
+  constructor(source?: Partial<RoadcraftFacility>) {
+    this.id = 0
+    this.name = ''
+    Object.assign(this, source)
+  }
+}
+
+class RoadcraftCalendarDay {
+  date: CognitoTime
+  holiday: {
+    name: string
+    is_public_holiday: boolean
+    is_school_holiday: boolean
+  }
+
+  events: {
+    id: number
+    number_of_days: number
+    student_numbers: string
+    group_number: string
+    start_date: CognitoTime
+    customer: {
+      name: string
+      short_name: string
+    }
+    status: string
+    course: {
+      name: string
+    }
+    eventEducators: {
+      educator_id: number
+    }[]
+    facilities: {
+      id: number
+    }[]
+  }[]
+
+  constructor(source?: Partial<RoadcraftCalendarDay>) {
+    this.date = new CognitoTime()
+    this.holiday = {
+      name: 'test',
+      is_public_holiday: false,
+      is_school_holiday: false,
+    }
+    this.events = []
+
+    Object.assign(this, source)
+    if (source?.date) {
+      this.date = new CognitoTime(source.date)
+    }
+    this.events.forEach((event) => {
+      if (event.start_date) {
+        event.start_date = new CognitoTime(event.start_date)
+      }
+    })
+  }
+}
+
+const facilities = ref<RoadcraftFacility[]>([])
+
+const days = ref<RoadcraftCalendarDay[]>([])
+
+const roadcraftCalendarContainer = ref()
+
+const showAllEvents = ref(true)
+
+const modal_open = ref(false)
+const modalEvent = ref()
+
+const selectEvent = (event) => {
+  modalEvent.value = event
+  modal_open.value = true
+}
+
+const getFilteredDay = (day: RoadcraftCalendarDay) => {
+  const filteredDay = ref(new RoadcraftCalendarDay())
+  filteredDay.value.date = day.date
+  filteredDay.value.holiday = day.holiday
+  filteredDay.value.events = day.events.filter(e => e.eventEducators.find(e => e.educator_id == userStore.user.id))
+  return filteredDay.value
+}
+
+const filteredDays = computed(() => {
+  if (!showAllEvents.value) {
+    const filteredDay = ref<RoadcraftCalendarDay[]>([])
+    days.value.forEach((day) => {
+      filteredDay.value.push(getFilteredDay(day))
+    })
+    return filteredDay.value
+  }
+  return days.value
+})
+
+const toggleEventView = () => {
+  showAllEvents.value = !showAllEvents.value
+}
+
+const showMonthLabel= (day) => {
+  const date = day.date.format('d')
+  if (date == '1') {
+    return true
+  }
+  if (date == '8') {
+    return true
+  }
+  if (date == '16') {
+    return true
+  }
+  if (date == '24') {
+    return true
+  }
+  return false
+}
+
+onMounted(() => {
+  $axios.graphql(gql`query roadcraftCalendarQuery($calendarStart: String!, $calendarEnd: String!){
+    roadcraftFacilitys {
+      id
+      name
+    }
+    roadcraftMisc {
+      calendar(from_date: $calendarStart, to_date: $calendarEnd) {
+        date
+        holiday {
+          name
+          is_public_holiday
+          is_school_holiday
+        }
+        is_public_holiday
+        is_school_holiday
+        events {
+          id
+          start_date
+          number_of_days
+          student_numbers
+          group_number
+          status
+          customer {
+            name
+            short_name
+          }
+          facilities {
+            id
+            name
+          }
+          course {
+            name
+          }
+          eventEducators {
+            educator_id
+            educator {
+              first_name
+              last_name
+            }
+          }
+        }
+      }
+    }
+  }`, {
+    calendarStart: formatISO(startOfMonth(subMonths(new Date(), 1)), { representation: 'date' }),
+    calendarEnd: formatISO(endOfMonth(addMonths(new Date(), 6)), { representation: 'date' }),
+  }).then((data: any) => {
+    facilities.value = data.roadcraftFacilitys
+    days.value = data.roadcraftMisc.calendar.map(e => new RoadcraftCalendarDay(e))
+    nextTick(() => {
+      roadcraftCalendarContainer.value.getElementsByClassName('currentDay')[0].scrollIntoView({ behavior: 'smooth', block: 'center' })
+    })
+  })
+})
+
+// TODO show the days educators are absent by replacing the dummy data with backend data then removing the v-if="false" on the span
+</script>
