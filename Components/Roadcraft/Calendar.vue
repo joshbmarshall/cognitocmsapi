@@ -56,17 +56,17 @@
           <div
             v-for="facility in facilities" :key="facility.id"
             class="w-full min-w-32 border-r-2 border-gray-400 text-center xl:min-w-0"
-            :class="{ 'border-orange-400': day.date.isWeekend(), 'bg-yellow-200': day.events.filter(e => e.facilities.find(e => e.id == facility.id)).length > 1, 'bg-purple-200': day.date.isSameDay(today) }"
+            :class="{ 'border-orange-400': day.date.isWeekend(), 'bg-yellow-200': day.eventDays.filter(e => e.facilities.find(e => e.id == facility.id)).length > 1, 'bg-purple-200': day.date.isSameDay(today) }"
           >
-            <template v-for="event in day.events" :key="event.id">
-              <template v-for="evfacility in event.facilities" :key="evfacility.id">
-                <div v-if="evfacility.id == facility.id" class="relative cursor-pointer py-1 hover:bg-gray-500/30" @click="selectEvent(event)">
-                  <div>{{ event.course?.name }}</div>
-                  <div>Day {{ day.date.diffInDays(event.start_date) + 1 }}</div>
-                  <div>{{ event.customer?.short_name }}</div>
-                  <div>{{ event.group_number }}</div>
-                  <div>{{ event.student_numbers }}</div>
-                  <div v-if="event.status == 'Offered'" class="absolute right-1 top-1 text-danger-500" title="Offered">
+            <template v-for="eventDay in day.eventDays" :key="eventDay.id">
+              <template v-for="evfacility in eventDay.facilities" :key="evfacility.id">
+                <div v-if="evfacility.id == facility.id" class="relative cursor-pointer py-1 hover:bg-gray-500/30" @click="selectEvent(eventDay.event)">
+                  <div>{{ eventDay.event.course?.name }}</div>
+                  <div>Day {{ day.date.diffInDays(eventDay.event.start_date) + 1 }}</div>
+                  <div>{{ eventDay.event.customer?.short_name }}</div>
+                  <div>{{ eventDay.event.group_number }}</div>
+                  <div>{{ eventDay.event.student_numbers }}</div>
+                  <div v-if="eventDay.event.status == 'Offered'" class="absolute right-1 top-1 text-danger-500" title="Offered">
                     <i-heroicons-solid:question-mark-circle />
                   </div>
                 </div>
@@ -105,17 +105,53 @@
               {{ modalEvent.customer.name }}
             </div>
           </div>
-          <div v-if="modalEvent.facilities.length > 0" class="text-lg">
+          <!-- Facility table -->
+          Facilities
+          <table class="w-full">
+            <tr>
+              <td />
+              <td v-for="eventDay in modalEvent.eventDays" :key="eventDay.date">
+                {{ eventDay.date }}
+              </td>
+            </tr>
+            <tr v-for="facility in facilities" :key="facility.id">
+              <td>
+                {{ facility.name }}
+              </td>
+              <td v-for="eventDay in modalEvent.eventDays" :key="eventDay.date">
+                <template v-if="eventDay.facilities.find(e => e.id == facility.id)">
+                  <i-heroicons-solid:check />
+                </template>
+              </td>
+            </tr>
+          </table>
+          <!-- Educators table -->
+          <div v-if="modalEvent.eventEducators.length > 0">
+            Educators
+            <table class="w-full">
+              <tr>
+                <td />
+                <td v-for="eventDay in modalEvent.eventDays" :key="eventDay.date">
+                  {{ eventDay.date }}
+                </td>
+              </tr>
+              <tr v-for="educator in modalEvent.eventEducators" :key="educator.educator_id">
+                <td>
+                  {{ educator.educator.first_name }}
+                  {{ educator.educator.last_name }}
+                </td>
+                <td v-for="eventDay in modalEvent.eventDays" :key="eventDay.date">
+                  <template v-for="evDayEducator in eventDay.eventDayEducators.filter(e => e.event_educator.educator_id == educator.educator.id && e.assigned)" :key="evDayEducator.educator_id">
+                    {{ evDayEducator.role.name }}
+                  </template>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div v-if="modalEvent.facilities?.length > 0" class="text-lg">
             <span class="text-base">Facilities</span>
             <div v-for="facility in modalEvent.facilities" :key="facility.id">
               {{ facility.name }}
-            </div>
-          </div>
-          <div v-if="modalEvent.eventEducators.length > 0" class="text-lg">
-            <span class="text-base">Educators</span>
-            <div v-for="educator in modalEvent.eventEducators" :key="educator.educator_id">
-              <span>{{ educator.educator.first_name }} {{ educator.educator.last_name }}</span>
-              <span v-if="false" class="text-sm text-gray-600"> absent 1st Mar, 5th Mar, 3rd Mar</span>
             </div>
           </div>
         </div>
@@ -152,25 +188,29 @@ class RoadcraftCalendarDay {
     is_school_holiday: boolean
   }
 
-  events: {
-    id: number
-    number_of_days: number
-    student_numbers: string
-    group_number: string
-    start_date: CognitoTime
-    customer: {
-      name: string
-      short_name: string
+  eventDays: {
+    date: string
+    event: {
+      id: number
+      number_of_days: number
+      student_numbers: string
+      group_number: string
+      start_date: CognitoTime
+      customer: {
+        name: string
+        short_name: string
+      }
+      status: string
+      course: {
+        name: string
+      }
+      eventEducators: {
+        educator_id: number
+      }[]
     }
-    status: string
-    course: {
-      name: string
-    }
-    eventEducators: {
-      educator_id: number
-    }[]
     facilities: {
       id: number
+      name: string
     }[]
   }[]
 
@@ -181,15 +221,15 @@ class RoadcraftCalendarDay {
       is_public_holiday: false,
       is_school_holiday: false,
     }
-    this.events = []
+    this.eventDays = []
 
     Object.assign(this, source)
     if (source?.date) {
       this.date = new CognitoTime(source.date)
     }
-    this.events.forEach((event) => {
-      if (event.start_date) {
-        event.start_date = new CognitoTime(event.start_date)
+    this.eventDays.forEach((eventDay) => {
+      if (eventDay.event.start_date) {
+        eventDay.event.start_date = new CognitoTime(eventDay.event.start_date)
       }
     })
   }
@@ -215,7 +255,7 @@ const getFilteredDay = (day: RoadcraftCalendarDay) => {
   const filteredDay = ref(new RoadcraftCalendarDay())
   filteredDay.value.date = day.date
   filteredDay.value.holiday = day.holiday
-  filteredDay.value.events = day.events.filter(e => e.eventEducators.find(e => e.educator_id == userStore.user.id))
+  filteredDay.value.eventDays = day.eventDays.filter(e => e.event.eventEducators.find(e => e.educator_id == userStore.user.id))
   return filteredDay.value
 }
 
@@ -234,7 +274,7 @@ const toggleEventView = () => {
   showAllEvents.value = !showAllEvents.value
 }
 
-const showMonthLabel= (day) => {
+const showMonthLabel = (day) => {
   const date = day.date.format('d')
   if (date == '1') {
     return true
@@ -267,30 +307,49 @@ onMounted(() => {
         }
         is_public_holiday
         is_school_holiday
-        events {
+        eventDays {
           id
-          start_date
-          number_of_days
-          student_numbers
-          group_number
-          status
-          customer {
-            name
-            short_name
+          date
+          event {
+            start_date
+            number_of_days
+            student_numbers
+            group_number
+            status
+            customer {
+              name
+              short_name
+            }
+            course {
+              name
+            }
+            eventEducators {
+              educator {
+                id
+                first_name
+                last_name
+              }
+            }
+            eventDays {
+              date
+              facilities {
+                id
+                name
+              }
+              eventDayEducators {
+                event_educator {
+                  educator_id
+                }
+                assigned
+                role {
+                  name
+                }
+              }
+            }
           }
           facilities {
             id
             name
-          }
-          course {
-            name
-          }
-          eventEducators {
-            educator_id
-            educator {
-              first_name
-              last_name
-            }
           }
         }
       }
