@@ -100,59 +100,56 @@
             Status: Offered
           </cgn-alert-warning>
           <div v-if="modalEvent.customer">
-            <span class="text-base">Customer</span>
-            <div>
+            <span class="text-sm">Customer</span>
+            <span class="pl-2 text-lg">
               {{ modalEvent.customer.name }}
-            </div>
+            </span>
           </div>
-          <!-- Facility table -->
-          Facilities
-          <table class="w-full">
-            <tr>
-              <td />
-              <td v-for="eventDay in modalEvent.eventDays" :key="eventDay.date">
-                {{ eventDay.date }}
-              </td>
-            </tr>
-            <tr v-for="facility in facilities" :key="facility.id">
-              <td>
-                {{ facility.name }}
-              </td>
-              <td v-for="eventDay in modalEvent.eventDays" :key="eventDay.date">
-                <template v-if="eventDay.facilities.find(e => e.id == facility.id)">
-                  <i-heroicons-solid:check />
-                </template>
-              </td>
-            </tr>
-          </table>
-          <!-- Educators table -->
-          <div v-if="modalEvent.eventEducators.length > 0">
-            Educators
+          <div v-if="modalEvent.eventDays?.length > 0" class="text-lg">
             <table class="w-full">
-              <tr>
-                <td />
-                <td v-for="eventDay in modalEvent.eventDays" :key="eventDay.date">
-                  {{ eventDay.date }}
-                </td>
-              </tr>
-              <tr v-for="educator in modalEvent.eventEducators" :key="educator.educator_id">
-                <td>
-                  {{ educator.educator.first_name }}
-                  {{ educator.educator.last_name }}
-                </td>
-                <td v-for="eventDay in modalEvent.eventDays" :key="eventDay.date">
-                  <template v-for="evDayEducator in eventDay.eventDayEducators.filter(e => e.event_educator.educator_id == educator.educator.id && e.assigned)" :key="evDayEducator.educator_id">
-                    {{ evDayEducator.role.name }}
-                  </template>
-                </td>
-              </tr>
+              <!-- Educators table -->
+              <template v-if="modalEvent.eventEducators.length > 0">
+                <tr>
+                  <th class="text-lg">
+                    Educators
+                  </th>
+                  <td v-for="eventDay in modalEvent.eventDays" :key="eventDay.date" class="border-l border-black text-center">
+                    {{ eventDay.date }}
+                  </td>
+                </tr>
+                <tr v-for="educator, index in modalEvent.eventEducators" :key="educator.educator_id" :class="{ 'bg-gray-100': !(index % 2) }">
+                  <td class="border-t border-black">
+                    {{ educator.educator.first_name }}
+                    {{ educator.educator.last_name }}
+                  </td>
+                  <td v-for="eventDay in modalEvent.eventDays" :key="eventDay.date" class="border-l border-t border-black text-center">
+                    <div v-for="evDayEducator in eventDay.eventDayEducators.filter(e => e.event_educator.educator_id == educator.educator.id && e.assigned)" :key="evDayEducator.educator_id">
+                      {{ evDayEducator.role.name }}
+                    </div>
+                  </td>
+                </tr>
+              </template>
+              <tr class="h-8" />
+              <!-- Facility table -->
+              <template v-if="modalEvent.eventDays.length > 0">
+                <tr>
+                  <th class="text-lg">
+                    Facilities
+                  </th>
+                  <td v-for="eventDay in modalEvent.eventDays" :key="eventDay.date" class="border-l border-black text-center">
+                    {{ eventDay.date }}
+                  </td>
+                </tr>
+                <tr v-for="facility, index in facilities" :key="facility.id" :class="{ 'bg-gray-100': !(index % 2) }">
+                  <td class="border-t border-black">
+                    {{ facility.name }}
+                  </td>
+                  <td v-for="eventDay in modalEvent.eventDays" :key="eventDay.date" class="border-l border-t border-black">
+                    <i-heroicons-solid:check v-if="eventDay.facilities.find(e => e.id == facility.id)" class="mx-auto" />
+                  </td>
+                </tr>
+              </template>
             </table>
-          </div>
-          <div v-if="modalEvent.facilities?.length > 0" class="text-lg">
-            <span class="text-base">Facilities</span>
-            <div v-for="facility in modalEvent.facilities" :key="facility.id">
-              {{ facility.name }}
-            </div>
           </div>
         </div>
       </template>
@@ -189,7 +186,7 @@ class RoadcraftCalendarDay {
   }
 
   eventDays: {
-    date: string
+    date: CognitoTime
     event: {
       id: number
       number_of_days: number
