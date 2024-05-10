@@ -114,7 +114,7 @@
                     Educators
                   </th>
                   <td v-for="eventDay in modalEvent.eventDays" :key="eventDay.date" class="border-l border-black text-center">
-                    {{ eventDay.date }}
+                    {{ new CognitoTime(eventDay.date).format('E do LLL') }}
                   </td>
                 </tr>
                 <tr v-for="educator, index in modalEvent.eventEducators" :key="educator.educator_id" :class="{ 'bg-gray-100': !(index % 2) }">
@@ -137,7 +137,7 @@
                     Facilities
                   </th>
                   <td v-for="eventDay in modalEvent.eventDays" :key="eventDay.date" class="border-l border-black text-center">
-                    {{ eventDay.date }}
+                    {{ new CognitoTime(eventDay.date).format('E do LLL') }}
                   </td>
                 </tr>
                 <tr v-for="facility, index in facilities" :key="facility.id" :class="{ 'bg-gray-100': !(index % 2) }">
@@ -214,7 +214,7 @@ class RoadcraftCalendarDay {
   constructor(source?: Partial<RoadcraftCalendarDay>) {
     this.date = new CognitoTime()
     this.holiday = {
-      name: 'test',
+      name: '',
       is_public_holiday: false,
       is_school_holiday: false,
     }
