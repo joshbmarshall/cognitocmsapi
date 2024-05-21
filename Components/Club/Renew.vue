@@ -29,6 +29,9 @@
           <cgn-form-input v-model="extra.qty" type="number" :min-amount="0" />
         </div>
       </div>
+      <div v-if="showAddToNewsletter">
+        <cgn-form-checkbox v-model="membershipForm.add_to_newsletter" label="Please add me to your email newsletter" />
+      </div>
       <div v-if="membershipForm.membership_type" class="my-2">
         <div v-if="terms">
           <div class="prose-dark" v-html="terms" />
@@ -55,11 +58,13 @@ const membership_types = ref<ClubMembershipType[]>([])
 const terms = ref('')
 const showPhone = ref(false)
 const showAddress = ref(false)
+const showAddToNewsletter = ref(false)
 const membershipForm = ref({
   phone: '',
   address: new CognitoAddressLookup(),
   membership_type: 0,
   extras: [],
+  add_to_newsletter: 1,
 })
 
 const selected_membership_type = computed(() => {
@@ -107,6 +112,7 @@ onMounted(async () => {
       membership_terms {
         content
       }
+      show_add_to_newsletter
     }
     clubExtras {
       id
@@ -119,6 +125,7 @@ onMounted(async () => {
   membership_types.value = gqldata.clubMembershipTypes
   membershipForm.value.extras = gqldata.clubExtras
   terms.value = gqldata.clubMisc.membership_terms?.content
+  showAddToNewsletter.value = gqldata.clubMisc.show_add_to_newsletter
 
   const user = await (new CognitoUser()).getLoggedInUser()
   showPhone.value = !user.mobile_phone
