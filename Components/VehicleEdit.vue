@@ -102,8 +102,7 @@ const loadBodyStyles = async () => {
 }
 
 const loadStates = async () => {
-  const data = await new CognitoState().find_many({})
-  states.value = data.mapped
+  states.value = await new CognitoState().getAustralianStates()
 }
 
 const selectVehicle = () => {

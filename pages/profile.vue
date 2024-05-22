@@ -221,7 +221,11 @@
                 type="date"
                 label="Drivers Licence Expiry"
               />
-              <cgn-form-dropdown v-model="formValues.drivers_licence_state_of_issue_id" :options="states" label="Drivers Licence State of Issue" />
+              <cgn-form-dropdown
+                v-model="formValues.drivers_licence_state_of_issue_id"
+                :options="states"
+                label="Drivers Licence State of Issue"
+              />
             </template>
 
             <template v-if="config.profile.edit_emergency_contact">
@@ -302,7 +306,7 @@ const formValues = ref({
   newpassword: '',
   drivers_licence_number: '',
   drivers_licence_expiry: '',
-  drivers_licence_state_of_issue_id: '',
+  drivers_licence_state_of_issue_id: 0,
   emergency_contact_name: '',
   emergency_contact_phone: '',
   club_additional_member: '',
@@ -347,8 +351,8 @@ const uploadHeadshot = () => {
 }
 
 onMounted(async () => {
+  states.value = await new CognitoState().getAustralianStates()
   await getUser()
-  states.value = (await new CognitoState().find_many({})).data
   formValues.value = userStore.user
 })
 </script>

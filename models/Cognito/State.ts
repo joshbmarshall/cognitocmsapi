@@ -17,6 +17,11 @@ class CognitoState extends CognitoBase {
     this.country = new CognitoCountry()
     Object.assign(this, source)
   }
+
+  getAustralianStates = async () => {
+    const data = await new CognitoState().find_many({})
+    return data.mapped.filter(e => e.country?.code == 'AU')
+  }
 }
 
 export { CognitoState }
