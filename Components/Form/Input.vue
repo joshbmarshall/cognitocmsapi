@@ -50,6 +50,7 @@
         <div class="flex">
           <input
             ref="inputel" v-maska:[maska] :min="minAmount" :max="maxAmount" :value="modelValue" :type="inputType"
+            :step="step"
             :placeholder="placeholder" :required="required" class="cgn-input-field block w-full appearance-none p-2"
             :class="inputClass + (hasIcon ? ' pl-7' : '')"
             :autocomplete="autocomplete"
@@ -102,6 +103,10 @@ const props = defineProps({
   },
   maxAmount: {
     type: [String, Number],
+  },
+  step: {
+    type: [String, Number],
+    default: '',
   },
   type: {
     type: String,
