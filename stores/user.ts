@@ -17,6 +17,21 @@ export const useUserStore = defineStore('user', () => {
     is_admin: false,
     email: '',
     mobile_phone: '',
+    date_of_birth: '',
+    current_address_id: 0,
+    image: '',
+    thumbnail: '',
+    company_name: '',
+    company_phone: '',
+    trading_name: '',
+    abn: null,
+    website: null,
+    facebook_link: null,
+    drivers_licence_number: '',
+    drivers_licence_expiry: '',
+    drivers_licence_state_of_issue_id: 0,
+    emergency_contact_name: '',
+    emergency_contact_phone: '',
   })
   const link_active = ref(true)
   const baseURL = ref('')
@@ -46,6 +61,21 @@ export const useUserStore = defineStore('user', () => {
       is_admin: false,
       email: '',
       mobile_phone: '',
+      date_of_birth: '',
+      current_address_id: 0,
+      image: '',
+      thumbnail: '',
+      company_name: '',
+      company_phone: '',
+      trading_name: '',
+      abn: null,
+      website: null,
+      facebook_link: null,
+      drivers_licence_number: '',
+      drivers_licence_expiry: '',
+      drivers_licence_state_of_issue_id: 0,
+      emergency_contact_name: '',
+      emergency_contact_phone: '',
     }
   }
   const isLoggedIn = (): boolean => {
