@@ -12,6 +12,85 @@
     <template v-if="formdata?.questions.length > 0">
       <div v-for="question in formdata.questions" :key="question.id">
         <div v-if="question.field_type == 'content'" class="prose max-w-none dark:prose-invert" v-html="question.content" />
+        <cgn-form-input-text
+          v-else-if="question.field_type == 'text'"
+          v-model="question.value"
+          :label="question.label"
+          :required="question.required"
+        />
+        <cgn-form-input-textarea
+          v-else-if="question.field_type == 'textarea'"
+          v-model="question.value"
+          :label="question.label"
+          :required="question.required"
+        />
+        <cgn-form-input-email
+          v-else-if="question.field_type == 'email'"
+          v-model="question.value"
+          :label="question.label"
+          :required="question.required"
+        />
+        <cgn-form-input-phone
+          v-else-if="question.field_type == 'phone'"
+          v-model="question.value"
+          :label="question.label"
+          :required="question.required"
+        />
+        <cgn-form-input-currency
+          v-else-if="question.field_type == 'currency'"
+          v-model="question.value"
+          :label="question.label"
+          :required="question.required"
+        />
+        <cgn-form-input-percent
+          v-else-if="question.field_type == 'percent'"
+          v-model="question.value"
+          :label="question.label"
+          :required="question.required"
+        />
+        <cgn-form-input
+          v-else-if="question.field_type == 'number'"
+          v-model="question.value"
+          type="number"
+          :label="question.label"
+          :required="question.required"
+        />
+        <cgn-form-input-password
+          v-else-if="question.field_type == 'password'"
+          v-model="question.value"
+          :label="question.label"
+          :required="question.required"
+        />
+        <cgn-form-input-date
+          v-else-if="question.field_type == 'date'"
+          v-model="question.value"
+          :label="question.label"
+          :required="question.required"
+        />
+        <cgn-form-input-date-time
+          v-else-if="question.field_type == 'datetime'"
+          v-model="question.value"
+          :label="question.label"
+          :required="question.required"
+        />
+        <cgn-form-input-time
+          v-else-if="question.field_type == 'time'"
+          v-model="question.value"
+          :label="question.label"
+          :required="question.required"
+        />
+        <cgn-form-checkbox
+          v-else-if="question.field_type == 'checkbox'"
+          v-model="question.value"
+          :label="question.label"
+          :required="question.required"
+        />
+        <cgn-button
+          v-else-if="question.field_type == 'submit'"
+          v-model="question.value"
+        >
+          {{ question.label }}
+        </cgn-button>
         <pre v-else>{{ question }}</pre>
       </div>
     </template>
@@ -105,6 +184,9 @@ const loadForm = async () => {
 }
 
 const formValues = computed(() => {
+  if (formdata.value?.questions.length) {
+    return formdata.value?.questions.reduce((obj, item) => Object.assign(obj, { [item.name]: item.value }), {})
+  }
   return formdata.value?.data.reduce((obj, item) => Object.assign(obj, { [item.name]: item.value }), {})
 })
 

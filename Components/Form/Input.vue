@@ -47,6 +47,9 @@
         <div v-if="type === 'currency'" class="absolute inset-y-0 left-1 flex items-center pl-1" :class="iconClass">
           $
         </div>
+        <div v-if="type === 'percent'" class="absolute inset-y-0 right-1 flex items-center pl-1" :class="iconClass">
+          %
+        </div>
         <div class="flex">
           <input
             ref="inputel" v-maska:[maska] :min="minAmount" :max="maxAmount" :value="modelValue" :type="inputType"
