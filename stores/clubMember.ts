@@ -19,6 +19,7 @@ export const useClubMemberStore = defineStore({
       type: '',
       color: '#ffffff',
       track_color: '#ffffff',
+      special_vehicle: false,
     }
   },
   getters: {
@@ -55,6 +56,7 @@ export const useClubMemberStore = defineStore({
       this.is_approved = res.data.is_approved
       this.home_track = res.data.home_track
       this.track_color = res.data.track_color
+      this.special_vehicle = res.data.special_vehicle
     },
     setRacersId(racers_id: number) {
       this.racers_id = racers_id
