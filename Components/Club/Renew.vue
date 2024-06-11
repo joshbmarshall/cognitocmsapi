@@ -22,11 +22,14 @@
           Extras
         </div>
         <div v-for="extra in membershipForm.extras" :key="extra.id">
-          <div class="text-2xl">
-            {{ extra.name }}
+          <cgn-form-checkbox v-if="extra.max_qty == 1" v-model="extra.qty" :label="extra.name" />
+          <div v-else>
+            <div class="text-2xl">
+              {{ extra.name }}
+            </div>
+            <div v-html="extra.content" />
+            <cgn-form-input v-model="extra.qty" type="number" :min-amount="0" :max-amount="extra.max_qty" />
           </div>
-          <div v-html="extra.content" />
-          <cgn-form-input v-model="extra.qty" type="number" :min-amount="0" />
         </div>
       </div>
       <div v-if="showAddToNewsletter">
@@ -119,6 +122,7 @@ onMounted(async () => {
       name
       content
       cost
+      max_qty
     }
   }`)
 
