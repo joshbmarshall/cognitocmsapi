@@ -7,7 +7,7 @@ class CognitoForm extends CognitoBase {
   name: string
   url: string
   use_captcha: boolean
-  data: any
+  data: any[]
   must_be_logged_on: boolean
   cost: number
   questions: CognitoFormQuestion[]
@@ -25,6 +25,7 @@ class CognitoForm extends CognitoBase {
     this.must_be_logged_on = false
     this.cost = 0
     this.questions = []
+    this.data = []
     Object.assign(this, source)
   }
 
