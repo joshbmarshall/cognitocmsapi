@@ -1,5 +1,6 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { nanoid } from 'nanoid'
+import { config } from '~/config'
 
 export const useUserStore = defineStore('user', () => {
   const route = useRoute()
@@ -91,8 +92,14 @@ export const useUserStore = defineStore('user', () => {
     setRedirectAfterLogin(route.fullPath)
     router.replace('/login')
   }
+  const canEditDateOfBirth = () => {
+    if (!user.value.date_of_birth) {
+      return true
+    }
+    return config.profile.change_date_of_birth
+  }
 
-  return { access_token, refresh_token, redirect_after_login, auth_fingerprint, oauth2_state, user, link_active, baseURL, getAuthFingerprint, setAccessToken, setRefreshToken, setRedirectAfterLogin, logout, isLoggedIn, checkLoggedIn }
+  return { access_token, refresh_token, redirect_after_login, auth_fingerprint, oauth2_state, user, link_active, baseURL, getAuthFingerprint, setAccessToken, setRefreshToken, setRedirectAfterLogin, logout, isLoggedIn, checkLoggedIn, canEditDateOfBirth }
 }, {
   persist: true,
   share: {

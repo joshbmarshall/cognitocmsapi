@@ -9,7 +9,9 @@ const config = {
   isEcommerce: false,
   payment_to_user_id: 1,
   profile: {
+    edit_name: false,
     edit_date_of_birth: false,
+    change_date_of_birth: false,
     edit_drivers_licence: false,
     edit_emergency_contact: false,
     edit_company_name: false,

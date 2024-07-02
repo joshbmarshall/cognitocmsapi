@@ -132,7 +132,7 @@
               {{ userStore.user.first_name }}
               {{ userStore.user.last_name }}
               <span
-                v-if="!name_field_visible"
+                v-if="!name_field_visible && config.profile.edit_name"
                 class="block cursor-pointer text-xs sm:inline-block sm:pl-1"
                 @click="changeName()"
               >change</span>
@@ -169,11 +169,19 @@
               required
             />
 
-            <cgn-form-input-date-of-birth
-              v-if="config.profile.edit_date_of_birth"
-              v-model="formValues.date_of_birth"
-              label="Date of Birth"
-            />
+            <template v-if="config.profile.edit_date_of_birth">
+              <cgn-form-input-date-of-birth
+                v-if="userStore.canEditDateOfBirth()"
+                v-model="formValues.date_of_birth"
+                label="Date of Birth"
+              />
+
+              <cgn-form-input-read-only
+                v-else
+                v-model="date_of_birth"
+                label="Date of Birth"
+              />
+            </template>
 
             <cgn-form-input-text
               v-if="config.profile.edit_company_name"
@@ -279,6 +287,7 @@
 <script setup lang="ts">
 import { config } from '~/config'
 import { CognitoState } from '~cognito/models/Cognito/State'
+import { CognitoTime } from '~cognito/models/Cognito/Time'
 import { CognitoUser } from '~cognito/models/Cognito/User'
 import { $axios, getUser } from '~cognito/plugins/axios'
 
@@ -314,6 +323,10 @@ const formValues = ref({
   addresses: [],
 })
 const states = ref<CognitoState[]>([])
+
+const date_of_birth = computed(() => {
+  return (new CognitoTime(formValues.value.date_of_birth)).toHumanDateString(true)
+})
 
 const name_field_visible = ref(false)
 function changeName() {
@@ -353,7 +366,7 @@ const uploadHeadshot = () => {
 onMounted(async () => {
   states.value = await new CognitoState().getAustralianStates()
   await getUser()
-  formValues.value = userStore.user
+  formValues.value = JSON.parse(JSON.stringify(userStore.user))
 })
 </script>
 
