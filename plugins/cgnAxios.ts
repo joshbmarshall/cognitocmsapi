@@ -330,8 +330,11 @@ class CgnAxios {
 
     const userStore = this.userStore()
     let redirectTo = userStore.redirect_after_login || '/'
+
     if (window.location.host === 'www.qldraceways.com.au' || window.location.host === 'www.hamptondowns.com') {
-      redirectTo = `/enter/#${userStore.redirect_after_login || '/profile'}`
+      if (!redirectTo.startsWith('http')) {
+        redirectTo = `/enter/#${userStore.redirect_after_login || '/profile'}`
+      }
     }
 
     if (access_token && refresh_token) {
