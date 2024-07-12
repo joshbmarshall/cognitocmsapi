@@ -1,4 +1,4 @@
-import { addMinutes, differenceInCalendarDays, differenceInYears, format, isAfter, isFuture, isPast, isSameDay, isSameMonth, isWeekend, parseISO, subMinutes, subMonths } from 'date-fns'
+import { addDays, addMinutes, differenceInCalendarDays, differenceInYears, format, isAfter, isFuture, isPast, isSameDay, isSameMonth, isWeekend, parseISO, subDays, subMinutes, subMonths } from 'date-fns'
 
 class CognitoTime {
   time: Date
@@ -12,6 +12,14 @@ class CognitoTime {
     if (this.time == 'Invalid Date') {
       this.time = new Date()
     }
+  }
+
+  addDays(days: number): CognitoTime {
+    return new CognitoTime(addDays(this.time, days))
+  }
+
+  subDays(days: number): CognitoTime {
+    return new CognitoTime(subDays(this.time, days))
   }
 
   addMinutes(minutes: number): CognitoTime {
