@@ -53,6 +53,17 @@
           <td v-if="day.eventDays.length < 1" class="min-w-10 border-b-2 border-r border-inherit text-center" :class="getDayColor(day.date)" />
         </template>
       </tr>
+      <tr class="border-inherit">
+        <th class="sticky left-0 z-10 border-x border-b-2 border-inherit bg-blue-50">
+          <span class="text-nowrap px-1 text-xs">Vehicle Numbers</span>
+        </th>
+        <template v-for="day, index in days" :key="index">
+          <td v-for="eventDay in day.eventDays" :key="eventDay.event.id" class="text-nowrap border-b-2 border-r border-inherit px-0.5 text-center text-xs" :class="getDayColor(day.date)">
+            {{ eventDay.event.vehicle_numbers }}
+          </td>
+          <td v-if="day.eventDays.length < 1" class="min-w-10 border-b-2 border-r border-inherit text-center" :class="getDayColor(day.date)" />
+        </template>
+      </tr>
       <tr v-for="educator in educators" :key="educator.id" class="text-nowrap border-inherit text-center text-sm odd:bg-[#ddd9c3] even:bg-white">
         <th class="sticky left-0 z-10 border-x border-b border-inherit bg-inherit px-0.5">
           {{ educator.first_name }} {{ educator.last_name }}
@@ -121,6 +132,7 @@ class RoadcraftPlannerDay {
         name: string
       }
       student_numbers: string
+      vehicle_numbers: string
     }
     eventDayEducators: {
       event_educator: {
@@ -252,6 +264,7 @@ const getPlannerData = () => {
               name
             }
             student_numbers
+            vehicle_numbers
           }
           eventDayEducators {
             event_educator {

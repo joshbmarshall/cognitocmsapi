@@ -65,8 +65,12 @@
                   <div>Day {{ day.date.diffInDays(eventDay.event.start_date) + 1 }}</div>
                   <div>{{ eventDay.event.customer?.short_name }}</div>
                   <div>{{ eventDay.event.note }}</div>
-                  <div>{{ eventDay.event.vehicle_numbers }}</div>
-                  <div>{{ eventDay.event.student_numbers }}</div>
+                  <div v-if="eventDay.event.vehicle_numbers">
+                    V: {{ eventDay.event.vehicle_numbers }}
+                  </div>
+                  <div v-if="eventDay.event.student_numbers">
+                    S: {{ eventDay.event.student_numbers }}
+                  </div>
                   <div v-if="eventDay.event.status == 'Offered'" class="absolute right-1 top-1 text-danger-500" title="Offered">
                     <i-heroicons-solid:question-mark-circle />
                   </div>
