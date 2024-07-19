@@ -139,7 +139,6 @@ class RoadcraftPlannerDay {
 
   staffUnavailable: {
     staff_id: number
-    note: string
   }[]
 
   requiredAccommodation: {
@@ -197,10 +196,7 @@ const educatorIsAway = (day: RoadcraftPlannerDay, educator: RoadcraftPlannerEduc
 const getEducatorDayStatus = (day: RoadcraftPlannerDay, educator: RoadcraftPlannerEducator) => {
   const unavailable = day.staffUnavailable.find(e => e.staff_id == educator.id)
   if (unavailable) {
-    if (!unavailable.note) {
-      return 'AWAY'
-    }
-    return unavailable.note
+    return 'AWAY'
   }
   for (let index = 0; index < day.eventDays.length; index++) {
     const eventDay = day.eventDays[index]
@@ -268,7 +264,6 @@ const getPlannerData = () => {
         }
         staffUnavailable {
           staff_id
-          note
         }
         requiredAccommodation {
           id
