@@ -40,7 +40,7 @@
                 {{ eventDay.event.course.name }}
               </div>
               <div>
-                {{ eventDay.event.customer.name }}
+                {{ eventDay.event.customer?.name }}
               </div>
             </span>
           </td>
@@ -95,7 +95,8 @@
         </th>
         <td v-for="day, index in days" :key="index" class="border-r border-t-2 border-inherit text-center text-sm" :class="getDayColor(day.date)" :colspan="day.eventDays.length">
           <div v-for="accommodation in day.requiredAccommodation" :key="accommodation.id">
-            {{ accommodation.name }}
+            {{ accommodation.accommodation.name }}
+            ({{ accommodation.residents.join(', ') }})
           </div>
         </td>
       </tr>
@@ -162,15 +163,18 @@ class RoadcraftPlannerDay {
   }[]
 
   requiredAccommodation: {
-    id: number
-    name: string
+    accommodation: {
+      id: number
+      name: string
+    }
+    residents: string[]
   }[]
 
   constructor(source?: Partial<RoadcraftPlannerDay>) {
     this.date = new CognitoTime()
     this.eventDays = []
     this.staffUnavailable = []
-    this.requiredAccommodation = { id: 0, name: '' }
+    this.requiredAccommodation = { accommodation: { id: 0, name: '' }, residents: [] }
 
     Object.assign(this, source)
     if (source?.date) {
@@ -295,8 +299,11 @@ const getPlannerData = () => {
           staff_id
         }
         requiredAccommodation {
-          id
-          name
+          accommodation {
+            id
+            name
+          }
+          residents
         }
       }
     }
