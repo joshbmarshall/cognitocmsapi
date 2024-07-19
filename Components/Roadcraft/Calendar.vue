@@ -64,7 +64,8 @@
                   <div>{{ eventDay.event.course?.name }}</div>
                   <div>Day {{ day.date.diffInDays(eventDay.event.start_date) + 1 }}</div>
                   <div>{{ eventDay.event.customer?.short_name }}</div>
-                  <div>{{ eventDay.event.group_number }}</div>
+                  <div>{{ eventDay.event.note }}</div>
+                  <div>{{ eventDay.event.vehicle_numbers }}</div>
                   <div>{{ eventDay.event.student_numbers }}</div>
                   <div v-if="eventDay.event.status == 'Offered'" class="absolute right-1 top-1 text-danger-500" title="Offered">
                     <i-heroicons-solid:question-mark-circle />
@@ -191,7 +192,8 @@ class RoadcraftCalendarDay {
       id: number
       number_of_days: number
       student_numbers: string
-      group_number: string
+      vehicle_numbers: string
+      note: string
       start_date: CognitoTime
       customer: {
         name: string
@@ -310,8 +312,9 @@ onMounted(() => {
           event {
             start_date
             number_of_days
+            vehicle_numbers
             student_numbers
-            group_number
+            note
             status
             customer {
               name
@@ -362,6 +365,4 @@ onMounted(() => {
     })
   })
 })
-
-// TODO show the days educators are absent by replacing the dummy data with backend data then removing the v-if="false" on the span
 </script>
