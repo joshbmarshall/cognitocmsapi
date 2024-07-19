@@ -136,6 +136,7 @@ class RoadcraftPlannerDay {
       id: number
       course: {
         name: string
+        roster_name: string
       }
       customer: {
         name: string
@@ -245,7 +246,7 @@ const getFacilityDayStatus = (day: RoadcraftPlannerDay, facility: RoadcraftFacil
     if (!eventFacility) {
       continue
     }
-    facilityEvents.push(eventDay.event.course.name)
+    facilityEvents.push(eventDay.event.course.roster_name || eventDay.event.course.name)
   }
   return facilityEvents
 }
@@ -274,6 +275,7 @@ const getPlannerData = () => {
             id
             course {
               name
+              roster_name
             }
             customer {
               name
