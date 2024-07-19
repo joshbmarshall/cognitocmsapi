@@ -58,8 +58,8 @@
           {{ educator.first_name }} {{ educator.last_name }}
         </th>
         <td v-for="day, index in days" :key="index" class="m-0 max-w-24 border-b border-r border-inherit" :colspan="day.eventDays.length" :class="{ 'bg-neutral-500 text-white': educatorIsAway(day, educator) }">
-          <div class="truncate px-0.5" :title="getEducatorDayStatus(day, educator)">
-            {{ getEducatorDayStatus(day, educator) }}
+          <div v-for="(status, sidx) in getEducatorDayStatus(day, educator)" :key="sidx" class="px-0.5">
+            {{ status }}
           </div>
         </td>
       </tr>
@@ -193,19 +193,24 @@ const educatorIsAway = (day: RoadcraftPlannerDay, educator: RoadcraftPlannerEduc
   return day.staffUnavailable.find(e => e.staff_id == educator.id)
 }
 
-const getEducatorDayStatus = (day: RoadcraftPlannerDay, educator: RoadcraftPlannerEducator) => {
+const getEducatorDayStatus = (day: RoadcraftPlannerDay, educator: RoadcraftPlannerEducator): string[] => {
   const unavailable = day.staffUnavailable.find(e => e.staff_id == educator.id)
   if (unavailable) {
-    return 'AWAY'
+    return ['AWAY']
   }
+  const status = []
   for (let index = 0; index < day.eventDays.length; index++) {
     const eventDay = day.eventDays[index]
     const eventEducator = eventDay.eventDayEducators.find(e => e.event_educator.educator_id == educator.id)
     if (!eventEducator) {
       continue
     }
-    return eventDay.event.course.name
+    if (!eventEducator.assigned) {
+      continue
+    }
+    status.push(eventDay.event.course.name)
   }
+  return status
 }
 
 const getFacilityDayStatus = (day: RoadcraftPlannerDay, facility: RoadcraftFacility) => {
