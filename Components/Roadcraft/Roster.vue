@@ -36,7 +36,12 @@
         <template v-for="day, index in days" :key="index">
           <td v-for="eventDay in day.eventDays" :key="eventDay.event.id" class="min-w-10 border-b border-r border-inherit text-center" :class="getDayColor(day.date)">
             <span class="rotate-180 text-nowrap [text-orientation:mixed] [writing-mode:vertical-rl]">
-              {{ eventDay.event.course.name }}
+              <div>
+                {{ eventDay.event.course.name }}
+              </div>
+              <div>
+                {{ eventDay.event.customer.name }}
+              </div>
             </span>
           </td>
           <td v-if="day.eventDays.length < 1" class="min-w-10 border-b border-r border-inherit text-center" :class="getDayColor(day.date)" />
@@ -129,6 +134,9 @@ class RoadcraftPlannerDay {
     event: {
       id: number
       course: {
+        name: string
+      }
+      customer: {
         name: string
       }
       student_numbers: string
@@ -261,6 +269,9 @@ const getPlannerData = () => {
           event {
             id
             course {
+              name
+            }
+            customer {
               name
             }
             student_numbers
