@@ -198,13 +198,11 @@ class RoadcraftPlannerEducator {
   id: number
   first_name: string
   last_name: string
-  roadcraft_is_an_educator: boolean
 
   constructor(source?: Partial<RoadcraftPlannerEducator>) {
     this.id = 0
     this.first_name = ''
     this.last_name = ''
-    this.roadcraft_is_an_educator = false
 
     Object.assign(this, source)
   }
@@ -233,7 +231,7 @@ const getEducatorDayStatus = (day: RoadcraftPlannerDay, educator: RoadcraftPlann
     if (!eventEducator.assigned) {
       continue
     }
-    status.push(eventDay.event.course.name)
+    status.push(eventDay.event.course.roster_name || eventDay.event.course.name)
   }
   return status
 }
@@ -308,12 +306,11 @@ const getPlannerData = () => {
           residents
         }
       }
-    }
-    cognitoUsers {
-      id
-      first_name
-      last_name
-      roadcraft_is_an_educator
+      educators {
+        id
+        first_name
+        last_name
+      }
     }
   }`, {
     calendarStart: formatISO(addMonths(startOfMonth(today.value.time), month_offset.value), { representation: 'date' }),
@@ -322,8 +319,7 @@ const getPlannerData = () => {
     facilities.value = data.roadcraftFacilitys
     days.value = data.roadcraftMisc.calendar.map(e => new RoadcraftPlannerDay(e))
     console.log(days.value)
-    educators.value = data.cognitoUsers.map(e => new RoadcraftPlannerEducator(e))
-      .filter(educator => educator.roadcraft_is_an_educator == true)
+    educators.value = data.roadcraftMisc.educators.map(e => new RoadcraftPlannerEducator(e))
   })
 }
 
