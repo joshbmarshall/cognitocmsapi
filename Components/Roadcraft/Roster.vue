@@ -151,6 +151,7 @@ class RoadcraftPlannerDay {
       assigned: number
       role: {
         name: string
+        short_name: string
       }
     }[]
     facilities: {
@@ -224,14 +225,18 @@ const getEducatorDayStatus = (day: RoadcraftPlannerDay, educator: RoadcraftPlann
   const status = []
   for (let index = 0; index < day.eventDays.length; index++) {
     const eventDay = day.eventDays[index]
-    const eventEducator = eventDay.eventDayEducators.find(e => e.event_educator.educator_id == educator.id)
-    if (!eventEducator) {
+    const eventDayEducator = eventDay.eventDayEducators.find(e => e.event_educator.educator_id == educator.id)
+    if (!eventDayEducator) {
       continue
     }
-    if (!eventEducator.assigned) {
+    if (!eventDayEducator.assigned) {
       continue
     }
-    status.push(eventDay.event.course.roster_name || eventDay.event.course.name)
+    let thisstatus = eventDay.event.course.roster_name || eventDay.event.course.name
+    if (eventDayEducator.role?.short_name) {
+      thisstatus += `-${eventDayEducator.role?.short_name}`
+    }
+    status.push(thisstatus)
   }
   return status
 }
@@ -288,6 +293,7 @@ const getPlannerData = () => {
             assigned
             role {
               name
+              short_name
             }
           }
           facilities {
