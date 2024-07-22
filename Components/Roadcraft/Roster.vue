@@ -34,10 +34,11 @@
           <span class="rotate-180 text-nowrap text-xl [text-orientation:mixed] [writing-mode:vertical-rl]">Course</span>
         </th>
         <template v-for="day, index in days" :key="index">
-          <td v-for="eventDay in day.eventDays" :key="eventDay.event.id" class="min-w-10 border-b border-r border-inherit text-center" :class="getDayColor(day.date)">
-            <span class="rotate-180 text-nowrap [text-orientation:mixed] [writing-mode:vertical-rl]">
+          <td v-for="eventDay in day.eventDays" :key="eventDay.event.id" class="min-w-12 border-b border-r border-inherit text-center" :class="getDayColor(day.date)">
+            <span class="rotate-180 text-nowrap leading-tight [text-orientation:mixed] [writing-mode:vertical-rl]">
               <div>
                 {{ eventDay.event.course.name }}
+                <span v-if="eventDay.event.number_of_days > 1">D{{ eventDay.day_number || 1 }}</span>
               </div>
               <div>
                 {{ eventDay.event.customer?.name }}
@@ -143,6 +144,7 @@ class RoadcraftPlannerDay {
       }
       student_numbers: string
       vehicle_numbers: string
+      number_of_days: number
     }
     eventDayEducators: {
       event_educator: {
@@ -158,6 +160,7 @@ class RoadcraftPlannerDay {
       id: number
       name: string
     }[]
+    day_number: number
   }[]
 
   staffUnavailable: {
@@ -285,6 +288,7 @@ const getPlannerData = () => {
             }
             student_numbers
             vehicle_numbers
+            number_of_days
           }
           eventDayEducators {
             event_educator {
@@ -300,6 +304,7 @@ const getPlannerData = () => {
             id
             name
           }
+          # day_number
         }
         staffUnavailable {
           staff_id
