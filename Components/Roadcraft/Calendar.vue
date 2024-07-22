@@ -55,31 +55,37 @@
           </div>
           <div
             v-for="facility in facilities" :key="facility.id"
-            class="w-full min-w-32 border-r-2 border-gray-400 text-center xl:min-w-0"
+            class="flex w-full min-w-32 border-r-2 border-gray-400 text-center xl:min-w-0"
             :class="{ 'border-orange-400': day.date.isWeekend(), 'bg-yellow-200': day.eventDays.filter(e => e.facilities.find(e => e.id == facility.id)).length > 1, 'bg-purple-200': day.date.isSameDay(today) }"
           >
-            <template v-for="eventDay in day.eventDays" :key="eventDay.id">
-              <template v-for="evfacility in eventDay.facilities" :key="evfacility.id">
-                <div v-if="evfacility.id == facility.id" class="relative cursor-pointer py-1 hover:bg-gray-500/30" @click="selectEvent(eventDay.event)">
-                  <div>{{ eventDay.event.course?.name }}</div>
-                  <div>Day {{ day.date.diffInDays(eventDay.event.start_date) + 1 }}</div>
-                  <div>{{ eventDay.event.customer?.short_name }}</div>
-                  <div>{{ eventDay.event.note }}</div>
-                  <div v-if="eventDay.event.vehicle_numbers">
-                    V: {{ eventDay.event.vehicle_numbers }}
+            <div class="flex-1" :class="{ 'bg-black/10': !facility.is_primary_facility }">
+              <template v-for="eventDay in day.eventDays" :key="eventDay.id">
+                <template v-for="evfacility in eventDay.facilities" :key="evfacility.id">
+                  <div
+                    v-if="evfacility.id == facility.id"
+                    class="relative cursor-pointer py-1 hover:bg-gray-500/30"
+                    @click="selectEvent(eventDay.event)"
+                  >
+                    <div>{{ eventDay.event.course?.name }}</div>
+                    <div>Day {{ day.date.diffInDays(eventDay.event.start_date) + 1 }}</div>
+                    <div>{{ eventDay.event.customer?.short_name }}</div>
+                    <div>{{ eventDay.event.note }}</div>
+                    <div v-if="eventDay.event.vehicle_numbers">
+                      V: {{ eventDay.event.vehicle_numbers }}
+                    </div>
+                    <div v-if="eventDay.event.student_numbers">
+                      S: {{ eventDay.event.student_numbers }}
+                    </div>
+                    <div v-if="eventDay.event.status == 'Offered'" class="absolute right-1 top-1 text-danger-500" title="Offered">
+                      <i-heroicons-solid:question-mark-circle />
+                    </div>
+                    <div v-if="eventDay.event.status == 'Pending Numbers'" class="absolute right-1 top-1 text-warning-500" title="Pending Numbers">
+                      <i-heroicons-solid:question-mark-circle />
+                    </div>
                   </div>
-                  <div v-if="eventDay.event.student_numbers">
-                    S: {{ eventDay.event.student_numbers }}
-                  </div>
-                  <div v-if="eventDay.event.status == 'Offered'" class="absolute right-1 top-1 text-danger-500" title="Offered">
-                    <i-heroicons-solid:question-mark-circle />
-                  </div>
-                  <div v-if="eventDay.event.status == 'Pending Numbers'" class="absolute right-1 top-1 text-warning-500" title="Pending Numbers">
-                    <i-heroicons-solid:question-mark-circle />
-                  </div>
-                </div>
+                </template>
               </template>
-            </template>
+            </div>
           </div>
           <div
             class="hidden min-w-16 bg-gray-100 p-1 xl:block"
@@ -178,9 +184,11 @@ const today = ref<CognitoTime>(new CognitoTime())
 class RoadcraftFacility {
   id: number
   name: string
+  is_primary_facility: boolean
   constructor(source?: Partial<RoadcraftFacility>) {
     this.id = 0
     this.name = ''
+    this.is_primary_facility = true
     Object.assign(this, source)
   }
 }
@@ -302,6 +310,7 @@ onMounted(() => {
     roadcraftFacilitys {
       id
       name
+      is_primary_facility
     }
     roadcraftMisc {
       calendar(from_date: $calendarStart, to_date: $calendarEnd) {
@@ -366,6 +375,7 @@ onMounted(() => {
     calendarEnd: formatISO(endOfMonth(addMonths(new Date(), 6)), { representation: 'date' }),
   }).then((data: any) => {
     facilities.value = data.roadcraftFacilitys
+    console.log(facilities.value[0])
     days.value = data.roadcraftMisc.calendar.map(e => new RoadcraftCalendarDay(e))
     nextTick(() => {
       roadcraftCalendarContainer.value.getElementsByClassName('currentDay')[0].scrollIntoView({ behavior: 'smooth', block: 'center' })
