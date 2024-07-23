@@ -167,6 +167,11 @@ class RoadcraftPlannerDay {
     staff_id: number
   }[]
 
+  staffTravelling: {
+    staff_id: number
+    note: string
+  }[]
+
   requiredAccommodation: {
     accommodation: {
       id: number
@@ -179,6 +184,7 @@ class RoadcraftPlannerDay {
     this.date = new CognitoTime()
     this.eventDays = []
     this.staffUnavailable = []
+    this.staffTravelling = []
     this.requiredAccommodation = { accommodation: { id: 0, name: '' }, residents: [] }
 
     Object.assign(this, source)
@@ -240,6 +246,10 @@ const getEducatorDayStatus = (day: RoadcraftPlannerDay, educator: RoadcraftPlann
       thisstatus += `-${eventDayEducator.role?.short_name}`
     }
     status.push(thisstatus)
+  }
+  const travelling = day.staffTravelling.find(e => e.staff_id == educator.id)
+  if (travelling) {
+    status.push(travelling.note)
   }
   return status
 }
@@ -308,6 +318,10 @@ const getPlannerData = () => {
         }
         staffUnavailable {
           staff_id
+        }
+        staffTravelling {
+          staff_id
+          note
         }
         requiredAccommodation {
           accommodation {
