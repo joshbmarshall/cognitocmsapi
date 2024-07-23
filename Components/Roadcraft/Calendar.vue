@@ -19,7 +19,7 @@
           public holidays
         </div>
       </div>
-      <div class="flex justify-center py-2">
+      <div v-if="false" class="flex justify-center py-2">
         <cgn-button color-brand fullwidth @click="toggleEventView()">
           {{ showAllEvents ? 'All events' : 'Your events' }}
         </cgn-button>
