@@ -38,7 +38,7 @@
             <span class="rotate-180 text-nowrap leading-tight [text-orientation:mixed] [writing-mode:vertical-rl]">
               <div>
                 {{ eventDay.event.course.name }}
-                <span v-if="eventDay.event.number_of_days > 1">D{{ eventDay.day_number || 1 }}</span>
+                <span v-if="eventDay.event.number_of_days > 1">D{{ eventDay.day_number }}</span>
               </div>
               <div>
                 {{ eventDay.event.customer?.name }}
@@ -314,7 +314,8 @@ const getPlannerData = () => {
             id
             name
           }
-          # day_number
+          date # needed for day_number
+          day_number
         }
         staffUnavailable {
           staff_id
