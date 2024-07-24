@@ -21,7 +21,7 @@
       </div>
     </div>
   </div>
-  <div v-if="canShowPageEditor" class="absolute left-1 top-1 cursor-pointer">
+  <div v-if="canShowPageEditor" class="absolute left-1 top-1 z-50 cursor-pointer">
     <i-heroicons-solid:pencil v-if="!showPageEditor" @click="showPageEditor = true" />
   </div>
   <cgn-toast-output />
