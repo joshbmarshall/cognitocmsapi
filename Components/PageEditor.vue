@@ -9,6 +9,9 @@
     <cgn-button color-success fullwidth class="flex items-center justify-center gap-1" @click="openAddWidgetModal()">
       <i-heroicons-solid:plus /> Add widget
     </cgn-button>
+    <div v-for="widget in pageStore.currentPage.pageContents" :key="widget.name">
+      {{ widget.name }} {{ widget.template }}
+    </div>
     <!-- TODO make the current iterator work for new system
     <div v-for="row in pageStore.currentPage.rows" :key="row.id">
       <div v-for="block in row.blocks" :key="block.id">
@@ -44,7 +47,7 @@ import type { PageWidgetTemplate } from '~cognito/models/Page/WidgetTemplate'
 
 const emit = defineEmits(['closeEditor'])
 
-const pageStore = usePageStore()
+const pageStore = useListPageStore()
 const pageEditor = usePageEditor()
 
 const addWidgetModalOpen = ref(false)

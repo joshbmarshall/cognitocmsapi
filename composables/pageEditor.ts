@@ -1,9 +1,9 @@
 import { gql } from 'graphql-request'
-import type { PageWidgetTemplate } from '~cognito/models/Page/WidgetTemplate'
 import { $axios } from '~cognito/plugins/axios'
+import type { PageWidgetTemplate } from '~cognito/models/Page/WidgetTemplate'
 
 export function usePageEditor() {
-  const pageStore = usePageStore()
+  const pageStore = useListPageStore()
 
   const loadWidgetTemplates = async (): Promise<PageWidgetTemplate[]> => {
     const data = await $axios.graphql(gql`query widgetTemplateQuery {
@@ -24,6 +24,9 @@ export function usePageEditor() {
   }
 
   const addWidget = async (templateName: string, page_id?: number): Promise<number> => {
+    if (!page_id) {
+      page_id = pageStore.currentPage.id
+    }
     const data = await $axios.graphql(gql`mutation createWidgetQuery($page_id: Int!, $name: String!, $template: String!) {
     createCognitoPageContent(
       page_id: $page_id
@@ -32,10 +35,11 @@ export function usePageEditor() {
       id
     }
   }`, {
-      page_id: page_id || pageStore.currentPage.id,
+      page_id,
       name: 'new',
       template: templateName,
     })
+    pageStore.refreshPage(page_id)
     return (data.createCognitoPageContent.id)
   }
 

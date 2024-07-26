@@ -87,6 +87,7 @@ const config = {
     image_aspect: '1x1',
     image_width: 300,
   },
+  listPageContentFeature: false,
 }
 
 export { config }
