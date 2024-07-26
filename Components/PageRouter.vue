@@ -13,11 +13,15 @@
 
 <script setup lang="ts">
 import { CognitoWidget } from '~cognito/models/Cognito/Widget'
+import { config } from '~/config'
 
 const showPageEditor = ref(false)
 const widgets = ref<CognitoWidget[]>([])
 
 const canShowPageEditor = computed(() => {
+  if (!config.listPageContentFeature) {
+    return false
+  }
   return widgets.value.length > 0
 })
 
@@ -26,4 +30,5 @@ onMounted(async () => {
     widgets.value = data
   })
 })
+// TODO replace cognitowidget getlist check with a proper user is admin check
 </script>
