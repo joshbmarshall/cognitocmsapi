@@ -2,7 +2,7 @@
   <div
     class="size-full overflow-y-scroll overscroll-contain bg-darkbg-500 p-2 shadow-xl shadow-slate-700 dark:shadow-black"
   >
-    <div class="flex items-center justify-between text-lg">
+    <div class="flex items-center justify-between pb-2 text-xl">
       <span>Edit {{ pageStore.currentPage.name }}</span>
       <i-heroicons-solid:x class="cursor-pointer" @click="emit('closeEditor')" />
     </div>
