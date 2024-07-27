@@ -89,7 +89,8 @@ onMounted(() => {
     logout()
     useRouter().push('/')
   }
-  const redirect = redirects.data.find(e => e.from == props.page)
+  const pageurl = useRouter().currentRoute
+  const redirect = redirects.data.find(e => `/${e.from}` == pageurl.value.fullPath)
   if (redirect) {
     useRouter().replace(`/${redirect.to}`)
   }
