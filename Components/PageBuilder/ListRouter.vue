@@ -9,12 +9,12 @@
         v-for="widget in pageStore.currentPage.pageContents" :key="widget.name"
         class="space-y-2 text-gray-900 dark:text-gray-200"
       >
-        <cgn-page-builder-wrapper :widget="widget" :url-parts="urlParts" />
+        <cgn-page-builder-list-wrapper :widget="widget" :url-parts="urlParts" />
       </div>
       <div
-        v-if="pageStore.currentPage.content"
+        v-if="pageContent.length"
         class="prose-brand prose mx-auto space-y-2 p-6 text-gray-500 dark:prose-dark dark:text-gray-200 sm:p-12 lg:max-w-none"
-        v-html="pageStore.currentPage.content"
+        v-html="pageContent"
       />
     </div>
     <div v-else>
@@ -33,33 +33,38 @@ import { redirects } from '~/initialData.json'
 
 const props = defineProps({
   page: {
-    type: String,
+    type: String || Array<string>,
     required: true,
   },
 })
+
 const pageStore = useListPageStore()
 const router = useRouter()
+
 const loading = ref(true)
+const urlParts = ref(new CognitoUrlParts())
+
 const not_found = computed(() => {
   return !pageStore.currentPage.id
 })
-const urlParts = ref(new CognitoUrlParts())
+
+const pageContent = computed(() => {
+  return JSON.parse(pageStore.currentPage.content)
+})
 
 async function loadPageContent(url: string | string[]) {
   pageStore.loadPage(url)
   urlParts.value = new CognitoUrlParts().parse(url)
 }
 
-watch(() => props, () => {
+watch(() => props.page, () => {
   loading.value = true
   nextTick(() => {
     // Load on next tick to refresh blocks on page change
     loadPageContent(props.page)
     loading.value = false
   })
-}, {
-  deep: true,
-})
+}, { deep: true })
 
 onMounted(() => {
   loadPageContent(props.page)
@@ -71,7 +76,10 @@ onMounted(() => {
     logout()
     router.push('/')
   }
-  const redirect = redirects.data.find(redirect => redirect.from == props.page)
+
+  // handle redirects
+  const redirectList: { from: string, to: string }[] = redirects.data
+  const redirect = redirectList.find(redirect => redirect.from == props.page)
   if (redirect) {
     router.replace(`/${redirect.to}`)
   }

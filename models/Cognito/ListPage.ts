@@ -1,16 +1,47 @@
+import type { CognitoImage } from './Image'
+
 class CognitoListPageContent {
   name: string
   template: string
   variables: string
+
   text_colour: string
   background_colour: string
 
-  constructor() {
+  background_image?: CognitoImage
+  background_image_fixed: boolean
+  background_image_opacity: string
+  background_image_saturation: string
+
+  display_start_time: string | null
+  display_end_time: string | null
+
+  padding_top: string
+  padding_bottom: string
+  padding_left: string
+  padding_right: string
+
+  margin_top: string
+  margin_bottom: string
+
+  constructor(source?: Partial<CognitoListPageContent>) {
     this.name = ''
     this.template = ''
     this.variables = ''
     this.text_colour = ''
     this.background_colour = ''
+    this.background_image_fixed = false
+    this.background_image_opacity = '100'
+    this.background_image_saturation = '100'
+    this.display_start_time = null
+    this.display_end_time = null
+    this.padding_top = ''
+    this.padding_bottom = ''
+    this.padding_left = ''
+    this.padding_right = ''
+    this.margin_top = ''
+    this.margin_bottom = ''
+    Object.assign(this, source)
   }
 }
 

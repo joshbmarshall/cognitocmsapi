@@ -27,10 +27,27 @@ export const useListPageStore = defineStore('listPage', {
       }
       this.currentPage = pagesStore.findById(this.currentPage.id)
     },
+    async updatePages(page_url: string) {
+      const pageResolver = useListPageResolver()
+      const pagesStore = useListPagesStore()
+
+      const page_check_url = this.currentPage.url
+      const page = await pageResolver.loadPage(page_url)
+      // Check if currentPage has changed since loading (ie navigated to another page)
+      if (this.currentPage.url != page_check_url) {
+        return
+      }
+      if (page.updated_at != this.currentPage.updated_at) {
+        this.currentPage.url = ''
+        this.currentPage = page
+        pagesStore.loadPages()
+      }
+    },
     loadPage(urlToLoad: string | string[]) {
       const pagesStore = useListPagesStore()
       const urlParts = new CognitoUrlParts().parse(urlToLoad)
       let page = new CognitoListPage()
+
       if (pagesStore.pages.length == 0) {
         pagesStore.initPages()
       }
@@ -42,30 +59,21 @@ export const useListPageStore = defineStore('listPage', {
       } else {
         this.loadPages(urlToLoad)
       }
+
       if (!page.url) {
         page.updated_at = 'Need load from server'
       }
 
       // Set the page from the cached version
       this.currentPage = page
+
+      // Check if there is a newer version
       if ($axios.isSSR()) {
         return
       }
-      const pageResolver = useListPageResolver()
-      // Check if there is a newer version
-      const page_check_url = this.currentPage.url
       setTimeout(async () => {
-        const page = await pageResolver.loadPage(urlParts.page_url)
-        // Check if currentPage has changed since loading (ie navigated to another page)
-        if (this.currentPage.url != page_check_url) {
-          return
-        }
-        if (page.updated_at != this.currentPage.updated_at) {
-          this.currentPage.url = ''
-          this.currentPage = page
-          pagesStore.loadPages()
-        }
-      }, 1000)
+        await this.updatePages(urlParts.page_url)
+      }, 500)
     },
   },
 

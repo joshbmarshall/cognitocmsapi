@@ -38,44 +38,49 @@ export function useListPageResolver() {
     return page
   }
 
+  const fragmentCognitoPage = gql`
+    fragment cognitoPage on CognitoPage {
+      id
+      name
+      url
+      updated_at
+      content
+      pageContents {
+        name
+        template
+        variables
+        text_colour
+        background_colour
+        background_image_fixed
+        background_image_opacity
+        background_image_saturation
+        display_start_time
+        display_end_time
+        padding_top
+        padding_bottom
+        padding_left
+        padding_right
+        margin_top
+        margin_bottom
+      }
+    }`
+
   const loadPages = async (): Promise<CognitoListPage[]> => {
     const data = await $axios.graphql(gql`query pagesQuery {
       cognitoPages {
-        id
-        name
-        url
-        updated_at
-        content
-        pageContents {
-          name
-          template
-          variables
-          text_colour
-          background_colour
-        }
+        ...cognitoPage
       }
-    }`)
+    }`.concat(fragmentCognitoPage))
     return (data.cognitoPages)
   }
 
   const loadPage = async (urlToLoad: string | string[]): Promise <CognitoListPage> => {
     const url = resolveurlpath(urlToLoad)
-    const data = await $axios.graphql(gql`query pagesQuery($url: String!) {
+    const data = await $axios.graphql(gql`query pageQuery($url: String!) {
       cognitoPage(whereEqual: {url: $url}) {
-        id
-        name
-        url
-        updated_at
-        content
-        pageContents {
-          name
-          template
-          variables
-          text_colour
-          background_colour
-        }
+        ...cognitoPage
       }
-    }`, {
+    }`.concat(fragmentCognitoPage), {
       url,
     })
     const page = (data.cognitoPage)
