@@ -14,30 +14,33 @@ const props = defineProps({
   label: {
     type: String,
   },
-  modelValue: {
-    type: Number,
-    default: 0,
-  },
   required: {
     type: Boolean,
     default: false,
   },
 })
 
-const emit = defineEmits(['update:modelValue'])
+const modelValue = defineModel({ type: Number || String, default: 0 })
 
 const checked = ref(false)
 
-const handleInput = () => emit('update:modelValue', checked.value ? 1 : 0)
+const handleInput = () => {
+  modelValue.value = checked.value ? 1 : 0
+}
 
 const setChecked = () => {
-  checked.value = !!props.modelValue
+  if (typeof modelValue.value == 'string') {
+    modelValue.value = Number.parseInt(modelValue.value)
+  }
+  checked.value = !!modelValue.value
 }
+
 watch(() => props, () => {
   setChecked()
 }, {
   deep: true,
 })
+
 onMounted(() => {
   setChecked()
 })
