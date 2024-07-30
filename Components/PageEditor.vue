@@ -26,13 +26,13 @@
       </div>
     </div>
     -->
-    <cgn-modal v-model="addWidgetModalOpen" fullheight>
+    <cgn-modal v-model="addWidgetModalOpen">
       <template #clean-content>
         <div class="grid grid-cols-3 gap-2">
           <cgn-button
-            v-for="template in widgetTemplates"
+            v-for="template in pageEditor.widgetTemplates.value"
             :key="template.name" color-brand
-            class="flex items-center gap-1" @click="addWidget(template.name)"
+            class="flex items-center gap-1" @click="addWidget(template)"
           >
             <i-heroicons-solid:plus /> {{ template.name }}
           </cgn-button>
@@ -51,18 +51,13 @@ const pageStore = useListPageStore()
 const pageEditor = usePageEditor()
 
 const addWidgetModalOpen = ref(false)
-const widgetTemplates = ref<PageWidgetTemplate[]>()
 
 const openAddWidgetModal = () => {
   addWidgetModalOpen.value = true
 }
 
-const addWidget = (templateName: string) => {
+const addWidget = (template: PageWidgetTemplate) => {
   addWidgetModalOpen.value = false
-  pageEditor.addWidget(templateName)
+  pageEditor.addEditorWidget(template)
 }
-
-onMounted(async () => {
-  widgetTemplates.value = await pageEditor.loadWidgetTemplates()
-})
 </script>
