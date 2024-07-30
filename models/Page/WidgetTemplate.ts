@@ -6,6 +6,7 @@ class PageWidgetTemplate {
     type: string
     default_value: any
     description: string
+    options: string
   }[]
 
   constructor(source?: Partial<PageWidgetTemplate>) {

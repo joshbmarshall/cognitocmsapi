@@ -18,6 +18,7 @@ export function usePageEditor() {
           type
           default_value
           description
+          options
         }
       }
     }
