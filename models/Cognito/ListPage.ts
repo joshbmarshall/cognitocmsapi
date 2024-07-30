@@ -41,7 +41,7 @@ class CognitoListPageContent {
     this.background_image_fixed = false
     this.background_image_opacity = '100'
     this.background_image_saturation = '100'
-    this.enabled = null
+    this.enabled = true
     this.display_start_time = null
     this.display_end_time = null
     this.padding_top = ''

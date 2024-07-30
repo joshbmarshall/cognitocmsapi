@@ -26,6 +26,10 @@ export function usePageEditor() {
     return (data.cognitoMisc.pageContentThemes)
   }
 
+  const getTemplate = (templateName: string): PageWidgetTemplate | undefined => {
+    return widgetTemplates.value.find(template => template.name == templateName)
+  }
+
   const addEditorWidget = (template: PageWidgetTemplate) => {
     const widget = ref<CognitoListPageContent>(new CognitoListPageContent())
     const highestSortOrder = pageStore.currentPage.pageContents.reduce((pre, cur) => {
@@ -46,33 +50,139 @@ export function usePageEditor() {
     pageStore.currentPage.pageContents.push(widget.value)
   }
 
-  const getTemplate = (templateName: string): PageWidgetTemplate | undefined => {
-    return widgetTemplates.value.find(template => template.name == templateName)
-  }
-
   const addWidget = async (templateName: string, page_id?: number): Promise<number> => {
     if (!page_id) {
       page_id = pageStore.currentPage.id
     }
     const data = await $axios.graphql(gql`mutation createWidgetQuery($page_id: Int!, $name: String!, $template: String!) {
-    createCognitoPageContent(
-      page_id: $page_id
-      name: $name
-      template: $template) {
-      id
-    }
-  }`, {
+      createCognitoPageContent(
+        page_id: $page_id
+        name: $name
+        template: $template) {
+        id
+      }
+    }`, {
       page_id,
       name: 'new',
       template: templateName,
     })
-    pageStore.refreshPage(page_id)
     return (data.createCognitoPageContent.id)
+  }
+  const updateWidget = async (widget: CognitoListPageContent, page_id?: number): Promise<number> => {
+    if (!page_id) {
+      page_id = pageStore.currentPage.id
+    }
+    const data = await $axios.graphql(gql`mutation updateWidgetQuery(
+      $id: Int!,
+      $page_id: Int,
+      $sort_order: Int,
+      $name: String,
+      $variables: String,
+      $enabled: Boolean,
+      $display_start_time: String,
+      $display_end_time: String,
+      $text_colour: String,
+      $background_colour: String,
+      $background_image_fixed: Boolean,
+      $background_image_opacity: String,
+      $background_image_saturation: String,
+      $padding_top: String,
+      $padding_bottom: String,
+      $padding_left: String,
+      $padding_right: String,
+      $margin_top: String,
+      $margin_bottom: String,
+    ) {
+      updateCognitoPageContent(
+        id: $id
+        page_id: $page_id
+        sort_order: $sort_order
+        name: $name
+        variables: $variables
+        enabled: $enabled
+        display_start_time: $display_start_time
+        display_end_time: $display_end_time
+        text_colour: $text_colour
+        background_colour: $background_colour
+        background_image_fixed: $background_image_fixed
+        background_image_opacity: $background_image_opacity
+        background_image_saturation: $background_image_saturation
+        padding_top: $padding_top
+        padding_bottom: $padding_bottom
+        padding_left: $padding_left
+        padding_right: $padding_right
+        margin_top: $margin_top
+        margin_bottom: $margin_bottom
+      ) {
+        id
+      }
+    }`, {
+      id: widget.id,
+      page_id,
+      sort_order: widget.sort_order,
+      name: widget.name,
+      variables: widget.variables,
+      enabled: widget.enabled,
+      display_start_time: widget.display_start_time,
+      display_end_time: widget.display_end_time,
+      text_colour: widget.text_colour,
+      background_colour: widget.background_colour,
+      background_image_fixed: widget.background_image_fixed,
+      background_image_opacity: widget.background_image_opacity,
+      background_image_saturation: widget.background_image_saturation,
+      padding_top: widget.padding_top,
+      padding_bottom: widget.padding_bottom,
+      padding_left: widget.padding_left,
+      padding_right: widget.padding_right,
+      margin_top: widget.margin_top,
+      margin_bottom: widget.margin_bottom,
+    })
+    return (data.updateCognitoPageContent.id)
+  }
+  const deleteWidget = async (id: number) => {
+    await $axios.graphql(gql`mutation deleteWidgetQuery($id: Int!) {
+      deleteCognitoPageContent(id: $id)
+    }`, {
+      id,
+    })
+  }
+
+  const savePageChanges = async () => {
+    await pageStore.currentPage.pageContents.forEach(async (widget) => {
+      if (widget.id === null) {
+        if (widget.deleted) {
+          // newly created then deleted, nothing needs to be done
+          return
+        }
+        // new widget, we need to add it before updating
+        widget.id = await addWidget(widget.template)
+      }
+      if (widget.deleted) {
+        await deleteWidget(widget.id)
+        return
+      }
+      // update widget with information
+      await updateWidget(widget)
+    })
+    pageStore.refreshPage(pageStore.currentPage.id)
+  }
+
+  const cancelPageChanges = () => {
+    pageStore.refreshPage(pageStore.currentPage.id)
   }
 
   onMounted(async () => {
     widgetTemplates.value = await loadWidgetTemplates()
   })
 
-  return { widgetTemplates, loadWidgetTemplates, addEditorWidget, getTemplate, addWidget }
+  return {
+    widgetTemplates,
+    loadWidgetTemplates,
+    addEditorWidget,
+    getTemplate,
+    addWidget,
+    updateWidget,
+    savePageChanges,
+    cancelPageChanges,
+  }
 }

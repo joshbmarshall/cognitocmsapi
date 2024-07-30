@@ -57,12 +57,12 @@
 </template>
 
 <script setup lang="ts">
-import { CognitoListPageContent } from '~cognito/models/Cognito/ListPage'
+import type { CognitoListPageContent } from '~cognito/models/Cognito/ListPage'
 import { CognitoUrlParts } from '~cognito/models/Cognito/Page'
 
 const props = defineProps({
   widget: {
-    type: CognitoListPageContent,
+    type: Object as PropType<CognitoListPageContent>,
     required: true,
   },
   urlParts: {
