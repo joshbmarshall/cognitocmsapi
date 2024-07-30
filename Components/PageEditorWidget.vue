@@ -86,5 +86,9 @@ watch(() => widgetVariables.value, () => {
   widget.value.variables = JSON.stringify(widgetVariables.value)
 }, { deep: true })
 
+watch(() => widget.value.variables, () => {
+  widgetVariables.value = JSON.parse(widget.value.variables)
+})
+
 onClickOutside(widgetRef, () => closeWidget())
 </script>
