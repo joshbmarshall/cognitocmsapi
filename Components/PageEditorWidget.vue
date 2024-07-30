@@ -11,7 +11,18 @@
     </div>
     <div v-if="widgetOpen" class="flex flex-col gap-2 border-t border-gray-500 py-2">
       <div v-for="field in props.template?.fields" :key="field.name">
-        <cgn-form-input-text v-if="field.type == 'string'" v-model="widgetVariables[field.name]" :label="field.display_name" class="!my-0" />
+        <cgn-form-input-text
+          v-if="field.type == 'string'" v-model="widgetVariables[field.name]"
+          :label="field.display_name" class="!my-0"
+        />
+        <div v-else-if="field.type == 'html'">
+          <cgn-form-label :label="field.display_name" />
+          <cgn-tip-tap v-model="widgetVariables[field.name]" />
+        </div>
+        <cgn-form-checkbox
+          v-else-if="field.type == 'bool'" v-model="widgetVariables[field.name]"
+          :label="field.display_name"
+        />
         <div v-else>
           {{ field.display_name }}
           <div class="text-muted text-sm">
