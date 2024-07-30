@@ -5,7 +5,7 @@ import { CognitoListPageContent } from '~cognito/models/Cognito/ListPage'
 
 export function usePageEditor() {
   const pageStore = useListPageStore()
-  const widgetTemplates = ref<PageWidgetTemplate[]>()
+  const widgetTemplates = ref<PageWidgetTemplate[]>([])
 
   const loadWidgetTemplates = async (): Promise<PageWidgetTemplate[]> => {
     const data = await $axios.graphql(gql`query widgetTemplateQuery {
@@ -27,6 +27,11 @@ export function usePageEditor() {
 
   const addEditorWidget = (template: PageWidgetTemplate) => {
     const widget = ref<CognitoListPageContent>(new CognitoListPageContent())
+    const highestSortOrder = pageStore.currentPage.pageContents.reduce((pre, cur) => {
+      return (pre && pre.sort_order > cur.sort_order) ? pre : cur
+    }).sort_order
+    widget.value.sort_order = highestSortOrder + 1
+
     widget.value.name = 'new'
     widget.value.template = template.name
 
@@ -38,6 +43,10 @@ export function usePageEditor() {
     widget.value.variables = JSON.stringify(variables)
 
     pageStore.currentPage.pageContents.push(widget.value)
+  }
+
+  const getTemplate = (templateName: string): PageWidgetTemplate | undefined => {
+    return widgetTemplates.value.find(template => template.name == templateName)
   }
 
   const addWidget = async (templateName: string, page_id?: number): Promise<number> => {
@@ -64,5 +73,5 @@ export function usePageEditor() {
     widgetTemplates.value = await loadWidgetTemplates()
   })
 
-  return { widgetTemplates, loadWidgetTemplates, addWidget, addEditorWidget }
+  return { widgetTemplates, loadWidgetTemplates, addEditorWidget, getTemplate, addWidget }
 }

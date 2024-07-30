@@ -1,6 +1,9 @@
 import type { CognitoImage } from './Image'
 
 class CognitoListPageContent {
+  id: number | null
+  sort_order: number
+
   name: string
   template: string
   variables: string
@@ -25,6 +28,8 @@ class CognitoListPageContent {
   margin_bottom: string
 
   constructor(source?: Partial<CognitoListPageContent>) {
+    this.id = null
+    this.sort_order = 0
     this.name = ''
     this.template = ''
     this.variables = ''
