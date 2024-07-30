@@ -51,13 +51,14 @@ export function useListPageResolver() {
         name
         template
         variables
+        enabled
+        display_start_time
+        display_end_time
         text_colour
         background_colour
         background_image_fixed
         background_image_opacity
         background_image_saturation
-        display_start_time
-        display_end_time
         padding_top
         padding_bottom
         padding_left

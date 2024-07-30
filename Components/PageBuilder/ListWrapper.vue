@@ -52,6 +52,11 @@ const widgetBackgroundImageClass = computed(() => {
 })
 
 const widgetVisible = computed(() => {
+  if (props.widget.enabled !== null) {
+    if (!props.widget.enabled) {
+      return false
+    }
+  }
   if (props.widget.display_start_time) {
     const hide_before = new CognitoTime(props.widget.display_start_time)
     if (hide_before.isFuture()) {
