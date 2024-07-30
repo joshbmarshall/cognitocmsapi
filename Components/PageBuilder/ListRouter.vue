@@ -5,12 +5,11 @@
   </div>
   <div v-else>
     <div v-if="pageStore.currentPage.url">
-      <div
-        v-for="widget in pageStore.currentPage.pageContents" :key="widget.name"
-        class="space-y-2 text-gray-900 dark:text-gray-200"
-      >
-        <cgn-page-builder-list-wrapper :widget="widget" :url-parts="urlParts" />
-      </div>
+      <template v-for="widget in pageStore.currentPage.pageContents" :key="widget.name">
+        <div v-if="!widget.deleted" class="space-y-2 text-gray-900 dark:text-gray-200">
+          <cgn-page-builder-list-wrapper :widget="widget" :url-parts="urlParts" />
+        </div>
+      </template>
       <div
         v-if="pageContent.length"
         class="prose-brand prose mx-auto space-y-2 p-6 text-gray-500 dark:prose-dark dark:text-gray-200 sm:p-12 lg:max-w-none"

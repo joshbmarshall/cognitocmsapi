@@ -27,6 +27,8 @@ class CognitoListPageContent {
   margin_top: string
   margin_bottom: string
 
+  deleted?: boolean
+
   constructor(source?: Partial<CognitoListPageContent>) {
     this.id = null
     this.sort_order = 0
