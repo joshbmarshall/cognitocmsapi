@@ -9,7 +9,7 @@
           loop
           muted
           playsinline
-          class="inset-0 z-10 h-full w-full object-cover object-center"
+          class="inset-0 z-10 size-full object-cover object-center"
           :class="imageClass"
         >
           <source
@@ -20,7 +20,7 @@
       </div>
       <div class="relative flex h-[500px] flex-col p-8" :class="textClass">
         <cgn-lazy-image v-if="templatevar.overlay_image" class="h-16 p-2" :image="templatevar.overlay_image" />
-        <div class="pb-2 font-title text-2xl font-semibold md:text-4xl">
+        <div class="font-title pb-2 text-2xl font-semibold md:text-4xl">
           {{ templatevar.heading }}
         </div>
         <div v-if="templatevar.subheading" class="mb-2 font-display text-xl font-semibold">
@@ -62,7 +62,7 @@ class Templatevars {
 <script setup lang="ts">
 const props = defineProps({
   templatevar: {
-    type: Templatevars,
+    type: Object as PropType<Templatevars>,
     required: true,
   },
 })

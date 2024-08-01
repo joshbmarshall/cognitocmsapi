@@ -41,7 +41,7 @@ const props = defineProps({
     required: true,
   },
 })
-const modelValue = defineModel({ type: String || Number })
+const modelValue = defineModel<any>()
 
 const optionsArray = computed(() => {
   return props.templateField.options.split('|').map((option) => {

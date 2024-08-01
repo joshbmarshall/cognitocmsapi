@@ -12,13 +12,13 @@
 
 <script setup lang="ts">
 import { compareAsc } from 'date-fns'
-import { CognitoListPageContent } from '~cognito/models/Cognito/ListPage'
+import type { CognitoListPageContent } from '~cognito/models/Cognito/ListPage'
 import { CognitoUrlParts } from '~cognito/models/Cognito/Page'
 import { CognitoTime } from '~cognito/models/Cognito/Time'
 
 const props = defineProps({
   widget: {
-    type: CognitoListPageContent,
+    type: Object as PropType<CognitoListPageContent>,
     required: true,
   },
   urlParts: {

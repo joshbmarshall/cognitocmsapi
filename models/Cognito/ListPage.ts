@@ -9,8 +9,8 @@ class CognitoListPageContent {
   variables: string
 
   hidden: boolean | null
-  start_time: string | null
-  end_time: string | null
+  start_time: any
+  end_time: any
 
   text_colour: string
   background_colour: string
