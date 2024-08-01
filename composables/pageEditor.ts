@@ -78,9 +78,9 @@ export function usePageEditor() {
       $sort_order: Int,
       $name: String,
       $variables: String,
-      $enabled: Boolean,
-      $display_start_time: String,
-      $display_end_time: String,
+      $hidden: Boolean,
+      $start_time: String,
+      $end_time: String,
       $text_colour: String,
       $background_colour: String,
       $background_image_fixed: Boolean,
@@ -99,9 +99,9 @@ export function usePageEditor() {
         sort_order: $sort_order
         name: $name
         variables: $variables
-        enabled: $enabled
-        display_start_time: $display_start_time
-        display_end_time: $display_end_time
+        hidden: $hidden
+        start_time: $start_time
+        end_time: $end_time
         text_colour: $text_colour
         background_colour: $background_colour
         background_image_fixed: $background_image_fixed
@@ -122,9 +122,9 @@ export function usePageEditor() {
       sort_order: widget.sort_order,
       name: widget.name,
       variables: widget.variables,
-      enabled: widget.enabled,
-      display_start_time: widget.display_start_time,
-      display_end_time: widget.display_end_time,
+      hidden: widget.hidden,
+      start_time: widget.start_time,
+      end_time: widget.end_time,
       text_colour: widget.text_colour,
       background_colour: widget.background_colour,
       background_image_fixed: widget.background_image_fixed,
@@ -145,10 +145,11 @@ export function usePageEditor() {
     }`, {
       id,
     })
+    return (null)
   }
 
   const savePageChanges = async () => {
-    await pageStore.currentPage.pageContents.forEach(async (widget) => {
+    await Promise.all(pageStore.currentPage.pageContents.map(async (widget) => {
       if (widget.id === null) {
         if (widget.deleted) {
           // newly created then deleted, nothing needs to be done
@@ -163,7 +164,7 @@ export function usePageEditor() {
       }
       // update widget with information
       await updateWidget(widget)
-    })
+    }))
     pageStore.refreshPage(pageStore.currentPage.id)
   }
 

@@ -8,9 +8,9 @@ class CognitoListPageContent {
   template: string
   variables: string
 
-  enabled: boolean | null
-  display_start_time: string | null
-  display_end_time: string | null
+  hidden: boolean | null
+  start_time: string | null
+  end_time: string | null
 
   text_colour: string
   background_colour: string
@@ -41,9 +41,9 @@ class CognitoListPageContent {
     this.background_image_fixed = false
     this.background_image_opacity = '100'
     this.background_image_saturation = '100'
-    this.enabled = true
-    this.display_start_time = null
-    this.display_end_time = null
+    this.hidden = false
+    this.start_time = null
+    this.end_time = null
     this.padding_top = ''
     this.padding_bottom = ''
     this.padding_left = ''

@@ -51,9 +51,9 @@ export function useListPageResolver() {
         name
         template
         variables
-        enabled
-        display_start_time
-        display_end_time
+        hidden
+        start_time
+        end_time
         text_colour
         background_colour
         background_image_fixed

@@ -52,19 +52,17 @@ const widgetBackgroundImageClass = computed(() => {
 })
 
 const widgetVisible = computed(() => {
-  if (props.widget.enabled !== null) {
-    if (!props.widget.enabled) {
-      return false
-    }
+  if (props.widget.hidden) {
+    return false
   }
-  if (props.widget.display_start_time) {
-    const hide_before = new CognitoTime(props.widget.display_start_time)
+  if (props.widget.start_time) {
+    const hide_before = new CognitoTime(props.widget.start_time)
     if (hide_before.isFuture()) {
       return false
     }
   }
-  if (props.widget.display_end_time) {
-    const hide_after = new CognitoTime(props.widget.display_end_time)
+  if (props.widget.end_time) {
+    const hide_after = new CognitoTime(props.widget.end_time)
     if (hide_after.isPast()) {
       return false
     }
