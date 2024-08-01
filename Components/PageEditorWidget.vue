@@ -1,6 +1,6 @@
 <template>
   <div
-    ref="widgetRef" class="rounded-lg bg-gray-200 px-2 dark:bg-darkbg-700" :class="{ 'text-muted': widget.deleted }"
+    ref="widgetRef" class="rounded-lg bg-gray-200 px-2 dark:bg-darkbg-700" :class="{ 'text-muted': widget.deleted || !widgetVisible }"
     @click="openWidget()"
   >
     <div class="flex items-center justify-between py-2 text-xl">
@@ -15,28 +15,7 @@
     <div v-if="widgetOpen" class="border-t border-gray-500 py-2">
       <div v-if="!widget.deleted" class="flex flex-col gap-2 pb-2">
         <div v-for="field in props.template?.fields" :key="field.name">
-          <cgn-form-input-text
-            v-if="field.type == 'string'" v-model="widgetVariables[field.name]"
-            :label="field.display_name" class="!my-0"
-          />
-          <div v-else-if="field.type == 'html'">
-            <cgn-form-label :label="field.display_name" />
-            <cgn-tip-tap v-model="widgetVariables[field.name]" />
-          </div>
-          <cgn-form-checkbox
-            v-else-if="field.type == 'bool'" v-model="widgetVariables[field.name]"
-            :label="field.display_name"
-          />
-          <cgn-form-dropdown
-            v-else-if="field.type == 'select'" v-model="widgetVariables[field.name]"
-            :options="createOptionsArray(field.options)" :label="field.display_name"
-          />
-          <div v-else>
-            {{ field.display_name }}
-            <div class="text-muted text-sm">
-              Unknkown type: '{{ field.type }}'
-            </div>
-          </div>
+          <cgn-page-editor-widget-variable v-model="widgetVariables[field.name]" :template-field="field" />
         </div>
       </div>
       <cgn-button v-if="widget.deleted" color-warning fullwidth @click="widget.deleted = false">
@@ -51,6 +30,7 @@
 
 <script setup lang="ts">
 import type { CognitoListPageContent } from '~cognito/models/Cognito/ListPage'
+import { CognitoTime } from '~cognito/models/Cognito/Time'
 import type { PageWidgetTemplate } from '~cognito/models/Page/WidgetTemplate'
 
 const props = defineProps({
@@ -66,21 +46,31 @@ const widgetOpen = ref(false)
 
 const widgetVariables = ref(JSON.parse(widget.value.variables))
 
-const createOptionsArray = (optionsString: string) => {
-  const options: { id: string, name: string }[] = []
-  optionsString.split('|').forEach((option) => {
-    const optionFields = option.split('=')
-    options.push({ id: optionFields[0], name: optionFields[1] })
-  })
-  return options
-}
-
 const openWidget = () => {
   widgetOpen.value = true
 }
 const closeWidget = () => {
   widgetOpen.value = false
 }
+
+const widgetVisible = computed(() => {
+  if (widget.value.hidden) {
+    return false
+  }
+  if (widget.value.start_time) {
+    const hide_before = new CognitoTime(widget.value.start_time)
+    if (hide_before.isFuture()) {
+      return false
+    }
+  }
+  if (widget.value.end_time) {
+    const hide_after = new CognitoTime(widget.value.end_time)
+    if (hide_after.isPast()) {
+      return false
+    }
+  }
+  return true
+})
 
 watch(() => widgetVariables.value, () => {
   widget.value.variables = JSON.stringify(widgetVariables.value)
