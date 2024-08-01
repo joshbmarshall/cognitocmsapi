@@ -48,7 +48,10 @@
         <div class="text-lg">
           Background Image
         </div>
-        {{ widget.background_image_fixed }}
+        <label class="inline-block select-none text-sm text-gray-800 dark:text-gray-200">
+          <input v-model="widget.background_image_fixed" type="checkbox">
+          Background Image Fixed
+        </label>
         {{ widget.background_image_opacity }}
         {{ widget.background_image_saturation }}
       </div>
@@ -72,4 +75,7 @@ const closeOptions = () => {
 }
 
 onClickOutside(optionsRef, () => closeOptions())
+// TODO send through AOS types
+// TODO functional background image
+// TODO send through anchor name and block class
 </script>
