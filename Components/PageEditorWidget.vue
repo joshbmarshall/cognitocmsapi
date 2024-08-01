@@ -1,9 +1,14 @@
 <template>
   <div
-    ref="widgetRef" class="rounded-lg bg-gray-200 px-2 dark:bg-darkbg-700" :class="{ 'text-muted': widget.deleted || !widgetVisible }"
+    ref="widgetRef" class="relative rounded-lg bg-gray-200 px-2 dark:bg-darkbg-700"
     @click="openWidget()"
   >
-    <div class="flex items-center justify-between py-2 text-xl">
+    <div class="absolute right-0 top-0 flex overflow-hidden rounded-bl rounded-tr-lg">
+      <i-heroicons-solid:trash v-if="widget.deleted" class="bg-danger-500 text-on-danger" />
+      <i-heroicons-solid:plus v-else-if="widget.id === null" class="bg-success-500 text-on-success" />
+      <i-heroicons-solid:eye-slash v-if="!widgetVisible" class="bg-warning-500 text-on-warning" />
+    </div>
+    <div class="flex items-center justify-between py-2 text-xl" :class="{ 'text-muted': widget.deleted || !widgetVisible }">
       <cgn-form-input-text v-if="widgetOpen && !widget.deleted" v-model="widget.name" class="!my-0" />
       <div v-else>
         {{ widget.name }}
