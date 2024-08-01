@@ -22,6 +22,7 @@
         <div v-for="field in props.template?.fields" :key="field.name">
           <cgn-page-editor-widget-variable v-model="widgetVariables[field.name]" :template-field="field" />
         </div>
+        <cgn-page-editor-widget-options v-model="widget" />
       </div>
       <cgn-button v-if="widget.deleted" color-warning fullwidth @click="widget.deleted = false">
         Restore
@@ -34,6 +35,7 @@
 </template>
 
 <script setup lang="ts">
+import { compareAsc } from 'date-fns'
 import type { CognitoListPageContent } from '~cognito/models/Cognito/ListPage'
 import { CognitoTime } from '~cognito/models/Cognito/Time'
 import type { PageWidgetTemplate } from '~cognito/models/Page/WidgetTemplate'
@@ -58,19 +60,20 @@ const closeWidget = () => {
   widgetOpen.value = false
 }
 
+const currentTime = useNow({ interval: 60000 })
 const widgetVisible = computed(() => {
   if (widget.value.hidden) {
     return false
   }
   if (widget.value.start_time) {
     const hide_before = new CognitoTime(widget.value.start_time)
-    if (hide_before.isFuture()) {
+    if (compareAsc(currentTime.value, hide_before.time) == -1) {
       return false
     }
   }
   if (widget.value.end_time) {
     const hide_after = new CognitoTime(widget.value.end_time)
-    if (hide_after.isPast()) {
+    if (compareAsc(hide_after.time, currentTime.value) == -1) {
       return false
     }
   }

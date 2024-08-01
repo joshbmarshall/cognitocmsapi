@@ -11,6 +11,7 @@
 </template>
 
 <script setup lang="ts">
+import { compareAsc } from 'date-fns'
 import { CognitoListPageContent } from '~cognito/models/Cognito/ListPage'
 import { CognitoUrlParts } from '~cognito/models/Cognito/Page'
 import { CognitoTime } from '~cognito/models/Cognito/Time'
@@ -51,19 +52,20 @@ const widgetBackgroundImageClass = computed(() => {
   return classes
 })
 
+const currentTime = useNow({ interval: 60000 })
 const widgetVisible = computed(() => {
   if (props.widget.hidden) {
     return false
   }
   if (props.widget.start_time) {
     const hide_before = new CognitoTime(props.widget.start_time)
-    if (hide_before.isFuture()) {
+    if (compareAsc(currentTime.value, hide_before.time) == -1) {
       return false
     }
   }
   if (props.widget.end_time) {
     const hide_after = new CognitoTime(props.widget.end_time)
-    if (hide_after.isPast()) {
+    if (compareAsc(hide_after.time, currentTime.value) == -1) {
       return false
     }
   }
