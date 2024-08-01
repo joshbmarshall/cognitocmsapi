@@ -168,8 +168,8 @@ export function usePageEditor() {
     pageStore.refreshPage(pageStore.currentPage.id)
   }
 
-  const cancelPageChanges = () => {
-    pageStore.refreshPage(pageStore.currentPage.id)
+  const cancelPageChanges = async () => {
+    return pageStore.refreshPage(pageStore.currentPage.id)
   }
 
   onMounted(async () => {
