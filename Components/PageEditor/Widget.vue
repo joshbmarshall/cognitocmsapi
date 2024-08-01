@@ -8,7 +8,10 @@
       <i-heroicons-solid:plus v-else-if="widget.id === null" class="bg-success-500 text-on-success" />
       <i-heroicons-solid:eye-slash v-if="!widgetVisible" class="bg-warning-500 text-on-warning" />
     </div>
-    <div class="flex items-center justify-between py-2 text-xl" :class="{ 'text-muted': widget.deleted || !widgetVisible }">
+    <div
+      class="flex cursor-pointer items-center justify-between py-2 text-xl"
+      :class="{ 'text-muted': widget.deleted || !widgetVisible }"
+    >
       <cgn-form-input-text v-if="widgetOpen && !widget.deleted" v-model="widget.name" class="!my-0" />
       <div v-else>
         {{ widget.name }}
