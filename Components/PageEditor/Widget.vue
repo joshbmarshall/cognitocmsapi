@@ -12,7 +12,7 @@
       class="flex cursor-pointer items-center justify-between py-2 text-xl"
       :class="{ 'text-muted': widget.deleted || !widgetVisible }"
     >
-      <cgn-form-input-text v-if="widgetOpen && !widget.deleted" v-model="widget.name" class="!my-0" />
+      <cgn-form-input-text v-if="widget.editing && !widget.deleted" v-model="widget.name" class="!my-0" />
       <div v-else>
         {{ widget.name }}
       </div>
@@ -20,7 +20,7 @@
         {{ widget.template }}
       </div>
     </div>
-    <div v-if="widgetOpen" class="border-t border-gray-500 py-2">
+    <div v-if="widget.editing" class="border-t border-gray-500 py-2">
       <div v-if="!widget.deleted" class="flex flex-col gap-2 pb-2">
         <div v-for="field in props.template?.fields" :key="field.name">
           <cgn-page-editor-widget-variable v-model="widgetVariables[field.name]" :template-field="field" />
@@ -52,15 +52,14 @@ const props = defineProps({
 const widget = defineModel({ type: Object as PropType<CognitoListPageContent>, required: true })
 
 const widgetRef = ref()
-const widgetOpen = ref(false)
 
 const widgetVariables = ref(JSON.parse(widget.value.variables))
 
 const openWidget = () => {
-  widgetOpen.value = true
+  widget.value.editing = true
 }
 const closeWidget = () => {
-  widgetOpen.value = false
+  widget.value.editing = false
 }
 
 const currentTime = useNow({ interval: 60000 })

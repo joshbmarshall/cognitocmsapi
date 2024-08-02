@@ -28,6 +28,7 @@ class CognitoListPageContent {
   margin_top: string
   margin_bottom: string
 
+  editing?: boolean
   deleted?: boolean
 
   constructor(source?: Partial<CognitoListPageContent>) {

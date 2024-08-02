@@ -54,6 +54,10 @@ const widgetBackgroundImageClass = computed(() => {
 
 const currentTime = useNow({ interval: 60000 })
 const widgetVisible = computed(() => {
+  if (props.widget.editing) {
+    // if editor has the widget open, then display it for easier editing
+    return true
+  }
   if (props.widget.hidden) {
     return false
   }
