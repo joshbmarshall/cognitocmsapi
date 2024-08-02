@@ -56,15 +56,25 @@ export function useListPageResolver() {
         end_time
         text_colour
         background_colour
-        background_image_fixed
-        background_image_opacity
-        background_image_saturation
         padding_top
         padding_bottom
         padding_left
         padding_right
         margin_top
         margin_bottom
+        background_image {
+          url
+          width
+          height
+        }
+        background_image_fixed
+        background_image_opacity
+        background_image_saturation
+        aos_type
+        aos_easing
+        aos_offset
+        aos_duration
+        aos_delay
       }
     }`
 

@@ -1,4 +1,4 @@
-import type { CognitoImage } from './Image'
+import { CognitoImage } from './Image'
 
 class CognitoListPageContent {
   id: number | null
@@ -15,18 +15,23 @@ class CognitoListPageContent {
   text_colour: string
   background_colour: string
 
-  background_image?: CognitoImage
-  background_image_fixed: boolean
-  background_image_opacity: string
-  background_image_saturation: string
-
   padding_top: string
   padding_bottom: string
   padding_left: string
   padding_right: string
-
   margin_top: string
   margin_bottom: string
+
+  background_image: CognitoImage
+  background_image_fixed: boolean
+  background_image_opacity: string
+  background_image_saturation: string
+
+  aos_type: string
+  aos_easing: string
+  aos_offset: string
+  aos_duration: string
+  aos_delay: string
 
   editing?: boolean
   deleted?: boolean
@@ -37,20 +42,26 @@ class CognitoListPageContent {
     this.name = ''
     this.template = ''
     this.variables = ''
-    this.text_colour = ''
-    this.background_colour = ''
-    this.background_image_fixed = false
-    this.background_image_opacity = '100'
-    this.background_image_saturation = '100'
     this.hidden = false
     this.start_time = null
     this.end_time = null
+    this.text_colour = ''
+    this.background_colour = ''
     this.padding_top = ''
     this.padding_bottom = ''
     this.padding_left = ''
     this.padding_right = ''
     this.margin_top = ''
     this.margin_bottom = ''
+    this.background_image = new CognitoImage()
+    this.background_image_fixed = false
+    this.background_image_opacity = '100'
+    this.background_image_saturation = '100'
+    this.aos_type = ''
+    this.aos_easing = ''
+    this.aos_offset = ''
+    this.aos_duration = ''
+    this.aos_delay = ''
     Object.assign(this, source)
   }
 }

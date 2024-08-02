@@ -83,15 +83,21 @@ export function usePageEditor() {
       $end_time: String,
       $text_colour: String,
       $background_colour: String,
-      $background_image_fixed: Boolean,
-      $background_image_opacity: String,
-      $background_image_saturation: String,
       $padding_top: String,
       $padding_bottom: String,
       $padding_left: String,
       $padding_right: String,
       $margin_top: String,
       $margin_bottom: String,
+      $background_image: String,
+      $background_image_fixed: Boolean,
+      $background_image_opacity: String,
+      $background_image_saturation: String,
+      $aos_type: String,
+      $aos_easing: String,
+      $aos_offset: String,
+      $aos_duration: String,
+      $aos_delay: String,
     ) {
       updateCognitoPageContent(
         id: $id
@@ -104,15 +110,21 @@ export function usePageEditor() {
         end_time: $end_time
         text_colour: $text_colour
         background_colour: $background_colour
-        background_image_fixed: $background_image_fixed
-        background_image_opacity: $background_image_opacity
-        background_image_saturation: $background_image_saturation
         padding_top: $padding_top
         padding_bottom: $padding_bottom
         padding_left: $padding_left
         padding_right: $padding_right
         margin_top: $margin_top
         margin_bottom: $margin_bottom
+        background_image: $background_image
+        background_image_fixed: $background_image_fixed
+        background_image_opacity: $background_image_opacity
+        background_image_saturation: $background_image_saturation
+        aos_type: $aos_type
+        aos_easing: $aos_easing
+        aos_offset: $aos_offset
+        aos_duration: $aos_duration
+        aos_delay: $aos_delay
       ) {
         id
       }
@@ -127,15 +139,21 @@ export function usePageEditor() {
       end_time: widget.end_time,
       text_colour: widget.text_colour,
       background_colour: widget.background_colour,
-      background_image_fixed: widget.background_image_fixed,
-      background_image_opacity: widget.background_image_opacity,
-      background_image_saturation: widget.background_image_saturation,
       padding_top: widget.padding_top,
       padding_bottom: widget.padding_bottom,
       padding_left: widget.padding_left,
       padding_right: widget.padding_right,
       margin_top: widget.margin_top,
       margin_bottom: widget.margin_bottom,
+      background_image: widget.background_image,
+      background_image_fixed: widget.background_image_fixed,
+      background_image_opacity: widget.background_image_opacity,
+      background_image_saturation: widget.background_image_saturation,
+      aos_type: widget.aos_type,
+      aos_easing: widget.aos_easing,
+      aos_offset: widget.aos_offset,
+      aos_duration: widget.aos_duration,
+      aos_delay: widget.aos_delay,
     })
     return (data.updateCognitoPageContent.id)
   }
@@ -187,3 +205,4 @@ export function usePageEditor() {
     cancelPageChanges,
   }
 }
+// TODO now sure how sending back the background image is supposed to work, I get url width and height from backend, and mutation expects a string

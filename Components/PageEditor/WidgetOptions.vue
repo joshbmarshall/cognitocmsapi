@@ -48,12 +48,24 @@
         <div class="text-lg">
           Background Image
         </div>
+        {{ widget.background_image }}
         <label class="inline-block select-none text-sm text-gray-800 dark:text-gray-200">
           <input v-model="widget.background_image_fixed" type="checkbox">
           Background Image Fixed
         </label>
         {{ widget.background_image_opacity }}
         {{ widget.background_image_saturation }}
+      </div>
+
+      <div>
+        <div class="text-lg">
+          Animate On Scroll
+        </div>
+        {{ widget.aos_type }}
+        {{ widget.aos_easing }}
+        {{ widget.aos_offset }}
+        {{ widget.aos_duration }}
+        {{ widget.aos_delay }}
       </div>
     </template>
   </div>
