@@ -98,6 +98,7 @@ export function usePageEditor() {
       $aos_offset: String,
       $aos_duration: String,
       $aos_delay: String,
+      $anchor_name: String,
     ) {
       updateCognitoPageContent(
         id: $id
@@ -125,6 +126,7 @@ export function usePageEditor() {
         aos_offset: $aos_offset
         aos_duration: $aos_duration
         aos_delay: $aos_delay
+        anchor_name: $anchor_name
       ) {
         id
       }
@@ -154,6 +156,7 @@ export function usePageEditor() {
       aos_offset: widget.aos_offset,
       aos_duration: widget.aos_duration,
       aos_delay: widget.aos_delay,
+      anchor_name: widget.anchor_name,
     })
     return (data.updateCognitoPageContent.id)
   }

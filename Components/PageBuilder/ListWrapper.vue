@@ -1,5 +1,13 @@
 <template>
-  <div class="relative">
+  <div
+    :id="widget.anchor_name"
+    :data-aos="widget.aos_type"
+    :data-aos-easing="widget.aos_easing"
+    :data-aos-offset="widget.aos_offset"
+    :data-aos-duration="widget.aos_duration"
+    :data-aos-delay="widget.aos_delay"
+    class="relative"
+  >
     <div
       v-if="widget.background_image"
       class="absolute inset-0 bg-cover bg-center"

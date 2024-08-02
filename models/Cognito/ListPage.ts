@@ -33,6 +33,8 @@ class CognitoListPageContent {
   aos_duration: string
   aos_delay: string
 
+  anchor_name: string
+
   editing?: boolean
   deleted?: boolean
 
@@ -62,6 +64,7 @@ class CognitoListPageContent {
     this.aos_offset = ''
     this.aos_duration = ''
     this.aos_delay = ''
+    this.anchor_name = ''
     Object.assign(this, source)
   }
 }

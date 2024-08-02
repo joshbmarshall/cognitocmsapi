@@ -75,6 +75,7 @@ export function useListPageResolver() {
         aos_offset
         aos_duration
         aos_delay
+        anchor_name
       }
     }`
 
