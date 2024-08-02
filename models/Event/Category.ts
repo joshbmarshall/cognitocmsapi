@@ -12,6 +12,7 @@ class EventCategory extends CognitoBase {
   requires_vehicle: boolean
   requires_garage: boolean
   garage_included_in_entry_fee: boolean
+  race_licence_included_in_entry_fee: boolean
   unavailable_garage_types: number[]
   vehicle_must_be_registered: boolean
   cannot_enter_reason: string
@@ -36,6 +37,7 @@ class EventCategory extends CognitoBase {
     this.requires_vehicle = true
     this.requires_garage = false
     this.garage_included_in_entry_fee = false
+    this.race_licence_included_in_entry_fee = false
     this.unavailable_garage_types = []
     this.vehicle_must_be_registered = true
     this.cannot_enter_reason = ''

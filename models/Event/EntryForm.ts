@@ -611,7 +611,9 @@ class EventEntryForm {
       cost += category.price
     }
     if (licence) {
-      cost += licence.price
+      if (!category?.race_licence_included_in_entry_fee) {
+        cost += licence.price
+      }
     }
     if (garage) {
       if (category && category.garage_included_in_entry_fee) {
@@ -683,6 +685,30 @@ class EventEntryForm {
 
   race_licence_expired_by_event(): boolean {
     return !!this.eventDetails?.start_date.isAfter(new CognitoTime(this.race_licence_expiry))
+  }
+
+  licenceTypeOptions(freelicence: boolean) {
+    if (!this.eventDetails) {
+      return []
+    }
+    const options = this.eventDetails.licence_types.map((e) => {
+      let name = e.name
+      if (!freelicence) {
+        name += ` $${e.price.toFixed(2)}`
+      }
+      return new EventEntryFormRadio({
+        id: e.id,
+        name,
+        content: e.content,
+      })
+    })
+    options.push(new EventEntryFormRadio({
+      id: 0,
+      name: 'No Licence',
+      content: 'I do not need to purchase a licence',
+      disabled: false,
+    }))
+    return options
   }
 }
 export { EventEntryForm, EventEntryFormMerch, EventEntryFormRadio, EventEntryFormSpectator, EventEntryFormExtra, EventEntryFormStallPower }
