@@ -89,7 +89,6 @@ export function usePageEditor() {
       $padding_right: String,
       $margin_top: String,
       $margin_bottom: String,
-      $background_image: String,
       $background_image_fixed: Boolean,
       $background_image_opacity: String,
       $background_image_saturation: String,
@@ -117,7 +116,6 @@ export function usePageEditor() {
         padding_right: $padding_right
         margin_top: $margin_top
         margin_bottom: $margin_bottom
-        background_image: $background_image
         background_image_fixed: $background_image_fixed
         background_image_opacity: $background_image_opacity
         background_image_saturation: $background_image_saturation
@@ -147,7 +145,6 @@ export function usePageEditor() {
       padding_right: widget.padding_right,
       margin_top: widget.margin_top,
       margin_bottom: widget.margin_bottom,
-      background_image: widget.background_image,
       background_image_fixed: widget.background_image_fixed,
       background_image_opacity: widget.background_image_opacity,
       background_image_saturation: widget.background_image_saturation,
@@ -186,7 +183,7 @@ export function usePageEditor() {
       // update widget with information
       await updateWidget(widget)
     }))
-    pageStore.refreshPage(pageStore.currentPage.id)
+    return pageStore.refreshPage(pageStore.currentPage.id)
   }
 
   const cancelPageChanges = async () => {
@@ -208,4 +205,4 @@ export function usePageEditor() {
     cancelPageChanges,
   }
 }
-// TODO now sure how sending back the background image is supposed to work, I get url width and height from backend, and mutation expects a string
+// TODO background image for widgets

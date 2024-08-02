@@ -125,5 +125,4 @@ const optionsOpen = ref(false)
 const toggleOptions = () => {
   optionsOpen.value = !optionsOpen.value
 }
-// TODO functional background image
 </script>
