@@ -1,11 +1,14 @@
+import { gql } from 'graphql-request'
 import type { CognitoAddress } from '../Cognito/Address'
 import { CognitoMapSite } from '../Cognito/MapSite'
 import { CognitoPayment } from '../Cognito/Payment'
 import type { CognitoPhoto } from '../Cognito/Photo'
+import { CognitoTime } from '../Cognito/Time'
 import { EventEvent } from './Event'
 import type { EventMerch } from './Merch'
 import type { EventProduct } from './Product'
 import { EventVehicle } from './Vehicle'
+import { $axios } from '~cognito/plugins/axios'
 
 class EventEntryFormStallPower {
   id: string | number | undefined
@@ -266,6 +269,25 @@ class EventEntryForm {
     if (eventDetails.race_licence_number) {
       this.race_licence_number = eventDetails.race_licence_number
       this.race_licence_expiry = eventDetails.race_licence_expiry
+    } else if (eventDetails.race_licence_required?.name == 'RACERS') {
+      // Load licence details from RACERS
+      const licenceDetails = await $axios.graphql(gql`query ($eventId: ID) {
+        eventEvent(id: $eventId) {
+          racers_licence_check {
+            racers_number
+            valid
+            is_annual
+            expiry_date
+            disqualified
+          }
+        }
+      }`, {
+        eventId: this.event_id,
+      })
+      if (licenceDetails?.eventEvent?.racers_licence_check) {
+        this.race_licence_number = licenceDetails.eventEvent.racers_licence_check.racers_number
+        this.race_licence_expiry = licenceDetails.eventEvent.racers_licence_check.expiry_date
+      }
     }
     this.extras = eventDetails.extras.map((e) => {
       return new EventEntryFormExtra({
@@ -657,6 +679,10 @@ class EventEntryForm {
       }),
       payable,
     }
+  }
+
+  race_licence_expired_by_event(): boolean {
+    return !!this.eventDetails?.start_date.isAfter(new CognitoTime(this.race_licence_expiry))
   }
 }
 export { EventEntryForm, EventEntryFormMerch, EventEntryFormRadio, EventEntryFormSpectator, EventEntryFormExtra, EventEntryFormStallPower }
