@@ -63,9 +63,16 @@
         </div>
         {{ widget.aos_type }}
         {{ widget.aos_easing }}
-        {{ widget.aos_offset }}
-        {{ widget.aos_duration }}
-        {{ widget.aos_delay }}
+        <cgn-form-input v-model="widget.aos_offset" type="number" :min-amount="0" label="AOS Offset" />
+        <cgn-form-input v-model="widget.aos_duration" type="number" :min-amount="0" label="AOS Duration" />
+        <cgn-form-input v-model="widget.aos_delay" type="number" :min-amount="0" label="AOS Delay" />
+      </div>
+
+      <div>
+        <div class="text-lg">
+          Advanced
+        </div>
+        <cgn-form-input-text v-model="widget.anchor_name" label="Anchor Name" />
       </div>
     </template>
   </div>
@@ -87,7 +94,5 @@ const closeOptions = () => {
 }
 
 onClickOutside(optionsRef, () => closeOptions())
-// TODO send through AOS types
 // TODO functional background image
-// TODO send through anchor name and block class
 </script>
