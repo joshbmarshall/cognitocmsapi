@@ -38,7 +38,11 @@
       v-else-if="props.templateField.type.startsWith('\\')"
       v-model:id="modelValue" :model="props.templateField.type" :label="props.templateField.display_name"
     />
-    <div v-else>
+    <cgn-page-editor-dropdown-modellist
+      v-else-if="props.templateField.type == 'modellist'"
+      v-model="modelValue" :label="props.templateField.display_name"
+    />
+    <div v-else-if="false">
       {{ props.templateField.display_name }}
       <div class="text-muted text-sm">
         Unknkown type: '{{ props.templateField.type }}'
@@ -71,5 +75,4 @@ const optionsArray = computed(() => {
     return { id: optionFields[0], name: optionFields[1] }
   })
 })
-// TODO hide unknown type once everything is set-up
 </script>

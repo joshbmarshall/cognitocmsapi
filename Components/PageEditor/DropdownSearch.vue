@@ -39,7 +39,7 @@ const props = defineProps({
   },
   emptyName: {
     type: String,
-    default: '-- Select --',
+    default: '-- None --',
   },
 })
 
