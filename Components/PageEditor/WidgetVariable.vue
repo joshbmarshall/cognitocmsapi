@@ -71,4 +71,5 @@ const optionsArray = computed(() => {
     return { id: optionFields[0], name: optionFields[1] }
   })
 })
+// TODO hide unknown type once everything is set-up
 </script>
