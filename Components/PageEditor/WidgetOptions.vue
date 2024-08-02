@@ -27,21 +27,45 @@
         <div class="text-lg">
           Colours
         </div>
-        {{ widget.text_colour }}
-        {{ widget.background_colour }}
+        <cgn-page-editor-dropdown-search
+          v-model:id="widget.text_colour"
+          model="\Cognito\PageContent" variable="text_colour" label="Text Colour"
+        />
+        <cgn-page-editor-dropdown-search
+          v-model:id="widget.background_colour"
+          model="\Cognito\PageContent" variable="background_colour" label="Background Colour"
+        />
       </div>
 
       <div>
         <div class="text-lg">
           Padding & Margin
         </div>
-        {{ widget.padding_top }}
-        {{ widget.padding_bottom }}
-        {{ widget.padding_left }}
-        {{ widget.padding_right }}
+        <cgn-page-editor-dropdown-search
+          v-model:id="widget.padding_top"
+          model="\Cognito\PageContent" variable="padding_top" label="Padding Top"
+        />
+        <cgn-page-editor-dropdown-search
+          v-model:id="widget.padding_bottom"
+          model="\Cognito\PageContent" variable="padding_bottom" label="Padding Bottom"
+        />
+        <cgn-page-editor-dropdown-search
+          v-model:id="widget.padding_left"
+          model="\Cognito\PageContent" variable="padding_left" label="Padding Left"
+        />
+        <cgn-page-editor-dropdown-search
+          v-model:id="widget.padding_right"
+          model="\Cognito\PageContent" variable="padding_right" label="Padding Right"
+        />
 
-        {{ widget.margin_top }}
-        {{ widget.margin_bottom }}
+        <cgn-page-editor-dropdown-search
+          v-model:id="widget.margin_top"
+          model="\Cognito\PageContent" variable="margin_top" label="Margin Top"
+        />
+        <cgn-page-editor-dropdown-search
+          v-model:id="widget.margin_bottom"
+          model="\Cognito\PageContent" variable="margin_bottom" label="Margin Bottom"
+        />
       </div>
 
       <div>
@@ -53,16 +77,28 @@
           <input v-model="widget.background_image_fixed" type="checkbox">
           Background Image Fixed
         </label>
-        {{ widget.background_image_opacity }}
-        {{ widget.background_image_saturation }}
+        <cgn-page-editor-dropdown-search
+          v-model:id="widget.background_image_opacity" empty-name=""
+          model="\Cognito\PageContent" variable="background_image_opacity" label="Background Image Opacity"
+        />
+        <cgn-page-editor-dropdown-search
+          v-model:id="widget.background_image_saturation" empty-name=""
+          model="\Cognito\PageContent" variable="background_image_saturation" label="Background Image Saturation"
+        />
       </div>
 
       <div>
         <div class="text-lg">
           Animate On Scroll
         </div>
-        <cgn-page-editor-dropdown-search v-model:id="widget.aos_type" model="\Cognito\PageContent" variable="aos_type" label="AOS Type" />
-        <cgn-page-editor-dropdown-search v-model:id="widget.aos_type" model="\Cognito\PageContent" variable="aos_easing" label="AOS Easing" />
+        <cgn-page-editor-dropdown-search
+          v-model:id="widget.aos_type"
+          model="\Cognito\PageContent" variable="aos_type" label="AOS Type"
+        />
+        <cgn-page-editor-dropdown-search
+          v-model:id="widget.aos_type"
+          model="\Cognito\PageContent" variable="aos_easing" label="AOS Easing"
+        />
         <cgn-form-input v-model="widget.aos_offset" type="number" :min-amount="0" label="AOS Offset" />
         <cgn-form-input v-model="widget.aos_duration" type="number" :min-amount="0" label="AOS Duration" />
         <cgn-form-input v-model="widget.aos_delay" type="number" :min-amount="0" label="AOS Delay" />
