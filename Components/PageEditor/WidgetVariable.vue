@@ -8,6 +8,10 @@
       v-else-if="props.templateField.type == 'integer'" v-model="modelValue"
       :label="props.templateField.display_name" class="!my-0" type="number" :min-amount="0"
     />
+    <cgn-form-input-textarea
+      v-else-if="props.templateField.type == 'htmlsource'" v-model="modelValue"
+      :label="props.templateField.display_name" class="!my-0"
+    />
     <cgn-form-checkbox
       v-else-if="props.templateField.type == 'bool'" v-model="modelValue"
       :label="props.templateField.display_name"
