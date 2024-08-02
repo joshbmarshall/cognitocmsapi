@@ -61,8 +61,8 @@
         <div class="text-lg">
           Animate On Scroll
         </div>
-        {{ widget.aos_type }}
-        {{ widget.aos_easing }}
+        <cgn-page-editor-dropdown-search v-model:id="widget.aos_type" model="\Cognito\PageContent" variable="aos_type" label="AOS Type" />
+        <cgn-page-editor-dropdown-search v-model:id="widget.aos_type" model="\Cognito\PageContent" variable="aos_easing" label="AOS Easing" />
         <cgn-form-input v-model="widget.aos_offset" type="number" :min-amount="0" label="AOS Offset" />
         <cgn-form-input v-model="widget.aos_duration" type="number" :min-amount="0" label="AOS Duration" />
         <cgn-form-input v-model="widget.aos_delay" type="number" :min-amount="0" label="AOS Delay" />
@@ -89,10 +89,5 @@ const optionsOpen = ref(false)
 const toggleOptions = () => {
   optionsOpen.value = !optionsOpen.value
 }
-const closeOptions = () => {
-  optionsOpen.value = false
-}
-
-onClickOutside(optionsRef, () => closeOptions())
 // TODO functional background image
 </script>
