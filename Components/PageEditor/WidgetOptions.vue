@@ -96,7 +96,7 @@
           model="\Cognito\PageContent" variable="aos_type" label="AOS Type"
         />
         <cgn-page-editor-dropdown-search
-          v-model:id="widget.aos_type"
+          v-model:id="widget.aos_easing"
           model="\Cognito\PageContent" variable="aos_easing" label="AOS Easing"
         />
         <cgn-form-input v-model="widget.aos_offset" type="number" :min-amount="0" label="AOS Offset" />
@@ -115,6 +115,7 @@
 </template>
 
 <script setup lang="ts">
+import AOS from 'aos'
 import type { CognitoListPageContent } from '~cognito/models/Cognito/ListPage'
 
 const widget = defineModel({ type: Object as PropType<CognitoListPageContent>, required: true })
@@ -125,4 +126,8 @@ const optionsOpen = ref(false)
 const toggleOptions = () => {
   optionsOpen.value = !optionsOpen.value
 }
+
+watch(() => widget.value.aos_type, () => {
+  AOS.refreshHard()
+})
 </script>
