@@ -62,7 +62,7 @@ export function useListPageResolver() {
         padding_right
         margin_top
         margin_bottom
-        background_image {
+        background_image(image_width: 1920) {
           url
           width
           height

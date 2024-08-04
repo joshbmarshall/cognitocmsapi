@@ -6,7 +6,7 @@
     :data-aos-offset="widget.aos_offset"
     :data-aos-duration="widget.aos_duration"
     :data-aos-delay="widget.aos_delay"
-    class="relative"
+    class="relative" :class="widgetBackgroundColourClass"
   >
     <div
       v-if="widget.background_image"
@@ -58,6 +58,22 @@ const widgetBackgroundImageClass = computed(() => {
   }
 
   return classes
+})
+
+const widgetBackgroundColourClass = computed(() => {
+  if (props.widget.background_colour) {
+    const classes = {
+      wht: 'bg-white',
+      blk: 'bg-black',
+      bnd: 'bg-brand-500',
+      suc: 'bg-success-500',
+      inf: 'bg-info-500',
+      wrn: 'bg-warning-500',
+      dng: 'bg-danger-500',
+    }
+    return classes[props.widget.background_colour as keyof typeof classes]
+  }
+  return ''
 })
 
 const currentTime = useNow({ interval: 60000 })
@@ -325,18 +341,6 @@ const pbcClass = computed(() => {
       96: 'mb-96',
     }
     wclass.push(classes[props.widget.margin_bottom as keyof typeof classes])
-  }
-  if (props.widget.background_colour) {
-    const classes = {
-      wht: 'bg-white',
-      blk: 'bg-black',
-      bnd: 'bg-brand-500',
-      suc: 'bg-success-500',
-      inf: 'bg-info-500',
-      wrn: 'bg-warning-500',
-      dng: 'bg-danger-500',
-    }
-    wclass.push(classes[props.widget.background_colour as keyof typeof classes])
   }
   if (props.widget.text_colour) {
     const classes = {
