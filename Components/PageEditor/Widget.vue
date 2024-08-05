@@ -23,7 +23,11 @@
     <div v-if="widget.editing" class="border-t border-gray-500 py-2">
       <div v-if="!widget.deleted" class="flex flex-col gap-2 pb-2">
         <div v-for="field in props.template?.fields" :key="field.name">
-          <cgn-page-editor-widget-variable v-model="widgetVariables[field.name]" :template-field="field" />
+          <cgn-page-editor-widget-variable
+            v-model="widgetVariables[field.name]"
+            v-model:image-hash="widgetVariables.image_hashes[field.name]"
+            :template-field="field"
+          />
         </div>
         <cgn-page-editor-widget-options v-model="widget" />
       </div>

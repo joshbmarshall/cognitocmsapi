@@ -32,7 +32,11 @@
       :options="optionsArray" :label="props.templateField.display_name"
     />
     <div v-else-if="props.templateField.type == '\\Cognito\\Image'">
-      TODO image
+      <cgn-page-editor-image-upload
+        v-model="modelValue"
+        v-model:image-hash="imageHash"
+        :name="props.templateField.display_name"
+      />
     </div>
     <cgn-page-editor-dropdown-search
       v-else-if="props.templateField.type.startsWith('\\')"
@@ -68,6 +72,7 @@ const props = defineProps({
   },
 })
 const modelValue = defineModel<any>()
+const imageHash = defineModel<string>('imageHash', { default: '' })
 
 const optionsArray = computed(() => {
   return props.templateField.options.split('|').map((option) => {
