@@ -8,14 +8,23 @@
       </div>
     </div>
     <form class="my-2 flex" @submit.prevent="changeImage(imageField)">
-      <cgn-form-input v-model="imageField" input-class="py-3" class="!my-0 flex-1" type="text" :placeholder="modelValue" />
+      <cgn-form-input v-model="imageField" input-class="py-3" class="!my-0 flex-1" type="text" placeholder="Input image URL or ID" />
       <cgn-button class="ml-1" color-success submit>
         <i-heroicons-solid:plus />
       </cgn-button>
     </form>
-    <cgn-button color-info>
-      Upload
-    </cgn-button>
+    <cgn-upload-image
+      v-slot="slot" v-model="uploadedFile"
+      :on-success="uploadFile"
+    >
+      <cgn-button color-info fullwidth is-label>
+        Upload
+        <input type="file" class="hidden" @change="slot.upload">
+      </cgn-button>
+      <div>
+        <cgn-progress v-if="slot.progress > 0" :progress="slot.progress" />
+      </div>
+    </cgn-upload-image>
   </div>
 </template>
 
@@ -33,6 +42,7 @@ const modelValue = defineModel<any>()
 const imageHash = defineModel<string>('imageHash', { default: '' })
 
 const imageField = ref('')
+const uploadedFile = ref('')
 
 const isNumeric = (value: string) => {
   return /^-?\d+$/.test(value)
@@ -81,5 +91,12 @@ const changeImage = async (image: any) => {
 const deleteImage = () => {
   modelValue.value = 'delete'
   imageHash.value = ''
+}
+
+const uploadFile = async () => {
+  const data = await createImageHash(uploadedFile.value)
+  imageHash.value = data.imageHash
+  modelValue.value = data.id
+  imageField.value = ''
 }
 </script>
