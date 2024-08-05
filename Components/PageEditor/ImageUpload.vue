@@ -8,7 +8,7 @@
       </div>
     </div>
     <form class="my-2 flex" @submit.prevent="changeImage(imageField)">
-      <cgn-form-input v-model="imageField" input-class="py-3" class="!my-0 flex-1" type="text" placeholder="Input image URL or ID" />
+      <cgn-form-input v-model="imageField" input-class="py-3" class="!my-0 flex-1" type="text" placeholder="Paste image or URL" @paste="event => pasteImage(event)" />
       <cgn-button class="ml-1" color-success submit>
         <i-heroicons-solid:plus />
       </cgn-button>
@@ -98,5 +98,34 @@ const uploadFile = async () => {
   imageHash.value = data.imageHash
   modelValue.value = data.id
   imageField.value = ''
+}
+
+const pasteImage = async (event: ClipboardEvent) => {
+  const { clipboardData } = event
+  if (!clipboardData) {
+    return
+  }
+
+  for (let index = 0; index < clipboardData.items.length; index++) {
+    const clipboardItem = clipboardData.items[index]
+    if (!clipboardItem.type.startsWith('image')) {
+      continue
+    }
+    const blob = clipboardItem.getAsFile()
+    if (!blob) {
+      continue
+    }
+
+    const arrayBuffer = await blob.arrayBuffer()
+    let string = ''
+    new Uint8Array(arrayBuffer).forEach((byte) => {
+      string += String.fromCharCode(byte)
+    })
+
+    const data = await createImageHash(`base64,${btoa(string)}`)
+    imageHash.value = data.imageHash
+    modelValue.value = data.id
+    imageField.value = ''
+  }
 }
 </script>
