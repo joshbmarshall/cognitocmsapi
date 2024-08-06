@@ -32,18 +32,23 @@ export function usePageEditor() {
 
   const addEditorWidget = (template: PageWidgetTemplate) => {
     const widget = ref<CognitoListPageContent>(new CognitoListPageContent())
-    const highestSortOrder = pageStore.currentPage.pageContents.reduce((pre, cur) => {
-      return (pre && pre.sort_order > cur.sort_order) ? pre : cur
-    }).sort_order
+    const highestSortOrder = pageStore.currentPage.pageContents.map(widget => widget.sort_order).reduce((pre, cur) => {
+      return (pre > cur) ? pre : cur
+    }, 1)
     widget.value.sort_order = highestSortOrder + 1
 
     widget.value.name = 'new'
     widget.value.template = template.name
 
     const variables: { [key: string]: any } = {}
+    variables.image_hashes = {}
     template.fields.forEach((field) => {
       variables[field.name] = field.default_value
+      if (field.type == '\\Cognito\\Image') {
+        variables.image_hashes[field.name] = ''
+      }
     })
+    console.log(variables)
 
     widget.value.variables = JSON.stringify(variables)
 
