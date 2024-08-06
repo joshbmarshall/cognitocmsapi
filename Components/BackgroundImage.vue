@@ -1,9 +1,9 @@
 <template>
   <cgn-image
     v-if="props.imageHash"
-    class="size-full bg-cover bg-center" :class="{ 'sm:bg-fixed': props.parallax }" background
-    :image-hash="props.imageHash" :field="props.field" :width="props.width" :aspect="props.aspect"
-    :extension="props.extension" :lazy="props.lazy"
+    class="size-full bg-cover bg-center" :class="{ 'sm:bg-fixed': props.parallax }"
+    :image-hash="props.imageHash" :width="props.width" :aspect="props.aspect"
+    :extension="props.extension" :lazy="props.lazy" background
   >
     <slot />
   </cgn-image>
@@ -16,10 +16,6 @@
 const props = defineProps({
   imageHash: {
     type: String,
-  },
-  field: {
-    type: String,
-    default: 'image',
   },
   width: {
     type: Number,

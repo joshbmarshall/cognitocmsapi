@@ -14,10 +14,6 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  field: {
-    type: String,
-    default: 'image',
-  },
   width: {
     type: Number,
     required: true,
@@ -223,6 +219,6 @@ onMounted(async () => {
 })
 
 onServerPrefetch(async () => {
-  src.value = urlGetter.getUrl(props.imageHash, props.field, props.width, props.aspect, props.extension || 'jpg')
+  src.value = urlGetter.getUrl(props.imageHash, props.width, props.aspect, props.extension || 'jpg')
 })
 </script>
