@@ -1,5 +1,8 @@
 <template>
-  <img ref="image" :src="src">
+  <img v-if="!props.background" ref="image" :src="src">
+  <div v-else ref="image" :style="{ 'background-image': `url(${src})` }">
+    <slot />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -29,6 +32,9 @@ const props = defineProps({
   lazy: {
     type: Boolean,
     default: true,
+  },
+  background: {
+    type: Boolean,
   },
 })
 
@@ -177,6 +183,10 @@ async function newImage() {
       await new Promise((resolve) => {
         if (!image.value) {
           return
+        }
+        if (props.background) {
+          // div for the background doesn't have image events
+          resolve(true)
         }
         image.value.onload = resolve
         image.value.onerror = resolve
