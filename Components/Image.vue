@@ -71,7 +71,7 @@ const getImageUrl = (width: number) => {
   } else if (webp_supported) {
     extension = 'webp'
   }
-  return urlGetter.getUrl(props.imageHash, props.field, width, props.aspect, extension)
+  return urlGetter.getUrl(props.imageHash, width, props.aspect, extension)
 }
 const imageUrl = computed(() => {
   return getImageUrl(props.width)

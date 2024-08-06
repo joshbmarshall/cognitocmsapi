@@ -51,19 +51,23 @@ const isNumeric = (value: string) => {
 const getImageHash = async (id: number) => {
   const data = await $axios.graphql(gql`query getImageById($id: ID) {
     cognitoImage(id: $id) {
-      imageHash
+      imageHashes {
+        image
+      }
     }
   }`, {
     id,
   })
-  return (data.cognitoImage.imageHash)
+  return (data.cognitoImage.imageHashes.image)
 }
 const createImageHash = async (image: string) => {
   const name = nanoid()
   const data = await $axios.graphql(gql`mutation createImage($image: String!, $name: String!) {
     createCognitoImage(image: $image, name: $name) {
       id
-      imageHash
+      imageHashes {
+        image
+      }
     }
   }`, {
     image,
@@ -83,7 +87,7 @@ const changeImage = async (image: any) => {
     return
   }
   const data = await createImageHash(image)
-  imageHash.value = data.imageHash
+  imageHash.value = data.imageHashes.image
   modelValue.value = data.id
   imageField.value = ''
 }
@@ -95,7 +99,7 @@ const deleteImage = () => {
 
 const uploadFile = async () => {
   const data = await createImageHash(uploadedFile.value)
-  imageHash.value = data.imageHash
+  imageHash.value = data.imageHashes.image
   modelValue.value = data.id
   imageField.value = ''
 }
@@ -123,7 +127,7 @@ const pasteImage = async (event: ClipboardEvent) => {
     })
 
     const data = await createImageHash(`base64,${btoa(string)}`)
-    imageHash.value = data.imageHash
+    imageHash.value = data.imageHashes.image
     modelValue.value = data.id
     imageField.value = ''
   }
