@@ -1,7 +1,12 @@
 <template>
   <div class="mx-auto space-y-2 lg:col-start-1 lg:row-start-1 lg:max-w-none">
     <div :class="outerClass" class="relative overflow-hidden">
-      <div v-if="!templatevar.background_video?.file" class="absolute inset-0 bg-cover bg-center" :class="imageClass" :style="{ 'background-image': `url(${templatevar.background_image?.url})` }" />
+      <cgn-background-image
+        v-if="props.templatevar.image_hashes && !templatevar.background_video?.file"
+        class="absolute inset-0" :class="imageClass" :parallax="props.templatevar.parallax == 1"
+        :image-hash="props.templatevar.image_hashes.background_image"
+      />
+      <div v-else-if="!templatevar.background_video?.file" class="absolute inset-0 bg-cover bg-center" :class="imageClass" :style="{ 'background-image': `url(${templatevar.background_image?.url})` }" />
       <div v-else class="absolute inset-0">
         <video
           :poster="templatevar.background_video.slate"
@@ -19,7 +24,8 @@
         </video>
       </div>
       <div class="relative flex h-[500px] flex-col p-8" :class="textClass">
-        <cgn-lazy-image v-if="templatevar.overlay_image" class="h-16 p-2" :image="templatevar.overlay_image" />
+        <cgn-image v-if="props.templatevar.image_hashes?.overlay_image" :image-hash="props.templatevar.image_hashes.overlay_image" class="h-16 p-2" :width="100" aspect="raw" />
+        <cgn-lazy-image v-else-if="templatevar.overlay_image" class="h-16 p-2" :image="templatevar.overlay_image" />
         <div class="font-title pb-2 text-2xl font-semibold md:text-4xl">
           {{ templatevar.heading }}
         </div>
@@ -45,6 +51,7 @@ class Templatevars {
   html?: string
   overlay_image?: CognitoImage
   background_image?: CognitoImage
+  image_hashes?: { overlay_image?: string, background_image?: string }
   background_video?: CognitoVideo
   overlay_colour?: string
   image_opacity?: string
