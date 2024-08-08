@@ -2,7 +2,7 @@ import { gql } from 'graphql-request'
 import { $axios } from '~cognito/plugins/axios'
 import type { PageWidgetTemplate } from '~cognito/models/Page/WidgetTemplate'
 import { CognitoListPageContent } from '~cognito/models/Cognito/ListPage'
-import widgetList from '~cognito/assets/widgets'
+import templateList from '~cognito/templates'
 
 export function usePageEditor() {
   const pageStore = useListPageStore()
@@ -197,7 +197,7 @@ export function usePageEditor() {
 
   onMounted(async () => {
     const fullTemplateList = await loadWidgetTemplates()
-    widgetTemplates.value = fullTemplateList.filter(template => widgetList.includes(template.name))
+    widgetTemplates.value = fullTemplateList.filter(template => templateList.includes(template.name))
   })
 
   return {

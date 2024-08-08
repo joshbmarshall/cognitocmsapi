@@ -1,6 +1,6 @@
 import { config } from '~/config'
 
-const cgnWidgets = [
+const cgnTemplates = [
   'core/html',
   'core/heading',
   'core/faq',
@@ -19,6 +19,6 @@ const cgnWidgets = [
   'core/gift_voucher_purchase',
   'core/link_children',
 ]
-const widgetList = cgnWidgets.concat(config.siteSpecificTemplates)
+const templateList = cgnTemplates.concat(config.siteSpecificTemplates)
 
-export default widgetList
+export default templateList
