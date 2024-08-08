@@ -63,7 +63,7 @@ const getImageHash = async (id: number) => {
 const createImageHash = async (image: string) => {
   const name = nanoid()
   const data = await $axios.graphql(gql`mutation createImage($image: String!, $name: String!) {
-    createCognitoImage(image: $image, name: $name) {
+    createCognitoImage(image: $image, name: $name, is_temporary: true) {
       id
       imageHashes {
         image
