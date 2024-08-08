@@ -48,7 +48,6 @@ export function usePageEditor() {
         variables.image_hashes[field.name] = ''
       }
     })
-    console.log(variables)
 
     widget.value.variables = JSON.stringify(variables)
 
