@@ -14,7 +14,7 @@
       :class="widgetBackgroundImageClass"
       :style="{ 'background-image': `url(${widget.background_image.url})` }"
     />
-    <page-builder-list-content v-if="widgetVisible" :widget="widget" :url-parts="urlParts" :class="pbcClass" />
+    <page-builder-list-content v-if="widgetVisible" :widget="props.widget" :url-parts="urlParts" :class="pbcClass" />
   </div>
 </template>
 
