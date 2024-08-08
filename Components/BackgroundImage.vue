@@ -3,7 +3,7 @@
     v-if="props.imageHash"
     class="size-full bg-cover bg-center" :class="{ 'sm:bg-fixed': props.parallax }"
     :image-hash="props.imageHash" :width="props.width" :aspect="props.aspect"
-    :extension="props.extension" :lazy="props.lazy" background
+    :extension="props.extension" :lazy="props.lazy" :parallax="props.parallax" background
   >
     <slot />
   </cgn-image>
@@ -23,7 +23,6 @@ const props = defineProps({
   },
   aspect: {
     type: String,
-    default: '16x9',
   },
   extension: {
     type: String,

@@ -20,7 +20,6 @@ const props = defineProps({
   },
   aspect: {
     type: String,
-    required: true,
   },
   extension: {
     type: String,
@@ -32,12 +31,27 @@ const props = defineProps({
   background: {
     type: Boolean,
   },
+  parallax: {
+    type: Boolean,
+  },
 })
 
 const image = ref()
 
 const imageIsVisible = useElementVisibility(image)
 const urlGetter = useImageUrl()
+
+const default_aspects = [
+  { name: '16x3', ratio: 16 / 3 },
+  { name: '16x9', ratio: 16 / 9 },
+  { name: '8x5', ratio: 8 / 5 },
+  { name: '4x3', ratio: 4 / 3 },
+  { name: '1x1', ratio: 1 / 1 },
+  { name: '3x4', ratio: 3 / 4 },
+  { name: '5x8', ratio: 5 / 8 },
+  { name: '9x16', ratio: 9 / 16 },
+] // Make sure this is ordered from widest to tallest
+const sizeRounding = 25
 
 let all_done = false
 let webp_supported = false
@@ -48,14 +62,45 @@ const src = ref(blank_webp)
 const show_image = ref('')
 const last_image_url = ref('')
 
+const desiredWidth = computed(() => {
+  let actualWidth = 0
+  if (props.parallax) {
+    actualWidth = Math.round(window.innerWidth * window.devicePixelRatio)
+  } else {
+    actualWidth = Math.round(image.value.clientWidth * window.devicePixelRatio)
+  }
+  return Math.ceil(actualWidth / sizeRounding) * sizeRounding
+})
+const desiredHeight = computed(() => {
+  let actualHeight = 0
+  if (props.parallax) {
+    actualHeight = Math.round(window.innerHeight * window.devicePixelRatio)
+  } else {
+    actualHeight = Math.round(image.value.clientHeight * window.devicePixelRatio)
+  }
+  return Math.ceil(actualHeight / sizeRounding) * sizeRounding
+})
+
 const imageAspect = computed(() => {
-  const aspect = props.aspect.match(/\d+/g)
-  const aspectX = Number.parseInt(aspect?.at(0) || '1')
-  const aspectY = Number.parseInt(aspect?.at(1) || '1')
-  return { width: aspectX, height: aspectY }
+  if (props.aspect) {
+    const aspect = props.aspect.match(/\d+/g)
+    const aspectX = Number.parseInt(aspect?.at(0) || '1')
+    const aspectY = Number.parseInt(aspect?.at(1) || '1')
+    return { name: `${aspectX}x${aspectY}`, ratio: aspectX / aspectY }
+  }
+  // No aspect defined, default to the nearest default
+  for (let index = 0; index < default_aspects.length; index++) {
+    const aspect = default_aspects[index]
+    const height = desiredWidth.value / aspect.ratio
+    if (height >= desiredHeight.value - sizeRounding) {
+      return aspect
+    }
+  }
+  // Didn't find an aspect that is taller than the current aspect, use the tallest available
+  return default_aspects[default_aspects.length - 1]
 })
 const imageHeight = computed(() => {
-  return (props.width / imageAspect.value.width) * imageAspect.value.height
+  return props.width / imageAspect.value.ratio
 })
 
 const getImageUrl = (width: number) => {
@@ -67,7 +112,7 @@ const getImageUrl = (width: number) => {
   } else if (webp_supported) {
     extension = 'webp'
   }
-  return urlGetter.getUrl(props.imageHash, width, props.aspect, extension)
+  return urlGetter.getUrl(props.imageHash, width, imageAspect.value.name, extension)
 }
 const imageUrl = computed(() => {
   return getImageUrl(props.width)
@@ -129,25 +174,15 @@ async function checkVisible() {
     return
   }
 
-  let width = Math.round(image.value.clientWidth * window.devicePixelRatio)
-  const height = Math.round(image.value.clientHeight * window.devicePixelRatio)
-  if (height === 0) {
+  if (desiredHeight.value === 0) {
     return
   }
-
-  // Make it to the closest upper 25px - not pixel perfect but close for similar sized screens
-  const roundTo = 25
-  const newWidth = Math.ceil(width / roundTo) * roundTo
-  if (newWidth > 0) {
-    width = newWidth
-  }
-
   if (!imageIsVisible.value) {
     return
   }
   nextTick(() => {
     all_done = true
-    show_image.value = getImageUrl(width)
+    show_image.value = getImageUrl(desiredWidth.value)
     checkVisible()
   })
 }
@@ -219,6 +254,6 @@ onMounted(async () => {
 })
 
 onServerPrefetch(async () => {
-  src.value = urlGetter.getUrl(props.imageHash, props.width, props.aspect, props.extension || 'jpg')
+  src.value = urlGetter.getUrl(props.imageHash, props.width, props.aspect || 'raw', props.extension || 'jpg')
 })
 </script>
