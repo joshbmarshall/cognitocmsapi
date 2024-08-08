@@ -78,6 +78,6 @@ const props = defineProps({
 })
 
 const variables = computed(() => {
-  return JSON.parse(props.widget.variables)
+  return JSON.parse(props.widget.variables || '{}')
 })
 </script>

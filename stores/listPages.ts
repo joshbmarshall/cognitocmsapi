@@ -40,10 +40,10 @@ export const useListPagesStore = defineStore('listPages', {
       this.pages[pageIndex] = await pageResolver.loadPage(this.pages[pageIndex].url)
     },
     findById(id: number): CognitoListPage {
-      return new CognitoListPage(JSON.parse(JSON.stringify(this.pages.find(page => page.id === id))))
+      return new CognitoListPage(JSON.parse(JSON.stringify(this.pages.find(page => page.id === id) || {})))
     },
     findByUrl(url: string): CognitoListPage {
-      return new CognitoListPage(JSON.parse(JSON.stringify(this.pages.find(page => page.url === url))))
+      return new CognitoListPage(JSON.parse(JSON.stringify(this.pages.find(page => page.url === url) || {})))
     },
   },
   persist: true,

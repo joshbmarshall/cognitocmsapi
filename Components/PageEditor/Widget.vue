@@ -57,7 +57,7 @@ const widget = defineModel({ type: Object as PropType<CognitoListPageContent>, r
 
 const widgetRef = ref()
 
-const widgetVariables = ref(JSON.parse(widget.value.variables))
+const widgetVariables = ref(JSON.parse(widget.value.variables || '{}'))
 
 const openWidget = () => {
   widget.value.editing = true
@@ -91,7 +91,7 @@ watch(() => widgetVariables.value, () => {
 }, { deep: true })
 
 watch(() => widget.value.variables, () => {
-  widgetVariables.value = JSON.parse(widget.value.variables)
+  widgetVariables.value = JSON.parse(widget.value.variables || '{}')
 })
 
 onClickOutside(widgetRef, () => closeWidget())
