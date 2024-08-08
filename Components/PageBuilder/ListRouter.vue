@@ -48,7 +48,7 @@ const not_found = computed(() => {
 })
 
 const pageContent = computed(() => {
-  return JSON.parse(pageStore.currentPage.content || '[]')
+  return JSON.parse(pageStore.currentPage.content)
 })
 
 async function loadPageContent(url: string | string[]) {
