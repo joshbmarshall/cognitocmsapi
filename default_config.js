@@ -88,6 +88,7 @@ const config = {
     image_width: 300,
   },
   listPageContentFeature: false,
+  siteSpecificTemplates: [],
 }
 
 export { config }

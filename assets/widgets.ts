@@ -1,4 +1,4 @@
-import widgets from '~/assets/widgets'
+import { config } from '~/config'
 
 const cgnWidgets = [
   'core/html',
@@ -19,6 +19,6 @@ const cgnWidgets = [
   'core/gift_voucher_purchase',
   'core/link_children',
 ]
-const widgetList = cgnWidgets.concat(widgets)
+const widgetList = cgnWidgets.concat(config.siteSpecificTemplates)
 
 export default widgetList
