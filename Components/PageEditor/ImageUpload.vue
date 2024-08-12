@@ -3,7 +3,7 @@
     <cgn-form-label :label="props.name" />
     <div v-if="imageHash" class="relative flex justify-center overflow-hidden rounded-md bg-gray-300 dark:bg-darkbg-800">
       <cgn-image :image-hash="imageHash" :width="100" aspect="raw" />
-      <div class="absolute right-0 top-0 m-1 cursor-pointer rounded-full bg-black/50 p-1" @click="deleteImage()">
+      <div class="absolute right-0 top-0 m-1 cursor-pointer rounded-full bg-black/50 p-1 text-white" @click="deleteImage()">
         <i-heroicons-solid:trash />
       </div>
     </div>
