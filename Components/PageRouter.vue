@@ -5,8 +5,8 @@
   <div v-if="showPageEditor" class="fixed right-0 top-0 z-50 h-screen w-1/4">
     <cgn-page-editor :widgets="widgets" @close-editor="showPageEditor = false" />
   </div>
-  <div v-if="canShowPageEditor" class="absolute left-1 top-1 z-50 hidden cursor-pointer sm:block">
-    <i-heroicons-solid:pencil v-if="!showPageEditor" @click="showPageEditor = true" />
+  <div v-if="canShowPageEditor && !showPageEditor" class="absolute left-1 top-1 z-50 hidden cursor-pointer rounded-full bg-white/50 p-1 dark:bg-black/50 sm:block" @click="showPageEditor = true">
+    <i-heroicons-solid:pencil class="text-black dark:text-white" />
   </div>
   <cgn-toast-output />
 </template>
