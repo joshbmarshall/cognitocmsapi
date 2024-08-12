@@ -38,6 +38,8 @@
             <span class="rotate-180 text-nowrap leading-tight [text-orientation:mixed] [writing-mode:vertical-rl]">
               <div>
                 {{ eventDay.event.course.name }}
+                <span v-if="eventDay.am_only" class="font-bold">AM</span>
+                <span v-if="eventDay.pm_only" class="font-bold">PM</span>
                 <span v-if="eventDay.event.number_of_days > 1">D{{ eventDay.day_number }}</span>
               </div>
               <div>
@@ -160,6 +162,8 @@ class RoadcraftPlannerDay {
       id: number
       name: string
     }[]
+    start_time: string
+    end_time: string
     day_number: number
   }[]
 
@@ -315,6 +319,10 @@ const getPlannerData = () => {
             name
           }
           date # needed for day_number
+          start_time # needed for am_only
+          end_time # needed for am_only
+          am_only
+          pm_only
           day_number
         }
         staffUnavailable {
