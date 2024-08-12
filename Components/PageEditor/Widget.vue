@@ -9,14 +9,14 @@
       <i-heroicons-solid:eye-slash v-if="!widgetVisible" class="bg-warning-500 text-on-warning" />
     </div>
     <div
-      class="flex cursor-pointer items-center justify-between py-2 text-xl"
+      class="flex cursor-pointer items-center justify-between gap-2 py-2 text-xl"
       :class="{ 'text-muted': widget.deleted || !widgetVisible }"
     >
       <cgn-form-input-text v-if="widget.editing && !widget.deleted" v-model="widget.name" class="!my-0" />
-      <div v-else>
+      <div v-else class="text-nowrap">
         {{ widget.name }}
       </div>
-      <div>
+      <div class="max-w-[70%] overflow-hidden text-ellipsis text-nowrap text-sm" :title="widget.template">
         {{ widget.template }}
       </div>
     </div>

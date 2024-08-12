@@ -29,9 +29,13 @@
           <cgn-button
             v-for="template in pageEditor.widgetTemplates.value"
             :key="template.name" color-brand
-            class="flex items-center gap-1" @click="addWidget(template)"
+            class="flex items-center gap-1" :title="template.name"
+            @click="addWidget(template)"
           >
-            <i-heroicons-solid:plus /> {{ template.name }}
+            <i-heroicons-solid:plus />
+            <div class="max-w-[90%] overflow-hidden text-ellipsis text-nowrap">
+              {{ template.name }}
+            </div>
           </cgn-button>
         </div>
       </template>
