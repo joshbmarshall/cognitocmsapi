@@ -64,8 +64,8 @@
           <cgn-form-input v-model="bookform.est_arrival_time" type="time" label="Estimated Arrival Time" required />
           <cgn-form-tristate v-model="has_animals" label="Will you have any domestic animals on your site?" required />
           <div v-if="has_animals">
-            <cgn-form-input v-model="bookform.number_of_animals" type="number" min-amount="0" max-amount="10" label="Number of animals" />
-            <cgn-form-input v-model="bookform.pet_breed" label="Pet Breed(s)" />
+            <cgn-form-input v-model="bookform.number_of_animals" type="number" min-amount="0" max-amount="10" label="Number of animals" required />
+            <cgn-form-input v-model="bookform.pet_breed" label="Pet Breed(s)" required />
             <cgn-alert-warning>
               If you have 2 or more dogs, please email management for approval in writing (info@ipswichshow.com.au)
             </cgn-alert-warning>
