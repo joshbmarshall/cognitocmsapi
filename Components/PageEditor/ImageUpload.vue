@@ -1,11 +1,15 @@
 <template>
   <div>
     <cgn-form-label :label="props.name" />
-    <div v-if="imageHash" class="relative flex justify-center overflow-hidden rounded-md bg-gray-300 dark:bg-darkbg-800">
+    <div v-if="imageHash" class="relative flex justify-center overflow-hidden rounded-md border border-info-500 bg-gray-300 dark:bg-darkbg-800">
       <cgn-image :image-hash="imageHash" :width="100" aspect="raw" />
       <div class="absolute right-0 top-0 m-1 cursor-pointer rounded-full bg-black/50 p-1 text-white" @click="deleteImage()">
         <i-heroicons-solid:trash />
       </div>
+      <cgn-spinner v-if="isLoading" class="absolute left-0 top-0 m-2 rounded-full" />
+    </div>
+    <div v-else-if="isLoading" class="flex justify-center rounded-md border border-info-500 bg-gray-300 p-2 dark:bg-darkbg-800">
+      <cgn-spinner />
     </div>
     <form class="my-2 flex" @submit.prevent="changeImage(imageField)">
       <cgn-form-input v-model="imageField" input-class="py-3" class="!my-0 flex-1" type="text" placeholder="Paste image or URL" @paste="event => pasteImage(event)" />
@@ -43,6 +47,8 @@ const imageHash = defineModel<string>('imageHash', { default: '' })
 
 const imageField = ref('')
 const uploadedFile = ref('')
+
+const isLoading = ref(false)
 
 const isNumeric = (value: string) => {
   return /^-?\d+$/.test(value)
@@ -109,6 +115,7 @@ const pasteImage = async (event: ClipboardEvent) => {
   if (!clipboardData) {
     return
   }
+  isLoading.value = true
 
   for (let index = 0; index < clipboardData.items.length; index++) {
     const clipboardItem = clipboardData.items[index]
@@ -130,6 +137,9 @@ const pasteImage = async (event: ClipboardEvent) => {
     imageHash.value = data.imageHashes.image
     modelValue.value = data.id
     imageField.value = ''
+    isLoading.value = false
+    return
   }
+  isLoading.value = false
 }
 </script>
