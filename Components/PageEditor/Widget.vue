@@ -45,11 +45,11 @@
 import { compareAsc } from 'date-fns'
 import type { CognitoListPageContent } from '~cognito/models/Cognito/ListPage'
 import { CognitoTime } from '~cognito/models/Cognito/Time'
-import type { PageWidgetTemplate } from '~cognito/models/Page/WidgetTemplate'
+import type { PageBlockTemplate } from '~cognito/models/Page/BlockTemplate'
 
 const props = defineProps({
   template: {
-    type: Object as PropType<PageWidgetTemplate>,
+    type: Object as PropType<PageBlockTemplate>,
   },
 })
 

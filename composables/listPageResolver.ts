@@ -62,14 +62,18 @@ export function useListPageResolver() {
         padding_right
         margin_top
         margin_bottom
-        background_image(image_width: 1920, image_aspect: "16x9") {
-          url
-          width
-          height
+        imageHashes {
+          background_image
         }
         background_image_fixed
         background_image_opacity
         background_image_saturation
+        background_video {
+          slate {
+            url
+          }
+          file
+        }
         aos_type
         aos_easing
         aos_offset

@@ -1,20 +1,35 @@
 <template>
   <div
-    :id="widget.anchor_name"
-    :data-aos="widget.aos_type"
-    :data-aos-easing="widget.aos_easing"
-    :data-aos-offset="widget.aos_offset"
-    :data-aos-duration="widget.aos_duration"
-    :data-aos-delay="widget.aos_delay"
-    class="relative" :class="widgetBackgroundColourClass"
+    :id="props.block.anchor_name"
+    :data-aos="props.block.aos_type"
+    :data-aos-easing="props.block.aos_easing"
+    :data-aos-offset="props.block.aos_offset"
+    :data-aos-duration="props.block.aos_duration"
+    :data-aos-delay="props.block.aos_delay"
+    class="relative" :class="backgroundColourClass"
   >
-    <div
-      v-if="widget.background_image"
-      class="absolute inset-0 bg-cover bg-center"
-      :class="widgetBackgroundImageClass"
-      :style="{ 'background-image': `url(${widget.background_image.url})` }"
+    <div v-if="props.block.background_video?.file" class="absolute inset-0">
+      <video
+        :poster="props.block.background_video.slate?.url"
+        autoplay
+        loop
+        muted
+        playsinline
+        class="size-full object-cover object-center"
+        :class="backgroundImageClass"
+      >
+        <source
+          :src="props.block.background_video.file"
+          type="video/mp4"
+        >
+      </video>
+    </div>
+    <cgn-background-image
+      v-else-if="block.imageHashes?.background_image"
+      class="absolute inset-0" :class="backgroundImageClass" :parallax="props.block.background_image_fixed"
+      :image-hash="block.imageHashes?.background_image"
     />
-    <page-builder-list-content v-if="widgetVisible" :widget="props.widget" :url-parts="urlParts" :class="pbcClass" />
+    <page-builder-list-content v-if="visible" :widget="props.block" :url-parts="urlParts" :class="pageClasses" />
   </div>
 </template>
 
@@ -25,7 +40,7 @@ import { CognitoUrlParts } from '~cognito/models/Cognito/Page'
 import { CognitoTime } from '~cognito/models/Cognito/Time'
 
 const props = defineProps({
-  widget: {
+  block: {
     type: Object as PropType<CognitoListPageContent>,
     required: true,
   },
@@ -35,64 +50,67 @@ const props = defineProps({
   },
 })
 
-const widgetBackgroundImageClass = computed(() => {
-  let classes = ''
+const backgroundImageClass = computed(() => {
+  const classes = []
 
-  classes += [
-    { name: 'opacity-10', id: '10' },
-    { name: 'opacity-30', id: '30' },
-    { name: 'opacity-50', id: '50' },
-    { name: 'opacity-70', id: '70' },
-    { name: 'opacity-90', id: '90' },
-    { name: 'opacity-100', id: '100' },
-  ].find(e => e.id === props.widget.background_image_opacity)?.name
-
-  classes += ` ${[
-  { name: 'saturate-0', id: '0' },
-  { name: 'saturate-50', id: '50' },
-  { name: 'saturate-100', id: '100' },
-].find(e => e.id === props.widget.background_image_saturation)?.name}`
-
-  if (props.widget.background_image_fixed) {
-    classes += ' sm:bg-fixed'
+  const opacity = {
+    '': '',
+    '10': 'opacity-10',
+    '30': 'opacity-30',
+    '50': 'opacity-50',
+    '70': 'opacity-70',
+    '90': 'opacity-90',
+    '100': 'opacity-100',
   }
+  classes.push(opacity[props.block.background_image_opacity as keyof typeof opacity])
+
+  const saturation = {
+    '': '',
+    '0': 'saturate-0',
+    '50': 'saturate-50',
+    '100': 'saturate-100',
+  }
+  classes.push(saturation[props.block.background_image_saturation as keyof typeof saturation])
 
   return classes
 })
 
-const widgetBackgroundColourClass = computed(() => {
-  if (props.widget.background_colour) {
-    const classes = {
+const backgroundColourClass = computed(() => {
+  const classes = []
+  if (props.block.background_colour) {
+    const background_colour = {
       wht: 'bg-white',
       blk: 'bg-black',
       bnd: 'bg-brand-500',
+      pri: 'bg-primary-500',
+      sec: 'bg-secondary-500',
       suc: 'bg-success-500',
       inf: 'bg-info-500',
       wrn: 'bg-warning-500',
       dng: 'bg-danger-500',
     }
-    return classes[props.widget.background_colour as keyof typeof classes]
+    classes.push(background_colour[props.block.background_colour as keyof typeof background_colour])
   }
-  return ''
+  return classes
 })
 
 const currentTime = useNow({ interval: 60000 })
-const widgetVisible = computed(() => {
-  if (props.widget.editing) {
-    // if editor has the widget open, then display it for easier editing
+const visible = computed(() => {
+  if (props.block.editing) {
+    // if editor has the block open, then display it for easier editing
     return true
   }
-  if (props.widget.hidden) {
+  if (props.block.hidden) {
     return false
   }
-  if (props.widget.start_time) {
-    const hide_before = new CognitoTime(props.widget.start_time)
+  if (props.block.start_time) {
+    const hide_before = new CognitoTime(props.block.start_time)
     if (compareAsc(currentTime.value, hide_before.time) == -1) {
       return false
     }
   }
-  if (props.widget.end_time) {
-    const hide_after = new CognitoTime(props.widget.end_time)
+  if (props.block.end_time) {
+    const hide_after = new CognitoTime(props.block.end_time)
     if (compareAsc(hide_after.time, currentTime.value) == -1) {
       return false
     }
@@ -100,10 +118,10 @@ const widgetVisible = computed(() => {
   return true
 })
 
-const pbcClass = computed(() => {
-  const wclass = []
-  if (props.widget.padding_top) {
-    const classes = {
+const pageClasses = computed(() => {
+  const classes = []
+  if (props.block.padding_top) {
+    const padding_top = {
       0: 'pt-0',
       px: 'pt-px',
       0.5: 'pt-0.5',
@@ -140,10 +158,10 @@ const pbcClass = computed(() => {
       80: 'pt-80',
       96: 'pt-96',
     }
-    wclass.push(classes[props.widget.padding_top as keyof typeof classes])
+    classes.push(padding_top[props.block.padding_top as keyof typeof padding_top])
   }
-  if (props.widget.padding_bottom) {
-    const classes = {
+  if (props.block.padding_bottom) {
+    const padding_bottom = {
       0: 'pb-0',
       px: 'pb-px',
       0.5: 'pb-0.5',
@@ -180,10 +198,10 @@ const pbcClass = computed(() => {
       80: 'pb-80',
       96: 'pb-96',
     }
-    wclass.push(classes[props.widget.padding_bottom as keyof typeof classes])
+    classes.push(padding_bottom[props.block.padding_bottom as keyof typeof padding_bottom])
   }
-  if (props.widget.padding_left) {
-    const classes = {
+  if (props.block.padding_left) {
+    const padding_left = {
       0: 'pl-0',
       px: 'pl-px',
       0.5: 'pl-0.5',
@@ -220,10 +238,10 @@ const pbcClass = computed(() => {
       80: 'pl-80',
       96: 'pl-96',
     }
-    wclass.push(classes[props.widget.padding_left as keyof typeof classes])
+    classes.push(padding_left[props.block.padding_left as keyof typeof padding_left])
   }
-  if (props.widget.padding_right) {
-    const classes = {
+  if (props.block.padding_right) {
+    const padding_right = {
       0: 'pr-0',
       px: 'pr-px',
       0.5: 'pr-0.5',
@@ -260,10 +278,10 @@ const pbcClass = computed(() => {
       80: 'pr-80',
       96: 'pr-96',
     }
-    wclass.push(classes[props.widget.padding_right as keyof typeof classes])
+    classes.push(padding_right[props.block.padding_right as keyof typeof padding_right])
   }
-  if (props.widget.margin_top) {
-    const classes = {
+  if (props.block.margin_top) {
+    const margin_top = {
       0: 'mt-0',
       px: 'mt-px',
       0.5: 'mt-0.5',
@@ -300,10 +318,10 @@ const pbcClass = computed(() => {
       80: 'mt-80',
       96: 'mt-96',
     }
-    wclass.push(classes[props.widget.margin_top as keyof typeof classes])
+    classes.push(margin_top[props.block.margin_top as keyof typeof margin_top])
   }
-  if (props.widget.margin_bottom) {
-    const classes = {
+  if (props.block.margin_bottom) {
+    const margin_bottom = {
       0: 'mb-0',
       px: 'mb-px',
       0.5: 'mb-0.5',
@@ -340,19 +358,26 @@ const pbcClass = computed(() => {
       80: 'mb-80',
       96: 'mb-96',
     }
-    wclass.push(classes[props.widget.margin_bottom as keyof typeof classes])
+    classes.push(margin_bottom[props.block.margin_bottom as keyof typeof margin_bottom])
   }
-  if (props.widget.text_colour) {
-    const classes = {
+  if (props.block.text_colour) {
+    const text_colour = {
       wht: 'text-white',
       blk: 'text-black',
+      bnd: 'text-brand-500',
+      pri: 'text-primary-500',
+      sec: 'text-secondary-500',
+      suc: 'text-success-500',
+      inf: 'text-info-500',
+      wrn: 'text-warning-500',
+      dng: 'text-danger-500',
     }
-    wclass.push(classes[props.widget.text_colour as keyof typeof classes])
+    classes.push(text_colour[props.block.text_colour as keyof typeof text_colour])
   }
 
-  if (props.widget.background_image) {
-    wclass.push('relative')
+  if (props.block.imageHashes?.background_image) {
+    classes.push('relative')
   }
-  return wclass
+  return classes
 })
 </script>

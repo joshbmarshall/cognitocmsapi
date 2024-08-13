@@ -7,7 +7,7 @@
   >
     <slot />
   </cgn-image>
-  <div v-else class="size-full bg-cover bg-center" :class="{ 'bg-fixed': props.parallax }">
+  <div v-else class="size-full bg-cover bg-center" :class="{ 'sm:bg-fixed': props.parallax }">
     <slot />
   </div>
 </template>

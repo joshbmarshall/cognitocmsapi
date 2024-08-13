@@ -37,6 +37,9 @@ const props = defineProps({
 })
 
 const image = ref()
+const imageSize = useElementSize(image)
+const windowSize = useWindowSize()
+const { pixelRatio } = useDevicePixelRatio()
 
 const imageIsVisible = useElementVisibility(image)
 const urlGetter = useImageUrl()
@@ -65,18 +68,18 @@ const last_image_url = ref('')
 const desiredWidth = computed(() => {
   let actualWidth = 0
   if (props.parallax) {
-    actualWidth = Math.round(window.innerWidth * window.devicePixelRatio)
+    actualWidth = Math.round(windowSize.width.value * pixelRatio.value)
   } else {
-    actualWidth = Math.round(image.value.clientWidth * window.devicePixelRatio)
+    actualWidth = Math.round(imageSize.width.value * pixelRatio.value)
   }
   return Math.ceil(actualWidth / sizeRounding) * sizeRounding
 })
 const desiredHeight = computed(() => {
   let actualHeight = 0
   if (props.parallax) {
-    actualHeight = Math.round(window.innerHeight * window.devicePixelRatio)
+    actualHeight = Math.round(windowSize.height.value * pixelRatio.value)
   } else {
-    actualHeight = Math.round(image.value.clientHeight * window.devicePixelRatio)
+    actualHeight = Math.round(imageSize.height.value * pixelRatio.value)
   }
   return Math.ceil(actualHeight / sizeRounding) * sizeRounding
 })
@@ -137,7 +140,7 @@ async function checkVisible() {
   if (!image.value) {
     return
   }
-  if (image.value.clientHeight === 0) {
+  if (imageSize.height.value === 0 && !props.background) {
     // Ensure the placeholder image has a height
     return
   }

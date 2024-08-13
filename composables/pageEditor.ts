@@ -1,14 +1,14 @@
 import { gql } from 'graphql-request'
 import { $axios } from '~cognito/plugins/axios'
-import type { PageWidgetTemplate } from '~cognito/models/Page/WidgetTemplate'
 import { CognitoListPageContent } from '~cognito/models/Cognito/ListPage'
 import templateList from '~cognito/templates'
+import type { PageBlockTemplate } from '~cognito/models/Page/BlockTemplate'
 
 export function usePageEditor() {
   const pageStore = useListPageStore()
-  const widgetTemplates = ref<PageWidgetTemplate[]>([])
+  const widgetTemplates = ref<PageBlockTemplate[]>([])
 
-  const loadWidgetTemplates = async (): Promise<PageWidgetTemplate[]> => {
+  const loadWidgetTemplates = async (): Promise<PageBlockTemplate[]> => {
     const data = await $axios.graphql(gql`query widgetTemplateQuery {
       cognitoMisc {
         pageContentThemes {
@@ -27,11 +27,11 @@ export function usePageEditor() {
     return (data.cognitoMisc.pageContentThemes)
   }
 
-  const getTemplate = (templateName: string): PageWidgetTemplate | undefined => {
+  const getTemplate = (templateName: string): PageBlockTemplate | undefined => {
     return widgetTemplates.value.find(template => template.name == templateName)
   }
 
-  const addEditorWidget = (template: PageWidgetTemplate) => {
+  const addEditorWidget = (template: PageBlockTemplate) => {
     const widget = ref<CognitoListPageContent>(new CognitoListPageContent())
     const highestSortOrder = pageStore.currentPage.pageContents.map(widget => widget.sort_order).reduce((pre, cur) => {
       return (pre > cur) ? pre : cur
@@ -77,6 +77,9 @@ export function usePageEditor() {
     if (!page_id) {
       page_id = pageStore.currentPage.id
     }
+    if (/^-?\d+$/.test(widget.background_image)) {
+      widget.background_image = `Cognito/Image/${widget.background_image}image`
+    }
     const data = await $axios.graphql(gql`mutation updateWidgetQuery(
       $id: Int!,
       $page_id: Int,
@@ -94,6 +97,7 @@ export function usePageEditor() {
       $padding_right: String,
       $margin_top: String,
       $margin_bottom: String,
+      $background_image: String,
       $background_image_fixed: Boolean,
       $background_image_opacity: String,
       $background_image_saturation: String,
@@ -121,6 +125,7 @@ export function usePageEditor() {
         padding_right: $padding_right
         margin_top: $margin_top
         margin_bottom: $margin_bottom
+        background_image: $background_image
         background_image_fixed: $background_image_fixed
         background_image_opacity: $background_image_opacity
         background_image_saturation: $background_image_saturation
@@ -150,6 +155,7 @@ export function usePageEditor() {
       padding_right: widget.padding_right,
       margin_top: widget.margin_top,
       margin_bottom: widget.margin_bottom,
+      background_image: widget.background_image,
       background_image_fixed: widget.background_image_fixed,
       background_image_opacity: widget.background_image_opacity,
       background_image_saturation: widget.background_image_saturation,

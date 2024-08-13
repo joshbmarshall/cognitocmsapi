@@ -72,7 +72,12 @@
         <div class="text-lg">
           Background Image
         </div>
-        {{ widget.background_image }}
+        <cgn-page-editor-image-upload
+          v-if="widget.imageHashes"
+          v-model="widget.background_image"
+          v-model:image-hash="widget.imageHashes.background_image"
+          name="Background Image"
+        />
         <label class="inline-block select-none text-sm text-gray-800 dark:text-gray-200">
           <input v-model="widget.background_image_fixed" type="checkbox">
           Background Image Fixed

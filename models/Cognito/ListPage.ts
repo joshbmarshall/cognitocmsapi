@@ -1,5 +1,3 @@
-import { CognitoImage } from './Image'
-
 class CognitoListPageContent {
   id: number | null
   sort_order: number
@@ -22,10 +20,21 @@ class CognitoListPageContent {
   margin_top: string
   margin_bottom: string
 
-  background_image: CognitoImage
+  imageHashes?: {
+    background_image?: string
+  }
+
+  background_image: string
   background_image_fixed: boolean
   background_image_opacity: string
   background_image_saturation: string
+
+  background_video?: {
+    slate?: {
+      url?: string
+    }
+    file?: string
+  }
 
   aos_type: string
   aos_easing: string
@@ -55,7 +64,7 @@ class CognitoListPageContent {
     this.padding_right = ''
     this.margin_top = ''
     this.margin_bottom = ''
-    this.background_image = new CognitoImage()
+    this.background_image = ''
     this.background_image_fixed = false
     this.background_image_opacity = '100'
     this.background_image_saturation = '100'
