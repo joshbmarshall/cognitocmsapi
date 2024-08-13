@@ -86,16 +86,19 @@ const changeImage = async (image: any) => {
   if (!image) {
     return
   }
+  isLoading.value = true
   if (isNumeric(image)) {
     imageHash.value = await getImageHash(image)
     modelValue.value = image
     imageField.value = ''
+    isLoading.value = false
     return
   }
   const data = await createImageHash(image)
   imageHash.value = data.imageHashes.image
   modelValue.value = data.id
   imageField.value = ''
+  isLoading.value = false
 }
 
 const deleteImage = () => {
@@ -104,18 +107,21 @@ const deleteImage = () => {
 }
 
 const uploadFile = async () => {
+  isLoading.value = true
   const data = await createImageHash(uploadedFile.value)
   imageHash.value = data.imageHashes.image
   modelValue.value = data.id
   imageField.value = ''
+  isLoading.value = false
 }
 
 const pasteImage = async (event: ClipboardEvent) => {
+  isLoading.value = true
   const { clipboardData } = event
   if (!clipboardData) {
+    isLoading.value = false
     return
   }
-  isLoading.value = true
 
   for (let index = 0; index < clipboardData.items.length; index++) {
     const clipboardItem = clipboardData.items[index]

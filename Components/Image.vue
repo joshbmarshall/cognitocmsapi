@@ -86,6 +86,9 @@ const desiredHeight = computed(() => {
 
 const imageAspect = computed(() => {
   if (props.aspect) {
+    if (props.aspect == 'raw') {
+      return { name: 'raw', ratio: 1 }
+    }
     const aspect = props.aspect.match(/\d+/g)
     const aspectX = Number.parseInt(aspect?.at(0) || '1')
     const aspectY = Number.parseInt(aspect?.at(1) || '1')

@@ -20,7 +20,7 @@ class CognitoListPageContent {
   margin_top: string
   margin_bottom: string
 
-  imageHashes?: {
+  imageHashes: {
     background_image?: string
   }
 
@@ -29,7 +29,7 @@ class CognitoListPageContent {
   background_image_opacity: string
   background_image_saturation: string
 
-  background_video?: {
+  background_video: {
     slate?: {
       url?: string
     }
@@ -64,10 +64,12 @@ class CognitoListPageContent {
     this.padding_right = ''
     this.margin_top = ''
     this.margin_bottom = ''
+    this.imageHashes = {}
     this.background_image = ''
     this.background_image_fixed = false
     this.background_image_opacity = '100'
     this.background_image_saturation = '100'
+    this.background_video = {}
     this.aos_type = ''
     this.aos_easing = ''
     this.aos_offset = ''
