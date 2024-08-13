@@ -116,6 +116,9 @@ const imageHeight = computed(() => {
 })
 
 const getImageUrl = (width: number) => {
+  if (!props.imageHash) {
+    return ''
+  }
   let extension = 'jpg'
   if (props.extension) {
     extension = props.extension
@@ -266,6 +269,9 @@ onMounted(async () => {
 })
 
 onServerPrefetch(async () => {
+  if (!props.imageHash) {
+    return
+  }
   src.value = urlGetter.getUrl(props.imageHash, props.width, props.aspect || 'raw', props.extension || 'jpg')
 })
 </script>
