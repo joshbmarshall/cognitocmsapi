@@ -80,6 +80,9 @@ export function usePageEditor() {
     if (/^-?\d+$/.test(widget.background_image)) {
       widget.background_image = `Cognito/Image/${widget.background_image}image`
     }
+    if (typeof widget.background_video_id == 'string') {
+      widget.background_video_id = Number.parseInt(widget.background_video_id)
+    }
     const data = await $axios.graphql(gql`mutation updateWidgetQuery(
       $id: Int!,
       $page_id: Int,
@@ -101,6 +104,7 @@ export function usePageEditor() {
       $background_image_fixed: Boolean,
       $background_image_opacity: String,
       $background_image_saturation: String,
+      $background_video_id: Int,
       $aos_type: String,
       $aos_easing: String,
       $aos_offset: String,
@@ -129,6 +133,7 @@ export function usePageEditor() {
         background_image_fixed: $background_image_fixed
         background_image_opacity: $background_image_opacity
         background_image_saturation: $background_image_saturation
+        background_video_id: $background_video_id
         aos_type: $aos_type
         aos_easing: $aos_easing
         aos_offset: $aos_offset
@@ -159,6 +164,7 @@ export function usePageEditor() {
       background_image_fixed: widget.background_image_fixed,
       background_image_opacity: widget.background_image_opacity,
       background_image_saturation: widget.background_image_saturation,
+      background_video_id: widget.background_video_id,
       aos_type: widget.aos_type,
       aos_easing: widget.aos_easing,
       aos_offset: widget.aos_offset,

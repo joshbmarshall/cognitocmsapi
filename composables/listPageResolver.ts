@@ -69,11 +69,11 @@ export function useListPageResolver() {
         background_image_opacity
         background_image_saturation
         background_video {
-          slate {
-            url
+          imageHashes {
+            slate
           }
-          file
         }
+        background_video_id
         aos_type
         aos_easing
         aos_offset

@@ -70,7 +70,7 @@
 
       <div>
         <div class="text-lg">
-          Background Image
+          Background
         </div>
         <cgn-page-editor-image-upload
           v-if="widget.imageHashes"
@@ -82,6 +82,10 @@
           <input v-model="widget.background_image_fixed" type="checkbox">
           Background Image Fixed
         </label>
+        <cgn-page-editor-dropdown-search
+          v-model:id="widget.background_video_id"
+          model="\Cognito\Video" label="Background Video"
+        />
         <cgn-page-editor-dropdown-search
           v-model:id="widget.background_image_opacity" empty-name=""
           model="\Cognito\PageContent" variable="background_image_opacity" label="Background Image Opacity"

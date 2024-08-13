@@ -8,27 +8,27 @@
     :data-aos-delay="props.block.aos_delay"
     class="relative" :class="backgroundColourClass"
   >
-    <div v-if="props.block.background_video?.file" class="absolute inset-0">
+    <cgn-background-image
+      v-if="block.imageHashes?.background_image"
+      class="absolute inset-0" :class="backgroundImageClass" :parallax="props.block.background_image_fixed"
+      :image-hash="block.imageHashes?.background_image"
+    />
+    <cgn-image v-else-if="props.block.background_video_id" v-slot="{ src }" class="absolute inset-0" :image-hash="props.block.background_video.imageHashes.slate || ''" :width="500" custom>
       <video
-        :poster="props.block.background_video.slate?.url"
+        :poster="src"
         autoplay
         loop
         muted
         playsinline
         class="size-full object-cover object-center"
         :class="backgroundImageClass"
+        :src="videoUrl.getUrl(props.block.background_video_id)"
       >
         <source
-          :src="props.block.background_video.file"
           type="video/mp4"
         >
       </video>
-    </div>
-    <cgn-background-image
-      v-else-if="block.imageHashes?.background_image"
-      class="absolute inset-0" :class="backgroundImageClass" :parallax="props.block.background_image_fixed"
-      :image-hash="block.imageHashes?.background_image"
-    />
+    </cgn-image>
     <page-builder-list-content v-if="visible" :widget="props.block" :url-parts="urlParts" :class="pageClasses" />
   </div>
 </template>
@@ -49,6 +49,8 @@ const props = defineProps({
     required: true,
   },
 })
+
+const videoUrl = useVideoUrl()
 
 const backgroundImageClass = computed(() => {
   const classes = []

@@ -1,7 +1,10 @@
 <template>
-  <img v-if="!props.background" ref="image" :src="src">
-  <div v-else ref="image" :style="{ 'background-image': `url(${src})` }">
+  <img v-if="!props.background && !props.custom" ref="image" :src="src">
+  <div v-else-if="!props.custom" ref="image" :style="{ 'background-image': `url(${src})` }">
     <slot />
+  </div>
+  <div v-else ref="image">
+    <slot :src="src" />
   </div>
 </template>
 
@@ -28,10 +31,13 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  parallax: {
+    type: Boolean,
+  },
   background: {
     type: Boolean,
   },
-  parallax: {
+  custom: {
     type: Boolean,
   },
 })
@@ -221,7 +227,7 @@ async function newImage() {
         if (!image.value) {
           return
         }
-        if (props.background) {
+        if (props.background || props.custom) {
           // div for the background doesn't have image events
           resolve(true)
         }

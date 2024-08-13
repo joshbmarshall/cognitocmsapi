@@ -29,11 +29,11 @@ class CognitoListPageContent {
   background_image_opacity: string
   background_image_saturation: string
 
+  background_video_id: any
   background_video: {
-    slate?: {
-      url?: string
+    imageHashes: {
+      slate?: string
     }
-    file?: string
   }
 
   aos_type: string
@@ -69,7 +69,10 @@ class CognitoListPageContent {
     this.background_image_fixed = false
     this.background_image_opacity = '100'
     this.background_image_saturation = '100'
-    this.background_video = {}
+    this.background_video_id = null
+    this.background_video = {
+      imageHashes: {},
+    }
     this.aos_type = ''
     this.aos_easing = ''
     this.aos_offset = ''
