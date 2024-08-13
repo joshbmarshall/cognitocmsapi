@@ -9,9 +9,12 @@ class PageBlockTemplate {
     options: string
   }[]
 
+  fullwidth: boolean
+
   constructor(source?: Partial<PageBlockTemplate>) {
     this.name = ''
     this.fields = []
+    this.fullwidth = false
     Object.assign(this, source)
   }
 }

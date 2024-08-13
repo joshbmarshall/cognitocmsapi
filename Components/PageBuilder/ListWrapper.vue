@@ -9,11 +9,11 @@
     class="relative" :class="backgroundColourClass"
   >
     <cgn-background-image
-      v-if="block.imageHashes?.background_image"
+      v-if="props.block.imageHashes?.background_image"
       class="absolute inset-0" :class="backgroundImageClass" :parallax="props.block.background_image_fixed"
-      :image-hash="block.imageHashes?.background_image"
+      :image-hash="props.block.imageHashes?.background_image"
     />
-    <cgn-image v-else-if="props.block.background_video_id" v-slot="{ src }" class="absolute inset-0" :image-hash="props.block.background_video.imageHashes.slate || ''" :width="500" custom>
+    <cgn-image v-else-if="props.block.background_video_id" v-slot="{ src }" class="absolute inset-0" :image-hash="props.block.background_video?.imageHashes?.slate || ''" :width="500" custom>
       <video
         :poster="src"
         autoplay
@@ -29,7 +29,10 @@
         >
       </video>
     </cgn-image>
-    <page-builder-list-content v-if="visible" :widget="props.block" :url-parts="urlParts" :class="pageClasses" />
+    <page-builder-list-content
+      v-if="visible" :widget="props.block" :url-parts="urlParts"
+      :class="[pageClasses, { 'cgn-contained-class': !props.block.full_width }]"
+    />
   </div>
 </template>
 
@@ -382,4 +385,10 @@ const pageClasses = computed(() => {
   }
   return classes
 })
+
+/* tailwind.css
+.cgn-contained-class {
+  @apply px-6 py-2 mx-auto max-w-5xl
+}
+*/
 </script>

@@ -62,6 +62,7 @@ export function useListPageResolver() {
         padding_right
         margin_top
         margin_bottom
+        full_width
         imageHashes {
           background_image
         }

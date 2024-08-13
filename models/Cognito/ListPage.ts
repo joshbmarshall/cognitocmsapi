@@ -20,6 +20,8 @@ class CognitoListPageContent {
   margin_top: string
   margin_bottom: string
 
+  full_width: boolean
+
   imageHashes: {
     background_image?: string
   }
@@ -64,6 +66,7 @@ class CognitoListPageContent {
     this.padding_right = ''
     this.margin_top = ''
     this.margin_bottom = ''
+    this.full_width = false
     this.imageHashes = {}
     this.background_image = ''
     this.background_image_fixed = false

@@ -66,6 +66,11 @@
           v-model:id="widget.margin_bottom"
           model="\Cognito\PageContent" variable="margin_bottom" label="Margin Bottom"
         />
+
+        <label class="inline-block select-none text-sm text-gray-800 dark:text-gray-200">
+          <input v-model="widget.full_width" type="checkbox">
+          Full Width
+        </label>
       </div>
 
       <div>

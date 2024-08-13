@@ -21,6 +21,7 @@ export function usePageEditor() {
             description
             options
           }
+          fullwidth
         }
       }
     }`)
@@ -40,6 +41,7 @@ export function usePageEditor() {
 
     widget.value.name = 'new'
     widget.value.template = template.name
+    widget.value.full_width = template.fullwidth
 
     const variables: { [key: string]: any } = {}
     variables.image_hashes = {}
@@ -100,6 +102,7 @@ export function usePageEditor() {
       $padding_right: String,
       $margin_top: String,
       $margin_bottom: String,
+      $full_width: Boolean,
       $background_image: String,
       $background_image_fixed: Boolean,
       $background_image_opacity: String,
@@ -129,6 +132,7 @@ export function usePageEditor() {
         padding_right: $padding_right
         margin_top: $margin_top
         margin_bottom: $margin_bottom
+        full_width: $full_width
         background_image: $background_image
         background_image_fixed: $background_image_fixed
         background_image_opacity: $background_image_opacity
@@ -160,6 +164,7 @@ export function usePageEditor() {
       padding_right: widget.padding_right,
       margin_top: widget.margin_top,
       margin_bottom: widget.margin_bottom,
+      full_width: widget.full_width,
       background_image: widget.background_image,
       background_image_fixed: widget.background_image_fixed,
       background_image_opacity: widget.background_image_opacity,
