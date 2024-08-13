@@ -20,6 +20,7 @@ class CaravanBooking extends CognitoBase {
   newsletter: boolean
   est_arrival_time: string
   number_of_animals: number
+  pet_breed: string
   people: CaravanBookingPersonQty[]
 
   baseurl() {
@@ -45,6 +46,7 @@ class CaravanBooking extends CognitoBase {
     this.newsletter = false
     this.est_arrival_time = ''
     this.number_of_animals = 0
+    this.pet_breed = ''
     this.people = []
     Object.assign(this, source)
   }
