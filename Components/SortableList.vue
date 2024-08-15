@@ -36,7 +36,6 @@ const createSortable = (elementRef: any) => {
 
     onUpdate(event) {
       items.value.splice(event.newIndex || 0, 0, items.value.splice(event.oldIndex || 0, 1)[0])
-      console.log(event.oldIndex, event.newIndex)
       emit('reordered')
 
       event.item.remove() // remove the item to stop sortablejs from conflicting with vue
