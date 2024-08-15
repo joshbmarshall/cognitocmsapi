@@ -57,6 +57,12 @@ export function usePageEditor() {
     pageStore.currentPage.pageContents.push(widget.value)
   }
 
+  const regenSortOrders = () => {
+    pageStore.currentPage.pageContents.forEach((block, index) => {
+      block.sort_order = index + 1
+    })
+  }
+
   const addWidget = async (templateName: string, page_id?: number): Promise<number> => {
     if (!page_id) {
       page_id = pageStore.currentPage.id
@@ -221,6 +227,7 @@ export function usePageEditor() {
     widgetTemplates,
     loadWidgetTemplates,
     addEditorWidget,
+    regenSortOrders,
     getTemplate,
     addWidget,
     updateWidget,

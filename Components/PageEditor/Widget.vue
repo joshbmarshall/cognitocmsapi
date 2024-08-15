@@ -1,6 +1,6 @@
 <template>
   <div
-    ref="widgetRef" class="relative rounded-lg bg-gray-200 px-2 dark:bg-darkbg-700"
+    ref="widgetRef" class="relative rounded-lg bg-gray-200 dark:bg-darkbg-700"
     @click="openWidget()"
   >
     <div class="absolute right-0 top-0 flex overflow-hidden rounded-bl rounded-tr-lg">
@@ -8,19 +8,24 @@
       <i-heroicons-solid:plus v-else-if="widget.id === null" class="bg-success-500 text-on-success" />
       <i-heroicons-solid:eye-slash v-if="!widgetVisible" class="bg-warning-500 text-on-warning" />
     </div>
-    <div
-      class="flex cursor-pointer items-center justify-between gap-2 py-2 text-xl"
-      :class="{ 'text-muted': widget.deleted || !widgetVisible }"
-    >
-      <cgn-form-input-text v-if="widget.editing && !widget.deleted" v-model="widget.name" class="!my-0" />
-      <div v-else class="text-nowrap">
-        {{ widget.name }}
+    <div class="flex flex-row">
+      <div class="handle flex cursor-grab items-center text-lg" @click.stop>
+        <i-mdi:drag-vertical class="border-r border-gray-400" />
       </div>
-      <div class="max-w-[70%] overflow-hidden text-ellipsis text-nowrap text-sm" :title="widget.template">
-        {{ widget.template }}
+      <div
+        class="flex flex-1 cursor-pointer items-center justify-between gap-2 overflow-hidden p-2 text-xl"
+        :class="{ 'text-muted': widget.deleted || !widgetVisible }"
+      >
+        <cgn-form-input-text v-if="widget.editing && !widget.deleted" v-model="widget.name" class="!my-0" />
+        <div v-else class="text-nowrap">
+          {{ widget.name }}
+        </div>
+        <div class="overflow-hidden text-ellipsis text-nowrap text-sm" :title="widget.template">
+          {{ widget.template }}
+        </div>
       </div>
     </div>
-    <div v-if="widget.editing" class="border-t border-gray-500 py-2">
+    <div v-if="widget.editing" class="border-t border-gray-500 p-2">
       <div v-if="!widget.deleted" class="flex flex-col gap-2 pb-2">
         <div v-for="field in props.template?.fields" :key="field.name">
           <cgn-page-editor-widget-variable
@@ -53,7 +58,7 @@ const props = defineProps({
   },
 })
 
-const widget = defineModel({ type: Object as PropType<CognitoListPageContent>, required: true })
+const widget = defineModel<CognitoListPageContent>({ required: true })
 
 const widgetRef = ref()
 

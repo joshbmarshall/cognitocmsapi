@@ -9,12 +9,16 @@
     <cgn-button color-success fullwidth class="flex items-center justify-center gap-1" @click="openAddBlockModal()">
       <i-heroicons-solid:plus /> Add block
     </cgn-button>
-    <div class="flex flex-1 flex-col gap-2 overflow-y-scroll overscroll-contain py-2">
+    <cgn-sortable-list
+      v-model="pageStore.currentPage.pageContents"
+      class="flex flex-1 flex-col gap-2 overflow-y-scroll overscroll-contain py-2"
+      @reordered="pageEditor.regenSortOrders()"
+    >
       <cgn-page-editor-widget
         v-for="(block, index) in pageStore.currentPage.pageContents" :key="block.sort_order"
         v-model="pageStore.currentPage.pageContents[index]" :template="pageEditor.getTemplate(block.template)"
       />
-    </div>
+    </cgn-sortable-list>
     <div class="flex overflow-hidden rounded-md shadow">
       <cgn-button color-success fullwidth class="!rounded-none !shadow-none" @click="savePageChanges()">
         Save
