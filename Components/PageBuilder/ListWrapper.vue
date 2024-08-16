@@ -1,12 +1,13 @@
 <template>
   <div
+    v-if="visible"
     :id="props.block.anchor_name"
     :data-aos="props.block.aos_type"
     :data-aos-easing="props.block.aos_easing"
     :data-aos-offset="props.block.aos_offset"
     :data-aos-duration="props.block.aos_duration"
     :data-aos-delay="props.block.aos_delay"
-    class="relative" :class="backgroundColourClass"
+    class="relative" :class="[backgroundColourClass, pageClasses]"
   >
     <cgn-background-image
       v-if="props.block.imageHashes?.background_image"
@@ -30,8 +31,11 @@
       </video>
     </cgn-image>
     <page-builder-list-content
-      v-if="visible" :widget="props.block" :url-parts="urlParts"
-      :class="[pageClasses, { 'cgn-contained-class': !props.block.full_width }]"
+      :widget="props.block" :url-parts="urlParts"
+      :class="{
+        'cgn-contained-class': !props.block.full_width,
+        'relative': props.block.imageHashes?.background_image || props.block.background_video_id,
+      }"
     />
   </div>
 </template>
@@ -378,10 +382,6 @@ const pageClasses = computed(() => {
       dng: 'text-danger-500',
     }
     classes.push(text_colour[props.block.text_colour as keyof typeof text_colour])
-  }
-
-  if (props.block.imageHashes?.background_image) {
-    classes.push('relative')
   }
   return classes
 })

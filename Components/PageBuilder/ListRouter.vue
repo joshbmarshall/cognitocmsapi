@@ -6,7 +6,7 @@
   <div v-else>
     <div v-if="pageStore.currentPage.url">
       <template v-for="block in pageStore.currentPage.pageContents" :key="block.name">
-        <div v-if="!block.deleted" class="space-y-2 text-gray-900 dark:text-gray-200">
+        <div v-if="!block.deleted" class="space-y-2">
           <cgn-page-builder-list-wrapper :block="block" :url-parts="urlParts" />
         </div>
       </template>
