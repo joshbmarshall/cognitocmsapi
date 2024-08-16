@@ -326,9 +326,6 @@ const getPlannerData = () => {
             id
             name
           }
-          date # needed for day_number
-          start_time # needed for am_only
-          end_time # needed for am_only
           am_only
           pm_only
           day_number
