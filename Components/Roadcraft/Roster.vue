@@ -297,7 +297,7 @@ const getPlannerData = () => {
     roadcraftMisc {
       calendar(from_date: $calendarStart, to_date: $calendarEnd) {
         date
-        eventDays {
+        eventDays(hide_hidden_from_roster: true) {
           event {
             id
             course {
