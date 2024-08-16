@@ -36,7 +36,7 @@
         <template v-for="day, index in days" :key="index">
           <td v-for="eventDay in day.eventDays" :key="eventDay.event.id" class="min-w-12 border-b border-r border-inherit text-center" :class="getDayColor(day.date)">
             <span class="rotate-180 text-nowrap leading-tight [text-orientation:mixed] [writing-mode:vertical-rl]">
-              <div>
+              <div :class="getStatusColor(eventDay.event.status)">
                 {{ eventDay.event.course.name }}
                 <span v-if="eventDay.am_only" class="font-bold">AM</span>
                 <span v-if="eventDay.pm_only" class="font-bold">PM</span>
@@ -144,6 +144,7 @@ class RoadcraftPlannerDay {
       customer: {
         name: string
       }
+      status: string
       student_numbers: string
       vehicle_numbers: string
       number_of_days: number
@@ -271,6 +272,12 @@ const getFacilityDayStatus = (day: RoadcraftPlannerDay, facility: RoadcraftFacil
   return facilityEvents
 }
 
+const getStatusColor = (status: string) => {
+  if (status == 'Confirmed') {
+    return 'text-black'
+  }
+  return 'text-red-500'
+}
 const getDayColor = (day: CognitoTime) => {
   if (day.isWeekend()) {
     return 'bg-success-50'
@@ -300,6 +307,7 @@ const getPlannerData = () => {
             customer {
               name
             }
+            status
             student_numbers
             vehicle_numbers
             number_of_days
