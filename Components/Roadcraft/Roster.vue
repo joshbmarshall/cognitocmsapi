@@ -78,7 +78,9 @@
         </th>
         <td v-for="day, index in days" :key="index" class="m-0 max-w-24 border-b border-r border-inherit" :colspan="day.eventDays.length" :class="{ 'bg-neutral-500 text-white': educatorIsAway(day, educator) }">
           <div v-for="(status, sidx) in getEducatorDayStatus(day, educator)" :key="sidx" class="px-0.5">
-            {{ status }}
+            <div :class="status.class">
+              {{ status.text }}
+            </div>
           </div>
         </td>
       </tr>
@@ -87,8 +89,10 @@
           {{ facility.name }}
         </th>
         <td v-for="day, index in days" :key="index" class="m-0 max-w-24 border-r border-t border-inherit" :colspan="day.eventDays.length" :class="getDayColor(day.date)">
-          <div v-for="facilityStatus, idx in getFacilityDayStatus(day, facility)" :key="idx" class="truncate px-0.5" :title="facilityStatus">
-            {{ facilityStatus }}
+          <div v-for="status, idx in getFacilityDayStatus(day, facility)" :key="idx" class="truncate px-0.5" :title="facilityStatus">
+              <div :class="status.class">
+                {{ status.text }}
+              </div>
           </div>
         </td>
       </tr>
@@ -165,6 +169,8 @@ class RoadcraftPlannerDay {
     }[]
     start_time: string
     end_time: string
+    am_only: boolean
+    pm_only: boolean
     day_number: number
   }[]
 
@@ -223,6 +229,16 @@ class RoadcraftPlannerEducator {
   }
 }
 
+class RoadcraftCellColouredText {
+  class: string
+  text: string
+  constructor(source?: Partial<RoadcraftCellColouredText>) {
+    this.class = 'text-black'
+    this.text = ''
+    Object.assign(this, source)
+  }
+}
+
 const facilities = ref<RoadcraftFacility[]>([])
 const days = ref<RoadcraftPlannerDay[]>([])
 const educators = ref<RoadcraftPlannerEducator[]>([])
@@ -231,10 +247,17 @@ const educatorIsAway = (day: RoadcraftPlannerDay, educator: RoadcraftPlannerEduc
   return day.staffUnavailable.find(e => e.staff_id == educator.id)
 }
 
-const getEducatorDayStatus = (day: RoadcraftPlannerDay, educator: RoadcraftPlannerEducator): string[] => {
+const getStatusColor = (status: string) => {
+  if (status == 'Confirmed') {
+    return 'text-black'
+  }
+  return 'text-red-500'
+}
+
+const getEducatorDayStatus = (day: RoadcraftPlannerDay, educator: RoadcraftPlannerEducator): RoadcraftCellColouredText[] => {
   const unavailable = day.staffUnavailable.find(e => e.staff_id == educator.id)
   if (unavailable) {
-    return ['AWAY']
+    return [new RoadcraftCellColouredText({text: 'AWAY'})]
   }
   const status = []
   for (let index = 0; index < day.eventDays.length; index++) {
@@ -250,16 +273,19 @@ const getEducatorDayStatus = (day: RoadcraftPlannerDay, educator: RoadcraftPlann
     if (eventDayEducator.role?.short_name) {
       thisstatus += `-${eventDayEducator.role?.short_name}`
     }
-    status.push(thisstatus)
+    status.push(new RoadcraftCellColouredText({
+      text: thisstatus,
+      class: getStatusColor(eventDay.event.status),
+    }))
   }
   const travelling = day.staffTravelling.find(e => e.staff_id == educator.id)
   if (travelling) {
-    status.push(travelling.note)
+    status.push(new RoadcraftCellColouredText({text: travelling.note}))
   }
   return status
 }
 
-const getFacilityDayStatus = (day: RoadcraftPlannerDay, facility: RoadcraftFacility) => {
+const getFacilityDayStatus = (day: RoadcraftPlannerDay, facility: RoadcraftFacility): RoadcraftCellColouredText[] => {
   const facilityEvents = []
   for (let index = 0; index < day.eventDays.length; index++) {
     const eventDay = day.eventDays[index]
@@ -267,17 +293,14 @@ const getFacilityDayStatus = (day: RoadcraftPlannerDay, facility: RoadcraftFacil
     if (!eventFacility) {
       continue
     }
-    facilityEvents.push(eventDay.event.course.roster_name || eventDay.event.course.name)
+    facilityEvents.push(new RoadcraftCellColouredText({
+      text: eventDay.event.course.roster_name || eventDay.event.course.name,
+      class: getStatusColor(eventDay.event.status)
+    }))
   }
   return facilityEvents
 }
 
-const getStatusColor = (status: string) => {
-  if (status == 'Confirmed') {
-    return 'text-black'
-  }
-  return 'text-red-500'
-}
 const getDayColor = (day: CognitoTime) => {
   if (day.isWeekend()) {
     return 'bg-success-50'
