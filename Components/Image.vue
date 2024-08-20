@@ -1,5 +1,5 @@
 <template>
-  <img v-if="!props.background && !props.custom" ref="image" :src="src">
+  <img v-if="!props.background && !props.custom" ref="image" :src="src" :width="props.width" :height="imageHeight">
   <div v-else-if="!props.custom" ref="image" :style="{ 'background-image': `url(${src})` }">
     <slot />
   </div>

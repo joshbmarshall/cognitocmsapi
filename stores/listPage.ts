@@ -31,10 +31,9 @@ export const useListPageStore = defineStore('listPage', {
       const pageResolver = useListPageResolver()
       const pagesStore = useListPagesStore()
 
-      const page_check_url = this.currentPage.url
       const page = await pageResolver.loadPage(page_url)
       // Check if currentPage has changed since loading (ie navigated to another page)
-      if (this.currentPage.url != page_check_url) {
+      if (this.currentPage.url != page_url) {
         return
       }
       if (page.updated_at != this.currentPage.updated_at) {
@@ -72,8 +71,11 @@ export const useListPageStore = defineStore('listPage', {
         return
       }
       setTimeout(async () => {
+        if (this.currentPage.url != urlParts.page_url) {
+          return
+        }
         await this.updatePages(urlParts.page_url)
-      }, 500)
+      }, 2000)
     },
   },
 
