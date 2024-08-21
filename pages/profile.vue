@@ -251,6 +251,7 @@
               v-model="formValues.club_additional_member"
               :label="config.profile.club_additional_member_label"
             />
+            <site-profile-fields v-model="formValues" />
           </div>
 
           <cgn-button color-brand submit>
