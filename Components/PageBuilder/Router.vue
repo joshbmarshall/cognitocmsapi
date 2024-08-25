@@ -22,7 +22,7 @@
         </div>
       </div>
       <div
-        v-if="currentPage.content"
+        v-if="currentPage.content && currentPage.content != '[]'"
         class="prose-brand prose mx-auto space-y-2 p-6 text-gray-500 dark:prose-dark dark:text-gray-200 sm:p-12 lg:col-start-1 lg:row-start-1 lg:max-w-none"
         v-html="currentPage.content"
       />
