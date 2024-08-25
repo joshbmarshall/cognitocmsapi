@@ -9,7 +9,6 @@ class PodcastChannel extends CognitoBase {
   episodes: PodcastEpisode[]
   amazon_url?: string
   deezer_url?: string
-  google_podcast_url?: string
   iheart_url?: string
   itunes_url?: string
   samsung_cast_url?: string

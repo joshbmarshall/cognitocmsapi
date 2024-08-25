@@ -35,12 +35,6 @@
                   <span class="hidden sm:ml-3 sm:block">Spotify</span>
                 </a>
               </li>
-              <li v-if="podcast.google_podcast_url" class="flex">
-                <a class="group flex items-center" aria-label="Google Podcast" :href="podcast.google_podcast_url" target="_blank">
-                  <i-simple-icons:google class="h-8 w-8" />
-                  <span class="hidden sm:ml-3 sm:block">Google Podcast</span>
-                </a>
-              </li>
               <li v-if="podcast.deezer_url" class="flex">
                 <a class="group flex items-center" aria-label="Deezer" :href="podcast.deezer_url" target="_blank">
                   <i-simple-icons:deezer class="h-8 w-8" />
