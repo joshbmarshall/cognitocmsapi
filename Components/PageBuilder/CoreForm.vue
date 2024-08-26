@@ -88,6 +88,7 @@
         <cgn-button
           v-else-if="question.field_type == 'submit'"
           v-model="question.value"
+          color-brand
         >
           {{ question.label }}
         </cgn-button>
