@@ -98,7 +98,8 @@ const imageAspect = computed(() => {
     const aspect = props.aspect.match(/\d+/g)
     const aspectX = Number.parseInt(aspect?.at(0) || '1')
     const aspectY = Number.parseInt(aspect?.at(1) || '1')
-    return { name: `${aspectX}x${aspectY}`, ratio: aspectX / aspectY }
+    const hasw = props.aspect.endsWith('w') ? 'w' : ''
+    return { name: `${aspectX}x${aspectY}${hasw}`, ratio: aspectX / aspectY }
   }
   // No aspect defined, default to the nearest default
   for (let index = 0; index < default_aspects.length; index++) {
