@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <cgn-image v-if="props.templatevar.image_hashes?.image" :image-hash="props.templatevar.image_hashes.image" :width="props.templatevar.initial_width" :aspect="props.templatevar.aspect" class="w-full rounded-md" />
-    <cgn-lazy-image v-else-if="props.templatevar.image" :image="props.templatevar.image" class="rounded-md" />
-  </div>
+  <cgn-image v-if="props.templatevar.image_hashes?.image" :image-hash="props.templatevar.image_hashes.image" :width="props.templatevar.initial_width" :aspect="props.templatevar.aspect" class="w-full" />
+  <cgn-lazy-image v-else-if="props.templatevar.image" :image="props.templatevar.image" />
 </template>
 
 <script lang="ts">
