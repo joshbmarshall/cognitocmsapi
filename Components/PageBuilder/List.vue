@@ -23,6 +23,9 @@
   <div v-else-if="widget.template == 'core/image_with_content'">
     <cgn-page-builder-core-image-with-content :templatevar="variables" />
   </div>
+  <div v-else-if="widget.template == 'core/image'">
+    <cgn-page-builder-core-image :templatevar="variables" />
+  </div>
   <div v-else-if="widget.template == 'core/person_list'">
     <cgn-page-builder-core-person-list :templatevar="variables" />
   </div>
