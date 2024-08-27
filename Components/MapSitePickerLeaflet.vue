@@ -1,5 +1,5 @@
 <template>
-  <div class="h-96 w-full">
+  <div v-if="crs" class="h-96 w-full">
     <LMap
       ref="map"
       v-model:zoom="zoom"
@@ -40,7 +40,6 @@
 
 <script setup lang="ts">
 import type L from 'leaflet'
-import { CRS } from 'leaflet'
 import { computed, ref } from 'vue'
 import 'leaflet/dist/leaflet.css'
 
@@ -104,7 +103,7 @@ const bounds = computed(
       [mapheight.value, mapwidth.value],
     ] as L.LatLngBoundsLiteral,
 )
-const crs = CRS.Simple
+const crs = ref(null)
 
 const map = ref()
 
@@ -161,7 +160,9 @@ watch(() => width.value, () => {
   setColours()
 })
 
-onMounted(() => {
+onMounted(async () => {
+  const Leaflet = await import('leaflet')
+  crs.value = Leaflet.CRS.Simple
   rects.value = props.sites
   rects.value.forEach((e: CognitoMapSite) => {
     e.is_hovered = false
