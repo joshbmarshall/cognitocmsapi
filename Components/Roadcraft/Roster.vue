@@ -41,6 +41,7 @@
                 <span v-if="eventDay.am_only" class="font-bold">AM</span>
                 <span v-if="eventDay.pm_only" class="font-bold">PM</span>
                 <span v-if="eventDay.event.number_of_days > 1">D{{ eventDay.day_number }}</span>
+                <span v-if="eventDay.start_time"> ({{ eventDay.start_time }} - {{ eventDay.end_time }})</span>
               </div>
               <div>
                 {{ eventDay.event.customer?.name }}
@@ -89,10 +90,10 @@
           {{ facility.name }}
         </th>
         <td v-for="day, index in days" :key="index" class="m-0 max-w-24 border-r border-t border-inherit" :colspan="day.eventDays.length" :class="getDayColor(day.date)">
-          <div v-for="status, idx in getFacilityDayStatus(day, facility)" :key="idx" class="truncate px-0.5" :title="facilityStatus">
-              <div :class="status.class">
-                {{ status.text }}
-              </div>
+          <div v-for="status, idx in getFacilityDayStatus(day, facility)" :key="idx" class="truncate px-0.5" :title="status.text">
+            <div :class="status.class">
+              {{ status.text }}
+            </div>
           </div>
         </td>
       </tr>
@@ -101,7 +102,7 @@
           Accommodation
         </th>
         <td v-for="day, index in days" :key="index" class="border-r border-t-2 border-inherit text-center text-sm" :class="getDayColor(day.date)" :colspan="day.eventDays.length">
-          <div v-for="accommodation in day.requiredAccommodation" :key="accommodation.id">
+          <div v-for="accommodation in day.requiredAccommodation" :key="accommodation.accommodation.id">
             {{ accommodation.accommodation.name }}
             ({{ accommodation.residents.join(', ') }})
           </div>
@@ -196,11 +197,23 @@ class RoadcraftPlannerDay {
     this.eventDays = []
     this.staffUnavailable = []
     this.staffTravelling = []
-    this.requiredAccommodation = { accommodation: { id: 0, name: '' }, residents: [] }
+    this.requiredAccommodation = []
 
     Object.assign(this, source)
     if (source?.date) {
       this.date = new CognitoTime(source.date)
+    }
+    if (source?.eventDays) {
+      this.eventDays = source.eventDays.map((e) => {
+        const obj = JSON.parse(JSON.stringify(e))
+        if (obj.start_time) {
+          obj.start_time = new CognitoTime(`2000-01-01 ${e.start_time}`).toHumanTimeString()
+        }
+        if (obj.end_time) {
+          obj.end_time = new CognitoTime(`2000-01-01 ${e.end_time}`).toHumanTimeString()
+        }
+        return obj
+      })
     }
   }
 }
@@ -257,7 +270,7 @@ const getStatusColor = (status: string) => {
 const getEducatorDayStatus = (day: RoadcraftPlannerDay, educator: RoadcraftPlannerEducator): RoadcraftCellColouredText[] => {
   const unavailable = day.staffUnavailable.find(e => e.staff_id == educator.id)
   if (unavailable) {
-    return [new RoadcraftCellColouredText({text: 'AWAY'})]
+    return [new RoadcraftCellColouredText({ text: 'AWAY' })]
   }
   const status = []
   for (let index = 0; index < day.eventDays.length; index++) {
@@ -280,7 +293,7 @@ const getEducatorDayStatus = (day: RoadcraftPlannerDay, educator: RoadcraftPlann
   }
   const travelling = day.staffTravelling.find(e => e.staff_id == educator.id)
   if (travelling) {
-    status.push(new RoadcraftCellColouredText({text: travelling.note}))
+    status.push(new RoadcraftCellColouredText({ text: travelling.note }))
   }
   return status
 }
@@ -295,7 +308,7 @@ const getFacilityDayStatus = (day: RoadcraftPlannerDay, facility: RoadcraftFacil
     }
     facilityEvents.push(new RoadcraftCellColouredText({
       text: eventDay.event.course.roster_name || eventDay.event.course.name,
-      class: getStatusColor(eventDay.event.status)
+      class: getStatusColor(eventDay.event.status),
     }))
   }
   return facilityEvents
@@ -352,6 +365,8 @@ const getPlannerData = () => {
           am_only
           pm_only
           day_number
+          start_time
+          end_time
         }
         staffUnavailable {
           staff_id
@@ -380,7 +395,6 @@ const getPlannerData = () => {
   }).then((data: any) => {
     facilities.value = data.roadcraftFacilitys
     days.value = data.roadcraftMisc.calendar.map(e => new RoadcraftPlannerDay(e))
-    console.log(days.value)
     educators.value = data.roadcraftMisc.educators.map(e => new RoadcraftPlannerEducator(e))
   })
 }
