@@ -50,6 +50,9 @@
   <div v-else-if="widget.template == 'core/gift_voucher_purchase'">
     <cgn-page-builder-core-gift-voucher-purchase :templatevar="variables" />
   </div>
+  <div v-else-if="widget.template == 'core/video'">
+    <cgn-page-builder-core-video :templatevar="variables" />
+  </div>
   <div v-else-if="widget.template == 'core/link_children'">
     <cgn-page-builder-link-children :templatevar="variables" />
   </div>
