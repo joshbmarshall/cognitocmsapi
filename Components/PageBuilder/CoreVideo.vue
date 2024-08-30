@@ -1,6 +1,5 @@
 <template>
   <video
-    loop
     controls
     playsinline
     :src="videoUrl.getUrl(props.templatevar.video)"
