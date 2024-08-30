@@ -18,6 +18,8 @@ const cgnTemplates = [
   'core/gallery_group',
   'core/gift_voucher_purchase',
   'core/link_children',
+  'core/image',
+  'core/video',
 ]
 const templateList = cgnTemplates.concat(config.siteSpecificTemplates)
 
