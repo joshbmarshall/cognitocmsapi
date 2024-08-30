@@ -52,8 +52,9 @@ const pageContent = computed(() => {
 })
 
 async function loadPageContent(url: string | string[]) {
-  pageStore.loadPage(url)
+  await pageStore.loadPage(url)
   urlParts.value = new CognitoUrlParts().parse(url)
+  loading.value = false
 }
 
 watch(() => props.page, () => {
@@ -61,13 +62,11 @@ watch(() => props.page, () => {
   nextTick(() => {
     // Load on next tick to refresh blocks on page change
     loadPageContent(props.page)
-    loading.value = false
   })
 }, { deep: true })
 
 onMounted(() => {
   loadPageContent(props.page)
-  loading.value = false
   if (props.page == 'cms') {
     router.push(`${config.baseURL}/cms`)
   }
@@ -86,6 +85,5 @@ onMounted(() => {
 
 onServerPrefetch(async () => {
   await loadPageContent(props.page)
-  loading.value = false
 })
 </script>

@@ -17,7 +17,7 @@ export const useListPagesStore = defineStore('listPages', {
   actions: {
     initPages() {
       // this.pages = JSON.parse(JSON.stringify(initialData.pages.data))
-      // TODO initialData for pageList
+      // TODO initialData for pageList - not currently getting called we call loadPages instead
       this.currentDomain = JSON.parse(JSON.stringify(initialData.currentDomain))
     },
     async loadPages() {

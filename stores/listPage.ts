@@ -42,13 +42,13 @@ export const useListPageStore = defineStore('listPage', {
         pagesStore.loadPages()
       }
     },
-    loadPage(urlToLoad: string | string[]) {
+    async loadPage(urlToLoad: string | string[]) {
       const pagesStore = useListPagesStore()
       const urlParts = new CognitoUrlParts().parse(urlToLoad)
       let page = new CognitoListPage()
 
       if (pagesStore.pages.length == 0) {
-        pagesStore.initPages()
+        await pagesStore.loadPages()
       }
       if (pagesStore.pages.length > 0) {
         const pageStorepage = pagesStore.findByUrl(urlParts.page_url)
