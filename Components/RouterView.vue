@@ -30,9 +30,6 @@ const sitemapPage = computed((): {
 } => {
   const url = router?.currentRoute?.value?.path || ''
   const page = sitemapData.value.find(e => e.url == url)
-  if (page) {
-    return page
-  }
   if (!$axios.isSSR()) {
     if (nextUpdateInitialData.value.isPast()) {
       // Get details from server
@@ -42,6 +39,9 @@ const sitemapPage = computed((): {
         nextUpdateInitialData.value = new CognitoTime().addMinutes(1)
       })
     }
+  }
+  if (page) {
+    return page
   }
   return {
     url: '/',
