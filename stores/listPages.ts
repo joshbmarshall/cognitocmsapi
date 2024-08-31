@@ -22,11 +22,6 @@ export const useListPagesStore = defineStore('listPages', {
     },
     async loadPages() {
       const pageResolver = useListPageResolver()
-      if ($axios.isSSR()) {
-        this.initPages()
-        this.lastUpdate = new CognitoTime('').toDateTimeString()
-        return
-      }
       this.pages = await pageResolver.loadPages()
       this.currentDomain = await new CognitoDomain().currentDomain()
       this.lastUpdate = new CognitoTime().toDateTimeString()
