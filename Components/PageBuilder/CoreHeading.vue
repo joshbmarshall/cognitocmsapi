@@ -1,5 +1,5 @@
 <template>
-  <div class="prose dark:prose-invert">
+  <div class="prose dark:prose-invert" :class="{ 'max-w-none text-center': props.templatevar.centered }">
     <h1 v-if="templatevar.heading_type == 'h1'">
       {{ templatevar.heading }}
     </h1>
@@ -19,6 +19,7 @@
 class Templatevars {
   heading_type?: string
   heading?: string
+  centered?: boolean
 }
 </script>
 
