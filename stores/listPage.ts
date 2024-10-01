@@ -47,7 +47,7 @@ export const useListPageStore = defineStore('listPage', {
       const urlParts = new CognitoUrlParts().parse(urlToLoad)
       let page = new CognitoListPage()
 
-      if (pagesStore.pages.length == 0 || !pagesStore.findByUrl(urlParts.page_url).url) {
+      if (pagesStore.pages.length == 0) {
         await pagesStore.loadPages()
       }
       if (pagesStore.pages.length > 0) {
@@ -65,6 +65,11 @@ export const useListPageStore = defineStore('listPage', {
 
       // Set the page from the cached version
       this.currentPage = page
+
+      if (!this.currentPage.url) {
+        this.updatePages(urlParts.page_url)
+        return
+      }
 
       // Check if there is a newer version
       if ($axios.isSSR()) {

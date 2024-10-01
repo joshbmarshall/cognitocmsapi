@@ -102,7 +102,7 @@ export function useListPageResolver() {
     }`.concat(fragmentCognitoPage), {
       url,
     })
-    const page = (data.cognitoPage)
+    const page = new CognitoListPage(data.cognitoPage)
     page.item_url = getItemFromUrl(urlToLoad)
     return page
   }
