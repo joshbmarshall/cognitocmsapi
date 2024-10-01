@@ -47,7 +47,7 @@ export const useListPageStore = defineStore('listPage', {
       const urlParts = new CognitoUrlParts().parse(urlToLoad)
       let page = new CognitoListPage()
 
-      if (pagesStore.pages.length == 0) {
+      if (pagesStore.pages.length == 0 || !pagesStore.findByUrl(urlParts.page_url).url) {
         await pagesStore.loadPages()
       }
       if (pagesStore.pages.length > 0) {

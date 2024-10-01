@@ -2,7 +2,6 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import { CognitoTime } from '~cognito/models/Cognito/Time'
 import { CognitoDomain } from '~cognito/models/Cognito/Domain'
 import initialData from '~/initialData.json'
-import { $axios } from '~cognito/plugins/axios'
 import { CognitoListPage } from '~cognito/models/Cognito/ListPage'
 
 export const useListPagesStore = defineStore('listPages', {
