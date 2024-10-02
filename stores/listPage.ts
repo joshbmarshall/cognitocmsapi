@@ -27,13 +27,13 @@ export const useListPageStore = defineStore('listPage', {
       }
       this.currentPage = pagesStore.findById(this.currentPage.id)
     },
-    async updatePages(page_url: string) {
+    async updatePages(page_url: string, unknown_page?: boolean) {
       const pageResolver = useListPageResolver()
       const pagesStore = useListPagesStore()
 
       const page = await pageResolver.loadPage(page_url)
       // Check if currentPage has changed since loading (ie navigated to another page)
-      if (this.currentPage.url != page_url) {
+      if (this.currentPage.url != page_url && !unknown_page) {
         return
       }
       if (page.updated_at != this.currentPage.updated_at) {
@@ -67,7 +67,7 @@ export const useListPageStore = defineStore('listPage', {
       this.currentPage = page
 
       if (!this.currentPage.url) {
-        this.updatePages(urlParts.page_url)
+        this.updatePages(urlParts.page_url, true)
         return
       }
 
