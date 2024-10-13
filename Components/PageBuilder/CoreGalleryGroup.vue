@@ -6,7 +6,7 @@
         {{ props.templatevar.subheading }}
       </p>
     </div>
-    <div class="grid grid-cols-3 gap-2 pt-2 md:grid-cols-4 lg:grid-cols-5">
+    <div v-if="galleries.length > 1" class="grid grid-cols-3 gap-2 pt-2 md:grid-cols-4 lg:grid-cols-5">
       <div v-for="gallery in galleries" :key="gallery.url" class="group relative overflow-hidden bg-black" @click="selectGallery(gallery.id)">
         <div v-if="gallery.slides.length">
           <div class="mx-auto space-y-2 text-white lg:col-start-1 lg:row-start-1 lg:max-w-none">
@@ -72,6 +72,7 @@ class Templatevars {
   heading?: string
   subheading?: string
   group?: string
+  aspect?: string
 }
 </script>
 
@@ -97,13 +98,13 @@ function imageClass(slide: CognitoSlide) {
 }
 
 const selectGallery = async (gallery_id: number) => {
-  const data = await $axios.graphql(gql`query cognitoGalleryQuery($id: ID){
+  const data = await $axios.graphql(gql`query cognitoGalleryQuery($id: ID, $aspect: String){
     cognitoGallery(id: $id) {
       url
       heading
       sub_heading
       slides {
-        image(image_width: 400, image_aspect: "16x9") {
+        image(image_width: 400, image_aspect: $aspect) {
           url
           width
           height
@@ -112,11 +113,16 @@ const selectGallery = async (gallery_id: number) => {
     }
   }`, {
     id: gallery_id,
+    aspect: props.templatevar.aspect,
   })
-  miniGallery.value.scrollIntoView({
-    behavior: 'smooth',
-  })
+
   selectedGallery.value = new CognitoGallery(data.cognitoGallery)
+
+  if (galleries.value.length > 1) {
+    miniGallery.value.scrollIntoView({
+      behavior: 'smooth',
+    })
+  }
 }
 
 const loadGalleries = async () => {
@@ -140,7 +146,10 @@ const loadGalleries = async () => {
   galleries.value = data.cognitoGallerys
 }
 
-onMounted(() => {
-  loadGalleries()
+onMounted(async () => {
+  await loadGalleries()
+  if (galleries.value.length == 1) {
+    selectGallery(galleries.value[0].id)
+  }
 })
 </script>
