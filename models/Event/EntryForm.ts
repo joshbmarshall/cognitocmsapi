@@ -54,6 +54,7 @@ class EventEntryFormSku {
 class EventEntryFormExtra {
   id?: string | number
   label: string
+  content: string
   price: number
   checked: number
   disabled: boolean
@@ -61,6 +62,7 @@ class EventEntryFormExtra {
   constructor(source?: Partial<EventEntryFormExtra>) {
     this.id = 0
     this.label = ''
+    this.content = ''
     this.price = 0
     this.checked = 0
     this.disabled = false
@@ -293,6 +295,7 @@ class EventEntryForm {
       return new EventEntryFormExtra({
         id: e.id,
         label: e.name,
+        content: e.content,
         price: e.price_each,
         checked: 0,
         disabled: e.sold_out,
