@@ -57,6 +57,7 @@ class EventEntryFormExtra {
   content: string
   price: number
   checked: number
+  max_qty: number
   disabled: boolean
 
   constructor(source?: Partial<EventEntryFormExtra>) {
@@ -65,6 +66,7 @@ class EventEntryFormExtra {
     this.content = ''
     this.price = 0
     this.checked = 0
+    this.max_qty = 1
     this.disabled = false
 
     Object.assign(this, source)
@@ -299,6 +301,7 @@ class EventEntryForm {
         price: e.price_each,
         checked: 0,
         disabled: e.sold_out,
+        max_qty: e.max_qty_per_entry,
       })
     })
     this.spectators = eventDetails.spectator_types.map((e) => {
@@ -630,7 +633,7 @@ class EventEntryForm {
     }
     this.extras.forEach((extra) => {
       if (extra.checked) {
-        cost += extra.price
+        cost += extra.price * extra.checked
       }
     })
     this.spectators.forEach((spectator) => {
