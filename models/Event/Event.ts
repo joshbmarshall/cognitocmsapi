@@ -85,6 +85,9 @@ class EventEvent extends CognitoBase {
     enabled: boolean
   }[]
 
+  terms_and_conditions: string[]
+  combined_terms: string
+
   credit_balance: number
 
   baseurl() {
@@ -140,6 +143,8 @@ class EventEvent extends CognitoBase {
     this.stall_vehicle_registration = ''
     this.stall_power = []
     this.payment_methods = []
+    this.terms_and_conditions = []
+    this.combined_terms = ''
     this.credit_balance = 0
 
     Object.assign(this, source)
@@ -161,6 +166,11 @@ class EventEvent extends CognitoBase {
     } else {
       this.stall_power = []
     }
+
+    this.combined_terms = this.type.terms_and_conditions.content
+    this.terms_and_conditions.forEach((terms) => {
+      this.combined_terms += terms
+    })
   }
 
   async submitEntry(data: any): Promise<{
