@@ -1,11 +1,11 @@
 <template>
-  <VuePdf v-for="page in numOfPages" :key="page" :src="pdfSrc" :page="page" />
+  <VuePdfEmbed annotation-layer text-layer :source="pdfSrc" />
 </template>
 
 <script setup lang="ts">
-import type { VuePdfPropsType } from 'vue3-pdfjs/components/vue-pdf/vue-pdf-props'
-import type { PDFDocumentProxy } from 'pdfjs-dist/types/src/display/api'
-import { VuePdf, createLoadingTask } from 'vue3-pdfjs/esm'
+import VuePdfEmbed from 'vue-pdf-embed'
+import 'vue-pdf-embed/dist/styles/annotationLayer.css'
+import 'vue-pdf-embed/dist/styles/textLayer.css'
 
 const props = defineProps({
   pdf: {
@@ -14,17 +14,11 @@ const props = defineProps({
   },
 })
 const pdfSrc = ref<VuePdfPropsType['src']>('')
-const numOfPages = ref(0)
-
 const doload = () => {
   if (!props.pdf) {
     return
   }
   pdfSrc.value = props.pdf
-  const loadingTask = createLoadingTask(pdfSrc.value)
-  loadingTask.promise.then((pdf: PDFDocumentProxy) => {
-    numOfPages.value = pdf.numPages
-  })
 }
 
 watch(() => props.pdf, () => doload())
