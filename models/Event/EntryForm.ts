@@ -123,6 +123,7 @@ class EventEntryForm {
   category_id: number
   address_id: number
   garage_id: number
+  garage_ids: number[]
   camp_site_id: number
   camp_site_ids: number[]
   licence_id: number
@@ -193,6 +194,7 @@ class EventEntryForm {
     this.category_id = 0
     this.address_id = 0
     this.garage_id = 0
+    this.garage_ids = []
     this.camp_site_id = 0
     this.camp_site_ids = []
     this.licence_id = 0
@@ -432,6 +434,15 @@ class EventEntryForm {
     return this.eventDetails?.garages.find(e => e.id == this.garage_id)
   }
 
+  selectedGaragesCost() {
+    let cost = 0
+    for (let index = 0; index < this.garage_id.length; index++) {
+      const garage_id = this.garage_id[index]
+      cost += this.eventDetails?.garages.find(e => e.id == garage_id)?.price
+    }
+    return cost
+  }
+
   selectedCampSite() {
     if (this.camp_site_id == 0) {
       return null
@@ -621,11 +632,20 @@ class EventEntryForm {
         cost += licence.price
       }
     }
-    if (garage) {
-      if (category && category.garage_included_in_entry_fee) {
+    if (this.eventDetails?.sell_multiple_garages_per_transaction) {
+      this.garage_ids.forEach((garage_id) => {
+        const garage = this.eventDetails?.garages.find(e => e.id == garage_id)
+        if (garage) {
+          cost += garage.price
+        }
+      })
+    } else {
+      if (garage) {
+        if (category && category.garage_included_in_entry_fee) {
         // No additional cost
-      } else {
-        cost += garage.price
+        } else {
+          cost += garage.price
+        }
       }
     }
     if (campSite) {

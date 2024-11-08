@@ -136,7 +136,7 @@ const setColours = () => {
       changeTo = props.unavailableColour
     } else if (e.id == props.modelValue) {
       changeTo = props.selectedColour
-    } else if (props.modelValue.includes(e.id)) {
+    } else if (props.multipleSelection && props.modelValue.includes(e.id)) {
       changeTo = props.selectedColour
     }
     if (e.fill != changeTo) {
@@ -191,6 +191,15 @@ onMounted(async () => {
     e.is_hovered = false
     e.align = 'left'
   })
+  if (props.multipleSelection) {
+    if (typeof (props.modelValue) != 'object') {
+      emit('update:modelValue', [])
+    }
+  } else {
+    if (typeof (props.modelValue) == 'object') {
+      emit('update:modelValue', 0)
+    }
+  }
   setPositions()
   setColours()
 })
