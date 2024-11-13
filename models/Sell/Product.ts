@@ -47,6 +47,7 @@ class SellProduct extends CognitoBase {
   }
 
   video: CognitoVideo
+  size_chart_image?: string
   skus: SellSku[]
   addons: string[]
   groupaddons: string[]
