@@ -41,7 +41,7 @@
                 <span v-if="eventDay.am_only" class="font-bold">AM</span>
                 <span v-if="eventDay.pm_only" class="font-bold">PM</span>
                 <span v-if="eventDay.event.number_of_days > 1">D{{ eventDay.day_number }}</span>
-                <span v-if="eventDay.start_time"> ({{ eventDay.start_time }} - {{ eventDay.end_time }})</span>
+                <span v-if="eventDay.start_time && false"> ({{ eventDay.start_time }} - {{ eventDay.end_time }})</span>
               </div>
               <div>
                 {{ eventDay.event.customer?.name }}
