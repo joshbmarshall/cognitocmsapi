@@ -16,7 +16,7 @@
     <slot />
   </a>
   <router-link
-    v-else
+    v-else-if="to.length > 0"
     :to="to"
     class="
       cursor-pointer
@@ -30,6 +30,9 @@
   >
     <slot />
   </router-link>
+  <template v-else>
+    <slot />
+  </template>
 </template>
 
 <script setup lang="ts">
