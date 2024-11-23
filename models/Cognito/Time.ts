@@ -101,6 +101,16 @@ class CognitoTime {
     return `${this.format('eeee do MMMM')} - ${othertime.format('eeee do MMMM')}`
   }
 
+  betweenDateStringShort(othertime: CognitoTime): string {
+    if (this.isSameDay(othertime)) {
+      return this.format('dd MMM')
+    }
+    if (this.isSameMonth(othertime)) {
+      return `${this.format('dd')}-${othertime.format('dd MMM')}`
+    }
+    return `${this.format('dd MMM')} - ${othertime.format('dd MMM')}`
+  }
+
   isAfter(othertime: CognitoTime): boolean {
     return isAfter(this.time, othertime.time)
   }
