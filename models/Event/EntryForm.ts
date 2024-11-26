@@ -356,7 +356,7 @@ class EventEntryForm {
     this.stallSiteTypeRadio = eventDetails.stall_site_types.map((e) => {
       return new EventEntryFormRadio({
         id: e.id,
-        name: `${e.name} ${(e.sold_out) ? '- Sold out' : `$${e.price}`}`,
+        name: `${e.name} ${(e.sold_out) ? '- Sold out' : ''}`,
         class: e.sold_out ? 'text-danger-500' : '',
         content: `${e.site_description}`,
         disabled: e.sold_out,
@@ -674,6 +674,57 @@ class EventEntryForm {
       cost += sku.price
     })
     return cost
+  }
+
+  selectedStallSiteType() {
+    return this.eventDetails?.stall_site_types.find(e => e.id == this.stall_site_type_id)
+  }
+
+  stall_area() {
+    return (this.stall_width) * this.stall_length
+  }
+
+  stallAreaOk(): boolean {
+    const selectedStallSiteType = this.selectedStallSiteType()
+    if (!selectedStallSiteType) {
+      return false
+    }
+    if (selectedStallSiteType.min_site_depth && this.stall_length < selectedStallSiteType.min_site_depth) {
+      return false
+    }
+    if (selectedStallSiteType.max_site_depth && this.stall_length > selectedStallSiteType.max_site_depth) {
+      return false
+    }
+    if (selectedStallSiteType.min_site_width && this.stall_width < selectedStallSiteType.min_site_width) {
+      return false
+    }
+    if (selectedStallSiteType.max_site_width && this.stall_width > selectedStallSiteType.max_site_width) {
+      return false
+    }
+    if (selectedStallSiteType.max_site_area && this.stall_area() > selectedStallSiteType.max_site_area) {
+      return false
+    }
+    return this.stall_area() > 0
+  }
+
+  stallHirePrice() {
+    const area = this.stall_length * this.stall_width
+
+    const selectedStallSiteType = this.selectedStallSiteType()
+    if (!selectedStallSiteType) {
+      return 0
+    }
+    if (!selectedStallSiteType.price_tiers.length) {
+      return selectedStallSiteType.price
+    }
+    // Determine price from tiers
+    for (let index = 0; index < selectedStallSiteType.price_tiers.length; index++) {
+      const price_tier = selectedStallSiteType.price_tiers[index]
+      if (price_tier.maximum_area >= area) {
+        return price_tier.base_price + (area - price_tier.base_area) * price_tier.price_per_square_metre
+      }
+    }
+    return 0
   }
 
   async calculatedPrice(): Promise<{
