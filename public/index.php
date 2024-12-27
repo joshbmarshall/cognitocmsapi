@@ -7,12 +7,11 @@ try {
 } catch (\Exception $e) {
 }
 
-function isSecure() {
+function isSecure(): bool {
   return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
     || $_SERVER['SERVER_PORT'] == 443;
 }
 if (isSecure()) {
-  $redirect     = '';
   $redirectbase = 'https://' . $_SERVER['HTTP_HOST'];
 
   $redirect_to  = '';
