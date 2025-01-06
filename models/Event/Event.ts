@@ -169,7 +169,7 @@ class EventEvent extends CognitoBase {
       this.stall_power = []
     }
 
-    this.combined_terms = this.type.terms_and_conditions.content
+    this.combined_terms = this.type?.terms_and_conditions?.content
     this.terms_and_conditions.forEach((terms) => {
       this.combined_terms += terms
     })
