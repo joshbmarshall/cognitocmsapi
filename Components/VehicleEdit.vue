@@ -10,18 +10,21 @@
           <cgn-form-input-text v-model="newVehicle.model" label="Model" class="w-full" required />
           <cgn-form-input-text v-model="newVehicle.colour" label="Colour" class="col-span-2 w-full sm:col-span-1" required />
         </div>
-        <div class="grid grid-cols-2 gap-x-2">
+        <div class="grid grid-cols-2 gap-x-2 sm:grid-cols-3">
+          <cgn-form-dropdown v-model="newVehicle.body_style_id" :options="bodyStyles" label="Body Style" required />
           <cgn-form-dropdown v-model="newVehicle.induction_type_id" :options="inductionTypes" label="Induction type" required />
           <cgn-form-dropdown v-model="newVehicle.engine_type_id" :options="engineTypes" label="Engine type" required />
         </div>
-        <cgn-form-dropdown v-if="!props.requireRegistration" v-model="isRegistered" :options="['Yes', 'No']" label="Is this vehicle registered?" required />
+        <div class="grid grid-cols-2 gap-x-2 sm:grid-cols-3">
+          <cgn-form-input v-model="newVehicle.year_of_manufacture" type="number" label="Year of manufacture" class="w-full" required />
+          <cgn-form-input-text v-model="newVehicle.racing_number" min-amount="0" type="number" label="Racing Number" class="w-full" />
+          <cgn-form-dropdown v-if="!props.requireRegistration" v-model="isRegistered" :options="['Yes', 'No']" label="Is this vehicle registered?" required />
+        </div>
         <div v-if="isRegistered == 'Yes' || props.requireRegistration" class="grid grid-cols-2 gap-x-2 sm:grid-cols-3">
           <cgn-form-input-text v-model="newVehicle.registration" label="Registration" class="w-full" required />
           <cgn-form-dropdown v-model="newVehicle.registration_state_id" :options="states" label="Registration State" required />
           <cgn-form-input v-model="newVehicle.registration_expiry" type="date" label="Registration Expiry" class="col-span-2 w-full sm:col-span-1" required />
         </div>
-        <cgn-form-dropdown v-model="newVehicle.body_style_id" :options="bodyStyles" label="Body Style" required />
-        <cgn-form-input v-model="newVehicle.year_of_manufacture" type="number" label="Year of manufacture" class="w-full" required />
         <div class="grid grid-cols-2 gap-x-2">
           <cgn-form-input-text v-model="newVehicle.vehicle_owner" label="Vehicle Owner" class="w-full" required />
           <cgn-form-input-phone v-model="newVehicle.owner_mobile" label="Owner mobile" class="w-full" required />

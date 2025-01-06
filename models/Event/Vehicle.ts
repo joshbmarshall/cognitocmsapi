@@ -22,6 +22,7 @@ class EventVehicle extends CognitoBase {
   engine_type: EventVehicleEngineType
   engine_type_id: number
   vehicle_owner: string
+  racing_number?: number
   owner_mobile: string
   photo: CognitoImage
 
