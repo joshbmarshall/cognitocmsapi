@@ -20,9 +20,9 @@ const props = defineProps({
   },
 })
 
-const modelValue = defineModel({ type: Number || String, default: 0 })
+const modelValue = defineModel({ type: Number || String || Boolean, default: 0 })
 
-const checked = ref(false)
+const checked = ref(true) // workaround sometimes not checking by default
 
 const handleInput = () => {
   modelValue.value = checked.value ? 1 : 0
@@ -35,6 +35,7 @@ const setChecked = () => {
   checked.value = !!modelValue.value
 }
 
+watch(modelValue, setChecked)
 watch(() => props, () => {
   setChecked()
 }, {
