@@ -714,17 +714,23 @@ class EventEntryForm {
     if (!selectedStallSiteType) {
       return 0
     }
+
+    let power_price = 0
+    if (this.stall_power.length > selectedStallSiteType.included_power_connections) {
+      power_price += selectedStallSiteType.additional_power_connection * (this.stall_power.length - selectedStallSiteType.included_power_connections)
+    }
+
     if (!selectedStallSiteType.price_tiers.length) {
-      return selectedStallSiteType.price
+      return power_price + selectedStallSiteType.price
     }
     // Determine price from tiers
     for (let index = 0; index < selectedStallSiteType.price_tiers.length; index++) {
       const price_tier = selectedStallSiteType.price_tiers[index]
       if (price_tier.maximum_area >= area) {
-        return price_tier.base_price + (area - price_tier.base_area) * price_tier.price_per_square_metre
+        return power_price + price_tier.base_price + (area - price_tier.base_area) * price_tier.price_per_square_metre
       }
     }
-    return 0
+    return power_price + 0
   }
 
   async calculatedPrice(): Promise<{
