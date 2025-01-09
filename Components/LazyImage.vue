@@ -275,7 +275,7 @@ watch(() => props, () => {
 
 onMounted(async () => {
   use_webp = await useWebpStore().isSupported()
-  use_avif = await useAVIFStore().isSupported()
+  use_avif = false // await useAVIFStore().isSupported()
   await newImage()
 })
 
