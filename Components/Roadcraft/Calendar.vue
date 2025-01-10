@@ -76,10 +76,10 @@
                     <div v-if="eventDay.event.student_numbers">
                       S: {{ eventDay.event.student_numbers }}
                     </div>
-                    <div v-if="eventDay.event.status == 'Offered'" class="absolute right-1 top-1 text-danger-500" title="Offered">
-                      <i-heroicons-solid:question-mark-circle />
+                    <div v-if="eventDay.event.status == 'Offered'" class="absolute right-1 top-1" title="Offered">
+                      <i-heroicons-solid:exclamation-triangle />
                     </div>
-                    <div v-if="eventDay.event.status == 'Pending Numbers'" class="absolute right-1 top-1 text-warning-500" title="Pending Numbers">
+                    <div v-if="eventDay.event.status == 'Pending Numbers'" class="absolute right-1 top-1" title="Pending Numbers">
                       <i-heroicons-solid:question-mark-circle />
                     </div>
                   </div>
