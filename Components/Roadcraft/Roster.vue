@@ -11,6 +11,11 @@
       Today
     </cgn-button>
   </div>
+  <div v-if="is_draft" class="absolute inset-0 items-center justify-center flex pointer-events-none">
+    <div class="text-9xl text-black/30 -rotate-45">
+      DRAFT
+    </div>
+  </div>
   <div class="overflow-x-scroll">
     <table class="border-separate border-spacing-0 border-black">
       <tr class="border-inherit">
@@ -324,6 +329,8 @@ const getDayColor = (day: CognitoTime) => {
   return 'bg-orange-100'
 }
 
+const is_draft = ref(false)
+
 const getPlannerData = () => {
   $axios.graphql(gql`query roadcraftCalendarQuery($calendarStart: String!, $calendarEnd: String!){
     roadcraftFacilitys {
@@ -331,6 +338,7 @@ const getPlannerData = () => {
       name
     }
     roadcraftMisc {
+      is_draft_roster(date: $calendarStart)
       calendar(from_date: $calendarStart, to_date: $calendarEnd) {
         date
         eventDays(hide_hidden_from_roster: true) {
@@ -393,6 +401,7 @@ const getPlannerData = () => {
     calendarStart: formatISO(addMonths(startOfMonth(today.value.time), month_offset.value), { representation: 'date' }),
     calendarEnd: formatISO(endOfMonth(addMonths(today.value.time, month_offset.value)), { representation: 'date' }),
   }).then((data: any) => {
+    is_draft.value = data.roadcraftMisc.is_draft_roster
     facilities.value = data.roadcraftFacilitys
     days.value = data.roadcraftMisc.calendar.map(e => new RoadcraftPlannerDay(e))
     educators.value = data.roadcraftMisc.educators.map(e => new RoadcraftPlannerEducator(e))
