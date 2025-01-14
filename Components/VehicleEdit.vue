@@ -18,12 +18,12 @@
         <div class="grid grid-cols-2 gap-x-2 sm:grid-cols-3">
           <cgn-form-input v-model="newVehicle.year_of_manufacture" type="number" label="Year of manufacture" class="w-full" required />
           <cgn-form-input-text v-model="newVehicle.racing_number" min-amount="0" type="number" label="Racing Number" class="w-full" />
-          <cgn-form-dropdown v-if="!props.requireRegistration" v-model="isRegistered" :options="['Yes', 'No']" label="Is this vehicle registered?" required />
+          <cgn-form-input-text v-model="newVehicle.registration" label="Registration / Number Plate" class="w-full" required />
         </div>
-        <div v-if="isRegistered == 'Yes' || props.requireRegistration" class="grid grid-cols-2 gap-x-2 sm:grid-cols-3">
-          <cgn-form-input-text v-model="newVehicle.registration" label="Registration" class="w-full" required />
-          <cgn-form-dropdown v-model="newVehicle.registration_state_id" :options="states" label="Registration State" required />
-          <cgn-form-input v-model="newVehicle.registration_expiry" type="date" label="Registration Expiry" class="col-span-2 w-full sm:col-span-1" required />
+        <div class="grid grid-cols-2 gap-x-2 sm:grid-cols-3">
+          <cgn-form-dropdown v-if="!props.requireRegistration" v-model="isRegistered" :options="['Yes', 'No']" label="Is this vehicle registered?" required />
+          <cgn-form-dropdown v-model="newVehicle.registration_state_id" :options="states" label="Registration State" :required="requireRegistration" />
+          <cgn-form-input v-model="newVehicle.registration_expiry" type="date" label="Registration Expiry" class="col-span-2 w-full sm:col-span-1" :required="requireRegistration" />
         </div>
         <div class="grid grid-cols-2 gap-x-2">
           <cgn-form-input-text v-model="newVehicle.vehicle_owner" label="Vehicle Owner" class="w-full" required />
@@ -88,6 +88,16 @@ const newVehicle = ref<EventVehicle>(new EventVehicle())
 const selectedVehicle = ref(0)
 const newVehiclePhoto = ref('')
 const isRegistered = ref('')
+
+const requireRegistration = computed(() => {
+  if (isRegistered.value == 'Yes') {
+    return true
+  }
+  if (props.requireRegistration) {
+    return true
+  }
+  return false
+})
 
 const loadInductionTypes = async () => {
   const data = await new EventVehicleInductionType().find_many({})
