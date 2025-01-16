@@ -67,15 +67,15 @@ class CognitoTime {
   }
 
   toDateString(): string {
-    return format(this.time, 'Y-MM-dd')
+    return format(this.time, 'y-MM-dd')
   }
 
   toISO8601String(): string {
-    return format(this.time, 'Y-MM-dd\'T\'HH:mm:ssXX')
+    return format(this.time, 'y-MM-dd\'T\'HH:mm:ssXX')
   }
 
   toDateTimeString(): string {
-    return format(this.time, 'Y-MM-dd HH:mm:ss')
+    return format(this.time, 'y-MM-dd HH:mm:ss')
   }
 
   toHumanDateString(include_year: boolean): string {
