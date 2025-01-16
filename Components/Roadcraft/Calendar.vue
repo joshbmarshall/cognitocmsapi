@@ -19,13 +19,14 @@
           public holidays
         </div>
       </div>
+      <i-heroicons-outline:printer class="mr-3 cursor-pointer text-right" @click="doprint" />
       <div v-if="false" class="flex justify-center py-2">
         <cgn-button color-brand fullwidth @click="toggleEventView()">
           {{ showAllEvents ? 'All events' : 'Your events' }}
         </cgn-button>
       </div>
     </div>
-    <div ref="roadcraftCalendarContainer" class="h-[80vh] overflow-x-scroll">
+    <div ref="roadcraftCalendarContainer" :class="print_view ? '' : 'h-[80vh] overflow-x-scroll'">
       <div class="sticky top-0 z-10 w-fit bg-white xl:w-full">
         <div class="flex flex-row">
           <div class="sticky left-0 top-0 min-w-16 border-r-2 border-gray-400 bg-white" />
@@ -257,12 +258,20 @@ const roadcraftCalendarContainer = ref()
 
 const showAllEvents = ref(true)
 
+const print_view = ref(false)
 const modal_open = ref(false)
 const modalEvent = ref()
 
 const selectEvent = (event) => {
   modalEvent.value = event
   modal_open.value = true
+}
+
+const doprint = () => {
+  print_view.value = true
+  nextTick(() => {
+    window.print()
+  })
 }
 
 const getFilteredDay = (day: RoadcraftCalendarDay) => {
