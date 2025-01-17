@@ -40,7 +40,7 @@
           <div class="prose-dark" v-html="terms" />
           <cgn-form-checkbox required label="I accept these terms" />
         </div>
-        <cgn-button v-if="totalPrice > 0">
+        <cgn-button v-if="totalPrice > 0 || isFreeMembership">
           Pay ${{ totalPrice.toFixed(2) }} Now
         </cgn-button>
       </div>
@@ -86,6 +86,12 @@ const totalPrice = computed(() => {
     total += e.qty * e.cost
   })
   return total
+})
+const isFreeMembership = computed(() => {
+  if (!selected_membership_type.value) {
+    return false
+  }
+  return Number.parseFloat(selected_membership_type.value.price) == 0
 })
 
 const membershipTypesRadio = computed(() => {
