@@ -72,6 +72,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  forceSelectionArray: {
+    type: Boolean,
+    default: false,
+  },
   modelValue: {
     type: [String, Number, Array<string>, Array<number>],
     default: '',
@@ -115,6 +119,17 @@ const outerDiv = ref()
 const { width } = useElementSize(outerDiv)
 const screenScale = 10000
 
+const doEmit = (value: any) => {
+  if (typeof value == 'object') {
+    emit('update:modelValue', value)
+  }
+  else if (props.forceSelectionArray || value == 0) {
+    emit('update:modelValue', [value])
+  }
+  else {
+    emit('update:modelValue', value)
+  }
+}
 const rects = ref<CognitoMapSite[]>([])
 
 const setPositions = () => {
@@ -161,12 +176,12 @@ const selectSite = (rect: CognitoMapSite) => {
     } else {
       newValue.push(rect.id)
     }
-    emit('update:modelValue', newValue)
+    doEmit(newValue)
   } else {
     if (rect.id == props.modelValue) {
-      emit('update:modelValue', 0)
+      doEmit(0)
     } else {
-      emit('update:modelValue', rect.id)
+      doEmit(rect.id)
     }
   }
 }
@@ -193,11 +208,11 @@ onMounted(async () => {
   })
   if (props.multipleSelection) {
     if (typeof (props.modelValue) != 'object') {
-      emit('update:modelValue', [])
+      doEmit([])
     }
   } else {
     if (typeof (props.modelValue) == 'object') {
-      emit('update:modelValue', 0)
+      doEmit(0)
     }
   }
   setPositions()
