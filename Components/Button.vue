@@ -6,7 +6,7 @@
     <slot />
   </router-link>
   <component
-    :is="url.startsWith('http') ? 'a' : 'router-link'"
+    :is="(url.startsWith('http') || url.startsWith('mailto:')) ? 'a' : 'router-link'"
     v-else-if="url && !disabled"
     :to="url"
     :href="url"
