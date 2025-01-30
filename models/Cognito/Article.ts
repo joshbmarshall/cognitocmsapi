@@ -37,6 +37,9 @@ class CognitoArticle extends CognitoBase {
     this.reading_time = 0
     this.rows = []
     Object.assign(this, source)
+    if (source?.publish_time) {
+      this.publish_time = new CognitoTime(source.publish_time)
+    }
   }
 }
 
