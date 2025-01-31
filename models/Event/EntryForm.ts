@@ -794,5 +794,10 @@ class EventEntryForm {
     }))
     return options
   }
+
+  stallSitesForLocation(location_id: number) {
+    const stall_site_ids = this.eventDetails?.stall_site_types.filter(e => e.location_ids.includes(location_id) || e.location_ids.length == 0).map(e => e.id)
+    return stall_site_ids
+  }
 }
 export { EventEntryForm, EventEntryFormMerch, EventEntryFormRadio, EventEntryFormSpectator, EventEntryFormExtra, EventEntryFormStallPower }

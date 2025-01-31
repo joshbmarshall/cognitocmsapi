@@ -22,6 +22,7 @@ class EventStallSiteType extends CognitoBase {
   max_site_area: number
   included_power_connections: number
   additional_power_connection: number
+  location_ids: number[]
   baseurl() {
     return '/api/v1/event/stallSiteType'
   }
@@ -43,6 +44,7 @@ class EventStallSiteType extends CognitoBase {
     this.max_site_area = 0
     this.included_power_connections = 0
     this.additional_power_connection = 0
+    this.location_ids = []
     Object.assign(this, source)
   }
 }
