@@ -80,6 +80,7 @@ class EventEvent extends CognitoBase {
   stall_vehicle_make_and_model: string
   stall_vehicle_registration: string
   stall_power: EventEntryFormStallPower[]
+  stall_not_for_profit_multiplier: number
   featured_event?: boolean
   featured_desktop_image?: CognitoImage
   featured_mobile_image?: CognitoImage
@@ -150,6 +151,7 @@ class EventEvent extends CognitoBase {
     this.stall_vehicle_make_and_model = ''
     this.stall_vehicle_registration = ''
     this.stall_power = []
+    this.stall_not_for_profit_multiplier = 1
     this.payment_methods = []
     this.terms_and_conditions = []
     this.combined_terms = ''

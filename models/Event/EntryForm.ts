@@ -183,6 +183,8 @@ class EventEntryForm {
   stall_food_licence_expiry: string
   stall_power: EventEntryFormStallPower[]
   stall_photos: CognitoPhoto[]
+  stall_not_for_profit: boolean
+  stall_not_for_profit_number: string
 
   constructor(source?: Partial<EventEntryForm>) {
     this.first_name = ''
@@ -251,6 +253,8 @@ class EventEntryForm {
     this.stall_food_licence_file = ''
     this.stall_food_licence_expiry = ''
     this.stall_photos = []
+    this.stall_not_for_profit = false
+    this.stall_not_for_profit_number = ''
     Object.assign(this, source)
   }
 
@@ -708,6 +712,13 @@ class EventEntryForm {
     return this.stall_area() > 0
   }
 
+  stallNFPHireAmount(amount: number) {
+    if (this.stall_not_for_profit && this.stall_not_for_profit_number) {
+      return amount * (this.eventDetails?.stall_not_for_profit_multiplier || 1)
+    }
+    return amount
+  }
+
   stallHirePrice() {
     const area = this.stall_length * this.stall_width
 
@@ -722,13 +733,13 @@ class EventEntryForm {
     }
 
     if (!selectedStallSiteType.price_tiers.length) {
-      return power_price + selectedStallSiteType.price
+      return power_price + this.stallNFPHireAmount(selectedStallSiteType.price)
     }
     // Determine price from tiers
     for (let index = 0; index < selectedStallSiteType.price_tiers.length; index++) {
       const price_tier = selectedStallSiteType.price_tiers[index]
       if (price_tier.maximum_area >= area) {
-        return power_price + price_tier.base_price + (area - price_tier.base_area) * price_tier.price_per_square_metre
+        return power_price + this.stallNFPHireAmount(price_tier.base_price + (area - price_tier.base_area) * price_tier.price_per_square_metre)
       }
     }
     return power_price + 0
