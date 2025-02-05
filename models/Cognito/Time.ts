@@ -1,4 +1,4 @@
-import { addDays, addMinutes, differenceInCalendarDays, differenceInYears, format, isAfter, isFuture, isPast, isSameDay, isSameMonth, isWeekend, parseISO, subDays, subMinutes, subMonths } from 'date-fns'
+import { addDays, addMinutes, differenceInCalendarDays, differenceInYears, format, isAfter, isBefore, isFuture, isPast, isSameDay, isSameMonth, isWeekend, parseISO, subDays, subMinutes, subMonths } from 'date-fns'
 
 class CognitoTime {
   time: Date
@@ -113,6 +113,10 @@ class CognitoTime {
 
   isAfter(othertime: CognitoTime): boolean {
     return isAfter(this.time, othertime.time)
+  }
+
+  isBefore(othertime: CognitoTime): boolean {
+    return isBefore(this.time, othertime.time)
   }
 
   hour(): number {
