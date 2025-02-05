@@ -317,14 +317,14 @@ const showMonthLabel = (day) => {
 }
 
 onMounted(() => {
-  $axios.graphql(gql`query roadcraftCalendarQuery($calendarStart: String!, $calendarEnd: String!){
+  $axios.graphql(gql`query roadcraftCalendarQuery($calendarStart: String!){
     roadcraftFacilitys {
       id
       name
       is_primary_facility
     }
     roadcraftMisc {
-      calendar(from_date: $calendarStart, to_date: $calendarEnd) {
+      calendar(from_date: $calendarStart) {
         date
         holiday {
           name
@@ -383,7 +383,6 @@ onMounted(() => {
     }
   }`, {
     calendarStart: formatISO(startOfMonth(subMonths(new Date(), 1)), { representation: 'date' }),
-    calendarEnd: formatISO(endOfMonth(addMonths(new Date(), 6)), { representation: 'date' }),
   }).then((data: any) => {
     facilities.value = data.roadcraftFacilitys
     console.log(facilities.value[0])
