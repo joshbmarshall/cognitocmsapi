@@ -26,6 +26,10 @@
           <td v-for="day, index in days" :key="index" class="w-20 border-y border-r border-inherit text-center" :class="getDayColor(day.date)" :colspan="day.eventDays.length">
             {{ day.date.format('d') }}
           </td>
+          <td class="w-20 text-center" colspan="2">
+            Days
+            Work
+          </td>
         </tr>
         <tr class="border-inherit">
           <th class="sticky left-0 z-10 border-x border-b-2 border-inherit bg-blue-50 font-medium">
@@ -34,6 +38,7 @@
           <td v-for="day, index in days" :key="index" class="border-b-2 border-r border-inherit text-center" :class="getDayColor(day.date)" :colspan="day.eventDays.length">
             {{ day.date.format('E') }}
           </td>
+          <td />
         </tr>
         <tr class="border-inherit">
           <th class="sticky left-0 z-10 h-36 border-x border-b border-inherit bg-blue-50">
@@ -56,6 +61,7 @@
             </td>
             <td v-if="day.eventDays.length < 1" class="min-w-10 border-b border-r border-inherit text-center" :class="getDayColor(day.date)" />
           </template>
+          <td />
         </tr>
         <tr class="border-inherit">
           <th class="sticky left-0 z-10 border-x border-b-2 border-inherit bg-blue-50">
@@ -67,6 +73,7 @@
             </td>
             <td v-if="day.eventDays.length < 1" class="min-w-10 border-b-2 border-r border-inherit text-center" :class="getDayColor(day.date)" />
           </template>
+          <td />
         </tr>
         <tr class="border-inherit">
           <th class="sticky left-0 z-10 border-x border-b-2 border-inherit bg-blue-50">
@@ -78,6 +85,7 @@
             </td>
             <td v-if="day.eventDays.length < 1" class="min-w-10 border-b-2 border-r border-inherit text-center" :class="getDayColor(day.date)" />
           </template>
+          <td />
         </tr>
         <tr v-for="educator in educators" :key="educator.id" class="text-nowrap border-inherit text-center text-sm odd:bg-[#ddd9c3] even:bg-white">
           <th class="sticky left-0 z-10 border-x border-b border-inherit bg-inherit px-0.5">
@@ -89,6 +97,12 @@
                 {{ status.text }}
               </div>
             </div>
+          </td>
+          <td class="min-w-10 text-center">
+            {{ educator.days_rostered }}
+          </td>
+          <td class="min-w-10 text-center">
+            {{ educator.weekend_days_rostered }}
           </td>
         </tr>
         <tr v-for="facility in facilities" :key="facility.id" class="text-nowrap border-inherit text-center text-sm">
@@ -102,6 +116,7 @@
               </div>
             </div>
           </td>
+          <td />
         </tr>
         <tr class="border-inherit">
           <th class="sticky left-0 z-10 h-10 border-x border-t-2 border-inherit bg-blue-50">
@@ -113,6 +128,7 @@
               ({{ accommodation.residents.join(', ') }})
             </div>
           </td>
+          <td />
         </tr>
         <tr class="border-inherit">
           <th class="sticky left-0 z-10 border-x border-t-2 border-inherit bg-blue-50 font-medium">
@@ -121,6 +137,7 @@
           <td v-for="day, index in days" :key="index" class="border-r border-t-2 border-inherit text-center" :class="getDayColor(day.date)" :colspan="day.eventDays.length">
             {{ day.date.format('d') }}
           </td>
+          <td />
         </tr>
         <tr class="border-inherit">
           <th class="sticky left-0 z-10 border border-inherit bg-blue-50 font-medium">
@@ -129,6 +146,7 @@
           <td v-for="day, index in days" :key="index" class="border-y border-r border-inherit text-center" :class="getDayColor(day.date)" :colspan="day.eventDays.length">
             {{ day.date.format('E') }}
           </td>
+          <td />
         </tr>
       </tbody>
     </table>
@@ -409,10 +427,12 @@ const getPlannerData = () => {
           residents
         }
       }
-      educators {
+      educators(from_date: $calendarStart, to_date: $calendarEnd) {
         id
         first_name
         last_name
+        days_rostered
+        weekend_days_rostered
       }
     }
   }`, {
