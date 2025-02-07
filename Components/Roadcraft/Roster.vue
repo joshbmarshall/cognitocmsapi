@@ -260,11 +260,15 @@ class RoadcraftPlannerEducator {
   id: number
   first_name: string
   last_name: string
+  days_rostered: number
+  weekend_days_rostered: number
 
   constructor(source?: Partial<RoadcraftPlannerEducator>) {
     this.id = 0
     this.first_name = ''
     this.last_name = ''
+    this.days_rostered = 0
+    this.weekend_days_rostered = 0
 
     Object.assign(this, source)
   }
