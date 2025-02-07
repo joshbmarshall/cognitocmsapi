@@ -18,7 +18,7 @@
   </div>
   <div class="overflow-x-scroll">
     <table class="border-separate border-spacing-0 border-black">
-      <tbody>
+      <tbody class="border-inherit">
         <tr class="border-inherit">
           <th class="sticky left-0 z-10 border border-inherit bg-blue-50 font-medium">
             Date
