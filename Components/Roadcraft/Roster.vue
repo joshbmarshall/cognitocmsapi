@@ -188,6 +188,7 @@ class RoadcraftPlannerDay {
         name: string
         short_name: string
       }
+      note: string
     }[]
     facilities: {
       id: number
@@ -295,6 +296,7 @@ const getStatusColor = (status: string) => {
 }
 
 const getEducatorDayStatus = (day: RoadcraftPlannerDay, educator: RoadcraftPlannerEducator): RoadcraftCellColouredText[] => {
+  const status = []
   const unavailable = day.staffUnavailable.find(e => e.staff_id == educator.id)
   if (unavailable) {
     // Check is if AM
@@ -302,16 +304,17 @@ const getEducatorDayStatus = (day: RoadcraftPlannerDay, educator: RoadcraftPlann
     const unavailable_to = new CognitoTime(unavailable.to)
     const unavailable_from = new CognitoTime(unavailable.from)
     if (unavailable_to.isBefore(noon.addMinutes(1))) {
-      return [new RoadcraftCellColouredText({ text: 'AWAY AM' })]
+      status.push(new RoadcraftCellColouredText({ text: 'AWAY AM' }))
     }
     // Check is if PM
-    if (unavailable_from.isAfter(noon.subMinutes(1))) {
-      return [new RoadcraftCellColouredText({ text: 'AWAY PM' })]
+    else if (unavailable_from.isAfter(noon.subMinutes(1))) {
+      status.push(new RoadcraftCellColouredText({ text: 'AWAY PM' }))
     }
-
-    return [new RoadcraftCellColouredText({ text: 'AWAY' })]
+    // Must be whole day
+    else {
+      status.push(new RoadcraftCellColouredText({ text: 'AWAY' }))
+    }
   }
-  const status = []
   for (let index = 0; index < day.eventDays.length; index++) {
     const eventDay = day.eventDays[index]
     const eventDayEducator = eventDay.eventDayEducators.find(e => e.event_educator.educator_id == educator.id)
@@ -325,6 +328,7 @@ const getEducatorDayStatus = (day: RoadcraftPlannerDay, educator: RoadcraftPlann
     if (eventDayEducator.role?.short_name) {
       thisstatus += `-${eventDayEducator.role?.short_name}`
     }
+    thisstatus += ` ${eventDayEducator.note}`
     status.push(new RoadcraftCellColouredText({
       text: thisstatus,
       class: getStatusColor(eventDay.event.status),
@@ -399,6 +403,7 @@ const getPlannerData = () => {
               name
               short_name
             }
+            note
           }
           facilities {
             id
