@@ -1,5 +1,5 @@
 <template>
-  <div v-if="crs" class="h-96 w-full">
+  <div v-if="crs" class="h-[80dvh] w-full">
     <LMap
       ref="map"
       v-model:zoom="zoom"
@@ -122,11 +122,9 @@ const screenScale = 10000
 const doEmit = (value: any) => {
   if (typeof value == 'object') {
     emit('update:modelValue', value)
-  }
-  else if (props.forceSelectionArray || value == 0) {
+  } else if (props.forceSelectionArray || value == 0) {
     emit('update:modelValue', [value])
-  }
-  else {
+  } else {
     emit('update:modelValue', value)
   }
 }
