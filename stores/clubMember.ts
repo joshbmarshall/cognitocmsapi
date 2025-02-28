@@ -13,6 +13,7 @@ export const useClubMemberStore = defineStore({
       name: '',
       additional_member: '',
       valid_to: '',
+      no_expiry: false,
       hasPrior: false,
       is_approved: false,
       home_track: 0,
@@ -24,18 +25,27 @@ export const useClubMemberStore = defineStore({
   },
   getters: {
     valid_to_formatted(state) {
+      if (state.no_expiry) {
+        return ''
+      }
       if (!state.valid_to) {
         return ''
       }
       return format(new Date(state.valid_to), 'do LLL yyyy')
     },
     canRenew(state) {
+      if (state.no_expiry) {
+        return false
+      }
       if (!state.valid_to) {
         return true
       }
       return new CognitoTime(state.valid_to).subMonths(1).isPast()
     },
     needsRenewal(state) {
+      if (state.no_expiry) {
+        return false
+      }
       if (!state.valid_to) {
         return true
       }
@@ -48,6 +58,7 @@ export const useClubMemberStore = defineStore({
       this.number = res.data.number
       this.name = res.data.name
       this.additional_member = res.data.additional_member
+      this.no_expiry = res.data.no_expiry
       this.valid_to = res.data.valid_to
       this.racers_id = res.data.racers_id
       this.type = res.data.type
