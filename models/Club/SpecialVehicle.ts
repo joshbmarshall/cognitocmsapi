@@ -10,6 +10,7 @@ class ClubSpecialVehicle extends CognitoBase {
   registration_number: string
   registered_owners_name: string
   vin_chassis_number: string
+  engine_number: string
   manufacture_month: string
   manufacture_year: string
   vehicle_photo: CognitoPhoto
@@ -24,6 +25,7 @@ class ClubSpecialVehicle extends CognitoBase {
     this.registration_number = ''
     this.registered_owners_name = ''
     this.vin_chassis_number = ''
+    this.engine_number = ''
     this.manufacture_month = ''
     this.manufacture_year = ''
     this.vehicle_photo = new CognitoPhoto()
