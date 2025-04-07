@@ -24,9 +24,9 @@
         </video>
       </div>
       <div class="relative flex h-[500px] flex-col p-8" :class="textClass">
-        <cgn-image v-if="props.templatevar.image_hashes?.overlay_image" :image-hash="props.templatevar.image_hashes.overlay_image" class="h-16 p-2" :width="100" aspect="raw" />
-        <cgn-lazy-image v-else-if="templatevar.overlay_image" class="h-16 p-2" :image="templatevar.overlay_image" />
-        <div class="pb-2 font-title text-2xl font-semibold md:text-4xl">
+        <cgn-image v-if="props.templatevar.image_hashes?.overlay_image" :image-hash="props.templatevar.image_hashes.overlay_image" class="max-w-lg p-2" :width="100" aspect="raw" />
+        <cgn-lazy-image v-else-if="templatevar.overlay_image" class="max-w-lg p-2" :image="templatevar.overlay_image" />
+        <div class="font-title pb-2 text-2xl font-semibold md:text-4xl">
           {{ templatevar.heading }}
         </div>
         <div v-if="templatevar.subheading" class="mb-2 font-display text-xl font-semibold">
@@ -109,15 +109,15 @@ const textClass = computed(() => {
   }
 
   classes += ` ${[
-  { name: 'text-white', id: 'wht' },
-  { name: 'text-black', id: 'blk' },
-  { name: 'text-brand-500', id: 'bnd' },
-  { name: 'text-primary-500', id: 'pri' },
-  { name: 'text-secondary-500', id: 'sec' },
-  { name: 'text-success-500', id: 'suc' },
-  { name: 'text-info-500', id: 'inf' },
-  { name: 'text-warning-500', id: 'wrn' },
-  { name: 'text-danger-500', id: 'dng' },
+    { name: 'text-white', id: 'wht' },
+    { name: 'text-black', id: 'blk' },
+    { name: 'text-brand-500', id: 'bnd' },
+    { name: 'text-primary-500', id: 'pri' },
+    { name: 'text-secondary-500', id: 'sec' },
+    { name: 'text-success-500', id: 'suc' },
+    { name: 'text-info-500', id: 'inf' },
+    { name: 'text-warning-500', id: 'wrn' },
+    { name: 'text-danger-500', id: 'dng' },
   ].find(e => e.id === props.templatevar.text_colour)?.name}`
 
   if (props.templatevar.parallax == 1) {
@@ -140,10 +140,10 @@ const imageClass = computed(() => {
   ].find(e => e.id === props.templatevar.image_opacity)?.name
 
   classes += ` ${[
-  { name: 'saturate-0', id: '0' },
-  { name: 'saturate-50', id: '50' },
-  { name: 'saturate-100', id: '100' },
-].find(e => e.id === props.templatevar.image_saturation)?.name}`
+    { name: 'saturate-0', id: '0' },
+    { name: 'saturate-50', id: '50' },
+    { name: 'saturate-100', id: '100' },
+  ].find(e => e.id === props.templatevar.image_saturation)?.name}`
 
   if (props.templatevar.parallax == 1) {
     classes += ' sm:bg-fixed'
