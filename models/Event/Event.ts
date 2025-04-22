@@ -35,6 +35,7 @@ class EventEvent extends CognitoBase {
   entrant_content: string
   spectator_content: string
   stallholder_content: string
+  spectator_form_link: string
   merch_content: string
   entries_open_at: CognitoTime
   can_enter: boolean
@@ -112,6 +113,7 @@ class EventEvent extends CognitoBase {
     this.entrant_content = ''
     this.spectator_content = ''
     this.stallholder_content = ''
+    this.spectator_form_link = ''
     this.merch_content = ''
     this.can_enter = false
     this.cant_enter_reason = ''
