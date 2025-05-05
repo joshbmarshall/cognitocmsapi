@@ -119,6 +119,7 @@ class EventEntryForm {
   last_name: string
   email: string
   mobile_phone: string
+  ambassadorCode?: string
   event_id?: string | number
   category_id: number
   address_id: number
@@ -258,7 +259,7 @@ class EventEntryForm {
     Object.assign(this, source)
   }
 
-  async loadEvent(event: string): Promise<EventEvent> {
+  prefillFromUser() {
     const user = useUserStore().user
     if (user) {
       this.first_name = user.first_name
@@ -266,6 +267,11 @@ class EventEntryForm {
       this.email = user.email
       this.mobile_phone = user.mobile_phone
     }
+    this.url = location.href
+  }
+
+  async loadEvent(event: string): Promise<EventEvent> {
+    this.prefillFromUser()
     const data = await new EventEvent().find_one({
       url: event,
       image_width: 1920,
@@ -275,7 +281,6 @@ class EventEntryForm {
     this.event_id = eventDetails.id
     this.address_id = eventDetails.last_address_id
     this.vehicle_id = eventDetails.last_vehicle_id
-    this.url = location.href
     this.aasa_licence = eventDetails.aasa_licence
     if (eventDetails.race_licence_number) {
       this.race_licence_number = eventDetails.race_licence_number
