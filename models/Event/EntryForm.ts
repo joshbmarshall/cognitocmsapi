@@ -267,7 +267,9 @@ class EventEntryForm {
       this.email = user.email
       this.mobile_phone = user.mobile_phone
     }
-    this.url = location?.href
+    if (typeof (location) != 'undefined') {
+      this.url = location.href
+    }
   }
 
   async loadEvent(event: string): Promise<EventEvent> {
