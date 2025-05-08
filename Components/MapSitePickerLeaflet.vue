@@ -21,19 +21,6 @@
           {{ rect.hoverText }}
         </LTooltip>
       </LRectangle>
-      <LRectangle
-        :lat-lngs="[
-          [5, 5],
-          [5, 10],
-          [10, 10],
-          [10, 5],
-        ]"
-        :fill="true"
-        color="#35495d"
-        @click="console.log('test')"
-      >
-        <LTooltip>name! </LTooltip>
-      </LRectangle>
     </LMap>
   </div>
 </template>
