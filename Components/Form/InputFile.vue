@@ -7,6 +7,7 @@
             type="file"
             class="block w-full text-sm text-slate-500 file:mr-4 file:rounded-lg file:border-0 file:bg-indigo-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-indigo-700 dark:file:bg-blue-600 dark:file:hover:bg-blue-700"
             disabled-accept="image/*"
+            :accept="props.accept"
             @change="upload"
           >
         </div>
@@ -27,6 +28,10 @@ const props = defineProps({
   },
   modelValue: {
     type: [String, Number],
+    default: '',
+  },
+  accept: {
+    type: String,
     default: '',
   },
   url: {
