@@ -119,6 +119,7 @@ class EventEntryForm {
   last_name: string
   email: string
   mobile_phone: string
+  postcode?: string
   ambassadorCode?: string
   event_id?: string | number
   category_id: number
