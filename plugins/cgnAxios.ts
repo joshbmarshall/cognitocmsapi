@@ -54,6 +54,11 @@ class CgnAxios {
 
     if (!settings.userStore) {
       settings.userStore = useUserStore
+      if (this.baseURL != settings.userStore.baseURL) {
+        setTimeout(() => {
+          useUserStore().baseURL = this.baseURL
+        }, 1000)
+      }
     }
 
     this.userStore = settings.userStore
