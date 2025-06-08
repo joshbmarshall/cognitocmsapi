@@ -42,11 +42,9 @@ class CognitoAddressLookup {
     q: string
     apiKey: string
   }): Promise<any> {
-    const at = `${params.latitude},${params.longitude}`
     return await axios
-      .get('https://autosuggest.search.hereapi.com/v1/autosuggest', {
+      .get('https://autocomplete.search.hereapi.com/v1/autocomplete', {
         params: {
-          at,
           q: params.q,
           apiKey: params.apiKey,
         },

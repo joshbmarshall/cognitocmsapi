@@ -134,7 +134,12 @@ watchDebounced(() => searchTerm.value, (newVal) => {
         search.value = []
         return
       }
-      search.value = result.data.items
+      search.value = result.data.items.map((e) => {
+        return {
+          id: e.id,
+          title: e.address.label,
+        }
+      })
       searchInput.value?.scrollIntoView({ behavior: 'smooth' })
     })
 }, {
