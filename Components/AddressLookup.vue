@@ -24,6 +24,7 @@
 </template>
 
 <script setup lang="ts">
+import { watchDebounced } from '@vueuse/core'
 import { CognitoAddressLookup } from '~cognito/models/Cognito/AddressLookup'
 
 const props = defineProps({
@@ -108,7 +109,7 @@ watch(() => props.modelValue, () => {
   validateAddress()
   setPlaceholder()
 })
-watch(() => searchTerm.value, (newVal) => {
+watchDebounced(() => searchTerm.value, (newVal) => {
   if (newVal.length < 5) {
     search.value = []
     return
@@ -136,6 +137,9 @@ watch(() => searchTerm.value, (newVal) => {
       search.value = result.data.items
       searchInput.value?.scrollIntoView({ behavior: 'smooth' })
     })
+}, {
+  debounce: 1000,
+  maxWait: 5000,
 })
 
 const selectAddress = (location: {
