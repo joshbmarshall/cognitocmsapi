@@ -56,6 +56,7 @@ class EventEvent extends CognitoBase {
   camp_site_map?: CognitoImage
   camp_sites: EventCampSite[]
   offer_camp_sites: boolean
+  camp_sites_restricted_to_entrants: boolean
   extras: EventExtra[]
   merch: EventMerch[]
   products: EventProduct[]
@@ -131,6 +132,7 @@ class EventEvent extends CognitoBase {
     this.user_has_entered_this_event = false
     this.camp_sites = []
     this.offer_camp_sites = false
+    this.camp_sites_restricted_to_entrants = false
     this.extras = []
     this.merch = []
     this.products = []
