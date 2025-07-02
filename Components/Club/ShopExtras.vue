@@ -9,7 +9,7 @@
     <form @submit.prevent="purchase">
       <div v-if="extras.length">
         <div class="w-full pt-2 text-center text-2xl">
-          Purchase Extras
+          Purchase
         </div>
         <div v-for="extra in extras" :key="extra.id">
           <cgn-form-checkbox v-if="extra.max_qty == 1" v-model="extra.qty" :label="extra.name" />
