@@ -8,7 +8,7 @@
     <cgn-modal v-model="fail" :timeout="3000">
       <template #icon>
         <div
-          class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100 sm:h-10 sm:w-10"
+          class="flex size-12 shrink-0 items-center justify-center rounded-full bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100 sm:size-10"
         >
           <i-heroicons-solid:exclamation />
         </div>
@@ -37,7 +37,7 @@
     <cgn-modal v-model="success" :timeout="3000">
       <template #icon>
         <div
-          class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-success-100 text-success-700 dark:bg-success-700 dark:text-success-100 sm:h-10 sm:w-10"
+          class="flex size-12 shrink-0 items-center justify-center rounded-full bg-success-100 text-success-700 dark:bg-success-700 dark:text-success-100 sm:size-10"
         >
           <i-heroicons-solid:check />
         </div>
@@ -66,7 +66,6 @@
     <div class="overflow-hidden">
       <div
         class="
-          font-display
           bg-gray-300
           py-12
           text-center
@@ -87,8 +86,7 @@
             <div
               class="
             -mt-16
-            h-32
-            w-32
+            size-32
             cursor-pointer
             select-none
             rounded-full
@@ -97,12 +95,12 @@
             bg-gray-800/0
             bg-cover
             bg-center
-            py-12 text-center
-            font-medium
+            py-12
+            text-center font-medium
             text-white
             text-opacity-0
-            bg-blend-overlay transition
-            duration-200
+            bg-blend-overlay
+            transition duration-200
             ease-in-out
             hover:bg-gray-800/90
             hover:text-opacity-100
@@ -111,7 +109,7 @@
               Edit headshot
             </div>
             <div>
-              <div class="-ml-6 -mt-10 h-7 w-7 rounded-full bg-black/75 p-1 text-center text-white">
+              <div class="-ml-6 -mt-10 size-7 rounded-full bg-black/75 p-1 text-center text-white">
                 <i-heroicons-solid:pencil />
               </div>
               <input type="file" class="hidden" @change="slot.upload">
