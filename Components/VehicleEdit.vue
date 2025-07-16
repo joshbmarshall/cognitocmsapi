@@ -29,7 +29,7 @@
           <cgn-form-input-text v-model="newVehicle.vehicle_owner" label="Vehicle Owner" class="w-full" required />
           <cgn-form-input-phone v-model="newVehicle.owner_mobile" label="Owner mobile" class="w-full" required />
         </div>
-        <cgn-form-image v-model="newVehiclePhoto" label="Photo" :required="props.requirePhoto" :thumbnail="newVehicle.photo?.url" />
+        <cgn-form-image v-model="newVehiclePhoto" label="Vehicle Photo" :required="props.requirePhoto" :thumbnail="newVehicle.photo?.url" />
       </div>
       <div class="w-full p-2">
         <cgn-button
