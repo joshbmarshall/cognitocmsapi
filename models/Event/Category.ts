@@ -16,6 +16,7 @@ class EventCategory extends CognitoBase {
   unavailable_garage_types: number[]
   vehicle_must_be_registered: boolean
   cannot_enter_reason: string
+  can_show_price: boolean
   no_race_licence_required: boolean
   ask_if_sharing_vehicle: boolean
   ask_expected_time: boolean
@@ -41,6 +42,7 @@ class EventCategory extends CognitoBase {
     this.unavailable_garage_types = []
     this.vehicle_must_be_registered = true
     this.cannot_enter_reason = ''
+    this.can_show_price = true
     this.no_race_licence_required = false
     this.ask_if_sharing_vehicle = false
     this.ask_expected_time = false

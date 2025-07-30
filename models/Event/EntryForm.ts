@@ -335,7 +335,7 @@ class EventEntryForm {
         name += ' - Sold out'
       } else if (e.cannot_enter_reason) {
         name += ` - ${e.cannot_enter_reason}`
-      } else {
+      } else if (e.can_show_price) {
         name += ` $${e.price}`
       }
       return new EventEntryFormRadio({
