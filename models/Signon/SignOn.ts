@@ -63,7 +63,7 @@ class SignonSignOn extends CognitoBase {
 
   isMinor(): boolean {
     if (this.date_of_birth) {
-      const date = parse(this.date_of_birth, 'dd/mm/yyyy', new Date())
+      const date = parse(this.date_of_birth, 'dd/M/yyyy', new Date())
       if (isAfter(date, subYears(new Date(), 18))) {
       // Is a minor as under 18 years
         return true
