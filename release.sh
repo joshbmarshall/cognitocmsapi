@@ -3,6 +3,11 @@
 cd "$(dirname "$0")"
 cd ..
 
+pnpm build || exit
+pnpm golive
+exit
+
+# Disabled release uploads
 export SENTRY_AUTH_TOKEN=$2
 export SENTRY_ORG=josh-marshall-pty-ltd
 export SENTRY_PROJECT=$1

@@ -35,7 +35,7 @@ const config = {
     clientApiId: '',
     eventManager: '',
   },
-  sentryDsn: '',
+  sentryDsn: 'https://989bf07846b342fd91bc5e9ae1849466@glitchtip.logger.jm1.au/5',
   show_back_to_top: true,
   pagebuilderImages: [
     {
