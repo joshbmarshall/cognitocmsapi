@@ -97,7 +97,7 @@ const pageLink = (pageNum: number) => {
   }
   return url
 }
-const currentPageNumber = computed(() => Number.parseInt(props.currentPage))
+const currentPageNumber = computed(() => Number.parseInt(props.currentPage) || 1)
 
 const firstLink = () => {
   return pageLink(1)
