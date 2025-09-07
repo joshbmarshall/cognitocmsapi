@@ -7,7 +7,7 @@
     <time :datetime="episode.display_start_time.toISO8601String()" class="text-muted text-sm">
       {{ episode.display_start_time.toHumanDateString(true) }}
     </time>
-    <cgn-lazy-image :image="episode.cover_art" class="mx-auto w-48 md:float-right md:ml-2" />
+    <cgn-lazy-image :image="episode.cover_art" class="mx-auto w-96" />
 
     <p class="prose mb-4 mt-1 max-w-none dark:prose-invert" v-html="episode.description" />
     <cgn-audio-player :media="episode.media_url" :title="`${episode.episode}: ${episode.name}`" />
