@@ -1,5 +1,5 @@
 <template>
-  <div v-if="amount > 0">
+  <div v-if="amount > 99">
     Or 4 payments of ${{ amount.toFixed(2) }} with <cgn-afterpay-logo width="100" class="inline-block" />
   </div>
 </template>
