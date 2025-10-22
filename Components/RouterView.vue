@@ -52,7 +52,7 @@ const sitemapPage = computed((): {
 
 // https://github.com/vueuse/head
 useHead({
-  title: () => sitemapPage.value?.seo_title || '',
+  title: () => sitemapPage.value?.seo_title || usePagesStore().currentDomain.organisation_name || '',
   meta: [
     {
       name: 'theme-color',
