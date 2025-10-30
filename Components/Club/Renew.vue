@@ -8,6 +8,7 @@
   <div v-else class="flex flex-col">
     <span class="w-full pt-2 text-center text-2xl">Choose membership type</span>
     <form @submit.prevent="renew">
+      <cgn-form-radio-button v-model="membershipForm.membership_type" :options="membershipTypesRadio" required />
       <cgn-form-input-phone v-if="showPhone" v-model="membershipForm.phone" label="Mobile Phone" required />
       <cgn-address-lookup
         v-if="showAddress"
@@ -16,7 +17,6 @@
         label="Address"
         required
       />
-      <cgn-form-radio-button v-model="membershipForm.membership_type" :options="membershipTypesRadio" required />
       <div v-if="membershipForm.extras.length">
         <div class="w-full pt-2 text-center text-2xl">
           Extras
