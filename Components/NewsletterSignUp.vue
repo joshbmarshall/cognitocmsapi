@@ -62,6 +62,7 @@ const signup = ref({
   email: '',
   first_name: '',
   last_name: '',
+  turnstile: '',
 })
 const is_loading = ref(false)
 const success = ref(false)
