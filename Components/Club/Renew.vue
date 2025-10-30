@@ -32,12 +32,15 @@
           </div>
         </div>
       </div>
-      <div v-if="showAddToNewsletter">
+      <div v-if="renewData?.clubMisc?.ask_for_occupation">
+        <cgn-form-input v-model="membershipForm.occupation" type="text" label="Occupation" required />
+      </div>
+      <div v-if="renewData?.clubMisc?.show_add_to_newsletter">
         <cgn-form-checkbox v-model="membershipForm.add_to_newsletter" label="Please add me to your email newsletter" />
       </div>
       <div v-if="membershipForm.membership_type" class="my-2">
-        <div v-if="terms">
-          <div class="prose-dark" v-html="terms" />
+        <div v-if="renewData?.clubMisc?.membership_terms">
+          <div class="prose-dark" v-html="renewData?.clubMisc?.membership_terms" />
           <cgn-form-checkbox required label="I accept these terms" />
         </div>
         <cgn-button v-if="totalPrice > 0 || isFreeMembership">
@@ -49,35 +52,58 @@
 </template>
 
 <script setup lang="ts">
-import { gql } from 'graphql-request'
 import { ClubMembershipType } from '~cognito/models/Club/MembershipType'
 import { CognitoAddressLookup } from '~cognito/models/Cognito/AddressLookup'
-import { CognitoUser } from '~cognito/models/Cognito/User'
 import { $axios } from '~cognito/plugins/axios'
 
+const { data: renewData, onReady } = useGqlStatic(graphql(`query clubMembershipRenewInfo {
+    clubMembershipTypes(isCanPurchase: true) {
+      id
+      name
+      subtitle
+      price
+    }
+    clubMisc {
+      membership_terms {
+        content
+      }
+      show_add_to_newsletter
+      ask_for_occupation
+    }
+    clubExtras {
+      id
+      name
+      content
+      cost
+      max_qty
+    }
+    cognitoUser(isCurrentUser: true) {
+      mobile_phone
+      current_address_id
+      club_occupation
+    }
+  }`))
 const payment_ok = ref(false)
 const payment = ref()
-const membership_types = ref<ClubMembershipType[]>([])
-const terms = ref('')
 const showPhone = ref(false)
 const showAddress = ref(false)
-const showAddToNewsletter = ref(false)
 const membershipForm = ref({
   phone: '',
   address: new CognitoAddressLookup(),
+  occupation: '',
   membership_type: 0,
   extras: [],
   add_to_newsletter: 1,
 })
 
 const selected_membership_type = computed(() => {
-  return membership_types.value.find(e => e.id == membershipForm.value.membership_type)
+  return renewData.value?.clubMembershipTypes.find(e => e.id == membershipForm.value.membership_type)
 })
 
 const totalPrice = computed(() => {
   let total = 0
   if (selected_membership_type.value) {
-    total = Number.parseFloat(selected_membership_type.value.price)
+    total = Number.parseFloat(`${selected_membership_type.value.price}`)
   }
   membershipForm.value.extras.forEach((e) => {
     if (!e.qty) {
@@ -91,11 +117,11 @@ const isFreeMembership = computed(() => {
   if (!selected_membership_type.value) {
     return false
   }
-  return Number.parseFloat(selected_membership_type.value.price) == 0
+  return Number.parseFloat(`${selected_membership_type.value.price}`) == 0
 })
 
 const membershipTypesRadio = computed(() => {
-  return membership_types.value.map((e) => {
+  return renewData.value?.clubMembershipTypes.map((e) => {
     return {
       id: e.id,
       name: `${e.name} $${e.price.toFixed(2)}`,
@@ -109,38 +135,14 @@ const renew = () => {
   new ClubMembershipType(selected_membership_type.value).renew(membershipForm.value)
 }
 
+onReady(() => {
+  membershipForm.value.extras = renewData.value?.clubExtras || []
+  membershipForm.value.occupation = renewData.value?.cognitoUser?.club_occupation
+  showPhone.value = !renewData.value?.cognitoUser.mobile_phone
+  showAddress.value = !renewData.value?.cognitoUser.current_address_id
+})
+
 onMounted(async () => {
-  const gqldata = await $axios.graphql(gql`query clubMembershipRenewInfo {
-    clubMembershipTypes(isCanPurchase: true) {
-      id
-      name
-      subtitle
-      price
-    }
-    clubMisc {
-      membership_terms {
-        content
-      }
-      show_add_to_newsletter
-    }
-    clubExtras {
-      id
-      name
-      content
-      cost
-      max_qty
-    }
-  }`)
-
-  membership_types.value = gqldata.clubMembershipTypes
-  membershipForm.value.extras = gqldata.clubExtras
-  terms.value = gqldata.clubMisc.membership_terms?.content
-  showAddToNewsletter.value = gqldata.clubMisc.show_add_to_newsletter
-
-  const user = await (new CognitoUser()).getLoggedInUser()
-  showPhone.value = !user.mobile_phone
-  showAddress.value = !user.current_address_id
-
   const payum_token = new URL(location.href).searchParams.get('payum_token')
   const url = btoa(location.href)
 

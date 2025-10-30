@@ -29,6 +29,7 @@ class ClubMembershipType extends CognitoBase {
 
   renew(data: {
     phone?: string
+    occupation?: string
     address?: any
     extras: any
   }) {
@@ -36,6 +37,7 @@ class ClubMembershipType extends CognitoBase {
       type_id: this.id,
       phone: data.phone,
       address: data.address,
+      occupation: data.occupation,
       extras: data.extras,
       url: btoa(location.href),
     }
