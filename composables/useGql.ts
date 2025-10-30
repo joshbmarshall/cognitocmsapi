@@ -1,10 +1,11 @@
+import type { TadaDocumentNode } from 'gql.tada'
 import { $axios } from '~cognito/plugins/axios'
 
 export async function useGql<T>(query: string, variables?: object) {
   return <T>$axios.graphql(query, variables)
 }
 
-export function useGqlStatic<T>(query: string, variables?: MaybeRefOrGetter<object>) {
+export function useGqlStatic<T, V = object>(query: string | TadaDocumentNode<T, V>, variables?: MaybeRefOrGetter<V>) {
   let readyCallback = () => { }
   let refreshCallback = () => { }
   const onReady = (callback: () => void) => readyCallback = callback
