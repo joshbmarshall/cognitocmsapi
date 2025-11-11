@@ -73,6 +73,7 @@
       <cgn-form-input-password suggest-password required label="password input" />
       <cgn-form-input-text label="form input text" placeholder="text placeholder" />
       <cgn-form-input-textarea label="form input textarea" />
+      <cgn-form-input-date-of-birth label="form input date of birth" />
       <cgn-form-dropdown label="form dropdown" :options="[{ id: 1, name: 'Option 1' }, { id: 2, name: 'Option 2' }]" />
       <cgn-form-radio-button label="form radio button" :options="[{ id: 1, name: 'Option 1', content: 'Second Line' }, { id: 2, name: 'Option 2' }]" />
       <cgn-form-instant-photo label="form instant photo" />
@@ -218,6 +219,7 @@ const dropdown_options = ref([
 const modal_open = ref(false)
 const toast_fail_open = ref(false)
 const toast_success_open = ref(false)
+const dob = ref('')
 
 const breadcrumbs_dummydata = ref([
   { name: 'Articles', url: '/articles' },
