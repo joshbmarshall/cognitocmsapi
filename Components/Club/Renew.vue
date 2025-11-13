@@ -79,8 +79,10 @@ const { data: renewData, onReady } = useGqlStatic(graphql(`query clubMembershipR
     }
     cognitoUser(isCurrentUser: true) {
       mobile_phone
-      current_address_id
       club_occupation
+      current_address {
+        postcode
+      }
     }
   }`))
 const payment_ok = ref(false)
@@ -139,7 +141,7 @@ onReady(() => {
   membershipForm.value.extras = renewData.value?.clubExtras || []
   membershipForm.value.occupation = renewData.value?.cognitoUser?.club_occupation
   showPhone.value = !renewData.value?.cognitoUser.mobile_phone
-  showAddress.value = !renewData.value?.cognitoUser.current_address_id
+  showAddress.value = !renewData.value?.cognitoUser?.current_address?.postcode
 })
 
 onMounted(async () => {
