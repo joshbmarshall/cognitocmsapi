@@ -7,7 +7,7 @@
           class="cgn-input-field w-20 p-2"
           :class="{
             'cursor-not-allowed opacity-50': disabled,
-            'bg-danger-500 text-on-danger': appearInvalid || showInvalid,
+            'text-danger-500': appearInvalid || showInvalid,
           }"
           :type="type" :placeholder="dayPlaceholder"
           :disabled="disabled" :required="required"
@@ -18,7 +18,7 @@
           class="cgn-input-field w-20 p-2"
           :class="{
             'cursor-not-allowed opacity-50': disabled,
-            'bg-danger-500 text-on-danger': appearInvalid || showInvalid,
+            'text-danger-500': appearInvalid || showInvalid,
           }"
           :type="type" :placeholder="monthPlaceholder"
           :disabled="disabled" :required="required" :maxlength="2"
@@ -29,7 +29,7 @@
           class="cgn-input-field w-20 p-2"
           :class="{
             'cursor-not-allowed opacity-50': disabled,
-            'bg-danger-500 text-on-danger': appearInvalid || showInvalid,
+            'text-danger-500': appearInvalid || showInvalid,
           }"
           :type="type" :placeholder="yearPlaceholder"
           :disabled="disabled" :required="required" :maxlength="4"
