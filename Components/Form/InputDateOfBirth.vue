@@ -155,10 +155,6 @@ const calculateYear = (yearInput: string) => {
     // isn't at length of 2, don't do fancy stuff
     return yearInput
   }
-  if (Number.parseInt(`${yearInput}00`) <= maxYear) {
-    // less than the current century, likely typing century instead of year
-    return yearInput
-  }
 
   if (Number.parseInt(`${currentCentury}${yearInput}`) <= maxYear) {
     // more than current century but less than the max year for this century
@@ -243,8 +239,10 @@ watch(month, () => {
   calculateInput('month', month.value)
   validateDate()
 })
-watch(year, () => {
+watchDebounced(year, () => {
   calculateInput('year', year.value)
   validateDate()
+}, {
+  debounce: 800,
 })
 </script>
