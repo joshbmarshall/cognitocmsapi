@@ -124,8 +124,11 @@ watch(() => selectedAddress.value, (newval) => {
   emit('update:modelValue', newval)
 })
 
-onMounted(() => {
+onMounted(async () => {
   selectedAddress.value = props.modelValue || ''
-  loadAddresses()
+  await loadAddresses()
+  if (!selectedAddress.value) {
+    selectedAddress.value = addressDropdown.value.at(0)?.id
+  }
 })
 </script>
