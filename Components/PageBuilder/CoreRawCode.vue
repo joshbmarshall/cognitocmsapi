@@ -1,5 +1,5 @@
 <template>
-  <div class="prose" v-html="templatevar.raw_html" />
+  <div v-html="templatevar.raw_html" />
 </template>
 
 <script lang="ts">
