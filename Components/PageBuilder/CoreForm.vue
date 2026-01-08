@@ -108,7 +108,7 @@
           <cgn-form-input v-model="input.value" type="number" :label="input.label" :placeholder="input.placeholder" :required="input.required" :min-amount="input.min" :max-amount="input.max" />
         </div>
         <div v-if="input.type == 'date'">
-          <cgn-form-input v-model="input.value" inputmask="date" :type="input.subtype" :label="input.label" placeholder="dd/mm/yyyy" :required="input.required" />
+          <cgn-form-input v-model="input.value" :type="input.subtype" :label="input.label" placeholder="dd/mm/yyyy" :required="input.required" />
         </div>
         <div v-if="input.type == 'select'">
           <cgn-form-dropdown v-model="input.value" :options="input.values" :prompt="input.placeholder || '-- Select --'" :required="input.required" :label="input.label" />
