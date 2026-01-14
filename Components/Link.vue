@@ -30,9 +30,9 @@
   >
     <slot />
   </router-link>
-  <template v-else>
+  <span v-else>
     <slot />
-  </template>
+  </span>
 </template>
 
 <script setup lang="ts">
