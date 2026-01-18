@@ -197,6 +197,11 @@ const calculateInput = (fieldType: 'day' | 'month' | 'year', value?: string) => 
 }
 
 const validateDate = () => {
+  if (!year.value || !month.value || !day.value) {
+    valid.value = false
+    inputValue.value = ''
+    return
+  }
   const date = useTime(`${year.value}-${month.value.padStart(2, '0')}-${day.value.padStart(2, '0')}`, 'YYYY-MM-DD', true)
   if (!date.isValid()) {
     valid.value = false
