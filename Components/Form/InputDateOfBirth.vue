@@ -9,7 +9,8 @@
             'cursor-not-allowed opacity-50': disabled,
             'text-danger-500': appearInvalid || showInvalid,
           }"
-          :type="type" :placeholder="dayPlaceholder"
+          type="text" inputmode="numeric" pattern="[0-9]*"
+          :placeholder="dayPlaceholder"
           :disabled="disabled" :required="required"
           :maxlength="2" @paste.prevent
         >
@@ -20,7 +21,8 @@
             'cursor-not-allowed opacity-50': disabled,
             'text-danger-500': appearInvalid || showInvalid,
           }"
-          :type="type" :placeholder="monthPlaceholder"
+          type="text" inputmode="numeric" pattern="[0-9]*"
+          :placeholder="monthPlaceholder"
           :disabled="disabled" :required="required" :maxlength="2"
           @keydown="event => handleKeyDown('month', event)" @paste.prevent
         >
@@ -31,7 +33,8 @@
             'cursor-not-allowed opacity-50': disabled,
             'text-danger-500': appearInvalid || showInvalid,
           }"
-          :type="type" :placeholder="yearPlaceholder"
+          type="text" inputmode="numeric" pattern="[0-9]*"
+          :placeholder="yearPlaceholder"
           :disabled="disabled" :required="required" :maxlength="4"
           @keydown="event => handleKeyDown('year', event)" @paste.prevent
         >
@@ -61,10 +64,7 @@
 </template>
 
 <script setup lang="ts">
-type InputTypes = 'text' | 'tel' | 'number'
-
 const {
-  type = 'tel',
   label,
   dayPlaceholder = 'DD',
   monthPlaceholder = 'MM',
@@ -80,7 +80,6 @@ const {
   appearRequired = undefined,
   appearInvalid,
 } = defineProps<{
-  type?: InputTypes
   label?: string
   dayPlaceholder?: string
   monthPlaceholder?: string
