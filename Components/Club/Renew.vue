@@ -40,7 +40,7 @@
       </div>
       <div v-if="membershipForm.membership_type" class="my-2">
         <div v-if="renewData?.clubMisc?.membership_terms">
-          <div class="prose-dark" v-html="renewData?.clubMisc?.membership_terms" />
+          <div class="prose-dark" v-html="renewData?.clubMisc?.membership_terms.content" />
           <cgn-form-checkbox required label="I accept these terms" />
         </div>
         <cgn-button v-if="totalPrice > 0 || isFreeMembership">
