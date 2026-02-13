@@ -6,7 +6,7 @@
     </cgn-alert-success>
   </div>
   <form
-    v-else
+    v-else-if="cfdata?.cognitoMisc"
     @submit.prevent="sendContactForm()"
   >
     <template v-if="formdata?.questions.length > 0">
@@ -130,6 +130,12 @@
         </div>
       </div>
     </template>
+    <cgn-form-turnstile
+      v-if="cfdata?.cognitoMisc?.cloudflare_turnstile_site_key"
+      v-model="turnstile"
+      :sitekey="cfdata.cognitoMisc.cloudflare_turnstile_site_key"
+      size="flexible"
+    />
   </form>
 
   <cgn-alert-danger v-if="submission_error">
@@ -168,6 +174,13 @@ const userStore = useUserStore()
 const payment_ok = ref(null)
 const payment_failed = ref(false)
 const payment = ref(new CognitoPayment())
+const turnstile = ref('')
+
+const { data: cfdata } = useGqlStatic(graphql(`query {
+  cognitoMisc {
+    cloudflare_turnstile_site_key
+  }
+}`))
 
 const loadForm = async () => {
   const data = await new CognitoForm().find_one_mapped({ id: props.templatevar.form })
@@ -196,7 +209,11 @@ const sendContactForm = () => {
     return
   }
   is_loading.value = true
-  formdata.value.submit(formValues.value)
+  const values = formValues.value
+  if (turnstile.value) {
+    values['cf-turnstile-response'] = turnstile.value
+  }
+  formdata.value.submit(values)
     .then((data) => {
       console.log({ data })
       submitted_ok.value = data.success
