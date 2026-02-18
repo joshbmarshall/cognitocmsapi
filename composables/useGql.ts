@@ -1,7 +1,7 @@
 import type { TadaDocumentNode } from 'gql.tada'
 import { $axios } from '~cognito/plugins/axios'
 
-export async function useGql<T>(query: string, variables?: object) {
+export async function useGql<T, V = object>(query: string | TadaDocumentNode<T, V>, variables?: MaybeRefOrGetter<V>) {
   return <T>$axios.graphql(query, variables)
 }
 
