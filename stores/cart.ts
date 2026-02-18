@@ -93,13 +93,11 @@ export const useCartStore = defineStore({
       this.getCart()
     },
     async mergeCart() {
-      await $axios
-        .post(
-          '/api/v1/sell/cart/mergeCart',
-          {
-            session: this.sessionKey,
-          },
-        )
+      await useGql(graphql(`mutation($session: String!) {
+        sellMiscMergeCart(session: $session)
+      }`), {
+        session: `${this.sessionKey}`,
+      })
       this.getCart()
     },
     getCart() {
