@@ -62,20 +62,17 @@ export const useCartStore = defineStore({
       })
       this.getCart()
     },
-    removeItem(id: number) {
-      $axios
-        .post(
-          '/api/v1/sell/cart/cartRemove',
-          {
-            id,
-            session: this.sessionKey,
-          },
-        )
-        .then((res) => {
-          if (res) {
-            this.getCart()
-          }
-        })
+    async removeItem(id: number) {
+      await useGql(graphql(`mutation($id: Int!, $qty: Int!, $session: String) {
+        sellMiscUpdateCartQty(cart_item_id: $id, qty: $qty, session: $session) {
+          id
+        }
+      }`), {
+        id,
+        qty: 0,
+        session: this.sessionKey,
+      })
+      this.getCart()
     },
     incrementQty(cartItem: any) {
       this.setQty(cartItem, cartItem.qty + 1)
