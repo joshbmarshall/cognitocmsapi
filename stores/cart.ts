@@ -203,26 +203,37 @@ export const useCartStore = defineStore({
       return this.getShippingQuotes(address.postcode, address.city, address.country)
     },
     async getShippingQuotes(postcode: string, suburb: string, country: string) {
-      const quotelist = await $axios
-        .post(
-          '/api/v1/sell/cart/shippingQuote',
-          {
-            session: this.sessionKey,
-            suburb,
-            postcode,
-            country,
-          },
-        )
-      const options = []
-      for (let index = 0; index < quotelist.data.length; index++) {
-        const shippingOption = quotelist.data[index]
+      const quotelist = await useGql(graphql(`query($postcode: String!, $suburb: String, $country: String, $session: String) {
+        sellMisc {
+          getShippingOptions(postcode: $postcode, suburb: $suburb, country: $country, session: $session) {
+            shipping_type_id
+            shipping_name
+            amount
+            is_pick_up
+          }
+        }
+      }`), {
+        session: this.sessionKey,
+        suburb,
+        postcode,
+        country,
+      })
+      const options = <{
+        id: number
+        name: string
+        amount: number
+        is_pick_up: boolean
+      }[]> []
+
+      quotelist.sellMisc?.getShippingOptions?.forEach((shippingOption) => {
         options.push({
           id: shippingOption.shipping_type_id,
           name: `${shippingOption.shipping_name} $${shippingOption.amount.toFixed(2)}`,
           amount: shippingOption.amount,
           is_pick_up: shippingOption.is_pick_up,
         })
-      }
+      })
+
       return options
     },
     async requestShippingQuote(address: SellAddress) {
