@@ -50,16 +50,16 @@ export const useCartStore = defineStore({
 
   actions: {
     async addToCart(sku_id: number, qty: number, addons: any) {
-      await $axios
-        .post(
-          '/api/v1/sell/cart/cartAdd',
-          {
-            sku: sku_id,
-            qty,
-            addons,
-            session: this.sessionKey,
-          },
-        )
+      await useGql(graphql(`mutation($sku: Int!, $qty: Int!, $addons: [sellAddToCartAddon!]!, $session: String) {
+        sellMiscAddToCart(sku: $sku, qty: $qty, addons: $addons, session: $session) {
+          id
+        }
+      }`), {
+        sku: sku_id,
+        qty: Number.parseInt(`${qty}`),
+        addons,
+        session: this.sessionKey,
+      })
       this.getCart()
     },
     removeItem(id: number) {
