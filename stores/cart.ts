@@ -9,7 +9,7 @@ export const useCartStore = defineStore({
     return {
       cartitemCount: 0,
       cartSubtotal: 0,
-      sessionKey: null,
+      sessionKey: '',
       hasCartItems: false,
       cartitems: [{
         id: 0,
@@ -20,7 +20,7 @@ export const useCartStore = defineStore({
         sku: {
           code: '',
         },
-        addons: [],
+        addons: <string[]>[],
         qty: 0,
         price: 0,
         image: '',
@@ -100,30 +100,66 @@ export const useCartStore = defineStore({
       })
       this.getCart()
     },
-    getCart() {
-      $axios
-        .post(
-          '/api/v1/sell/cart/getCart',
-          {
-            session: this.sessionKey,
-            promotion_code: this.promotion_code,
-            shipping_type: this.shipping_type,
-            shipping_address: this.shipping_address,
-          },
-        )
-        .then((res) => {
-          this.cartitemCount = res.data.item_count
-          this.cartitems = res.data.items
-          this.cartSubtotal = res.data.subtotal
-          this.sessionKey = res.data.sessionKey
-          this.all_in_stock = res.data.all_in_stock
-          this.hasCartItems = (this.cartitemCount > 0)
-          this.discount_amount = res.data.discount_amount
-          this.shipping_amount = res.data.shipping_amount
-          this.total_amount = res.data.total_amount
-          this.total_tax = res.data.total_tax
-          this.payment_types = res.data.payment_types
-        })
+    async getCart() {
+      const cart = await useGql(graphql(`query ($session: String, $promotion_code: String, $shipping_type: Int, $shipping_address: Int) {
+        sellMisc {
+          getCart(session: $session, promotion_code: $promotion_code, shipping_type: $shipping_type, shipping_address: $shipping_address) {
+            item_count
+            sessionKey
+            subtotal
+            all_in_stock
+            discount_amount
+            shipping_amount
+            total_amount
+            total_tax
+            items {
+              id
+              url
+              name
+              product_name
+              sku_id
+              sku {
+                code
+              },
+              addons
+              qty
+              price
+              image
+              img {
+                url
+                webp_url
+                placeholder
+              },
+              subtotal
+              can_purchase_qty
+            }
+            payment_types {
+              id
+              name
+            }
+          }
+        }
+      }`), {
+        session: this.sessionKey,
+        promotion_code: this.promotion_code,
+        shipping_type: this.shipping_type,
+        shipping_address: Number.parseInt(`${this.shipping_address}`),
+      })
+      if (!cart?.sellMisc?.getCart) {
+        return
+      }
+      const cartData = cart.sellMisc.getCart
+      this.cartitemCount = cartData.item_count
+      this.cartitems = cartData.items
+      this.cartSubtotal = cartData.subtotal
+      this.sessionKey = cartData.sessionKey
+      this.all_in_stock = cartData.all_in_stock
+      this.hasCartItems = (this.cartitemCount > 0)
+      this.discount_amount = cartData.discount_amount
+      this.shipping_amount = cartData.shipping_amount
+      this.total_amount = cartData.total_amount
+      this.total_tax = cartData.total_tax
+      this.payment_types = cartData.payment_types
     },
     getAddresses() {
       new SellAddress().find_many().then((data) => {
