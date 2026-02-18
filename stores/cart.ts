@@ -83,21 +83,17 @@ export const useCartStore = defineStore({
     decrementQty(cartItem: any) {
       this.setQty(cartItem, cartItem.qty - 1)
     },
-    setQty(cartItem: any, qty: number) {
-      $axios
-        .post(
-          '/api/v1/sell/cart/cartUpdate',
-          {
-            id: cartItem.id,
-            qty,
-            session: this.sessionKey,
-          },
-        )
-        .then((res) => {
-          if (res) {
-            this.getCart()
-          }
-        })
+    async setQty(cartItem: any, qty: number) {
+      await useGql(graphql(`mutation($id: Int!, $qty: Int!, $session: String) {
+        sellMiscUpdateCartQty(cart_item_id: $id, qty: $qty, session: $session) {
+          id
+        }
+      }`), {
+        id: cartItem.id,
+        qty: Number.parseInt(`${qty}`),
+        session: this.sessionKey,
+      })
+      this.getCart()
     },
     async mergeCart() {
       await $axios
