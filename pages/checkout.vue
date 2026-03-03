@@ -172,16 +172,6 @@
               <span v-else>${{ cartStore.total_amount.toFixed(2) }}</span>
             </p>
           </div>
-          <div v-if="hasLaybuy" class="mt-3 text-xs">
-            Or 6 payments of
-            ${{ (cartStore.total_amount / 6).toFixed(2) }}
-            with
-            <a href="https://www.laybuy.com/how-it-works" target="_blank">
-              <cgn-laybuy-logo class="inline" />
-                  &nbsp;
-              <i-heroicons-solid:question-mark-circle class="inline" />
-            </a>
-          </div>
           <cgn-form-input-text v-model="cartStore.promotion_code" class="mt-2" label="Promotion Code" />
           <cgn-form-input-textarea v-model="note" class="mt-2" label="Special instructions" small />
           <cgn-form-radio-button
@@ -383,17 +373,6 @@ const payNow = async () => {
     cartStore.promotion_code,
   )
 }
-
-const hasLaybuy = computed(() => {
-  for (let index = 0; index < paymentMethods.value.length; index++) {
-    const paymentMethod = paymentMethods.value[index]
-    if (paymentMethod.name == 'Laybuy') {
-      return true
-    }
-  }
-
-  return false
-})
 
 const payment_ok = ref(null)
 const payment = ref<CognitoPayment>()
