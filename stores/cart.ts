@@ -248,22 +248,26 @@ export const useCartStore = defineStore({
       return result.data
     },
     async submitOrder(address: number, shipping_option_id: number, paymentGateway: string, note: string, promotion_code: string) {
-      const res = await $axios
-        .post('/api/v1/sell/cart/submitOrder', {
+      const data = await useGql(graphql(`mutation($checkout: sellPlaceOrder) {
+        sellMiscPlaceOrder(checkout: $checkout) {
+          success
+          payment
+          message
+        }
+      }`), {
+        checkout: {
           address,
           shipping_option_id,
           paymentGateway,
           note,
           promotion_code,
           url: location.href,
-        })
-        .catch(() => {
-          return 'something went wrong'
-        })
-      if (res.data.success) {
-        window.location = res.data.payment
+        },
+      })
+      if (data.sellMiscPlaceOrder.success) {
+        window.location = data.sellMiscPlaceOrder.payment
       } else {
-        return res.data.message
+        return data.sellMiscPlaceOrder.message
       }
     },
     setPromotionCode(promocode: string) {

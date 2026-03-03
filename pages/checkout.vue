@@ -328,10 +328,6 @@ async function selectAddress() {
 const note = ref('')
 
 const selectedPaymentMethod = ref('')
-const paymentMethods = ref<{
-  id: string
-  name: string
-}[]>([])
 
 const payum_token = ref('')
 
