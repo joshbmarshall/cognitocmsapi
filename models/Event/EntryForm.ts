@@ -93,6 +93,22 @@ class EventEntryFormSpectator {
   }
 }
 
+class EventEntryFormRaffleTicket {
+  id: string | number | undefined
+  label: string
+  price: number
+  qty: number
+
+  constructor(source?: Partial<EventEntryFormRaffleTicket>) {
+    this.id = 0
+    this.label = ''
+    this.price = 0
+    this.qty = 0
+
+    Object.assign(this, source)
+  }
+}
+
 class EventEntryFormRadio {
   id: string | number | undefined
   name: string
@@ -138,6 +154,7 @@ class EventEntryForm {
   entrant_note?: string
   extras: EventEntryFormExtra[]
   spectators: EventEntryFormSpectator[]
+  raffleTickets: EventEntryFormRaffleTicket[]
   merch: EventEntryFormMerch[]
   skus: EventEntryFormSku[]
   url: string
@@ -209,6 +226,7 @@ class EventEntryForm {
     this.race_licence_expiry = ''
     this.extras = []
     this.spectators = []
+    this.raffleTickets = []
     this.merch = []
     this.skus = []
     this.url = ''
@@ -672,6 +690,11 @@ class EventEntryForm {
     this.spectators.forEach((spectator) => {
       if (spectator.qty > 0) {
         cost += spectator.price * spectator.qty
+      }
+    })
+    this.raffleTickets.forEach((raffleTicket) => {
+      if (raffleTicket.qty > 0) {
+        cost += raffleTicket.price * raffleTicket.qty
       }
     })
     this.camp_site_ids.forEach((camp_site_id) => {
