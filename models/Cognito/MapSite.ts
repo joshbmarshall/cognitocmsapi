@@ -1,5 +1,5 @@
 class CognitoMapSite {
-  id: string
+  id: number
   pos_x: number
   pos_y: number
   pos_width: number
@@ -29,7 +29,7 @@ class CognitoMapSite {
   }
 
   constructor(source?: Partial<CognitoMapSite>) {
-    this.id = ''
+    this.id = -1
     this.pos_x = 0
     this.pos_y = 0
     this.pos_width = 0

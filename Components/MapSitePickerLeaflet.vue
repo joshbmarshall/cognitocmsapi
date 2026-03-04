@@ -136,7 +136,7 @@ const setColours = () => {
       changeTo = props.unavailableColour
     } else if (e.id == props.modelValue) {
       changeTo = props.selectedColour
-    } else if (props.multipleSelection && props.modelValue.includes(e.id)) {
+    } else if (props.multipleSelection && Array.isArray(props.modelValue) && props.modelValue.includes(e.id)) {
       changeTo = props.selectedColour
     }
     if (e.fill != changeTo) {
@@ -190,6 +190,7 @@ onMounted(async () => {
   rects.value.forEach((e: CognitoMapSite) => {
     e.is_hovered = false
     e.align = 'left'
+    e.id = Number.parseInt(`${e.id}`)
   })
   if (props.multipleSelection) {
     if (typeof (props.modelValue) != 'object') {

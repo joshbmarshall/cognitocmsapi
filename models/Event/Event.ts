@@ -192,7 +192,88 @@ class EventEvent extends CognitoBase {
     message: string
     redirect: string
   }> {
-    return (await $axios.post(`${this.baseurl()}/submitEntry`, data)).data
+    const res = await useGql(graphql(`mutation($entry: eventSubmitEntryArgs!) {
+      eventSubmitEntry(entry: $entry) {
+        success
+        message
+        redirect
+      }
+    }`), {
+      entry: {
+        event_id: data.event_id,
+        category_id: data.category_id,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        email: data.email,
+        mobile_phone: data.mobile_phone,
+        postcode: data.postcode,
+        vehicle_id: data.vehicle_id,
+        address_id: data.address_id,
+        garage_id: data.garage_id,
+        garage_ids: data.garage_ids,
+        camp_site_id: data.camp_site_id,
+        camp_site_ids: data.camp_site_ids,
+        licence_id: data.licence_id,
+        race_licence_number: data.race_licence_number,
+        race_licence_expiry: data.race_licence_expiry,
+        expected_time: data.expected_time,
+        sharing_vehicle_with: data.sharing_vehicle_with,
+        entrant_note: data.entrant_note,
+        entry_transfer_from_invoice: data.entry_transfer_from_invoice,
+        blood_type_id: data.blood_type_id,
+        date_of_last_tetanus_vaccination: data.date_of_last_tetanus_vaccination,
+        has_allergies: data.has_allergies,
+        has_had_psychiatric_psychological_illness: data.has_had_psychiatric_psychological_illness,
+        has_had_brain_injury: data.has_had_brain_injury,
+        has_had_heart_issues: data.has_had_heart_issues,
+        has_had_cancer_diabeties: data.has_had_cancer_diabeties,
+        has_had_significant_illness_or_injury: data.has_had_significant_illness_or_injury,
+        is_on_medication: data.is_on_medication,
+        has_hearing_impairment: data.has_hearing_impairment,
+        has_hearing_disorder: data.has_hearing_disorder,
+        is_normal_eyesight: data.is_normal_eyesight,
+        date_of_last_medical_exam: data.date_of_last_medical_exam,
+        ambassadorCode: data.ambassadorCode,
+        stall_site_type_id: data.stall_site_type_id,
+        stall_width: data.stall_width,
+        stall_length: data.stall_length,
+        stall_height: data.stall_height,
+        stall_public_liability_insurance_file: data.stall_public_liability_insurance_file,
+        stall_public_liability_insurance_expiry: data.stall_public_liability_insurance_expiry,
+        stall_public_liability_insurance_will_update_on_renewal: data.stall_public_liability_insurance_will_update_on_renewal,
+        stall_public_liability_insurance_use_ours: data.stall_public_liability_insurance_use_ours,
+        stall_food_licence_file: data.stall_food_licence_file,
+        stall_food_licence_expiry: data.stall_food_licence_expiry,
+        stall_food_licence_will_update_on_renewal: data.stall_food_licence_will_update_on_renewal,
+        payment_gateway: data.payment_gateway,
+        url: data.url,
+        extras: data.extras.map(extra => ({
+          id: extra.id,
+          label: extra.label,
+          checked: !!extra.checked,
+        })),
+        spectators: data.spectators.map(spectator => ({
+          id: spectator.id,
+          label: spectator.label,
+          qty: Number.parseInt(spectator.qty),
+        })),
+        raffleTickets: data.raffleTickets.map(ticket => ({
+          id: ticket.id,
+          label: ticket.label,
+          qty: Number.parseInt(ticket.qty),
+        })),
+        merch: data.merch.map(merch => ({
+          id: merch.id,
+          name: merch.name,
+          option: Number.parseInt(merch.option),
+        })),
+        skus: data.skus.map(sku => ({
+          id: sku.id,
+          name: sku.name,
+        })),
+      },
+    })
+    return res.eventSubmitEntry
   }
 
   async upcomingEventList(type?: string): Promise<EventEvent[]> {
