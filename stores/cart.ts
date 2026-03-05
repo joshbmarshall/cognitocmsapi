@@ -263,7 +263,7 @@ export const useCartStore = defineStore({
       return result.data
     },
     async submitOrder(address: number, shipping_option_id: number, paymentGateway: string, note: string, promotion_code: string) {
-      const data = await useGql(graphql(`mutation($checkout: sellPlaceOrder) {
+      const data = await useGql(graphql(`mutation($checkout: sellPlaceOrder!) {
         sellMiscPlaceOrder(checkout: $checkout) {
           success
           payment
