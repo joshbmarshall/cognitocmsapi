@@ -1,5 +1,4 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { $axios } from '~cognito/plugins/axios'
 import { SellAddress } from '~cognito/models/Sell/Address'
 
 export const useCartStore = defineStore({
@@ -265,15 +264,22 @@ export const useCartStore = defineStore({
       return options
     },
     async requestShippingQuote(address: SellAddress) {
-      const result = await $axios
-        .post(
-          '/api/v1/sell/cart/requestShippingQuote',
-          {
-            session: this.sessionKey,
-            address,
-          },
-        )
-      return result.data
+      const data = await useGql(graphql(`mutation ($address: sellRequestQuote!) {
+        sellMiscRequestQuote(address: $address)
+        }`), {
+        address: {
+          email: address.email,
+          first_name: address.first_name,
+          last_name: address.last_name,
+          street_address: address.street_address,
+          street_address_2: address.street_address_2,
+          postcode: address.postcode,
+          city: address.city,
+          state: address.state,
+          country: address.country,
+        },
+      })
+      return data.sellMiscRequestQuote
     },
     async submitOrder(address: number, shipping_option_id: number, paymentGateway: string, note: string, promotion_code: string) {
       const data = await useGql(graphql(`mutation($checkout: sellPlaceOrder!) {

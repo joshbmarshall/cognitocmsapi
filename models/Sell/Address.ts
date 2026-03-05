@@ -10,6 +10,7 @@ class SellAddress {
   company: string | null
   street_address: string
   street_address_1: string
+  street_address_2: string
   postcode: string
   city: string
   state: string
@@ -25,6 +26,7 @@ class SellAddress {
     this.company = ''
     this.street_address = ''
     this.street_address_1 = ''
+    this.street_address_2 = ''
     this.postcode = ''
     this.city = ''
     this.state = ''
