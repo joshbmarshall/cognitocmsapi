@@ -162,8 +162,23 @@ export const useCartStore = defineStore({
       this.payment_types = cartData.payment_types
     },
     getAddresses() {
-      new SellAddress().find_many().then((data) => {
-        this.addresses = data.data
+      useGql(graphql(`{
+        sellAddresss(isMine: true) {
+          id
+          display_name
+          first_name
+          last_name
+          email
+          phone
+          company
+          street_address
+          postcode
+          city
+          state
+          country
+        }
+      }`)).then((data) => {
+        this.addresses = data.sellAddresss.map(e => new SellAddress(e)) || []
       })
     },
     async saveNewAddress(

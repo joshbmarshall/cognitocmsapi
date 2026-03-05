@@ -5,9 +5,9 @@ class SellAddress {
   display_name: string
   first_name: string
   last_name: string
-  email: string
-  phone: string
-  company: string
+  email: string | null
+  phone: string | null
+  company: string | null
   street_address: string
   street_address_1: string
   postcode: string
