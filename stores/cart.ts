@@ -179,6 +179,10 @@ export const useCartStore = defineStore({
         }
       }`)).then((data) => {
         this.addresses = data.sellAddresss.map(e => new SellAddress(e)) || []
+
+        this.addresses.forEach((address) => {
+          this.shipping_address = address.id
+        })
       })
     },
     async saveNewAddress(

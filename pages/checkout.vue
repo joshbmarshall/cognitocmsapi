@@ -254,7 +254,6 @@ const addresses = computed(() => {
       id: address.id,
       name: address.display_name,
     })
-    cartStore.shipping_address = address.id
   }
   return addresses
 })
