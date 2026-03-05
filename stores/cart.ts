@@ -198,22 +198,31 @@ export const useCartStore = defineStore({
       state: string,
       country: string,
     ): Promise<number> {
-      const address = new SellAddress()
-      address.first_name = first_name
-      address.last_name = last_name
-      address.email = email
-      address.phone = phone
-      address.company = company
-      address.street_address = street_address
-      address.street_address_1 = street_address_1
-      address.postcode = postcode
-      address.city = city
-      address.state = state
-      address.country = country
-      const data
-      = await address.create()
+      const data = await useGql(graphql(`mutation($address: SellAddressNewType!) {
+        newSellAddress(data: $address) {
+          id
+        }
+      }`), {
+        address: {
+          customer_id: useUserStore().user.id,
+          first_name,
+          last_name,
+          email,
+          phone,
+          company,
+          street_address,
+          street_address_2: street_address_1,
+          postcode,
+          city,
+          state,
+          country,
+        },
+      })
+
+      // Reload list
       this.getAddresses()
-      return data.item.id
+
+      return data.newSellAddress?.id || 0
     },
     async getShippingQuotesFromSelectedAddress(address: SellAddress) {
       if (!address) {
