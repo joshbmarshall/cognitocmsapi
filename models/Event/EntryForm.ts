@@ -291,7 +291,7 @@ class EventEntryForm {
     }
   }
 
-  async loadEvent(event: string): Promise<EventEvent> {
+  async loadEvent(event: string, category: string): Promise<EventEvent> {
     this.prefillFromUser()
     const data = await new EventEvent().find_one({
       url: event,
@@ -347,6 +347,28 @@ class EventEntryForm {
         disabled: e.sold_out,
       })
     })
+    if (category) {
+      // Specified a category by hash, get the id
+      const { eventCategory } = await useGql(graphql(`query($category: String!, $event_id: Int) {
+        eventCategory(hash: $category, whereEqual: [ {
+          event_id: $event_id
+        }]) {
+          id
+        }
+      }`), {
+        category,
+        event_id: Number.parseInt(`${eventDetails.id}`),
+      })
+      if (eventCategory) {
+        this.category_id = eventCategory.id
+        eventDetails.categories.forEach((e) => {
+          if (e.id == this.category_id) {
+            e.stealth = false
+          }
+        })
+      }
+    }
+    eventDetails.categories = eventDetails.categories.filter(e => !e.stealth)
     this.entryCategoryRadio = eventDetails.categories.map((e) => {
       let name = e.name
       if (e.sold_out) {
