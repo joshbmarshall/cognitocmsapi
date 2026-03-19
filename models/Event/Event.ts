@@ -219,7 +219,7 @@ class EventEvent extends CognitoBase {
         expected_time: data.expected_time,
         sharing_vehicle_with: data.sharing_vehicle_with,
         entrant_note: data.entrant_note,
-        entry_transfer_from_invoice: data.entry_transfer_from_invoice,
+        entry_transfer_from_invoice: Number.parseInt(`${data.entry_transfer_from_invoice}`),
         blood_type_id: data.blood_type_id,
         date_of_last_tetanus_vaccination: data.date_of_last_tetanus_vaccination,
         has_allergies: data.has_allergies,
