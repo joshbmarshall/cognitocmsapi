@@ -250,7 +250,7 @@ class EventEvent extends CognitoBase {
         extras: data.extras.map(extra => ({
           id: extra.id,
           label: extra.label,
-          checked: !!extra.checked,
+          qty: extra.checked ? 1 : 0,
         })),
         spectators: data.spectators.map(spectator => ({
           id: spectator.id,
