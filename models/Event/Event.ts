@@ -240,7 +240,7 @@ class EventEvent extends CognitoBase {
         stall_height: Number.parseFloat(data.stall_height),
         stall_public_liability_insurance_file: data.stall_public_liability_insurance_file,
         stall_public_liability_insurance_expiry: data.stall_public_liability_insurance_expiry,
-        stall_public_liability_insurance_will_update_on_renewal: data.stall_public_liability_insurance_will_update_on_renewal,
+        stall_public_liability_insurance_will_update_on_renewal: !!data.stall_public_liability_insurance_will_update_on_renewal,
         stall_public_liability_insurance_use_ours: data.stall_public_liability_insurance_use_ours,
         stall_food_licence_file: data.stall_food_licence_file,
         stall_food_licence_expiry: data.stall_food_licence_expiry,
