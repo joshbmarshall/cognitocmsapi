@@ -238,6 +238,8 @@ class EventEvent extends CognitoBase {
         stall_width: Number.parseFloat(data.stall_width),
         stall_length: Number.parseFloat(data.stall_length),
         stall_height: Number.parseFloat(data.stall_height),
+        stall_vehicle_make_and_model: data.stall_vehicle_make_and_model,
+        stall_vehicle_registration: data.stall_vehicle_registration,
         stall_public_liability_insurance_file: data.stall_public_liability_insurance_file,
         stall_public_liability_insurance_expiry: data.stall_public_liability_insurance_expiry,
         stall_public_liability_insurance_will_update_on_renewal: !!data.stall_public_liability_insurance_will_update_on_renewal,
