@@ -235,6 +235,7 @@ class EventEvent extends CognitoBase {
         date_of_last_medical_exam: data.date_of_last_medical_exam,
         ambassadorCode: data.ambassadorCode,
         stall_site_type_id: data.stall_site_type_id,
+        stall_products_and_display_description: data.stall_products_and_display_description,
         stall_width: Number.parseFloat(data.stall_width),
         stall_length: Number.parseFloat(data.stall_length),
         stall_height: Number.parseFloat(data.stall_height),
