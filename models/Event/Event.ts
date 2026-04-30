@@ -64,6 +64,7 @@ class EventEvent extends CognitoBase {
   last_address_id: number
   last_vehicle_id: number
   require_vehicle_photo: boolean
+  require_new_vehicle_photo_every_entry: boolean
   require_entrant_note: boolean
   entrant_note_content: string
   race_licence_required?: EventLicenceIssuer
@@ -140,6 +141,7 @@ class EventEvent extends CognitoBase {
     this.last_address_id = 0
     this.last_vehicle_id = 0
     this.require_vehicle_photo = false
+    this.require_new_vehicle_photo_every_entry = true
     this.require_entrant_note = false
     this.entrant_note_content = ''
     this.aasa_licence = ''
