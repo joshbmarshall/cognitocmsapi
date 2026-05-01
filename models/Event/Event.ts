@@ -210,6 +210,7 @@ class EventEvent extends CognitoBase {
         mobile_phone: data.mobile_phone,
         postcode: data.postcode,
         vehicle_id: data.vehicle_id,
+        new_vehicle_photo: data.new_vehicle_photo,
         address_id: data.address_id,
         garage_id: data.garage_id,
         garage_ids: data.garage_ids,

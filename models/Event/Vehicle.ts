@@ -24,6 +24,7 @@ class EventVehicle extends CognitoBase {
   vehicle_owner: string
   racing_number?: number
   owner_mobile: string
+  created_at: CognitoTime
   photo: CognitoImage
 
   baseurl() {
@@ -50,6 +51,7 @@ class EventVehicle extends CognitoBase {
     this.registration_expiry = ''
     Object.assign(this, source)
     this.photo = new CognitoImage(source?.photo)
+    this.created_at = new CognitoTime(source?.created_at)
   }
 
   registrationHasExpired(): boolean {

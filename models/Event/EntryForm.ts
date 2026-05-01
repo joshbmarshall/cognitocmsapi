@@ -152,6 +152,7 @@ class EventEntryForm {
   expected_time?: number
   sharing_vehicle_with?: string
   entrant_note?: string
+  new_vehicle_photo?: string
   extras: EventEntryFormExtra[]
   spectators: EventEntryFormSpectator[]
   raffleTickets: EventEntryFormRaffleTicket[]

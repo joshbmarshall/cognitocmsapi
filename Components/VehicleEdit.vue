@@ -31,7 +31,7 @@
         </div>
         <cgn-form-image
           v-model="newVehiclePhoto" label="Vehicle Photo" :required="props.requirePhoto"
-          :thumbnail="props.requireNewPhoto ? '' : newVehicle.photo?.url"
+          :thumbnail="newVehicle.photo?.url"
         />
       </div>
       <div class="w-full p-2">
@@ -68,10 +68,6 @@ const props = defineProps({
     default: false,
   },
   requirePhoto: {
-    type: Boolean,
-    default: false,
-  },
-  requireNewPhoto: {
     type: Boolean,
     default: false,
   },
@@ -130,9 +126,6 @@ const selectVehicle = () => {
   selectedVehicle.value = id
   newVehicle.value = new EventVehicle(props.vehicles.find(e => id == e.id))
   newVehiclePhoto.value = newVehicle.value?.photo?.url ? 'x' : ''
-  if (props.requireNewPhoto) {
-    newVehiclePhoto.value = ''
-  }
 }
 
 const loadVehicles = async () => {
@@ -170,7 +163,9 @@ watch(() => props.vehicles, (newval) => {
 })
 
 watch(() => selectedVehicle.value, (newval) => {
-  emit('update:modelValue', newval)
+  if (newval) {
+    emit('update:modelValue', newval)
+  }
 })
 
 onMounted(() => {
