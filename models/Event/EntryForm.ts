@@ -205,6 +205,7 @@ class EventEntryForm {
   stall_photos: CognitoPhoto[]
   stall_not_for_profit: boolean
   stall_not_for_profit_number: string
+  add_to_newsletter: boolean
 
   constructor(source?: Partial<EventEntryForm>) {
     this.first_name = ''
@@ -276,6 +277,7 @@ class EventEntryForm {
     this.stall_photos = []
     this.stall_not_for_profit = false
     this.stall_not_for_profit_number = ''
+    this.add_to_newsletter = true
     Object.assign(this, source)
   }
 

@@ -251,6 +251,7 @@ class EventEvent extends CognitoBase {
         stall_food_licence_file: data.stall_food_licence_file,
         stall_food_licence_expiry: data.stall_food_licence_expiry,
         stall_food_licence_will_update_on_renewal: data.stall_food_licence_will_update_on_renewal,
+        add_to_newsletter: !!data.add_to_newsletter,
         payment_gateway: data.payment_gateway,
         url: data.url,
         extras: data.extras.map(extra => ({
