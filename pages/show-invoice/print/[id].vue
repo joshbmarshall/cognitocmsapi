@@ -14,9 +14,9 @@ const props = defineProps({
   },
 })
 function loadInvoice() {
-  new CognitoInvoice().getInvoiceById(props.id)
-    .then((data) => {
-      window.location = data.pdf
+  new CognitoInvoice().getInvoicePdfUrl(props.id)
+    .then((url) => {
+      window.location = url
     })
 }
 onMounted(() => {

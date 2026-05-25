@@ -99,6 +99,17 @@ class CognitoInvoice extends CognitoBase {
     })).data
   }
 
+  async getInvoicePdfUrl(id: number): Promise<string> {
+    const { cognitoInvoice } = await useGql(graphql(`query($invoice_id: ID) {
+      cognitoInvoice(id: $invoice_id) {
+        invoicePdfUrl
+      }
+    }`), {
+      invoice_id: Number.parseInt(`${id}`),
+    })
+    return cognitoInvoice?.invoicePdfUrl || ''
+  }
+
   async getInvoiceText(id: number): Promise<string> {
     const { cognitoInvoice } = await useGql(graphql(`query($invoice_id: ID) {
       cognitoInvoice(id: $invoice_id) {
