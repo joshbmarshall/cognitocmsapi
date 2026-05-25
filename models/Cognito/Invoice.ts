@@ -99,6 +99,17 @@ class CognitoInvoice extends CognitoBase {
     })).data
   }
 
+  async getInvoiceText(id: number): Promise<string> {
+    const { cognitoInvoice } = await useGql(graphql(`query($invoice_id: ID) {
+      cognitoInvoice(id: $invoice_id) {
+        invoiceText
+      }
+    }`), {
+      invoice_id: Number.parseInt(`${id}`),
+    })
+    return cognitoInvoice?.invoiceText || ''
+  }
+
   async myInvoices(): Promise<CognitoInvoice[]> {
     const res = await $axios.get('/api/v1/cognito/invoice/myInvoices')
     return new CognitoInvoice().map(res.data.data)

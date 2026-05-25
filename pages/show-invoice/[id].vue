@@ -16,9 +16,9 @@ const props = defineProps({
 })
 const invoice = ref('')
 function loadInvoice() {
-  new CognitoInvoice().getInvoiceById(props.id)
+  new CognitoInvoice().getInvoiceText(props.id)
     .then((data) => {
-      invoice.value = data.invoiceText
+      invoice.value = data
     })
 }
 watch(() => props.id, () => {
