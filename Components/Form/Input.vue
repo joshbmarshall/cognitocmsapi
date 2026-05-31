@@ -173,6 +173,8 @@ if (props.inputmask === 'date') {
 
 const inputel = ref(null)
 
+defineExpose({ focus: () => inputel.value?.focus() })
+
 const handleInput = e => emit('update:modelValue', e.currentTarget.value)
 const blurInput = _e => emit('blur')
 const buttonClick = _e => emit('buttonClick')
