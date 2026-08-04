@@ -109,6 +109,9 @@ const visible = computed(() => {
     // if editor has the block open, then display it for easier editing
     return true
   }
+  if (props.block.name == 'ROOT') {
+    return false
+  }
   if (props.block.hidden) {
     return false
   }

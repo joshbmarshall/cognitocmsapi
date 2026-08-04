@@ -47,7 +47,6 @@ export function useListPageResolver() {
       content
       pageContents {
         id
-        sort_order
         name
         template
         variables
