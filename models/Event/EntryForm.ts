@@ -80,6 +80,8 @@ class EventEntryFormSpectator {
   qty: number
   qty_available: number
   disabled: boolean
+  require_vehicle_make_and_model: boolean
+  require_vehicle_registration: boolean
 
   constructor(source?: Partial<EventEntryFormSpectator>) {
     this.id = 0
@@ -88,6 +90,8 @@ class EventEntryFormSpectator {
     this.qty = 0
     this.qty_available = 0
     this.disabled = false
+    this.require_vehicle_make_and_model = false
+    this.require_vehicle_registration = false
 
     Object.assign(this, source)
   }
@@ -137,6 +141,8 @@ class EventEntryForm {
   mobile_phone: string
   postcode?: string
   ambassadorCode?: string
+  spectator_vehicle?: string
+  spectator_vehicle_registration?: string
   event_id?: string | number
   category_id: number
   address_id: number
@@ -348,6 +354,8 @@ class EventEntryForm {
         qty: 0,
         qty_available: e.qty_available,
         disabled: e.sold_out,
+        require_vehicle_make_and_model: e.require_vehicle_make_and_model,
+        require_vehicle_registration: e.require_vehicle_registration,
       })
     })
     if (category) {

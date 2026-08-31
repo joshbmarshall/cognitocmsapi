@@ -237,6 +237,8 @@ class EventEvent extends CognitoBase {
         is_normal_eyesight: data.is_normal_eyesight,
         date_of_last_medical_exam: data.date_of_last_medical_exam,
         ambassadorCode: data.ambassadorCode,
+        spectator_vehicle: data.spectator_vehicle,
+        spectator_vehicle_registration: data.spectator_vehicle_registration,
         stall_site_type_id: data.stall_site_type_id,
         stall_power: data.stall_power.map(power => ({
           id: power.id,
