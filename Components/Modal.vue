@@ -1,7 +1,6 @@
 <template>
-  <teleport
+  <div
     v-if="modelValue"
-    to="body"
   >
     <div class="fixed inset-0 z-[9999] h-screen w-screen bg-gray-500/75 transition-opacity dark:bg-black/60" @click="close()" />
     <div
@@ -30,7 +29,7 @@
         <slot name="button-footer" />
       </div>
     </div>
-  </teleport>
+  </div>
 </template>
 
 <script setup lang="ts">
