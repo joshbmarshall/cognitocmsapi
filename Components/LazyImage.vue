@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import { CognitoImage } from '~cognito/models/Cognito/Image'
 import { CognitoPhoto } from '~cognito/models/Cognito/Photo'
-import { hiresFetchMutex } from '~cognito/plugins/mutex'
+import { computeSizedUrl } from '~cognito/composables/imageSizing'
 
 const props = defineProps({
   // Give just the image if you have a CognitoImage
@@ -61,6 +61,18 @@ const last_image_url = ref('')
 const src = ref(blank_webp)
 const imageIsVisible = useElementVisibility(lazyelement)
 
+async function loadImage(source: string): Promise<boolean> {
+  const image = new Image()
+  image.src = source
+  try {
+    await image.decode()
+    return true
+  } catch (error) {
+    console.log({ error, src: image.src })
+    return false
+  }
+}
+
 async function checkVisible() {
   if (!show_image.value) {
     return
@@ -70,91 +82,44 @@ async function checkVisible() {
     return
   }
 
-  if (lazyelement.value.clientHeight === 0) {
-    // Ensure the placeholder image has a height
-    return
-  }
-
-  // Load standard image
-  const img = new Image()
-  if (all_done) {
-    // Only load one hi-res image at a time
-    await hiresFetchMutex.dispatch(async () => {
-      if (!lazyelement.value) {
-        // Element has disappeared, abort
-        return
-      }
-      img.src = show_image.value
-      try {
-        await img.decode()
-      } catch (error) {
-        console.log({ error, src: img.src })
-      }
-    })
-  } else {
-    img.src = show_image.value
-    try {
-      await img.decode()
-    } catch (error) {
-      console.log({ error, src: img.src })
+  // Fixed-size images load their exact url without measuring the element
+  if (props.forceSize) {
+    if (!await loadImage(show_image.value)) {
       return
     }
-  }
-  if (!lazyelement.value) {
-    // Element has disappeared, abort
-    return
-  }
-  src.value = show_image.value
-  if (props.forceSize) {
-    return
-  }
-  if (all_done) {
-    return
-  }
-  if (!lazyelement.value) {
-    // Element has disappeared, abort
-    return
-  }
-
-  const filename = show_image.value.split('/').pop()
-  let width = Math.round(lazyelement.value.clientWidth * window.devicePixelRatio)
-  let height = Math.round(lazyelement.value.clientHeight * window.devicePixelRatio)
-
-  if (height === 0) {
-    return
-  }
-
-  // Make it to the closest upper 25px - not pixel perfect but close for similar sized screens
-  const roundTo = 25
-  const newWidth = Math.ceil(width / roundTo) * roundTo
-  if (newWidth > 0) {
-    height = Math.ceil(height * newWidth / width)
-    width = newWidth
-  }
-
-  // Keep ratio for images that are cropped on-screen by hiding portions of the image, ie square thumbnails
-  if (props.image?.width && props.image?.height) {
-    const ratio = props.image.width / props.image.height
-    const checkWidth = Math.abs(Math.floor(props.image.height * width / height) - props.image.width)
-
-    if (checkWidth > 1) {
-      // Is definitely a different shape
-      if (width / height > ratio) {
-        height = Math.ceil(width / ratio)
-      } else {
-        width = Math.ceil(height * ratio)
-      }
+    if (!lazyelement.value) {
+      return
     }
+    src.value = show_image.value
+    return
   }
 
-  if (filename) {
-    const hires_url = `${show_image.value.replace(filename, '') + width}x${height}:${filename}`
-    nextTick(() => {
-      all_done = true
-      show_image.value = hires_url
-      checkVisible()
-    })
+  const sized_url = computeSizedUrl({
+    url: show_image.value,
+    clientWidth: lazyelement.value.clientWidth,
+    clientHeight: lazyelement.value.clientHeight,
+    devicePixelRatio: window.devicePixelRatio,
+    imageWidth: props.image?.width,
+    imageHeight: props.image?.height,
+  })
+
+  // Not laid out yet (e.g. closed tab/carousel). Leave it to retry once it has
+  // a width and is revealed.
+  if (!sized_url) {
+    return
   }
+
+  // One download: the placeholder is already showing, so only the sized file
+  // is fetched.
+  if (!await loadImage(sized_url)) {
+    return
+  }
+  if (!lazyelement.value) {
+    // Element has disappeared, abort
+    return
+  }
+  src.value = sized_url
+  all_done = true
 }
 
 async function newImage() {
@@ -280,11 +245,15 @@ onMounted(async () => {
 })
 
 onServerPrefetch(async () => {
-  if (props.image) {
-    src.value = props.image.url
+  // Render the placeholder only. The sized image is chosen in the browser, so
+  // the server has no viewport to size against and a template-size file would
+  // only be a wasted download.
+  if (props.placeholder) {
+    src.value = props.placeholder
   }
-  if (props.url) {
-    src.value = props.url
+  if (props.image) {
+    const image = props.image.image ? props.image.image : props.image
+    src.value = image.placeholder || src.value
   }
   if (props.imageHash && props.imageAspect && props.imageWidth) {
     const data = await new CognitoImage().getByHash({
@@ -292,7 +261,7 @@ onServerPrefetch(async () => {
       image_aspect: props.imageAspect,
       image_width: props.imageWidth,
     })
-    src.value = data.url
+    src.value = data.placeholder || src.value
   }
   if (props.imageId && props.imageAspect && props.imageWidth) {
     const data = await new CognitoImage().find_one({
@@ -300,8 +269,7 @@ onServerPrefetch(async () => {
       image_aspect: props.imageAspect,
       image_width: props.imageWidth,
     })
-    console.log(data)
-    src.value = data.url
+    src.value = data.placeholder || src.value
   }
 })
 </script>
