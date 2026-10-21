@@ -38,13 +38,14 @@ const props = defineProps({
 })
 
 const pageStore = useListPageStore()
+const itemNotFoundStore = useItemNotFoundStore()
 const router = useRouter()
 
 const loading = ref(true)
 const urlParts = ref(new CognitoUrlParts())
 
 const not_found = computed(() => {
-  return !pageStore.currentPage.id
+  return !pageStore.currentPage.id || !!itemNotFoundStore.url
 })
 
 const pageContent = computed(() => {
@@ -52,6 +53,7 @@ const pageContent = computed(() => {
 })
 
 async function loadPageContent(url: string | string[]) {
+  itemNotFoundStore.clear()
   await pageStore.loadPage(url)
   urlParts.value = new CognitoUrlParts().parse(url)
   loading.value = false
