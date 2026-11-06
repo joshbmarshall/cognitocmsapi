@@ -203,7 +203,7 @@ class CgnAxios {
     const nonce = nanoid()
     const state = nanoid()
     this.userStore().oauth2_state = state
-    return `${siteurl}?client_id=${this.clientId}&redirect_uri=${encodeURIComponent(redirect_uri)}&scope=all&state=${state}&nonce=${nonce}`
+    return `${siteurl}?client_id=${this.clientId}&redirect_uri=${encodeURIComponent(redirect_uri)}&response_type=code&scope=all&state=${state}&nonce=${nonce}`
   }
 
   setBaseUrl(baseURL: string) {
