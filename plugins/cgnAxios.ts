@@ -210,10 +210,14 @@ class CgnAxios {
     this.baseURL = baseURL
   }
 
-  async oauth2GetToken(code?: string, state?: string, sitepath?: string) {
+  async oauth2GetToken(code?: string, state?: string, sitepath?: string, redirect_uri?: string) {
     if (!sitepath) {
       sitepath = '/authtoken'
     }
+    if (!redirect_uri) {
+      redirect_uri = '/auth'
+    }
+    redirect_uri = window.location.origin + redirect_uri
     // Check state matches
     if (state != this.userStore().oauth2_state) {
       alert('Bad state please try again')
@@ -223,6 +227,7 @@ class CgnAxios {
       grant_type: 'authorization_code',
       code,
       client_id: this.clientId,
+      redirect_uri,
     })
     this.userStore().setAccessToken(res.data.access_token)
     this.userStore().setRefreshToken(res.data.refresh_token)
